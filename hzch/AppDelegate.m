@@ -7,16 +7,26 @@
 //
 
 #import "AppDelegate.h"
+#import "NBMapViewController.h"
 
 @interface AppDelegate ()
-
+@property (strong, nonatomic) NBMapViewController *mapViewController;
+@property (strong, nonatomic) UINavigationController *navController;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    _mapViewController = [[NBMapViewController alloc] initWithNibName:@"NBMapViewController" bundle:nil];
+    _navController = [[UINavigationController alloc] init];
+    [_navController pushViewController:_mapViewController animated:YES];
+    [self.window setRootViewController:_navController];
     return YES;
 }
 
