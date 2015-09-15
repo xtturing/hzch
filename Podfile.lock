@@ -40,6 +40,7 @@ PODS:
   - FMDB/standard (2.5):
     - FMDB/common
   - Reachability (3.2)
+  - SBJson (4.0.2)
   - SVProgressHUD (1.1.3)
 
 DEPENDENCIES:
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - EGOTableViewPullRefreshAndLoadMore (~> 1.0.4)
   - FMDB (~> 2.5)
   - Reachability (~> 3.2)
+  - SBJson (~> 4.0.2)
   - SVProgressHUD (~> 1.1.3)
 
 SPEC CHECKSUMS:
@@ -56,6 +58,7 @@ SPEC CHECKSUMS:
   EGOTableViewPullRefreshAndLoadMore: 118a0824590db042d42e08fcc442b93cebf15e73
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SBJson: c18691cc18375b14664ff0fec841f8c4faef1934
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
 COCOAPODS: 0.38.2

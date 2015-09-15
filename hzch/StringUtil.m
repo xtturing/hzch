@@ -50,7 +50,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
         else characters[length++] = '=';
     }
     
-    return [[[NSString alloc] initWithBytesNoCopy:characters length:length encoding:NSASCIIStringEncoding freeWhenDone:YES] autorelease];
+    return [[NSString alloc] initWithBytesNoCopy:characters length:length encoding:NSASCIIStringEncoding freeWhenDone:YES] ;
 }
 
 - (NSString*)escapeHTML
@@ -96,7 +96,7 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 - (NSString*)unescapeHTML
 {
 	NSMutableString* s = [NSMutableString string];
-	NSMutableString* target = [[self mutableCopy] autorelease];
+	NSMutableString* target = [self mutableCopy];
 	NSCharacterSet* chs = [NSCharacterSet characterSetWithCharactersInString:@"&"];
 	
 	while ([target length] > 0) {

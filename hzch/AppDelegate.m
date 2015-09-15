@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "NBMapViewController.h"
+#import "esriView.h"
 
 @interface AppDelegate ()
-@property (strong, nonatomic) NBMapViewController *mapViewController;
+@property (strong, nonatomic) esriView *mapViewController;
 @property (strong, nonatomic) UINavigationController *navController;
 @end
 
@@ -23,7 +23,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    _mapViewController = [[NBMapViewController alloc] initWithNibName:@"NBMapViewController" bundle:nil];
+    _mapViewController = [[esriView alloc] initWithFrame:self.window.frame];
     _navController = [[UINavigationController alloc] init];
     [_navController pushViewController:_mapViewController animated:YES];
     [self.window setRootViewController:_navController];
