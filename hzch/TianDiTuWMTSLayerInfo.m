@@ -12,6 +12,8 @@
 
 @synthesize url = _url;
 @synthesize layerName = _layerName;
+@synthesize style = _style;
+@synthesize format = _format;
 @synthesize minZoomLevel = _minZoomLevel;
 @synthesize maxZoomLevel = _maxZoomLevel;
 @synthesize xMin = _xMin;

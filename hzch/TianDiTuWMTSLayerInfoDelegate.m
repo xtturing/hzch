@@ -6,26 +6,35 @@
 //
 //
 #import "TianDiTuWMTSLayerInfoDelegate.h"
-//proxy
-#define KPROXY_URL @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?"
+
 //mecator
-#define kURL_VECTOR_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/vec_w/wmts"
-#define kURL_VECTOR_ANNOTATION_CHINESE_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cva_w/wmts"
-#define kURL_VECTOR_ANNOTATION_ENGLISH_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/eva_w/wmts"
-#define kURL_IMAGE_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/img_w/wmts"
-#define kURL_IMAGE_ANNOTATION_CHINESE_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cia_w/wmts"
-#define kURL_IMAGE_ANNOTATION_ENGLISH_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cia_w/wmts"
-#define kURL_TERRAIN_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/ter_w/wmts"
-#define kURL_TERRAIN_ANNOTATION_CHINESE_MERCATOR @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cta_w/wmts"
+#define kURL_VECTOR_MERCATOR @"http://t0.tianditu.com/vec_w/wmts"
+#define kURL_VECTOR_ANNOTATION_CHINESE_MERCATOR @"http://t0.tianditu.com/cva_w/wmts"
+#define kURL_VECTOR_ANNOTATION_ENGLISH_MERCATOR @"http://t0.tianditu.com/eva_w/wmts"
+#define kURL_IMAGE_MERCATOR @"http://t0.tianditu.com/img_w/wmts"
+#define kURL_IMAGE_ANNOTATION_CHINESE_MERCATOR @"http://t0.tianditu.com/cia_w/wmts"
+#define kURL_IMAGE_ANNOTATION_ENGLISH_MERCATOR @"http://t0.tianditu.com/cia_w/wmts"
+#define kURL_TERRAIN_MERCATOR @"http://t0.tianditu.com/ter_w/wmts"
+#define kURL_TERRAIN_ANNOTATION_CHINESE_MERCATOR @"http://t0.tianditu.com/cta_w/wmts"
 //cgcs2000
-#define kURL_VECTOR_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/vec_c/wmts"
-#define kURL_VECTOR_ANNOTATION_CHINESE_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cva_c/wmts"
-#define kURL_VECTOR_ANNOTATION_ENGLISH_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/eva_c/wmts"
-#define kURL_IMAGE_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/img_c/wmts"
-#define kURL_IMAGE_ANNOTATION_CHINESE_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cia_c/wmts"
-#define kURL_IMAGE_ANNOTATION_ENGLISH_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cia_c/wmts"
-#define kURL_TERRAIN_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/ter_c/wmts"
-#define kURL_TERRAIN_ANNOTATION_CHINESE_2000 @"http://61.164.34.9:8002/EarthquakeIINet/EarthquakeII/proxy.ashx?http://t0.tianditu.cn/cta_c/wmts"
+#define kURL_VECTOR_2000 @"http://t0.tianditu.com/vec_c/wmts"
+#define kURL_VECTOR_ANNOTATION_CHINESE_2000 @"http://t0.tianditu.com/cva_c/wmts"
+#define kURL_VECTOR_ANNOTATION_ENGLISH_2000 @"http://t0.tianditu.com/eva_c/wmts"
+#define kURL_IMAGE_2000 @"http://t0.tianditu.com/img_c/wmts"
+#define kURL_IMAGE_ANNOTATION_CHINESE_2000 @"http://t5.tianditu.com/cia_c/wmts"
+#define kURL_IMAGE_ANNOTATION_ENGLISH_2000 @"http://t0.tianditu.com/cia_c/wmts"
+#define kURL_TERRAIN_2000 @"http://t0.tianditu.com/ter_c/wmts"
+#define kURL_TERRAIN_ANNOTATION_CHINESE_2000 @"http://t0.tianditu.com/cta_c/wmts"
+/*浙江*/
+#define kURL_ZJ_VECTOR @"http://srv.zjditu.cn/ZJEMAP_2D/wmts"
+#define kURL_ZJ_VECTOR_ANNOTATION @"http://srv.zjditu.cn/ZJEMAPANNO_2D/wmts"
+#define kURL_ZJ_IMAGE @"http://srv.zjditu.cn/ZJDOM_2D/wmts"
+#define kURL_ZJ_IMAGE_ANNOTATION @"http://srv.zjditu.cn/ZJDOMANNO_2D/wmts"
+/*温州*/
+#define kURL_WZ_VECTOR @"http://www.go577.com/iserver/services/wzmap2/wmts"
+#define kURL_WZ_VECTOR_ANNOTATION @"http://www.go577.com/iserver/services/poi2/wmts"
+#define kURL_WZ_IMAGE @"http://www.go577.com/iserver/services/imagemap2/wmts"
+#define kURL_WZ_IMAGE_ANNOTATION @"http://www.go577.com/iserver/services/imagepoi2/wmts"
 
 //services
 #define kLAYER_NAME_VECTOR @"vec"
@@ -36,13 +45,35 @@
 #define kLAYER_NAME_IMAGE_ANNOTATION_ENGLISH @"eia"
 #define kLAYER_NAME_TERRAIN @"ter"
 #define kLAYER_NAME_TERRAIN_ANNOTATION_CHINESE @"cta"
+/*浙江*/
+#define kLAYER_NAME_ZJ_VECTOR @"ZJEMAP"
+#define kLAYER_NAME_ZJ_VECTOR_ANNOTATION @"zjemapanno"
+#define kLAYER_NAME_ZJ_IMAGE @"zjdom2w1"
+#define kLAYER_NAME_ZJ_IMAGE_ANNOTATION @"zjimganno"
+/*温州*/
+#define kLAYER_NAME_WZ_VECTOR @"wzmap2"
+#define kLAYER_NAME_WZ_VECTOR_ANNOTATION @"poi2"
+#define kLAYER_NAME_WZ_IMAGE @"imagemap2"
+#define kLAYER_NAME_WZ_IMAGE_ANNOTATION @"imagepoi2"
+
 
 //sr
 #define kTILE_MATRIX_SET_MERCATOR @"w"
 #define kTILE_MATRIX_SET_2000 @"c"
+/*浙江*/
+#define kTILE_MATRIX_SET_ZJ_VECTOR @"TileMatrixSet0"
+#define kTILE_MATRIX_SET_ZJ_VECTOR_ANNOTATION @"TileMatrixSet0"
+#define kTILE_MATRIX_SET_ZJ_IMAGE @"Matrix_0"
+#define kTILE_MATRIX_SET_ZJ_IMAGE_ANNOTATION @"TileMatrixSet0"
+/*温州*/
+#define kTILE_MATRIX_SET_WZ_VECTOR @"custom_wzmap2"
+#define kTILE_MATRIX_SET_WZ_VECTOR_ANNOTATION @"custom_poi2"
+#define kTILE_MATRIX_SET_WZ_IMAGE @"custom_imagemap2"
+#define kTILE_MATRIX_SET_WZ_IMAGE_ANNOTATION @"custom_imagepoi2"
+
 
 //
-#define SRID_2000 4490
+#define SRID_2000 4326
 #define SRID_MERCATOR 102100
 
 #define X_MIN_2000 -180.0
@@ -56,7 +87,7 @@
 #define Y_MAX_MERCATOR 20037508.3427892
 
 #define _minZoomLevel 0
-#define _maxZoomLevel 16
+#define _maxZoomLevel 13
 #define _tileWidth 256
 #define _tileHeight 256
 #define _dpi 96
@@ -73,7 +104,7 @@
     layerInfo.tileWidth = _tileWidth;
     layerInfo.minZoomLevel =_minZoomLevel;
     layerInfo.maxZoomLevel =_maxZoomLevel;
-    //sr 
+    //sr
     if (tiandituType < 8) {//sr:webmecator
         layerInfo.srid = SRID_MERCATOR;
         layerInfo.xMax = X_MAX_MERCATOR;
@@ -82,29 +113,28 @@
         layerInfo.yMin = Y_MIN_MERCATOR;
         layerInfo.tileMatrixSet = kTILE_MATRIX_SET_MERCATOR;
         layerInfo.origin = [AGSPoint pointWithX:X_MIN_MERCATOR y:Y_MAX_MERCATOR spatialReference:[[AGSSpatialReference alloc]initWithWKID:SRID_MERCATOR]];
-        
         //wgs84:*(0.0254000508/96)/111194.872221777
         //mecator:*(0.0254000508/96)
         layerInfo.lods = [NSMutableArray arrayWithObjects:
-                          [[AGSLOD alloc] initWithLevel:2 resolution:39135.83675440267 scale: 1.479146777272828E8],
-                          [[AGSLOD alloc] initWithLevel:3 resolution:19567.918377201335 scale: 7.39573388636414E7],
-                          [[AGSLOD alloc] initWithLevel:4 resolution:9783.959188600667 scale: 3.69786694318207E7],
-                          [[AGSLOD alloc] initWithLevel:5 resolution:4891.979594300334 scale: 1.848933471591035E7],
-                          [[AGSLOD alloc] initWithLevel:6 resolution:2445.989797150167 scale: 9244667.357955175],
-                          [[AGSLOD alloc] initWithLevel:7 resolution:1222.9948985750834 scale: 4622333.678977588],
-                          [[AGSLOD alloc] initWithLevel:8 resolution:611.4974492875417 scale: 2311166.839488794],
-                          [[AGSLOD alloc] initWithLevel:9 resolution:305.7487246437696 scale: 1155583.419744397],
-                          [[AGSLOD alloc] initWithLevel:10 resolution:152.87436232188531 scale: 577791.7098721985],
-                          [[AGSLOD alloc] initWithLevel:11 resolution:76.43718116094266 scale: 288895.85493609926],
-                          [[AGSLOD alloc] initWithLevel:12 resolution:38.21859058047133 scale: 144447.92746804963],
-                          [[AGSLOD alloc] initWithLevel:13 resolution:19.109295290235693 scale: 72223.96373402482],
-                          [[AGSLOD alloc] initWithLevel:14 resolution:9.554647645117846 scale: 36111.98186701241],
-                          [[AGSLOD alloc] initWithLevel:15 resolution:4.777323822558923 scale: 18055.990933506204],
-                          [[AGSLOD alloc] initWithLevel:16 resolution:2.3886619112794585 scale:9027.995466753102],
-                          [[AGSLOD alloc] initWithLevel:17 resolution:1.1943309556397292 scale: 4513.997733376551],
-                          [[AGSLOD alloc] initWithLevel:18 resolution:0.597165477819866 scale: 2256.998866688275],
+                          [[AGSLOD alloc] initWithLevel:1 resolution:78271.51696402048 scale: 2.958293554545656E8],
+                          [[AGSLOD alloc] initWithLevel:2 resolution:39135.75848201024 scale: 1.479146777272828E8],
+                          [[AGSLOD alloc] initWithLevel:3 resolution:19567.87924100512 scale: 7.39573388636414E7],
+                          [[AGSLOD alloc] initWithLevel:4 resolution:9783.93962050256 scale: 3.69786694318207E7],
+                          [[AGSLOD alloc] initWithLevel:5 resolution:4891.96981025128 scale: 1.848933471591035E7],
+                          [[AGSLOD alloc] initWithLevel:6 resolution:2445.98490512564 scale: 9244667.357955175],
+                          [[AGSLOD alloc] initWithLevel:7 resolution:1222.99245256282 scale: 4622333.678977588],
+                          [[AGSLOD alloc] initWithLevel:8 resolution:611.49622628141 scale: 2311166.839488794],
+                          [[AGSLOD alloc] initWithLevel:9 resolution:305.748113140705 scale: 1155583.419744397],
+                          [[AGSLOD alloc] initWithLevel:10 resolution:152.8740565703525 scale: 577791.7098721985],
+                          [[AGSLOD alloc] initWithLevel:11 resolution:76.43702828517625 scale: 288895.85493609926],
+                          [[AGSLOD alloc] initWithLevel:12 resolution:38.21851414258813 scale: 144447.92746804963],
+                          [[AGSLOD alloc] initWithLevel:13 resolution:19.109257071294063 scale: 72223.96373402482],
+                          [[AGSLOD alloc] initWithLevel:14 resolution:9.554628535647032 scale: 36111.98186701241],
+                          [[AGSLOD alloc] initWithLevel:15 resolution:4.777314267823516 scale: 18055.990933506204],
+                          [[AGSLOD alloc] initWithLevel:16 resolution:2.388657133911758 scale:9027.995466753102],
+                          [[AGSLOD alloc] initWithLevel:17 resolution:1.194328566955879 scale: 4513.997733376551],
+                          [[AGSLOD alloc] initWithLevel:18 resolution:0.5971642834779395 scale: 2256.998866688275],
                           nil ];
-
     }else{//sr:cgcs2000
         layerInfo.srid = SRID_2000;
         layerInfo.xMax = X_MAX_2000;
@@ -112,50 +142,32 @@
         layerInfo.yMax = Y_MAX_2000;
         layerInfo.yMin = Y_MIN_2000;
         layerInfo.tileMatrixSet = kTILE_MATRIX_SET_2000;
+        layerInfo.style = @"default";
+        layerInfo.format = @"tiles";
         layerInfo.origin = [AGSPoint pointWithX:X_MIN_2000 y:Y_MAX_2000 spatialReference:[[AGSSpatialReference alloc]initWithWKID:SRID_2000]];
-        
         layerInfo.lods = [NSMutableArray arrayWithObjects:
-                          //                          [[AGSLOD alloc] initWithLevel:1 resolution:
-                          //                           0.70391442 scale: 2.958293554545656E8],
-                          [[AGSLOD alloc] initWithLevel:2 resolution:0.3515625 scale: 147748799.285417],
-                          [[AGSLOD alloc] initWithLevel:3 resolution:0.17578125 scale: 73874399.6427087],
-                          [[AGSLOD alloc] initWithLevel:4 resolution:0.087890625 scale: 36937199.8213544],
-                          [[AGSLOD alloc] initWithLevel:5 resolution:0.0439453125 scale: 18468599.9106772],
-                          [[AGSLOD alloc] initWithLevel:6 resolution:0.02197265625 scale: 9234299.95533859],
-                          [[AGSLOD alloc] initWithLevel:7 resolution:0.010986328125 scale: 4617149.97766929],
-                          [[AGSLOD alloc] initWithLevel:8 resolution:0.0054931640625 scale: 2308574.98883465],
-                          [[AGSLOD alloc] initWithLevel:9 resolution:0.00274658203125 scale: 1155583.419744397],
-                          [[AGSLOD alloc] initWithLevel:10 resolution:0.001373291015625 scale: 577143.747208662],
-                          [[AGSLOD alloc] initWithLevel:11 resolution:0.0006866455078125 scale: 288571.873604331],
-                          [[AGSLOD alloc] initWithLevel:12 resolution:0.00034332275390625 scale: 144285.936802165],
-                          [[AGSLOD alloc] initWithLevel:13 resolution:0.000171661376953125 scale: 72142.9684010827],
-                          [[AGSLOD alloc] initWithLevel:14 resolution:8.58306884765629E-05 scale: 36071.4842005414],
-                          [[AGSLOD alloc] initWithLevel:15 resolution:4.29153442382814E-05 scale: 18035.7421002707],
-                          [[AGSLOD alloc] initWithLevel:16 resolution:2.14576721191407E-05 scale:9017.87105013534],
-                          [[AGSLOD alloc] initWithLevel:17 resolution:1.07288360595703E-05 scale: 4508.93552506767],
-                          [[AGSLOD alloc] initWithLevel:18 resolution:5.36441802978515E-06 scale: 2254.467762533835],
-                          nil ];
-//        layerInfo.lods = [NSMutableArray arrayWithObjects:
-////                          [[AGSLOD alloc] initWithLevel:1 resolution:
-////                           0.70391442 scale: 2.958293554545656E8],
-//                          [[AGSLOD alloc] initWithLevel:2 resolution:0.35195721 scale: 1.479146777272828E8],
-//                          [[AGSLOD alloc] initWithLevel:3 resolution:0.17597861 scale: 7.39573388636414E7],
-//                          [[AGSLOD alloc] initWithLevel:4 resolution:0.087989305 scale: 3.69786694318207E7],
-//                          [[AGSLOD alloc] initWithLevel:5 resolution:0.043994652 scale: 1.848933471591035E7],
-//                          [[AGSLOD alloc] initWithLevel:6 resolution:0.021997426 scale: 9244667.357955175],
-//                          [[AGSLOD alloc] initWithLevel:7 resolution:0.010998663 scale: 4622333.678977588],
-//                          [[AGSLOD alloc] initWithLevel:8 resolution:0.0054993315 scale: 2311166.839488794],
-//                          [[AGSLOD alloc] initWithLevel:9 resolution:0.0027496658 scale: 1155583.419744397],
-//                          [[AGSLOD alloc] initWithLevel:10 resolution:0.0013748329 scale: 577791.7098721985],
-//                          [[AGSLOD alloc] initWithLevel:11 resolution:0.00068741643 scale: 288895.85493609926],
-//                          [[AGSLOD alloc] initWithLevel:12 resolution:0.00034370822 scale: 144447.92746804963],
-//                          [[AGSLOD alloc] initWithLevel:13 resolution:0.00017185411 scale: 72223.96373402482],
-//                          [[AGSLOD alloc] initWithLevel:14 resolution:8.5927055E-05 scale: 36111.98186701241],
-//                          [[AGSLOD alloc] initWithLevel:15 resolution:4.2963527E-05 scale: 18055.990933506204],
-//                          [[AGSLOD alloc] initWithLevel:16 resolution:2.1481764E-05 scale:9027.995466753102],
-//                          [[AGSLOD alloc] initWithLevel:17 resolution:1.0740882E-05 scale: 4513.997733376551],
-//                          [[AGSLOD alloc] initWithLevel:18 resolution:5.370441E-06 scale: 2256.998866688275],
-//                          nil ];
+                          [[AGSLOD alloc] initWithLevel:1 resolution: 0.7031249999891485 scale: 2.958293554545656E8],
+                          [[AGSLOD alloc] initWithLevel:2 resolution:0.35156249999999994 scale: 1.479146777272828E8],
+                          [[AGSLOD alloc] initWithLevel:3 resolution:0.17578124999999997 scale: 7.39573388636414E7],
+                          [[AGSLOD alloc] initWithLevel:4 resolution:0.08789062500000014 scale: 3.69786694318207E7],
+                          [[AGSLOD alloc] initWithLevel:5 resolution:0.04394531250000007 scale: 1.848933471591035E7],
+                          [[AGSLOD alloc] initWithLevel:6 resolution:0.021972656250000007 scale: 9244667.357955175],
+                          [[AGSLOD alloc] initWithLevel:7 resolution:0.01098632812500002 scale: 4622333.678977588],
+                          [[AGSLOD alloc] initWithLevel:8 resolution:0.00549316406250001 scale: 2311166.839488794],
+                          [[AGSLOD alloc] initWithLevel:9 resolution:0.0027465820312500017 scale: 1155583.419744397],
+                          [[AGSLOD alloc] initWithLevel:10 resolution:0.0013732910156250009 scale: 577791.7098721985],
+                          [[AGSLOD alloc] initWithLevel:11 resolution:0.000686645507812499 scale: 288895.85493609926],
+                          [[AGSLOD alloc] initWithLevel:12 resolution:0.0003433227539062495 scale: 144447.92746804963],
+                          [[AGSLOD alloc] initWithLevel:13 resolution:0.00017166137695312503 scale: 72223.96373402482],
+                          [[AGSLOD alloc] initWithLevel:14 resolution:0.00008583068847656251 scale: 36111.98186701241],
+                          [[AGSLOD alloc] initWithLevel:15 resolution:0.000042915344238281406 scale: 18055.990933506204],
+                          [[AGSLOD alloc] initWithLevel:16 resolution:0.000021457672119140645 scale:9027.995466753102],
+                          [[AGSLOD alloc] initWithLevel:17 resolution:0.000010728836059570307 scale: 4513.997733376551],
+                          [[AGSLOD alloc] initWithLevel:18 resolution:0.000005364418029785169 scale: 2256.998866688275],
+                          [[AGSLOD alloc] initWithLevel:19 resolution:0.00000268220901489258 scale: 1128.49943334],
+                          [[AGSLOD alloc] initWithLevel:20 resolution:0.00000134110450744629 scale: 564.249716672],
+                          nil
+                          ];
     }
     //other parameters
     switch (tiandituType) {
@@ -223,10 +235,76 @@
             layerInfo.url = kURL_TERRAIN_ANNOTATION_CHINESE_2000;
             layerInfo.layerName = kLAYER_NAME_TERRAIN_ANNOTATION_CHINESE;
             break;
+        case 16:
+            layerInfo.url = kURL_ZJ_VECTOR;
+            layerInfo.layerName = kLAYER_NAME_ZJ_VECTOR;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_VECTOR;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 14;
+            layerInfo.maxZoomLevel = 16;
+            break;
+        case 17:
+            layerInfo.url = kURL_ZJ_VECTOR_ANNOTATION;
+            layerInfo.layerName = kLAYER_NAME_ZJ_VECTOR_ANNOTATION;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_VECTOR_ANNOTATION;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 14;
+            layerInfo.maxZoomLevel = 16;
+            break;
+        case 18:
+            layerInfo.url = kURL_ZJ_IMAGE;
+            layerInfo.layerName = kLAYER_NAME_ZJ_IMAGE;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_IMAGE;
+            layerInfo.style = @"zjdom2w1";
+            layerInfo.format = @"image/jpeg";
+            layerInfo.minZoomLevel = 14;
+            layerInfo.maxZoomLevel = 16;
+            break;
+        case 19:
+            layerInfo.url = kURL_ZJ_IMAGE_ANNOTATION;
+            layerInfo.layerName = kLAYER_NAME_ZJ_IMAGE_ANNOTATION;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_IMAGE_ANNOTATION;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 14;
+            layerInfo.maxZoomLevel = 16;
+            break;
+        case 20:
+            layerInfo.url = kURL_WZ_VECTOR;
+            layerInfo.layerName = kLAYER_NAME_WZ_VECTOR;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_WZ_VECTOR;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 17;
+            layerInfo.maxZoomLevel = 19;
+            break;
+        case 21:
+            layerInfo.url = kURL_WZ_VECTOR_ANNOTATION;
+            layerInfo.layerName = kLAYER_NAME_WZ_VECTOR_ANNOTATION;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_WZ_VECTOR_ANNOTATION;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 17;
+            layerInfo.maxZoomLevel = 19;
+            break;
+        case 22:
+            layerInfo.url = kURL_WZ_IMAGE;
+            layerInfo.layerName = kLAYER_NAME_WZ_IMAGE;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_WZ_IMAGE;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 17;
+            layerInfo.maxZoomLevel = 19;
+            break;
+        case 23:
+            layerInfo.url = kURL_WZ_IMAGE_ANNOTATION;
+            layerInfo.layerName = kLAYER_NAME_WZ_IMAGE_ANNOTATION;
+            layerInfo.tileMatrixSet = kTILE_MATRIX_SET_WZ_IMAGE_ANNOTATION;
+            layerInfo.format = @"image/png";
+            layerInfo.minZoomLevel = 17;
+            layerInfo.maxZoomLevel = 19;
+            break;
         default:
             break;
     }
     
     return layerInfo;
 }
+
 @end

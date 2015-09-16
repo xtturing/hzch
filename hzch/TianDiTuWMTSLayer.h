@@ -25,6 +25,14 @@ typedef enum {
     TIANDITU_IMAGE_ANNOTATION_ENGLISH_2000,     /*!< 天地图影像国家2000坐标系中文标注 */
     TIANDITU_TERRAIN_2000,     /*!< 天地图地形国家2000坐标系地图服务 */
     TIANDITU_TERRAIN_ANNOTATION_CHINESE_2000,     /*!< 天地图地形国家2000坐标系中文标注 */
+    TIANDITU_ZJ_VECTOR,     /*!< 天地图矢量浙江2000坐标系地图服务 */
+    TIANDITU_ZJ_VECTOR_ANNOTATION,  /*!< 天地图矢量浙江2000坐标系中文标注 */
+    TIANDITU_ZJ_IMAGE,     /*!< 天地图影像浙江2000坐标系地图服务 */
+    TIANDITU_ZJ_IMAGE_ANNOTATION,   /*!< 天地图影像浙江2000坐标系中文标注 */
+    TIANDITU_WZ_VECTOR,     /*!< 天地图矢量温州2000坐标系地图服务 */
+    TIANDITU_WZ_VECTOR_ANNOTATION,  /*!< 天地图矢量温州2000坐标系中文标注 */
+    TIANDITU_WZ_IMAGE,     /*!< 天地图影像温州2000坐标系地图服务 */
+    TIANDITU_WZ_IMAGE_ANNOTATION    /*!< 天地图影像温州2000坐标系中文标注 */
 } TianDiTuLayerTypes;
 
 @interface TianDiTuWMTSLayer : AGSTiledServiceLayer

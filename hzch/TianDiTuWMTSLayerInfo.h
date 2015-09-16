@@ -12,8 +12,12 @@
 @interface TianDiTuWMTSLayerInfo : NSObject
 {
     @private
-    NSString __unsafe_unretained *_url;
-    NSString __unsafe_unretained *_layerName;
+    NSString *_url;
+    NSString *_layerName;
+    
+    NSString *_style;
+    NSString *_format;
+    
     int _minZoomLevel;
     int _maxZoomLevel;
     double _xMin;
@@ -22,14 +26,16 @@
     double _yMax;
     int _tileWidth;
     int _tileHeight;
-    NSMutableArray __unsafe_unretained *_lods;
+    NSMutableArray *_lods;
     int _dpi;
     int _srid;
-    AGSPoint __unsafe_unretained *_origin;
-    NSString __unsafe_unretained *_tileMatrixSet;
+    AGSPoint *_origin;
+    NSString *_tileMatrixSet;
 }
-@property (nonatomic,assign) NSString *url;
-@property (nonatomic,assign) NSString *layerName;
+@property (nonatomic,strong) NSString *url;
+@property (nonatomic,strong) NSString *layerName;
+@property (nonatomic,strong) NSString *style;
+@property (nonatomic,strong) NSString *format;
 @property (nonatomic,assign) int minZoomLevel;
 @property (nonatomic,assign) int maxZoomLevel;
 @property (nonatomic,assign) double xMin;
@@ -38,10 +44,10 @@
 @property (nonatomic,assign) double yMax;
 @property (nonatomic,assign) int tileWidth;
 @property (nonatomic,assign) int tileHeight;
-@property (nonatomic,assign) NSMutableArray *lods;
+@property (nonatomic,strong) NSMutableArray *lods;
 @property (nonatomic,assign) int dpi;
 @property (nonatomic,assign) int srid;
-@property (nonatomic,assign) AGSPoint *origin;
-@property (nonatomic,assign) NSString *tileMatrixSet;
+@property (nonatomic,strong) AGSPoint *origin;
+@property (nonatomic,strong) NSString *tileMatrixSet;
 
 @end

@@ -24,9 +24,7 @@
     [self.window makeKeyAndVisible];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     _mapViewController = [[esriView alloc] initWithFrame:self.window.frame];
-    _navController = [[UINavigationController alloc] init];
-    [_navController pushViewController:_mapViewController animated:YES];
-    [self.window setRootViewController:_navController];
+    [self.window addSubview:_mapViewController];
     return YES;
 }
 

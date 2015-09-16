@@ -14,45 +14,49 @@
 #define kGetablility "%@?SERVICE=WMTS&REQUEST=getcapabilities"
 @implementation TianDiTuWMTSLayer
 -(AGSUnits)units{
-    return _units;
+	return _units;
 }
 
 -(AGSSpatialReference *)spatialReference{
-    return _fullEnvelope.spatialReference;
+	return _fullEnvelope.spatialReference;
 }
 
 -(AGSEnvelope *)fullEnvelope{
-    return _fullEnvelope;
+	return _fullEnvelope;
 }
 
 -(AGSEnvelope *)initialEnvelope{
-    //Assuming our initial extent is the same as the full extent
-    return _fullEnvelope;
+	//Assuming our initial extent is the same as the full extent
+	return _fullEnvelope;
 }
 
 -(AGSTileInfo*) tileInfo{
-    return _tileInfo;
+	return _tileInfo;
 }
 
 #pragma mark -
 -(id)initWithLayerType:(TianDiTuLayerTypes) tiandituType LocalServiceURL:(NSString *)url error:(NSError**) outError{
     if (self = [super init]) {
-        
+
         requestQueue = [[NSOperationQueue alloc] init];
         [requestQueue setMaxConcurrentOperationCount:16];
         /*get the currect layer info
          */
         layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc]getLayerInfo:tiandituType];
+        
         if ([url isEqual:[NSNull null]]) {
             layerInfo.url = url;
         }
+        
+       
+        
         AGSSpatialReference* sr = [AGSSpatialReference spatialReferenceWithWKID:layerInfo.srid];
         _fullEnvelope = [[AGSEnvelope alloc] initWithXmin:layerInfo.xMin
                                                      ymin:layerInfo.yMin
                                                      xmax:layerInfo.xMax
                                                      ymax:layerInfo.yMax
                                          spatialReference:sr];
-        
+
         _tileInfo = [[AGSTileInfo alloc]
                      initWithDpi:layerInfo.dpi
                      format :@"PNG"
@@ -61,8 +65,10 @@
                      spatialReference :self.spatialReference
                      tileSize:CGSizeMake(layerInfo.tileWidth,layerInfo.tileHeight)
                      ];
+        
         [_tileInfo computeTileBounds:self.fullEnvelope];
-        /*
+        
+         /*
          //get metadata from wmts
          NSURL *urlMetadata = [NSURL URLWithString:[NSString stringWithFormat:kGetablility,url.relativeString]];
          //Parse xml
@@ -84,10 +90,11 @@
          //... return error
          if (outError != NULL) {
          *outError = [parserDelegate error];
-         }
+         } 
          return nil;
          }
-         */
+          */
+         
         [super layerDidLoad];
     }
     return self;
@@ -97,14 +104,14 @@
 #pragma AGSTiledLayer (ForSubclassEyesOnly)
 - (void)requestTileForKey:(AGSTileKey *)key{
     //Create an operation to fetch tile from local cache
-    TianDiTuWMTSTileOperation *operation =
+	TianDiTuWMTSTileOperation *operation =
     [[TianDiTuWMTSTileOperation alloc] initWithTileKey:key
-                                        TiledLayerInfo:layerInfo
+                                                TiledLayerInfo:layerInfo 
                                                 target:self
                                                 action:@selector(didFinishOperation:)];
     
     
-    //Add the operation to the queue for execution
+	//Add the operation to the queue for execution
     //[ [AGSRequestOperation sharedOperationQueue] addOperation:operation]; //you do bad things
     [requestQueue addOperation:operation];
 }
