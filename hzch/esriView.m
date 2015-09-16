@@ -7,7 +7,7 @@
 //
 
 #import "esriView.h"
-#define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"浙江地震信息网" message:msg delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];[alert show];}
+#define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"杭州档案馆" message:msg delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];[alert show];}
 
 
 @interface esriView ()
@@ -48,16 +48,16 @@
             
             TianDiTuWMTSLayer* TianDiTuLyr = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_VECTOR_2000 LocalServiceURL:nil error:&err];
             TianDiTuWMTSLayer* TianDiTuLyr_Anno = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_VECTOR_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
-            //TianDiTuWMTSLayer* TianDituLyr_Image=[[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_IMAGE_2000 LocalServiceURL:nil error:&err];
+            TianDiTuWMTSLayer* TianDituLyr_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_ZJ_VECTOR LocalServiceURL:nil error:&err];
             
-            if(TianDiTuLyr!=nil && TianDiTuLyr_Anno !=nil)
+            if(TianDiTuLyr!=nil && TianDiTuLyr_Anno !=nil && TianDituLyr_zje != nil)
             {
                 [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
                 [self.mapView removeMapLayerWithName:@"TianDiTu Annotation Layer"];
+                [self.mapView removeMapLayerWithName:@"TianDiTu zje Layer"];
                 [self.mapView addMapLayer:TianDiTuLyr withName:@"TianDiTu Layer"];
                 [self.mapView addMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer"];
-                
-                //[self.mapView addMapLayer:TianDituLyr_Image withName:@"TianDiTu Image Layer"];
+                [self.mapView addMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer"];
                 
                 self.mapView.layerDelegate = self;
                 

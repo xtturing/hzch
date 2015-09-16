@@ -39,6 +39,8 @@
 		41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC61B9DD7F3000DDFAF /* Default@2x.png */; };
 		4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525D1BA92A33002DB58D /* libxml2.2.dylib */; };
 		416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525F1BA92BFC002DB58D /* ArcGIS.framework */; };
+		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
+		417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC3671BA9C69E00FA4394 /* ViewController.m */; };
 		41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */; };
 		41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D11BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m */; };
 		41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D31BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m */; };
@@ -97,6 +99,9 @@
 		41421DC61B9DD7F3000DDFAF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4162525D1BA92A33002DB58D /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		4162525F1BA92BFC002DB58D /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcGIS.framework; sourceTree = "<group>"; };
+		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		417DC3661BA9C69E00FA4394 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		417DC3671BA9C69E00FA4394 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		41E425CE1BA8694D009C0581 /* TianDiTuWMTSLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayer.h; sourceTree = "<group>"; };
 		41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TianDiTuWMTSLayer.m; sourceTree = "<group>"; };
 		41E425D01BA8694D009C0581 /* TianDiTuWMTSLayerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayerInfo.h; sourceTree = "<group>"; };
@@ -189,6 +194,9 @@
 				410555FF1B9C729400B208E8 /* Images.xcassets */,
 				410556011B9C729400B208E8 /* LaunchScreen.xib */,
 				410555EF1B9C729400B208E8 /* Supporting Files */,
+				417DC3641BA9C5D500FA4394 /* Main.storyboard */,
+				417DC3661BA9C69E00FA4394 /* ViewController.h */,
+				417DC3671BA9C69E00FA4394 /* ViewController.m */,
 			);
 			path = hzch;
 			sourceTree = "<group>";
@@ -398,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */,
+				417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */,
 				41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */,
 				410556031B9C729400B208E8 /* LaunchScreen.xib in Resources */,
 				410556001B9C729400B208E8 /* Images.xcassets in Resources */,
@@ -456,6 +465,7 @@
 				4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */,
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
+				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				410555F21B9C729400B208E8 /* main.m in Sources */,
 				4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */,
@@ -569,6 +579,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = hzch/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = hzch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -595,6 +607,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = hzch/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = hzch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

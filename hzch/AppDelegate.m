@@ -7,24 +7,34 @@
 //
 
 #import "AppDelegate.h"
-#import "esriView.h"
-
+#import "ViewController.h"
+#define kClientID @"17VawA9qKb4w14Ch"
 @interface AppDelegate ()
-@property (strong, nonatomic) esriView *mapViewController;
-@property (strong, nonatomic) UINavigationController *navController;
+@property (strong, nonatomic) ViewController *viewController;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSError *error = nil;
+    BOOL valid = [AGSRuntimeEnvironment setClientID:kClientID error:&error];
+    if (!valid) {
+        NSLog(@"setClientID failed: %@", error.localizedDescription);
+    }
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    _mapViewController = [[esriView alloc] initWithFrame:self.window.frame];
-    [self.window addSubview:_mapViewController];
+    // 1.显示状态栏
+    [UIApplication sharedApplication].statusBarHidden = NO;
+    // 2.主界面
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    // initstance root_Vc
+    ViewController *root_Vc = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+    // set to rootViewController
+    [[self window] setRootViewController:root_Vc];
+
     return YES;
 }
 

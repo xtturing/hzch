@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ShM-i4-vid">
+            <objects>
+                <viewController storyboardIdentifier="ViewController" id="cVi-gM-cqZ" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uIB-QN-m6Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="ic8-cM-Hmw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sS7-P5-iBN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ylL-Pk-H1K">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bei-PL-7rZ">
+                                        <rect key="frame" x="500" y="100" width="80" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="nSS-mt-d91"/>
+                                            <constraint firstAttribute="width" constant="80" id="qT9-4A-1d3"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="矢量"/>
+                                            <segment title="影像"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bei-PL-7rZ" secondAttribute="trailing" constant="20" id="Dtc-Wl-juO"/>
+                                    <constraint firstItem="bei-PL-7rZ" firstAttribute="top" secondItem="ylL-Pk-H1K" secondAttribute="top" constant="100" id="MCA-uQ-fqB"/>
+                                </constraints>
+                            </view>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VL2-h6-8Il">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VL2-h6-8Il" secondAttribute="height" multiplier="150:11" id="vSb-0H-o1Q"/>
+                                    <constraint firstAttribute="height" constant="44" id="yJn-by-cxg"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="vSb-0H-o1Q"/>
+                                    </mask>
+                                </variation>
+                            </searchBar>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEm-Gr-Pxg">
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="LEm-Gr-Pxg" secondAttribute="height" multiplier="600:49" id="WyT-SG-Qgq"/>
+                                    <constraint firstAttribute="height" constant="49" id="zbT-jJ-QXW"/>
+                                </constraints>
+                                <items>
+                                    <tabBarItem title="数据展示" image="app_data_show_normal" selectedImage="app_data_show_click" id="oqH-Am-N6x">
+                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                    </tabBarItem>
+                                    <tabBarItem title="资源中心" image="app_resource_center_normal" selectedImage="app_resource_center-click" id="kvG-gJ-cMU">
+                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                    </tabBarItem>
+                                    <tabBarItem title="工具" image="app_tool_normal" selectedImage="app_tool_click" id="E3e-fR-eJ1">
+                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                    </tabBarItem>
+                                    <tabBarItem title="设置" image="app_options_normal" selectedImage="app_options_click" id="eos-Q5-xcu">
+                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                    </tabBarItem>
+                                </items>
+                                <color key="selectedImageTintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="WyT-SG-Qgq"/>
+                                    </mask>
+                                </variation>
+                            </tabBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="LEm-Gr-Pxg" secondAttribute="trailing" constant="-16" id="0bn-Fl-ECS"/>
+                            <constraint firstItem="VL2-h6-8Il" firstAttribute="top" secondItem="uIB-QN-m6Y" secondAttribute="bottom" id="4oY-pg-AbJ"/>
+                            <constraint firstItem="LEm-Gr-Pxg" firstAttribute="top" secondItem="ylL-Pk-H1K" secondAttribute="bottom" id="Gac-L0-ST0"/>
+                            <constraint firstItem="VL2-h6-8Il" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="ITZ-Nv-wTl"/>
+                            <constraint firstItem="ylL-Pk-H1K" firstAttribute="top" secondItem="sS7-P5-iBN" secondAttribute="topMargin" id="M2K-M0-b6I"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ylL-Pk-H1K" secondAttribute="trailing" constant="-16" id="MbD-gI-Raj"/>
+                            <constraint firstItem="LEm-Gr-Pxg" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="Nhl-jQ-J2u"/>
+                            <constraint firstItem="ic8-cM-Hmw" firstAttribute="top" secondItem="LEm-Gr-Pxg" secondAttribute="bottom" id="bTI-Dl-szg"/>
+                            <constraint firstItem="ylL-Pk-H1K" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="ooB-bc-Hko"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VL2-h6-8Il" secondAttribute="trailing" constant="-16" id="qdB-j4-yEa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="conView" destination="ylL-Pk-H1K" id="9pm-Y0-yiU"/>
+                        <outlet property="segmentedView" destination="bei-PL-7rZ" id="0Hu-QP-PYE"/>
+                        <outlet property="tabBar" destination="LEm-Gr-Pxg" id="Gkd-hU-VII"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6n6-0U-v95" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="698" y="23"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="app_data_show_click" width="44" height="44"/>
+        <image name="app_data_show_normal" width="44" height="44"/>
+        <image name="app_options_click" width="44" height="44"/>
+        <image name="app_options_normal" width="44" height="44"/>
+        <image name="app_resource_center-click" width="44" height="44"/>
+        <image name="app_resource_center_normal" width="44" height="44"/>
+        <image name="app_tool_click" width="44" height="44"/>
+        <image name="app_tool_normal" width="44" height="44"/>
+    </resources>
+</document>
