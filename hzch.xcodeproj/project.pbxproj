@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		320740C8AF33C64BBA0274AD /* libPods-hzch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD3E8C73E5C425190C169241 /* libPods-hzch.a */; };
 		410555F21B9C729400B208E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410555F11B9C729400B208E8 /* main.m */; };
 		410555F51B9C729400B208E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410555F41B9C729400B208E8 /* AppDelegate.m */; };
 		410556001B9C729400B208E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410555FF1B9C729400B208E8 /* Images.xcassets */; };
 		410556031B9C729400B208E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410556011B9C729400B208E8 /* LaunchScreen.xib */; };
-		4105560F1B9C729400B208E8 /* hzchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105560E1B9C729400B208E8 /* hzchTests.m */; };
 		4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFEB1BA1D7A900EF997D /* StringUtil.m */; };
 		4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFEF1BA1D7A900EF997D /* NSDataAdditions.m */; };
 		4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFF11BA1D7A900EF997D /* NSDictionaryAdditions.m */; };
@@ -38,10 +36,10 @@
 		41421DBC1B9DD72F000DDFAF /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DBB1B9DD72F000DDFAF /* MediaPlayer.framework */; };
 		41421DBE1B9DD73B000DDFAF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DBD1B9DD73B000DDFAF /* libz.dylib */; };
 		41421DC01B9DD743000DDFAF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DBF1B9DD743000DDFAF /* MobileCoreServices.framework */; };
-		41421DC21B9DD777000DDFAF /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DC11B9DD777000DDFAF /* ArcGIS.framework */; };
 		41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */; };
 		41421DC81B9DD7F3000DDFAF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC51B9DD7F3000DDFAF /* Default.png */; };
 		41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC61B9DD7F3000DDFAF /* Default@2x.png */; };
+		4158A4EA1BA914F7003A7ECA /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4158A4E91BA914F7003A7ECA /* ArcGIS.framework */; };
 		41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */; };
 		41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D11BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m */; };
 		41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D31BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m */; };
@@ -53,6 +51,7 @@
 		41E425E81BA86B26009C0581 /* esriView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41E425E61BA86B26009C0581 /* esriView.xib */; };
 		41E425EB1BA86B7A009C0581 /* QueryParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425EA1BA86B7A009C0581 /* QueryParams.m */; };
 		41E425ED1BA86CBE009C0581 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E425EC1BA86CBE009C0581 /* libsqlite3.0.dylib */; };
+		FC6AA8D2199BA047EA9E2C58 /* libPods-hzch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1ADE15DC029A9099ED92F72 /* libPods-hzch.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0AD16B1B7ACB02BA48094AC0 /* Pods-hzch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hzch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-hzch/Pods-hzch.debug.xcconfig"; sourceTree = "<group>"; };
+		3FA55E223829CAB96C6F7376 /* Pods-hzch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hzch.release.xcconfig"; path = "Pods/Target Support Files/Pods-hzch/Pods-hzch.release.xcconfig"; sourceTree = "<group>"; };
 		410555EC1B9C729400B208E8 /* hzch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hzch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		410555F01B9C729400B208E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		410555F11B9C729400B208E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -75,8 +74,6 @@
 		410555FF1B9C729400B208E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		410556021B9C729400B208E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		410556081B9C729400B208E8 /* hzchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hzchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4105560D1B9C729400B208E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4105560E1B9C729400B208E8 /* hzchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hzchTests.m; sourceTree = "<group>"; };
 		4106DFDC1BA1D68200EF997D /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4106DFEA1BA1D7A900EF997D /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		4106DFEB1BA1D7A900EF997D /* StringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtil.m; sourceTree = "<group>"; };
@@ -107,10 +104,10 @@
 		41421DBB1B9DD72F000DDFAF /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		41421DBD1B9DD73B000DDFAF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		41421DBF1B9DD743000DDFAF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		41421DC11B9DD777000DDFAF /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = "../qdzl 2/ArcGIS.framework"; sourceTree = "<group>"; };
 		41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41421DC51B9DD7F3000DDFAF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		41421DC61B9DD7F3000DDFAF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		4158A4E91BA914F7003A7ECA /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../ArcGIS.framework; sourceTree = "<group>"; };
 		41E425CE1BA8694D009C0581 /* TianDiTuWMTSLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayer.h; sourceTree = "<group>"; };
 		41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TianDiTuWMTSLayer.m; sourceTree = "<group>"; };
 		41E425D01BA8694D009C0581 /* TianDiTuWMTSLayerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayerInfo.h; sourceTree = "<group>"; };
@@ -131,8 +128,8 @@
 		41E425E91BA86B7A009C0581 /* QueryParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryParams.h; sourceTree = "<group>"; };
 		41E425EA1BA86B7A009C0581 /* QueryParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryParams.m; sourceTree = "<group>"; };
 		41E425EC1BA86CBE009C0581 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		6BCCEBC68C9C28663761609C /* Pods-hzch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hzch.release.xcconfig"; path = "Pods/Target Support Files/Pods-hzch/Pods-hzch.release.xcconfig"; sourceTree = "<group>"; };
-		CD3E8C73E5C425190C169241 /* libPods-hzch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hzch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CBD89930187A749CD0B1FBC /* Pods-hzch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hzch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-hzch/Pods-hzch.debug.xcconfig"; sourceTree = "<group>"; };
+		D1ADE15DC029A9099ED92F72 /* libPods-hzch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hzch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,8 +137,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4158A4EA1BA914F7003A7ECA /* ArcGIS.framework in Frameworks */,
 				41E425ED1BA86CBE009C0581 /* libsqlite3.0.dylib in Frameworks */,
-				41421DC21B9DD777000DDFAF /* ArcGIS.framework in Frameworks */,
 				41421DC01B9DD743000DDFAF /* MobileCoreServices.framework in Frameworks */,
 				41421DBE1B9DD73B000DDFAF /* libz.dylib in Frameworks */,
 				41421DBC1B9DD72F000DDFAF /* MediaPlayer.framework in Frameworks */,
@@ -163,7 +160,7 @@
 				41421D9C1B9DD688000DDFAF /* AudioToolbox.framework in Frameworks */,
 				41421D9A1B9DD682000DDFAF /* AVFoundation.framework in Frameworks */,
 				41421D981B9DD67B000DDFAF /* AssetsLibrary.framework in Frameworks */,
-				320740C8AF33C64BBA0274AD /* libPods-hzch.a in Frameworks */,
+				FC6AA8D2199BA047EA9E2C58 /* libPods-hzch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,9 +179,8 @@
 			children = (
 				652407EDA660C0D97CBA1382 /* Frameworks */,
 				410555EE1B9C729400B208E8 /* hzch */,
-				4105560B1B9C729400B208E8 /* hzchTests */,
-				B43BCB53BFA2515899CAAF11 /* Pods */,
 				410555ED1B9C729400B208E8 /* Products */,
+				D59F2456D1FD2463978AE783 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -226,23 +222,6 @@
 				410555F01B9C729400B208E8 /* Info.plist */,
 				410555F11B9C729400B208E8 /* main.m */,
 				4106DFDC1BA1D68200EF997D /* PrefixHeader.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4105560B1B9C729400B208E8 /* hzchTests */ = {
-			isa = PBXGroup;
-			children = (
-				4105560E1B9C729400B208E8 /* hzchTests.m */,
-				4105560C1B9C729400B208E8 /* Supporting Files */,
-			);
-			path = hzchTests;
-			sourceTree = "<group>";
-		};
-		4105560C1B9C729400B208E8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4105560D1B9C729400B208E8 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -341,8 +320,8 @@
 		652407EDA660C0D97CBA1382 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4158A4E91BA914F7003A7ECA /* ArcGIS.framework */,
 				41E425EC1BA86CBE009C0581 /* libsqlite3.0.dylib */,
-				41421DC11B9DD777000DDFAF /* ArcGIS.framework */,
 				41421DBF1B9DD743000DDFAF /* MobileCoreServices.framework */,
 				41421DBD1B9DD73B000DDFAF /* libz.dylib */,
 				41421DBB1B9DD72F000DDFAF /* MediaPlayer.framework */,
@@ -364,16 +343,16 @@
 				41421D9B1B9DD688000DDFAF /* AudioToolbox.framework */,
 				41421D991B9DD682000DDFAF /* AVFoundation.framework */,
 				41421D971B9DD67B000DDFAF /* AssetsLibrary.framework */,
-				CD3E8C73E5C425190C169241 /* libPods-hzch.a */,
+				D1ADE15DC029A9099ED92F72 /* libPods-hzch.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B43BCB53BFA2515899CAAF11 /* Pods */ = {
+		D59F2456D1FD2463978AE783 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0AD16B1B7ACB02BA48094AC0 /* Pods-hzch.debug.xcconfig */,
-				6BCCEBC68C9C28663761609C /* Pods-hzch.release.xcconfig */,
+				8CBD89930187A749CD0B1FBC /* Pods-hzch.debug.xcconfig */,
+				3FA55E223829CAB96C6F7376 /* Pods-hzch.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -538,7 +517,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4105560F1B9C729400B208E8 /* hzchTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,12 +626,13 @@
 		};
 		410556131B9C729400B208E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0AD16B1B7ACB02BA48094AC0 /* Pods-hzch.debug.xcconfig */;
+			baseConfigurationReference = 8CBD89930187A749CD0B1FBC /* Pods-hzch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(HOME)/Library/SDKs/ArcGIS",
 					/Users/xtturing/qdzl,
+					/Users/xtturing,
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = hzch/Info.plist;
@@ -674,12 +653,13 @@
 		};
 		410556141B9C729400B208E8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BCCEBC68C9C28663761609C /* Pods-hzch.release.xcconfig */;
+			baseConfigurationReference = 3FA55E223829CAB96C6F7376 /* Pods-hzch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(HOME)/Library/SDKs/ArcGIS",
 					/Users/xtturing/qdzl,
+					/Users/xtturing,
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = hzch/Info.plist;

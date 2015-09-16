@@ -8,6 +8,6 @@ platform :ios, '7.0'
    pod 'Reachability', '~> 3.2'
    pod 'EGOTableViewPullRefreshAndLoadMore', '~> 1.0.4'
    pod 'SVProgressHUD', '~> 1.1.3'
-   pod 'ASIHTTPRequest', '~> 1.8.2'
+   pod 'ASIHTTPRequest', '~> 1.8.1’
    pod 'SBJson', '~> 4.0.2'
 end

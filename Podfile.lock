@@ -45,7 +45,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6.0)
-  - ASIHTTPRequest (~> 1.8.2)
+  - ASIHTTPRequest (~> 1.8.1)
   - EGOTableViewPullRefreshAndLoadMore (~> 1.0.4)
   - FMDB (~> 2.5)
   - Reachability (~> 3.2)
@@ -61,4 +61,4 @@ SPEC CHECKSUMS:
   SBJson: c18691cc18375b14664ff0fec841f8c4faef1934
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.38.0.beta.2
