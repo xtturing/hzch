@@ -21,7 +21,6 @@
 		41421D9E1B9DD68F000DDFAF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D9D1B9DD68F000DDFAF /* AddressBook.framework */; };
 		41421DA01B9DD697000DDFAF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D9F1B9DD697000DDFAF /* AdSupport.framework */; };
 		41421DA21B9DD6A3000DDFAF /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DA11B9DD6A3000DDFAF /* libstdc++.6.0.9.dylib */; };
-		41421DA41B9DD6B3000DDFAF /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DA31B9DD6B3000DDFAF /* libxml2.dylib */; };
 		41421DA61B9DD6B9000DDFAF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DA51B9DD6B9000DDFAF /* CFNetwork.framework */; };
 		41421DA81B9DD6BF000DDFAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DA71B9DD6BF000DDFAF /* Foundation.framework */; };
 		41421DAA1B9DD6D6000DDFAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DA91B9DD6D6000DDFAF /* UIKit.framework */; };
@@ -29,7 +28,6 @@
 		41421DAE1B9DD6EE000DDFAF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DAD1B9DD6EE000DDFAF /* CoreData.framework */; };
 		41421DB01B9DD6F8000DDFAF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DAF1B9DD6F8000DDFAF /* SystemConfiguration.framework */; };
 		41421DB21B9DD700000DDFAF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DB11B9DD700000DDFAF /* Security.framework */; };
-		41421DB41B9DD70B000DDFAF /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DB31B9DD70B000DDFAF /* libstdc++.dylib */; };
 		41421DB61B9DD713000DDFAF /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DB51B9DD713000DDFAF /* CoreText.framework */; };
 		41421DB81B9DD71A000DDFAF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DB71B9DD71A000DDFAF /* CoreLocation.framework */; };
 		41421DBA1B9DD724000DDFAF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421DB91B9DD724000DDFAF /* QuartzCore.framework */; };
@@ -39,7 +37,8 @@
 		41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */; };
 		41421DC81B9DD7F3000DDFAF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC51B9DD7F3000DDFAF /* Default.png */; };
 		41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC61B9DD7F3000DDFAF /* Default@2x.png */; };
-		4158A4EA1BA914F7003A7ECA /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4158A4E91BA914F7003A7ECA /* ArcGIS.framework */; };
+		4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525D1BA92A33002DB58D /* libxml2.2.dylib */; };
+		416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525F1BA92BFC002DB58D /* ArcGIS.framework */; };
 		41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */; };
 		41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D11BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m */; };
 		41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D31BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m */; };
@@ -54,16 +53,6 @@
 		FC6AA8D2199BA047EA9E2C58 /* libPods-hzch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1ADE15DC029A9099ED92F72 /* libPods-hzch.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		410556091B9C729400B208E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 410555E41B9C729400B208E8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 410555EB1B9C729400B208E8;
-			remoteInfo = hzch;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		3FA55E223829CAB96C6F7376 /* Pods-hzch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hzch.release.xcconfig"; path = "Pods/Target Support Files/Pods-hzch/Pods-hzch.release.xcconfig"; sourceTree = "<group>"; };
 		410555EC1B9C729400B208E8 /* hzch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hzch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,7 +62,6 @@
 		410555F41B9C729400B208E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		410555FF1B9C729400B208E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		410556021B9C729400B208E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		410556081B9C729400B208E8 /* hzchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hzchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4106DFDC1BA1D68200EF997D /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4106DFEA1BA1D7A900EF997D /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		4106DFEB1BA1D7A900EF997D /* StringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtil.m; sourceTree = "<group>"; };
@@ -107,7 +95,8 @@
 		41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41421DC51B9DD7F3000DDFAF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		41421DC61B9DD7F3000DDFAF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		4158A4E91BA914F7003A7ECA /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../ArcGIS.framework; sourceTree = "<group>"; };
+		4162525D1BA92A33002DB58D /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		4162525F1BA92BFC002DB58D /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcGIS.framework; sourceTree = "<group>"; };
 		41E425CE1BA8694D009C0581 /* TianDiTuWMTSLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayer.h; sourceTree = "<group>"; };
 		41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TianDiTuWMTSLayer.m; sourceTree = "<group>"; };
 		41E425D01BA8694D009C0581 /* TianDiTuWMTSLayerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayerInfo.h; sourceTree = "<group>"; };
@@ -137,7 +126,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4158A4EA1BA914F7003A7ECA /* ArcGIS.framework in Frameworks */,
+				416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */,
+				4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */,
 				41E425ED1BA86CBE009C0581 /* libsqlite3.0.dylib in Frameworks */,
 				41421DC01B9DD743000DDFAF /* MobileCoreServices.framework in Frameworks */,
 				41421DBE1B9DD73B000DDFAF /* libz.dylib in Frameworks */,
@@ -145,7 +135,6 @@
 				41421DBA1B9DD724000DDFAF /* QuartzCore.framework in Frameworks */,
 				41421DB81B9DD71A000DDFAF /* CoreLocation.framework in Frameworks */,
 				41421DB61B9DD713000DDFAF /* CoreText.framework in Frameworks */,
-				41421DB41B9DD70B000DDFAF /* libstdc++.dylib in Frameworks */,
 				41421DB21B9DD700000DDFAF /* Security.framework in Frameworks */,
 				41421DB01B9DD6F8000DDFAF /* SystemConfiguration.framework in Frameworks */,
 				41421DAE1B9DD6EE000DDFAF /* CoreData.framework in Frameworks */,
@@ -153,7 +142,6 @@
 				41421DAA1B9DD6D6000DDFAF /* UIKit.framework in Frameworks */,
 				41421DA81B9DD6BF000DDFAF /* Foundation.framework in Frameworks */,
 				41421DA61B9DD6B9000DDFAF /* CFNetwork.framework in Frameworks */,
-				41421DA41B9DD6B3000DDFAF /* libxml2.dylib in Frameworks */,
 				41421DA21B9DD6A3000DDFAF /* libstdc++.6.0.9.dylib in Frameworks */,
 				41421DA01B9DD697000DDFAF /* AdSupport.framework in Frameworks */,
 				41421D9E1B9DD68F000DDFAF /* AddressBook.framework in Frameworks */,
@@ -161,13 +149,6 @@
 				41421D9A1B9DD682000DDFAF /* AVFoundation.framework in Frameworks */,
 				41421D981B9DD67B000DDFAF /* AssetsLibrary.framework in Frameworks */,
 				FC6AA8D2199BA047EA9E2C58 /* libPods-hzch.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		410556051B9C729400B208E8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				410555EC1B9C729400B208E8 /* hzch.app */,
-				410556081B9C729400B208E8 /* hzchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -320,7 +300,8 @@
 		652407EDA660C0D97CBA1382 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4158A4E91BA914F7003A7ECA /* ArcGIS.framework */,
+				4162525F1BA92BFC002DB58D /* ArcGIS.framework */,
+				4162525D1BA92A33002DB58D /* libxml2.2.dylib */,
 				41E425EC1BA86CBE009C0581 /* libsqlite3.0.dylib */,
 				41421DBF1B9DD743000DDFAF /* MobileCoreServices.framework */,
 				41421DBD1B9DD73B000DDFAF /* libz.dylib */,
@@ -379,24 +360,6 @@
 			productReference = 410555EC1B9C729400B208E8 /* hzch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		410556071B9C729400B208E8 /* hzchTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 410556151B9C729400B208E8 /* Build configuration list for PBXNativeTarget "hzchTests" */;
-			buildPhases = (
-				410556041B9C729400B208E8 /* Sources */,
-				410556051B9C729400B208E8 /* Frameworks */,
-				410556061B9C729400B208E8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4105560A1B9C729400B208E8 /* PBXTargetDependency */,
-			);
-			name = hzchTests;
-			productName = hzchTests;
-			productReference = 410556081B9C729400B208E8 /* hzchTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -408,10 +371,6 @@
 				TargetAttributes = {
 					410555EB1B9C729400B208E8 = {
 						CreatedOnToolsVersion = 6.4;
-					};
-					410556071B9C729400B208E8 = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = 410555EB1B9C729400B208E8;
 					};
 				};
 			};
@@ -429,7 +388,6 @@
 			projectRoot = "";
 			targets = (
 				410555EB1B9C729400B208E8 /* hzch */,
-				410556071B9C729400B208E8 /* hzchTests */,
 			);
 		};
 /* End PBXProject section */
@@ -445,13 +403,6 @@
 				410556001B9C729400B208E8 /* Images.xcassets in Resources */,
 				41421DC81B9DD7F3000DDFAF /* Default.png in Resources */,
 				41E425E81BA86B26009C0581 /* esriView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		410556061B9C729400B208E8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,22 +464,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		410556041B9C729400B208E8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4105560A1B9C729400B208E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 410555EB1B9C729400B208E8 /* hzch */;
-			targetProxy = 410556091B9C729400B208E8 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		410556011B9C729400B208E8 /* LaunchScreen.xib */ = {
@@ -630,22 +566,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(HOME)/Library/SDKs/ArcGIS",
-					/Users/xtturing/qdzl,
-					/Users/xtturing,
+					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = hzch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"$(inherited)",
 					"-ObjC",
 					"-framework",
 					ArcGIS,
 					"-l",
 					"c++",
-					"-lxml2",
-					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -657,58 +592,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(HOME)/Library/SDKs/ArcGIS",
-					/Users/xtturing/qdzl,
-					/Users/xtturing,
+					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = hzch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"$(inherited)",
 					"-ObjC",
 					"-framework",
 					ArcGIS,
 					"-l",
 					"c++",
-					"-lxml2",
-					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		410556161B9C729400B208E8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = hzchTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/hzch.app/hzch";
-			};
-			name = Debug;
-		};
-		410556171B9C729400B208E8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = hzchTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/hzch.app/hzch";
 			};
 			name = Release;
 		};
@@ -729,15 +629,6 @@
 			buildConfigurations = (
 				410556131B9C729400B208E8 /* Debug */,
 				410556141B9C729400B208E8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		410556151B9C729400B208E8 /* Build configuration list for PBXNativeTarget "hzchTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				410556161B9C729400B208E8 /* Debug */,
-				410556171B9C729400B208E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
