@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		410555F21B9C729400B208E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410555F11B9C729400B208E8 /* main.m */; };
 		410555F51B9C729400B208E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410555F41B9C729400B208E8 /* AppDelegate.m */; };
-		410556001B9C729400B208E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410555FF1B9C729400B208E8 /* Images.xcassets */; };
 		410556031B9C729400B208E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410556011B9C729400B208E8 /* LaunchScreen.xib */; };
 		4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFEB1BA1D7A900EF997D /* StringUtil.m */; };
 		4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFEF1BA1D7A900EF997D /* NSDataAdditions.m */; };
 		4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFF11BA1D7A900EF997D /* NSDictionaryAdditions.m */; };
 		4106DFF91BA1D7A900EF997D /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */; };
+		410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A3ABE1BAB041B0025206E /* SetTableViewController.m */; };
+		410A3AC21BAB073A0025206E /* SetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A3AC11BAB073A0025206E /* SetViewController.m */; };
+		410A3AC41BAB13830025206E /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410A3AC31BAB13830025206E /* image.xcassets */; };
 		41421D981B9DD67B000DDFAF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D971B9DD67B000DDFAF /* AssetsLibrary.framework */; };
 		41421D9A1B9DD682000DDFAF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D991B9DD682000DDFAF /* AVFoundation.framework */; };
 		41421D9C1B9DD688000DDFAF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D9B1B9DD688000DDFAF /* AudioToolbox.framework */; };
@@ -62,7 +64,6 @@
 		410555F11B9C729400B208E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		410555F31B9C729400B208E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		410555F41B9C729400B208E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		410555FF1B9C729400B208E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		410556021B9C729400B208E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4106DFDC1BA1D68200EF997D /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4106DFEA1BA1D7A900EF997D /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
@@ -73,6 +74,11 @@
 		4106DFF11BA1D7A900EF997D /* NSDictionaryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryAdditions.m; sourceTree = "<group>"; };
 		4106DFF21BA1D7A900EF997D /* CLLocation+Sino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+Sino.h"; sourceTree = "<group>"; };
 		4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+Sino.m"; sourceTree = "<group>"; };
+		410A3ABD1BAB041B0025206E /* SetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetTableViewController.h; sourceTree = "<group>"; };
+		410A3ABE1BAB041B0025206E /* SetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetTableViewController.m; sourceTree = "<group>"; };
+		410A3AC01BAB073A0025206E /* SetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetViewController.h; sourceTree = "<group>"; };
+		410A3AC11BAB073A0025206E /* SetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetViewController.m; sourceTree = "<group>"; };
+		410A3AC31BAB13830025206E /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		41421D971B9DD67B000DDFAF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		41421D991B9DD682000DDFAF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41421D9B1B9DD688000DDFAF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -191,12 +197,12 @@
 				41421DCA1B9DD954000DDFAF /* kit */,
 				410555F31B9C729400B208E8 /* AppDelegate.h */,
 				410555F41B9C729400B208E8 /* AppDelegate.m */,
-				410555FF1B9C729400B208E8 /* Images.xcassets */,
 				410556011B9C729400B208E8 /* LaunchScreen.xib */,
 				410555EF1B9C729400B208E8 /* Supporting Files */,
 				417DC3641BA9C5D500FA4394 /* Main.storyboard */,
 				417DC3661BA9C69E00FA4394 /* ViewController.h */,
 				417DC3671BA9C69E00FA4394 /* ViewController.m */,
+				410A3AC31BAB13830025206E /* image.xcassets */,
 			);
 			path = hzch;
 			sourceTree = "<group>";
@@ -265,6 +271,10 @@
 		416876941BA1CE1900119267 /* set */ = {
 			isa = PBXGroup;
 			children = (
+				410A3ABD1BAB041B0025206E /* SetTableViewController.h */,
+				410A3ABE1BAB041B0025206E /* SetTableViewController.m */,
+				410A3AC01BAB073A0025206E /* SetViewController.h */,
+				410A3AC11BAB073A0025206E /* SetViewController.m */,
 			);
 			name = set;
 			sourceTree = "<group>";
@@ -409,9 +419,9 @@
 				417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */,
 				41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */,
 				410556031B9C729400B208E8 /* LaunchScreen.xib in Resources */,
-				410556001B9C729400B208E8 /* Images.xcassets in Resources */,
 				41421DC81B9DD7F3000DDFAF /* Default.png in Resources */,
 				41E425E81BA86B26009C0581 /* esriView.xib in Resources */,
+				410A3AC41BAB13830025206E /* image.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +474,9 @@
 				41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */,
 				4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */,
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
+				410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
+				410A3AC21BAB073A0025206E /* SetViewController.m in Sources */,
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				410555F21B9C729400B208E8 /* main.m in Sources */,

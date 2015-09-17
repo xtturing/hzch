@@ -7,10 +7,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--地图-->
         <scene sceneID="ShM-i4-vid">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="cVi-gM-cqZ" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" title="地图" id="cVi-gM-cqZ" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uIB-QN-m6Y"/>
                         <viewControllerLayoutGuide type="bottom" id="ic8-cM-Hmw"/>
@@ -22,22 +22,61 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ylL-Pk-H1K">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bei-PL-7rZ">
-                                        <rect key="frame" x="500" y="100" width="80" height="29"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bei-PL-7rZ">
+                                        <rect key="frame" x="500" y="100" width="88" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="nSS-mt-d91"/>
-                                            <constraint firstAttribute="width" constant="80" id="qT9-4A-1d3"/>
+                                            <constraint firstAttribute="width" constant="88" id="qT9-4A-1d3"/>
                                         </constraints>
                                         <segments>
                                             <segment title="矢量"/>
                                             <segment title="影像"/>
                                         </segments>
                                     </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-tI-83J">
+                                        <rect key="frame" x="536" y="142" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Pq0-xX-vZu"/>
+                                            <constraint firstAttribute="width" constant="44" id="rmV-xl-DX7"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <state key="normal" image="delete_line_normal" backgroundImage="btnBg">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4h3-jX-802">
+                                        <rect key="frame" x="536" y="194" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="ELe-RY-tpZ"/>
+                                            <constraint firstAttribute="height" constant="44" id="gC5-Km-DDw"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <state key="normal" image="layer_normal" backgroundImage="btnBg">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6B-6O-d36">
+                                        <rect key="frame" x="536" y="246" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="n8X-en-OXV"/>
+                                            <constraint firstAttribute="width" constant="44" id="sSX-4B-0eT"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <state key="normal" image="basemap_open" backgroundImage="btnBg">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="4h3-jX-802" secondAttribute="trailing" constant="20" id="2x7-AL-Gti"/>
                                     <constraint firstAttribute="trailing" secondItem="bei-PL-7rZ" secondAttribute="trailing" constant="20" id="Dtc-Wl-juO"/>
                                     <constraint firstItem="bei-PL-7rZ" firstAttribute="top" secondItem="ylL-Pk-H1K" secondAttribute="top" constant="100" id="MCA-uQ-fqB"/>
+                                    <constraint firstAttribute="trailing" secondItem="e6B-6O-d36" secondAttribute="trailing" constant="20" id="MGw-kf-FlQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="vQb-tI-83J" secondAttribute="trailing" constant="20" id="X0C-dA-ETB"/>
+                                    <constraint firstItem="vQb-tI-83J" firstAttribute="top" secondItem="bei-PL-7rZ" secondAttribute="bottom" constant="14" id="bqA-zY-A94"/>
+                                    <constraint firstItem="e6B-6O-d36" firstAttribute="top" secondItem="4h3-jX-802" secondAttribute="bottom" constant="8" id="xmd-hz-5dQ"/>
+                                    <constraint firstItem="4h3-jX-802" firstAttribute="top" secondItem="vQb-tI-83J" secondAttribute="bottom" constant="8" id="yJH-ru-dzw"/>
                                 </constraints>
                             </view>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VL2-h6-8Il">
@@ -61,20 +100,20 @@
                                     <constraint firstAttribute="height" constant="49" id="zbT-jJ-QXW"/>
                                 </constraints>
                                 <items>
-                                    <tabBarItem title="数据展示" image="app_data_show_normal" selectedImage="app_data_show_click" id="oqH-Am-N6x">
+                                    <tabBarItem tag="1002" title="资源中心" image="app_resource_center_normal" id="kvG-gJ-cMU">
                                         <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                     </tabBarItem>
-                                    <tabBarItem title="资源中心" image="app_resource_center_normal" selectedImage="app_resource_center-click" id="kvG-gJ-cMU">
+                                    <tabBarItem tag="1001" title="数据展示" image="app_data_show_normal" id="oqH-Am-N6x">
                                         <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                     </tabBarItem>
-                                    <tabBarItem title="工具" image="app_tool_normal" selectedImage="app_tool_click" id="E3e-fR-eJ1">
+                                    <tabBarItem tag="1003" title="工具" image="app_tool_normal" id="E3e-fR-eJ1">
                                         <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                     </tabBarItem>
-                                    <tabBarItem title="设置" image="app_options_normal" selectedImage="app_options_click" id="eos-Q5-xcu">
+                                    <tabBarItem tag="1004" title="设置" image="app_options_normal" id="eos-Q5-xcu">
                                         <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                     </tabBarItem>
                                 </items>
-                                <color key="selectedImageTintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="WyT-SG-Qgq"/>
@@ -97,24 +136,154 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="baseMapBtn" destination="e6B-6O-d36" id="o3Q-gT-QXq"/>
                         <outlet property="conView" destination="ylL-Pk-H1K" id="9pm-Y0-yiU"/>
+                        <outlet property="deleteBtn" destination="vQb-tI-83J" id="QHL-1w-CL0"/>
+                        <outlet property="layerBtn" destination="4h3-jX-802" id="YOB-AW-bKo"/>
                         <outlet property="segmentedView" destination="bei-PL-7rZ" id="0Hu-QP-PYE"/>
                         <outlet property="tabBar" destination="LEm-Gr-Pxg" id="Gkd-hU-VII"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6n6-0U-v95" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="698" y="23"/>
+            <point key="canvasLocation" x="-502" y="-705"/>
+        </scene>
+        <!--设置-->
+        <scene sceneID="yTd-Sm-QOz">
+            <objects>
+                <tableViewController storyboardIdentifier="SetTableViewController" title="设置" id="8US-iN-sKU" customClass="SetTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Aeh-DV-whz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="png-Oa-jpX">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="BC4-BA-wKJ">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BC4-BA-wKJ" id="h4w-ft-Th5">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我的标绘" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1G-2a-Jqq">
+                                                    <rect key="frame" x="25" y="8" width="247" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="BtT-uJ-vsB">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BtT-uJ-vsB" id="lYj-La-yzK">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="样式定制" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uus-T9-7la">
+                                                    <rect key="frame" x="25" y="8" width="247" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="LEE-mb-AxU">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LEE-mb-AxU" id="1ON-Sq-pTH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="资源显示方式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGA-OH-DrD">
+                                                    <rect key="frame" x="25" y="8" width="247" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="Vli-CE-dRe">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vli-CE-dRe" id="VBF-iV-nfw">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="数据离线下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbe-vO-uVh">
+                                                    <rect key="frame" x="25" y="8" width="247" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="in4-eQ-gOx">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="in4-eQ-gOx" id="Xne-fF-cDn">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="地图缓存下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IA-71-cDL">
+                                                    <rect key="frame" x="25" y="8" width="247" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="hRX-lH-E5U">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hRX-lH-E5U" id="Ndx-83-Zhg">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="清除缓存" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvw-gC-BHE">
+                                                    <rect key="frame" x="25" y="8" width="247" height="27"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="8US-iN-sKU" id="dd7-Kw-9mh"/>
+                            <outlet property="delegate" destination="8US-iN-sKU" id="2qd-wI-I6I"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="设置" id="7Qe-od-SwD">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="tSA-l4-oYG"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IMy-Y1-RhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="244" y="1042"/>
+        </scene>
+        <!--设置-->
+        <scene sceneID="fCO-RB-iug">
+            <objects>
+                <navigationController storyboardIdentifier="SetViewController" title="设置" id="gb9-H4-A6I" customClass="SetViewController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dRf-m5-unY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8US-iN-sKU" kind="relationship" relationship="rootViewController" id="qNW-oU-E7z"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ntN-EH-Yha" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="244" y="216"/>
         </scene>
     </scenes>
     <resources>
-        <image name="app_data_show_click" width="44" height="44"/>
         <image name="app_data_show_normal" width="44" height="44"/>
-        <image name="app_options_click" width="44" height="44"/>
         <image name="app_options_normal" width="44" height="44"/>
-        <image name="app_resource_center-click" width="44" height="44"/>
         <image name="app_resource_center_normal" width="44" height="44"/>
-        <image name="app_tool_click" width="44" height="44"/>
         <image name="app_tool_normal" width="44" height="44"/>
+        <image name="basemap_open" width="44" height="44"/>
+        <image name="btnBg" width="40" height="40"/>
+        <image name="delete_line_normal" width="44" height="44"/>
+        <image name="layer_normal" width="44" height="44"/>
     </resources>
 </document>

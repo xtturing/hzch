@@ -8,13 +8,17 @@
 
 #import "ViewController.h"
 #import "esriView.h"
+#import "SetViewController.h"
 @interface ViewController ()<esriViewDelegate,UITabBarDelegate>
 @property (strong,nonatomic)  esriView *esriView;
 
 @property (weak, nonatomic) IBOutlet UIView *conView;
-@property (weak, nonatomic) IBOutlet UITabBarItem *tabItemBar;
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedView;
+
+@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (weak, nonatomic) IBOutlet UIButton *layerBtn;
+@property (weak, nonatomic) IBOutlet UIButton *baseMapBtn;
 
 @end
 
@@ -24,11 +28,13 @@
     [super viewDidLoad];
     self.esriView               = [[esriView alloc] initWithFrame:self.conView.frame];
     self.esriView.delegate      = self;
-    self.tabBar.selectedItem    = self.tabItemBar;
     self.tabBar.delegate        = self;
     
     [self.conView addSubview:self.esriView];
     [self.conView addSubview:self.segmentedView];
+    [self.conView addSubview:self.deleteBtn];
+    [self.conView addSubview:self.layerBtn];
+    [self.conView addSubview:self.baseMapBtn];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,6 +42,36 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    switch (item.tag) {
+        case 1001:{
+            
+        }
+            
+            break;
+        case 1002:{
+            
+        }
+            
+            break;
+        case 1003:{
+            
+        }
+            
+            break;
+        case 1004:{
+            SetViewController *setViewController = [storyboard instantiateViewControllerWithIdentifier:@"SetViewController"];
+            [self presentViewController:setViewController animated:YES completion:^{
+                
+            }];
+        }
+            
+            break;
+        default:
+            break;
+    }
+}
 /*
 #pragma mark - Navigation
 
