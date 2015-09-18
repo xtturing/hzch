@@ -9,7 +9,9 @@
 #import "ViewController.h"
 #import "esriView.h"
 #import "SetViewController.h"
-@interface ViewController ()<esriViewDelegate,UITabBarDelegate>
+
+@interface ViewController ()<esriViewDelegate,UITabBarDelegate,toolDelegate>
+
 @property (strong,nonatomic)  esriView *esriView;
 
 @property (weak, nonatomic) IBOutlet UIView *conView;
@@ -56,7 +58,7 @@
             
             break;
         case 1003:{
-            
+            [self.esriView showToolView];
         }
             
             break;
@@ -72,6 +74,9 @@
             break;
     }
 }
+
+
+
 /*
 #pragma mark - Navigation
 

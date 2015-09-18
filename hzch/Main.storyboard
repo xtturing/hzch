@@ -100,18 +100,10 @@
                                     <constraint firstAttribute="height" constant="49" id="zbT-jJ-QXW"/>
                                 </constraints>
                                 <items>
-                                    <tabBarItem tag="1002" title="资源中心" image="app_resource_center_normal" id="kvG-gJ-cMU">
-                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                    </tabBarItem>
-                                    <tabBarItem tag="1001" title="数据展示" image="app_data_show_normal" id="oqH-Am-N6x">
-                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                    </tabBarItem>
-                                    <tabBarItem tag="1003" title="工具" image="app_tool_normal" id="E3e-fR-eJ1">
-                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                    </tabBarItem>
-                                    <tabBarItem tag="1004" title="设置" image="app_options_normal" id="eos-Q5-xcu">
-                                        <inset key="imageInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                    </tabBarItem>
+                                    <tabBarItem tag="1002" title="资源中心" image="app_resource_center_normal" id="kvG-gJ-cMU"/>
+                                    <tabBarItem tag="1001" title="数据展示" image="app_data_show_normal" id="oqH-Am-N6x"/>
+                                    <tabBarItem tag="1003" title="工具" image="app_tool_normal" id="E3e-fR-eJ1"/>
+                                    <tabBarItem tag="1004" title="设置" image="app_options_normal" id="eos-Q5-xcu"/>
                                 </items>
                                 <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="default">
@@ -155,7 +147,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Aeh-DV-whz">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="png-Oa-jpX">
                                 <cells>
@@ -167,7 +159,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我的标绘" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1G-2a-Jqq">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -181,7 +173,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="样式定制" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uus-T9-7la">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -195,7 +187,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="资源显示方式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGA-OH-DrD">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -209,7 +201,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="数据离线下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbe-vO-uVh">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -223,7 +215,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="地图缓存下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IA-71-cDL">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -237,7 +229,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="清除缓存" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvw-gC-BHE">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -252,8 +244,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="设置" id="7Qe-od-SwD">
-                        <barButtonItem key="leftBarButtonItem" title="返回" id="tSA-l4-oYG"/>
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="tSA-l4-oYG">
+                            <connections>
+                                <action selector="doBack:" destination="8US-iN-sKU" id="axz-B4-RFU"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="backBtn" destination="tSA-l4-oYG" id="5q1-lc-yGW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMy-Y1-RhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -277,13 +276,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="app_data_show_normal" width="44" height="44"/>
-        <image name="app_options_normal" width="44" height="44"/>
-        <image name="app_resource_center_normal" width="44" height="44"/>
-        <image name="app_tool_normal" width="44" height="44"/>
-        <image name="basemap_open" width="44" height="44"/>
+        <image name="app_data_show_normal" width="22" height="22"/>
+        <image name="app_options_normal" width="22" height="22"/>
+        <image name="app_resource_center_normal" width="22" height="22"/>
+        <image name="app_tool_normal" width="22" height="22"/>
+        <image name="basemap_open" width="22" height="22"/>
         <image name="btnBg" width="40" height="40"/>
-        <image name="delete_line_normal" width="44" height="44"/>
-        <image name="layer_normal" width="44" height="44"/>
+        <image name="delete_line_normal" width="22" height="22"/>
+        <image name="layer_normal" width="22" height="22"/>
     </resources>
 </document>

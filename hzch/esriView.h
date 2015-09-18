@@ -12,6 +12,7 @@
 #import "NSConfigData.h"
 #import <math.h>
 #import "QueryParams.h"
+#import "NBToolView.h"
 @class esriView;
 @protocol esriViewDelegate <NSObject>
 -(void)esriViewDetails:(esriView *)controller details:(AGSGraphic *)agsGraphic queryParams:(QueryParams *)queryParams;
@@ -22,7 +23,8 @@
 AGSMapViewLayerDelegate,
 AGSCalloutDelegate,
 AGSQueryTaskDelegate,
-CLLocationManagerDelegate>
+CLLocationManagerDelegate,
+toolDelegate>
 
 @property (weak,nonatomic) id <esriViewDelegate> delegate;
 
@@ -50,6 +52,8 @@ CLLocationManagerDelegate>
 @property (nonatomic,strong)AGSPoint *endPoint;
 @property (nonatomic,strong)AGSGraphicsLayer *sketchGhLayer;
 
+@property(nonatomic,strong) NBToolView *toolView;
+@property (nonatomic, strong) AGSSketchGraphicsLayer *sketchLayer;
 
 @property (nonatomic, strong) IBOutlet AGSMapView *mapView;
 @property (strong, nonatomic) IBOutlet UIButton *locationBtn;
@@ -59,6 +63,7 @@ CLLocationManagerDelegate>
 -(void)addCustLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addSketchLayer;
+-(void)showToolView;
 
 -(void)addSubjectLayer:(AGSFeatureSet *)p_features select:(AGSGraphic *)p_selGp queryParams:(QueryParams *) p_queryParams;
 @end

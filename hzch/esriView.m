@@ -7,10 +7,18 @@
 //
 
 #import "esriView.h"
+
 #define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"杭州档案馆" message:msg delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];[alert show];}
 
 
-@interface esriView ()
+@interface esriView (){
+    double _distance;
+    double _area;
+    AGSSRUnit _distanceUnit;
+    AGSAreaUnits _areaUnit;
+
+}
+
 @end
 
 @implementation esriView
@@ -289,6 +297,35 @@
 
 }
 
+- (void)showToolView{
+    if(_toolView){
+        [_toolView removeFromSuperview];
+        _toolView = nil;
+        self.sketchLayer = nil;
+        self.sketchLayer.geometry = nil;
+        self.mapView.touchDelegate = nil;
+        [self.mapView removeMapLayerWithName:@"sketchLayer"];
+        [self.mapView.callout removeFromSuperview];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
+    }else{
+        [self.mapView addSubview:self.toolView];
+        self.sketchLayer = [AGSSketchGraphicsLayer graphicsLayer];
+        if([self hasLayer:@"sketchLayer"])
+        {
+            [_mapView removeMapLayerWithName:@"sketchLayer"];
+        }
+        
+        [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+        self.mapView.touchDelegate = self.sketchLayer;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondToGeomChanged:) name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
+        // Set the default measures and units
+        _distance = 0;
+        _area = 0;
+        _distanceUnit = AGSSRUnitKilometer;
+        _areaUnit = AGSAreaUnitsSquareKilometers;
+    }
+}
+
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
     if ([self.ghLayer graphicsCount]>0) {
         AGSGraphic *t_selgh ;
@@ -544,11 +581,11 @@
 
 - (IBAction)locationAct:(id)sender {
     if (!self.locationState) {
-        [self.locationBtn setImage:[UIImage imageNamed:@"locActive.png"] forState:UIControlStateNormal];
+        [self.locationBtn setImage:[UIImage imageNamed:@"locActive"] forState:UIControlStateNormal];
         [self.locationManager startUpdatingLocation];
         self.locationState = YES;
     }else{
-        [self.locationBtn setImage:[UIImage imageNamed:@"location.png"] forState:UIControlStateNormal];
+        [self.locationBtn setImage:[UIImage imageNamed:@"location_click"] forState:UIControlStateNormal];
         [self.locationManager stopUpdatingLocation];
         self.locationState = NO;
     }
@@ -556,4 +593,133 @@
 }
 
 
+#pragma mark toolview
+
+- (NBToolView *)toolView{
+    if(!_toolView){
+        _toolView = [[NBToolView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-49-70, CGRectGetWidth(self.frame), 70)];
+        _toolView.delegate = self;
+    }
+    return _toolView;
+}
+#pragma mark -measure
+
+- (void)respondToGeomChanged:(NSNotification*)notification {
+    
+    AGSGeometry *sketchGeometry = self.sketchLayer.geometry;
+    if (![sketchGeometry isValid]) {
+        return;
+    }
+    // Update the distance and area whenever the geometry changes
+    if ([sketchGeometry isKindOfClass:[AGSMutablePolyline class]]) {
+        [self updateDistance:_distanceUnit];
+    }
+    else if ([sketchGeometry isKindOfClass:[AGSMutablePolygon class]]){
+        [self updateArea:_areaUnit];
+    }else if ([sketchGeometry isKindOfClass:[AGSMutablePoint class]]){
+        
+    }
+}
+
+- (void)updateDistance:(AGSSRUnit)unit {
+    
+    // Get the sketch layer's geometry
+    AGSGeometry *sketchGeometry = self.sketchLayer.geometry;
+    AGSGeometryEngine *geometryEngine = [AGSGeometryEngine defaultGeometryEngine];
+    
+    // Get the geodesic distance of the current line
+    _distance = [geometryEngine geodesicLengthOfGeometry:sketchGeometry inUnit:_distanceUnit];
+    if(_distance == 0){
+        self.toolView.label.text = @"请在地图上点击画线测量距离";
+    }else{
+        self.toolView.label.text = [NSString stringWithFormat:@"距离：%.2f 公里", _distance];
+    }
+}
+
+- (void)updateArea:(AGSAreaUnits)unit {
+    
+    // Get the sketch layer's geometry
+    AGSGeometry *sketchGeometry = self.sketchLayer.geometry;
+    AGSGeometryEngine *geometryEngine = [AGSGeometryEngine defaultGeometryEngine];
+    
+    // Get the area of the current polygon
+    
+    _area = [geometryEngine shapePreservingAreaOfGeometry:sketchGeometry inUnit:_areaUnit];
+    if(_area == 0){
+        self.toolView.label.text = @"请在地图上点击画面测量面积";
+    }else{
+        self.toolView.label.text = [NSString stringWithFormat:@"面积：%.4f 平方公里", _area];
+    }
+}
+#pragma mark - toolDelegate
+- (void)toolButtonClick:(int)buttonTag{
+    switch (buttonTag) {
+        case 100:
+        {
+            
+        }
+            break;
+        case 101:
+        {
+            self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+            self.mapView.touchDelegate = self.sketchLayer;
+            
+            if([self hasLayer:@"sketchLayer"])
+            {
+                [_mapView removeMapLayerWithName:@"sketchLayer"];
+            }
+            [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+        }
+            break;
+            
+        case 102:
+        {
+            self.sketchLayer.geometry = [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
+            self.mapView.touchDelegate = self.sketchLayer;
+            if([self hasLayer:@"sketchLayer"])
+            {
+                [_mapView removeMapLayerWithName:@"sketchLayer"];
+            }
+            [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+        }
+            break;
+            
+        case 103:
+        {
+            
+            
+        }
+            break;
+            
+        case 104:
+        {
+            self.sketchLayer.geometry = [[AGSMutablePoint alloc] initWithSpatialReference:self.mapView.spatialReference];
+            self.mapView.touchDelegate = self.sketchLayer;
+            
+            if([self hasLayer:@"sketchLayer"])
+            {
+                [_mapView removeMapLayerWithName:@"sketchLayer"];
+            }
+            [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+        }
+            break;
+        case 105:
+        {
+            [self.sketchLayer clear];
+            [self.mapView.callout removeFromSuperview];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+- (BOOL)hasLayer:(NSString *)name{
+    for(AGSLayer *layer in self.mapView.mapLayers){
+        if([layer.name isEqualToString:name]){
+            return YES;
+        }
+    }
+    return NO;
+}
 @end

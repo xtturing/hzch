@@ -10,6 +10,10 @@
 
 @interface SetTableViewController ()
 
+@property (weak,nonatomic) IBOutlet UIBarButtonItem *backBtn;
+
+- (IBAction)doBack:(id)sender;
+
 @end
 
 @implementation SetTableViewController
@@ -27,6 +31,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)doBack:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark - Table view data source
