@@ -106,6 +106,7 @@
                                     <tabBarItem tag="1004" title="设置" image="app_options_normal" id="eos-Q5-xcu"/>
                                 </items>
                                 <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="selectedImageTintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="WyT-SG-Qgq"/>
@@ -258,10 +259,10 @@
             </objects>
             <point key="canvasLocation" x="244" y="1042"/>
         </scene>
-        <!--设置-->
+        <!--设置navigation-->
         <scene sceneID="fCO-RB-iug">
             <objects>
-                <navigationController storyboardIdentifier="SetViewController" title="设置" id="gb9-H4-A6I" customClass="SetViewController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SetViewController" title="设置navigation" id="gb9-H4-A6I" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dRf-m5-unY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -273,6 +274,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ntN-EH-Yha" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="244" y="216"/>
+        </scene>
+        <!--资源中心navigation-->
+        <scene sceneID="ATW-mD-1Rz">
+            <objects>
+                <navigationController storyboardIdentifier="BDNavViewController" title="资源中心navigation" id="Fr0-PM-NSL" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pdt-QV-vwE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7vz-fK-RbG" kind="relationship" relationship="rootViewController" id="jcC-SN-X24"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xUl-zK-YR5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="539" y="-671"/>
+        </scene>
+        <!--资源中心-->
+        <scene sceneID="jJP-3J-SMb">
+            <objects>
+                <viewController storyboardIdentifier="BDViewController" title="资源中心" id="7vz-fK-RbG" customClass="RAViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5gh-Ab-rrE"/>
+                        <viewControllerLayoutGuide type="bottom" id="4oX-PL-GgX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2pP-V3-L3R">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="资源中心" id="zwg-fw-4Of">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="0yU-rH-l5P">
+                            <connections>
+                                <action selector="doBack:" destination="7vz-fK-RbG" id="omw-iy-XGh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="44U-6H-RzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1368" y="-671"/>
         </scene>
     </scenes>
     <resources>

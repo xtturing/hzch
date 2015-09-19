@@ -49,6 +49,60 @@
                         <action selector="zoomDownAct:" destination="g1L-6G-ZfW" eventType="touchUpInside" id="yU1-YW-BAD"/>
                     </connections>
                 </button>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="3k4-qg-hj1">
+                    <rect key="frame" x="0.0" y="206" width="315" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="evD-eT-IOZ"/>
+                        <barButtonItem tag="1001" image="measure_distance_click" id="8tL-EG-Ln6">
+                            <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tool:" destination="g1L-6G-ZfW" id="0CP-af-f1m"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="eFf-dT-SKc"/>
+                        <barButtonItem tag="1002" image="measure_area_click" id="2Xk-ac-8bA">
+                            <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tool:" destination="g1L-6G-ZfW" id="XJP-Cx-Y3j"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="NxF-7M-Abd"/>
+                        <barButtonItem tag="1003" image="plotting_click" id="9SF-8C-Vj0">
+                            <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tool:" destination="g1L-6G-ZfW" id="CcG-Ac-7wy"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="NOh-XA-eaa"/>
+                        <barButtonItem tag="1004" image="gesture_search_click" id="L96-cp-WBg">
+                            <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tool:" destination="g1L-6G-ZfW" id="xuB-pi-ksO"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="0Yx-uS-qN7"/>
+                        <barButtonItem tag="1005" image="gesture_search_click" id="sBA-aR-spK">
+                            <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tool:" destination="g1L-6G-ZfW" id="ySn-IV-AeE"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="fqI-Hu-AzS"/>
+                        <barButtonItem tag="1006" image="delete_line_click" id="a4O-My-SZK">
+                            <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ksI-Lx-uPA"/>
+                    </items>
+                </toolbar>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择使用工具" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pAs-hF-KjL">
+                    <rect key="frame" x="0.0" y="166" width="315" height="40"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.41419463909999998" blue="0.2229029126" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -56,12 +110,19 @@
             <connections>
                 <outlet property="locationBtn" destination="k74-ct-vhm" id="afq-Bp-6bH"/>
                 <outlet property="mapView" destination="kkN-D3-erp" id="E7L-Uv-zyW"/>
+                <outlet property="toolLabel" destination="pAs-hF-KjL" id="dUr-5K-wiF"/>
+                <outlet property="toolView" destination="3k4-qg-hj1" id="uUn-af-qnc"/>
             </connections>
         </view>
     </objects>
     <resources>
         <image name="btnBg" width="40" height="40"/>
+        <image name="delete_line_click" width="22" height="22"/>
+        <image name="gesture_search_click" width="22" height="22"/>
         <image name="location_click" width="22" height="22"/>
+        <image name="measure_area_click" width="22" height="22"/>
+        <image name="measure_distance_click" width="22" height="22"/>
+        <image name="plotting_click" width="22" height="22"/>
         <image name="zoom_down_click" width="22" height="22"/>
         <image name="zoom_up_click" width="22" height="22"/>
     </resources>

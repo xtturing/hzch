@@ -8,9 +8,8 @@
 
 #import "ViewController.h"
 #import "esriView.h"
-#import "SetViewController.h"
 
-@interface ViewController ()<esriViewDelegate,UITabBarDelegate,toolDelegate>
+@interface ViewController ()<esriViewDelegate,UITabBarDelegate>
 
 @property (strong,nonatomic)  esriView *esriView;
 
@@ -53,7 +52,9 @@
             
             break;
         case 1002:{
-            
+            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"BDNavViewController"] animated:YES completion:^{
+                
+            }];
         }
             
             break;
@@ -63,8 +64,7 @@
             
             break;
         case 1004:{
-            SetViewController *setViewController = [storyboard instantiateViewControllerWithIdentifier:@"SetViewController"];
-            [self presentViewController:setViewController animated:YES completion:^{
+            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"SetViewController"] animated:YES completion:^{
                 
             }];
         }

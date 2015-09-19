@@ -27,7 +27,7 @@
 {
     // Set the client ID
     NSError *error;
-    NSString* clientID = @"lsTnqx6kfd0c5Nml";
+//    NSString* clientID = @"lsTnqx6kfd0c5Nml";
 //   [AGSRuntimeEnvironment setClientID:clientID error:&error];
     if(error){
         // We had a problem using our client ID
@@ -298,9 +298,9 @@
 }
 
 - (void)showToolView{
-    if(_toolView){
-        [_toolView removeFromSuperview];
-        _toolView = nil;
+    if(!_toolView.hidden || !_toolLabel.hidden){
+        [_toolView setHidden:YES];
+        [_toolLabel setHidden:YES];
         self.sketchLayer = nil;
         self.sketchLayer.geometry = nil;
         self.mapView.touchDelegate = nil;
@@ -308,7 +308,8 @@
         [self.mapView.callout removeFromSuperview];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
     }else{
-        [self.mapView addSubview:self.toolView];
+        [_toolView setHidden:NO];
+        [_toolLabel setHidden:NO];
         self.sketchLayer = [AGSSketchGraphicsLayer graphicsLayer];
         if([self hasLayer:@"sketchLayer"])
         {
@@ -592,16 +593,6 @@
     
 }
 
-
-#pragma mark toolview
-
-- (NBToolView *)toolView{
-    if(!_toolView){
-        _toolView = [[NBToolView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-49-70, CGRectGetWidth(self.frame), 70)];
-        _toolView.delegate = self;
-    }
-    return _toolView;
-}
 #pragma mark -measure
 
 - (void)respondToGeomChanged:(NSNotification*)notification {
@@ -630,9 +621,9 @@
     // Get the geodesic distance of the current line
     _distance = [geometryEngine geodesicLengthOfGeometry:sketchGeometry inUnit:_distanceUnit];
     if(_distance == 0){
-        self.toolView.label.text = @"请在地图上点击画线测量距离";
+        self.toolLabel.text = @"请在地图上点击画线测量距离";
     }else{
-        self.toolView.label.text = [NSString stringWithFormat:@"距离：%.2f 公里", _distance];
+        self.toolLabel.text = [NSString stringWithFormat:@"测量距离：%.2f 公里", _distance];
     }
 }
 
@@ -646,21 +637,18 @@
     
     _area = [geometryEngine shapePreservingAreaOfGeometry:sketchGeometry inUnit:_areaUnit];
     if(_area == 0){
-        self.toolView.label.text = @"请在地图上点击画面测量面积";
+        self.toolLabel.text = @"请在地图上点击画面测量面积";
     }else{
-        self.toolView.label.text = [NSString stringWithFormat:@"面积：%.4f 平方公里", _area];
+        self.toolLabel.text = [NSString stringWithFormat:@"测量区域面积：%.4f 平方公里", _area];
     }
 }
 #pragma mark - toolDelegate
-- (void)toolButtonClick:(int)buttonTag{
-    switch (buttonTag) {
-        case 100:
+- (IBAction)tool:(id)sender{
+    UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
+    switch (btnItem.tag) {
+        case 1001:
         {
-            
-        }
-            break;
-        case 101:
-        {
+            self.toolLabel.text = @"请在地图上点击画线测量距离";
             self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
             
@@ -672,8 +660,9 @@
         }
             break;
             
-        case 102:
+        case 1002:
         {
+            self.toolLabel.text = @"请在地图上点击画面测量面积";
             self.sketchLayer.geometry = [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
             if([self hasLayer:@"sketchLayer"])
@@ -684,15 +673,16 @@
         }
             break;
             
-        case 103:
+        case 1003:
         {
-            
+            self.toolLabel.text = @"请在地图上点击开始标绘";
             
         }
             break;
             
-        case 104:
+        case 1004:
         {
+            self.toolLabel.text = @"请在地图上用手势画框查询";
             self.sketchLayer.geometry = [[AGSMutablePoint alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
             
@@ -703,8 +693,14 @@
             [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
         }
             break;
-        case 105:
+        case 1005:
         {
+            self.toolLabel.text = @"请在地图上点击两点查询路径";
+        }
+            break;
+        case 1006:
+        {
+            self.toolLabel.text = @"清空所有操作";
             [self.sketchLayer clear];
             [self.mapView.callout removeFromSuperview];
         }

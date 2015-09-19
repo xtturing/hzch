@@ -12,7 +12,6 @@
 #import "NSConfigData.h"
 #import <math.h>
 #import "QueryParams.h"
-#import "NBToolView.h"
 @class esriView;
 @protocol esriViewDelegate <NSObject>
 -(void)esriViewDetails:(esriView *)controller details:(AGSGraphic *)agsGraphic queryParams:(QueryParams *)queryParams;
@@ -23,8 +22,7 @@
 AGSMapViewLayerDelegate,
 AGSCalloutDelegate,
 AGSQueryTaskDelegate,
-CLLocationManagerDelegate,
-toolDelegate>
+CLLocationManagerDelegate>
 
 @property (weak,nonatomic) id <esriViewDelegate> delegate;
 
@@ -52,14 +50,16 @@ toolDelegate>
 @property (nonatomic,strong)AGSPoint *endPoint;
 @property (nonatomic,strong)AGSGraphicsLayer *sketchGhLayer;
 
-@property(nonatomic,strong) NBToolView *toolView;
+@property(nonatomic,weak) IBOutlet UIToolbar *toolView;
+@property(nonatomic,weak) IBOutlet UILabel *toolLabel;
 @property (nonatomic, strong) AGSSketchGraphicsLayer *sketchLayer;
 
-@property (nonatomic, strong) IBOutlet AGSMapView *mapView;
-@property (strong, nonatomic) IBOutlet UIButton *locationBtn;
+@property (nonatomic, weak) IBOutlet AGSMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIButton *locationBtn;
 - (IBAction)zoomUpAct:(id)sender;
 - (IBAction)zoomDownAct:(id)sender;
 - (IBAction)locationAct:(id)sender;
+- (IBAction)tool:(id)sender;
 -(void)addCustLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addSketchLayer;
