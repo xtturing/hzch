@@ -22,8 +22,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ylL-Pk-H1K">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bei-PL-7rZ">
-                                        <rect key="frame" x="500" y="100" width="88" height="29"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bei-PL-7rZ">
+                                        <rect key="frame" x="492" y="100" width="88" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="nSS-mt-d91"/>
                                             <constraint firstAttribute="width" constant="88" id="qT9-4A-1d3"/>
@@ -79,19 +79,6 @@
                                     <constraint firstItem="4h3-jX-802" firstAttribute="top" secondItem="vQb-tI-83J" secondAttribute="bottom" constant="8" id="yJH-ru-dzw"/>
                                 </constraints>
                             </view>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VL2-h6-8Il">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="VL2-h6-8Il" secondAttribute="height" multiplier="150:11" id="vSb-0H-o1Q"/>
-                                    <constraint firstAttribute="height" constant="44" id="yJn-by-cxg"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="vSb-0H-o1Q"/>
-                                    </mask>
-                                </variation>
-                            </searchBar>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEm-Gr-Pxg">
                                 <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -113,19 +100,23 @@
                                     </mask>
                                 </variation>
                             </tabBar>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="nS9-eR-XeR">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="LEm-Gr-Pxg" secondAttribute="trailing" constant="-16" id="0bn-Fl-ECS"/>
-                            <constraint firstItem="VL2-h6-8Il" firstAttribute="top" secondItem="uIB-QN-m6Y" secondAttribute="bottom" id="4oY-pg-AbJ"/>
+                            <constraint firstItem="nS9-eR-XeR" firstAttribute="top" secondItem="uIB-QN-m6Y" secondAttribute="bottom" id="2nZ-o6-cb2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nS9-eR-XeR" secondAttribute="trailing" constant="-16" id="5Jb-ea-1lF"/>
+                            <constraint firstItem="nS9-eR-XeR" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="EsX-hw-b74"/>
                             <constraint firstItem="LEm-Gr-Pxg" firstAttribute="top" secondItem="ylL-Pk-H1K" secondAttribute="bottom" id="Gac-L0-ST0"/>
-                            <constraint firstItem="VL2-h6-8Il" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="ITZ-Nv-wTl"/>
                             <constraint firstItem="ylL-Pk-H1K" firstAttribute="top" secondItem="sS7-P5-iBN" secondAttribute="topMargin" id="M2K-M0-b6I"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ylL-Pk-H1K" secondAttribute="trailing" constant="-16" id="MbD-gI-Raj"/>
                             <constraint firstItem="LEm-Gr-Pxg" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="Nhl-jQ-J2u"/>
                             <constraint firstItem="ic8-cM-Hmw" firstAttribute="top" secondItem="LEm-Gr-Pxg" secondAttribute="bottom" id="bTI-Dl-szg"/>
                             <constraint firstItem="ylL-Pk-H1K" firstAttribute="leading" secondItem="sS7-P5-iBN" secondAttribute="leadingMargin" constant="-16" id="ooB-bc-Hko"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="VL2-h6-8Il" secondAttribute="trailing" constant="-16" id="qdB-j4-yEa"/>
                         </constraints>
                     </view>
                     <connections>
@@ -257,7 +248,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMy-Y1-RhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="244" y="1042"/>
+            <point key="canvasLocation" x="268" y="1082"/>
         </scene>
         <!--设置navigation-->
         <scene sceneID="fCO-RB-iug">
@@ -304,17 +295,95 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="资源中心" id="zwg-fw-4Of">
+                    <navigationItem key="navigationItem" id="zwg-fw-4Of">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="返回" id="0yU-rH-l5P">
                             <connections>
                                 <action selector="doBack:" destination="7vz-fK-RbG" id="omw-iy-XGh"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="5bG-3u-8Yq">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="部门主题"/>
+                                <segment title="政务主题"/>
+                            </segments>
+                        </segmentedControl>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="44U-6H-RzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1368" y="-671"/>
+        </scene>
+        <!--数据展示navigation-->
+        <scene sceneID="nUY-MW-09Q">
+            <objects>
+                <navigationController storyboardIdentifier="NBDownLoadNavigationViewController" title="数据展示navigation" id="i10-4q-2mx" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MP7-zR-v9M">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="hKS-vS-pg7" kind="relationship" relationship="rootViewController" id="k2g-Qc-WOu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oa8-4d-loA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1362" y="229"/>
+        </scene>
+        <!--数据展示-->
+        <scene sceneID="Wa5-Ev-URS">
+            <objects>
+                <viewController storyboardIdentifier="NBDownLoadViewController" title="数据展示" id="hKS-vS-pg7" customClass="NBDownLoadViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ULh-W5-tXW"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Dd-lZ-8iT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yd2-8h-oFi">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1zA-QK-ZJy">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="hKS-vS-pg7" id="fpH-rT-BLh"/>
+                                    <outlet property="delegate" destination="hKS-vS-pg7" id="2kv-xX-T3f"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1zA-QK-ZJy" firstAttribute="leading" secondItem="yd2-8h-oFi" secondAttribute="leadingMargin" constant="-16" id="NY0-Bj-KzD"/>
+                            <constraint firstItem="1zA-QK-ZJy" firstAttribute="top" secondItem="yd2-8h-oFi" secondAttribute="topMargin" id="uJY-Of-cfa"/>
+                            <constraint firstItem="5Dd-lZ-8iT" firstAttribute="top" secondItem="1zA-QK-ZJy" secondAttribute="bottom" id="vNk-hL-dWm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1zA-QK-ZJy" secondAttribute="trailing" constant="-16" id="vbv-Y1-qlX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ebo-me-Zex">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="NWN-Dk-xbb">
+                            <connections>
+                                <action selector="doBack:" destination="hKS-vS-pg7" id="nC0-Ee-u1e"/>
+                            </connections>
+                        </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="XBn-Pt-Ekk">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="数据展示"/>
+                                <segment title="图层管理"/>
+                            </segments>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="table" destination="1zA-QK-ZJy" id="D3T-Vu-h4e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KhV-NP-c8t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1362" y="1126"/>
         </scene>
     </scenes>
     <resources>

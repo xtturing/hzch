@@ -9,7 +9,6 @@
 #import "dataHttpManager.h"
 #import "ASINetworkQueue.h"
 #import "ASIFormDataRequest.h"
-#import "JSON.h"
 #import "XMLReader.h"
 #import "NBTpk.h"
 #import "DownloadItem.h"
@@ -202,7 +201,7 @@ static dataHttpManager * instance=nil;
     NSDictionary *userInformation = [request userInfo];
     DataRequestType requestType = [[userInformation objectForKey:REQUEST_TYPE] intValue];
     NSString * responseString = [request responseString];
-    SBJsonParser *parser = [[SBJsonParser alloc] init];    
+    AGSSBJsonParser *parser = [[AGSSBJsonParser alloc] init];    
     id  returnObject = [parser objectWithString:responseString];
     if(!returnObject && responseString){
         NSError *parseError = nil;

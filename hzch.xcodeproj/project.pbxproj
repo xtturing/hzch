@@ -16,6 +16,23 @@
 		4106DFF91BA1D7A900EF997D /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */; };
 		410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A3ABE1BAB041B0025206E /* SetTableViewController.m */; };
 		410A3AC41BAB13830025206E /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410A3AC31BAB13830025206E /* image.xcassets */; };
+		413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE31BAF02CC00D972DB /* DowningCell.m */; };
+		413D7DEC1BAF02CC00D972DB /* DowningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 413D7DE41BAF02CC00D972DB /* DowningCell.xib */; };
+		413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */; };
+		413D7DEE1BAF02CC00D972DB /* NBDownLoadManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 413D7DE71BAF02CC00D972DB /* NBDownLoadManagerViewController.xib */; };
+		413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */; };
+		413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E061BAF033000D972DB /* DesEncrypt.m */; };
+		413D7E0B1BAF033000D972DB /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E081BAF033000D972DB /* GTMBase64.m */; };
+		413D7E0F1BAF049F00D972DB /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E0E1BAF049F00D972DB /* NBTpk.m */; };
+		413D7E121BAF04B900D972DB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E111BAF04B900D972DB /* Utility.m */; };
+		413D7E1F1BAF068C00D972DB /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E141BAF068C00D972DB /* CoreDataManager.m */; };
+		413D7E201BAF068C00D972DB /* DownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E171BAF068C00D972DB /* DownloadItem.m */; };
+		413D7E211BAF068C00D972DB /* DownloadItemEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E191BAF068C00D972DB /* DownloadItemEntity.m */; };
+		413D7E221BAF068C00D972DB /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E1B1BAF068C00D972DB /* DownloadManager.m */; };
+		413D7E231BAF068C00D972DB /* DownloadStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E1D1BAF068C00D972DB /* DownloadStoreManager.m */; };
+		413D7E241BAF068C00D972DB /* DwonloadModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E1E1BAF068C00D972DB /* DwonloadModel.xcdatamodel */; };
+		413D7E2A1BAF08ED00D972DB /* dataHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E291BAF08ED00D972DB /* dataHttpManager.m */; };
+		413D7E331BAF096400D972DB /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E321BAF096400D972DB /* XMLReader.m */; };
 		41421D981B9DD67B000DDFAF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D971B9DD67B000DDFAF /* AssetsLibrary.framework */; };
 		41421D9A1B9DD682000DDFAF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D991B9DD682000DDFAF /* AVFoundation.framework */; };
 		41421D9C1B9DD688000DDFAF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41421D9B1B9DD688000DDFAF /* AudioToolbox.framework */; };
@@ -90,6 +107,39 @@
 		410A3ABD1BAB041B0025206E /* SetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetTableViewController.h; sourceTree = "<group>"; };
 		410A3ABE1BAB041B0025206E /* SetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetTableViewController.m; sourceTree = "<group>"; };
 		410A3AC31BAB13830025206E /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
+		413D7DE21BAF02CC00D972DB /* DowningCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DowningCell.h; sourceTree = "<group>"; };
+		413D7DE31BAF02CC00D972DB /* DowningCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DowningCell.m; sourceTree = "<group>"; };
+		413D7DE41BAF02CC00D972DB /* DowningCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DowningCell.xib; sourceTree = "<group>"; };
+		413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDownLoadManagerViewController.m; sourceTree = "<group>"; };
+		413D7DE61BAF02CC00D972DB /* NBDownLoadManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDownLoadManagerViewController.h; sourceTree = "<group>"; };
+		413D7DE71BAF02CC00D972DB /* NBDownLoadManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NBDownLoadManagerViewController.xib; sourceTree = "<group>"; };
+		413D7DE81BAF02CC00D972DB /* NBDownLoadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDownLoadViewController.h; sourceTree = "<group>"; };
+		413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDownLoadViewController.m; sourceTree = "<group>"; };
+		413D7E051BAF033000D972DB /* DesEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesEncrypt.h; sourceTree = "<group>"; };
+		413D7E061BAF033000D972DB /* DesEncrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesEncrypt.m; sourceTree = "<group>"; };
+		413D7E071BAF033000D972DB /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		413D7E081BAF033000D972DB /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		413D7E091BAF033000D972DB /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		413D7E0D1BAF049F00D972DB /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
+		413D7E0E1BAF049F00D972DB /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
+		413D7E101BAF04B900D972DB /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		413D7E111BAF04B900D972DB /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		413D7E131BAF068C00D972DB /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
+		413D7E141BAF068C00D972DB /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
+		413D7E151BAF068C00D972DB /* DownloadConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadConstants.h; sourceTree = "<group>"; };
+		413D7E161BAF068C00D972DB /* DownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadItem.h; sourceTree = "<group>"; };
+		413D7E171BAF068C00D972DB /* DownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadItem.m; sourceTree = "<group>"; };
+		413D7E181BAF068C00D972DB /* DownloadItemEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadItemEntity.h; sourceTree = "<group>"; };
+		413D7E191BAF068C00D972DB /* DownloadItemEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadItemEntity.m; sourceTree = "<group>"; };
+		413D7E1A1BAF068C00D972DB /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		413D7E1B1BAF068C00D972DB /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadManager.m; sourceTree = "<group>"; };
+		413D7E1C1BAF068C00D972DB /* DownloadStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadStoreManager.h; sourceTree = "<group>"; };
+		413D7E1D1BAF068C00D972DB /* DownloadStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadStoreManager.m; sourceTree = "<group>"; };
+		413D7E1E1BAF068C00D972DB /* DwonloadModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DwonloadModel.xcdatamodel; sourceTree = "<group>"; };
+		413D7E281BAF08ED00D972DB /* dataHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataHttpManager.h; sourceTree = "<group>"; };
+		413D7E291BAF08ED00D972DB /* dataHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dataHttpManager.m; sourceTree = "<group>"; };
+		413D7E311BAF096400D972DB /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		413D7E321BAF096400D972DB /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		41421D971B9DD67B000DDFAF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		41421D991B9DD682000DDFAF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41421D9B1B9DD688000DDFAF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -261,6 +311,8 @@
 		4106DFE71BA1D78D00EF997D /* categary */ = {
 			isa = PBXGroup;
 			children = (
+				413D7E101BAF04B900D972DB /* Utility.h */,
+				413D7E111BAF04B900D972DB /* Utility.m */,
 				41E425DE1BA86A56009C0581 /* NSConvert.h */,
 				41E425DF1BA86A56009C0581 /* NSConvert.m */,
 				41E425DB1BA869B2009C0581 /* NSConfigData.h */,
@@ -277,9 +329,67 @@
 			name = categary;
 			sourceTree = "<group>";
 		};
+		413D7DF11BAF02EC00D972DB /* DownloadHelper */ = {
+			isa = PBXGroup;
+			children = (
+				413D7E131BAF068C00D972DB /* CoreDataManager.h */,
+				413D7E141BAF068C00D972DB /* CoreDataManager.m */,
+				413D7E151BAF068C00D972DB /* DownloadConstants.h */,
+				413D7E161BAF068C00D972DB /* DownloadItem.h */,
+				413D7E171BAF068C00D972DB /* DownloadItem.m */,
+				413D7E181BAF068C00D972DB /* DownloadItemEntity.h */,
+				413D7E191BAF068C00D972DB /* DownloadItemEntity.m */,
+				413D7E1A1BAF068C00D972DB /* DownloadManager.h */,
+				413D7E1B1BAF068C00D972DB /* DownloadManager.m */,
+				413D7E1C1BAF068C00D972DB /* DownloadStoreManager.h */,
+				413D7E1D1BAF068C00D972DB /* DownloadStoreManager.m */,
+				413D7E1E1BAF068C00D972DB /* DwonloadModel.xcdatamodel */,
+			);
+			name = DownloadHelper;
+			sourceTree = "<group>";
+		};
+		413D7E041BAF032500D972DB /* DES */ = {
+			isa = PBXGroup;
+			children = (
+				413D7E051BAF033000D972DB /* DesEncrypt.h */,
+				413D7E061BAF033000D972DB /* DesEncrypt.m */,
+				413D7E071BAF033000D972DB /* GTMBase64.h */,
+				413D7E081BAF033000D972DB /* GTMBase64.m */,
+				413D7E091BAF033000D972DB /* GTMDefines.h */,
+			);
+			name = DES;
+			sourceTree = "<group>";
+		};
+		413D7E0C1BAF033E00D972DB /* DownLoadManager */ = {
+			isa = PBXGroup;
+			children = (
+				413D7E0D1BAF049F00D972DB /* NBTpk.h */,
+				413D7E0E1BAF049F00D972DB /* NBTpk.m */,
+				413D7DE21BAF02CC00D972DB /* DowningCell.h */,
+				413D7DE31BAF02CC00D972DB /* DowningCell.m */,
+				413D7DE41BAF02CC00D972DB /* DowningCell.xib */,
+				413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */,
+				413D7DE61BAF02CC00D972DB /* NBDownLoadManagerViewController.h */,
+				413D7DE71BAF02CC00D972DB /* NBDownLoadManagerViewController.xib */,
+				413D7DE81BAF02CC00D972DB /* NBDownLoadViewController.h */,
+				413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */,
+			);
+			name = DownLoadManager;
+			sourceTree = "<group>";
+		};
+		413D7E301BAF095900D972DB /* XMLReader */ = {
+			isa = PBXGroup;
+			children = (
+				413D7E311BAF096400D972DB /* XMLReader.h */,
+				413D7E321BAF096400D972DB /* XMLReader.m */,
+			);
+			name = XMLReader;
+			sourceTree = "<group>";
+		};
 		41421DCA1B9DD954000DDFAF /* kit */ = {
 			isa = PBXGroup;
 			children = (
+				413D7E301BAF095900D972DB /* XMLReader */,
 				415A61181BADB4BB001FA3FB /* RATreeView */,
 				41E425DA1BA86958009C0581 /* tianditu */,
 			);
@@ -330,6 +440,9 @@
 		416876921BA1CDDF00119267 /* dataShow */ = {
 			isa = PBXGroup;
 			children = (
+				413D7E0C1BAF033E00D972DB /* DownLoadManager */,
+				413D7E041BAF032500D972DB /* DES */,
+				413D7DF11BAF02EC00D972DB /* DownloadHelper */,
 			);
 			name = dataShow;
 			sourceTree = "<group>";
@@ -365,6 +478,8 @@
 		417D01B71BA1E4CA00ADD996 /* dataManager */ = {
 			isa = PBXGroup;
 			children = (
+				413D7E281BAF08ED00D972DB /* dataHttpManager.h */,
+				413D7E291BAF08ED00D972DB /* dataHttpManager.m */,
 			);
 			name = dataManager;
 			sourceTree = "<group>";
@@ -488,7 +603,9 @@
 			files = (
 				41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */,
 				415A61101BADADFD001FA3FB /* RATreeCell.xib in Resources */,
+				413D7DEE1BAF02CC00D972DB /* NBDownLoadManagerViewController.xib in Resources */,
 				417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */,
+				413D7DEC1BAF02CC00D972DB /* DowningCell.xib in Resources */,
 				41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */,
 				410556031B9C729400B208E8 /* LaunchScreen.xib in Resources */,
 				41421DC81B9DD7F3000DDFAF /* Default.png in Resources */,
@@ -537,33 +654,48 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				413D7E1F1BAF068C00D972DB /* CoreDataManager.m in Sources */,
+				413D7E231BAF068C00D972DB /* DownloadStoreManager.m in Sources */,
 				41E425DD1BA869B2009C0581 /* NSConfigData.m in Sources */,
 				4106DFF91BA1D7A900EF997D /* CLLocation+Sino.m in Sources */,
 				41E425EB1BA86B7A009C0581 /* QueryParams.m in Sources */,
 				41E425E01BA86A56009C0581 /* NSConvert.m in Sources */,
 				410555F51B9C729400B208E8 /* AppDelegate.m in Sources */,
+				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,
 				41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */,
 				415A61351BADB4C9001FA3FB /* RATreeNodeInfo.m in Sources */,
+				413D7E211BAF068C00D972DB /* DownloadItemEntity.m in Sources */,
+				413D7E221BAF068C00D972DB /* DownloadManager.m in Sources */,
+				413D7E331BAF096400D972DB /* XMLReader.m in Sources */,
 				415A61401BADB7BE001FA3FB /* RATreeCell.m in Sources */,
 				415A61301BADB4C9001FA3FB /* RATreeView+Private.m in Sources */,
 				41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */,
 				415A613B1BADB4E8001FA3FB /* RADataObject.m in Sources */,
+				413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */,
 				4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */,
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
+				413D7E0F1BAF049F00D972DB /* NBTpk.m in Sources */,
 				410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */,
 				415A612F1BADB4C9001FA3FB /* RATreeView+TableViewDataSource.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
+				413D7E2A1BAF08ED00D972DB /* dataHttpManager.m in Sources */,
 				415A613C1BADB4E8001FA3FB /* RAViewController.m in Sources */,
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
+				413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				410555F21B9C729400B208E8 /* main.m in Sources */,
 				415A61331BADB4C9001FA3FB /* RATreeNode.m in Sources */,
+				413D7E121BAF04B900D972DB /* Utility.m in Sources */,
 				415A612E1BADB4C9001FA3FB /* RATreeView+TableViewDelegate.m in Sources */,
+				413D7E201BAF068C00D972DB /* DownloadItem.m in Sources */,
 				415A61321BADB4C9001FA3FB /* RATreeView+UIScrollView.m in Sources */,
+				413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */,
+				413D7E241BAF068C00D972DB /* DwonloadModel.xcdatamodel in Sources */,
 				4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */,
 				415A61341BADB4C9001FA3FB /* RATreeNodeCollectionController.m in Sources */,
+				413D7E0B1BAF033000D972DB /* GTMBase64.m in Sources */,
 				41E425E31BA86AAC009C0581 /* TianDiTuData.m in Sources */,
 				4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */,
 				415A612D1BADB4C9001FA3FB /* RATreeView.m in Sources */,

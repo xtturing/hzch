@@ -47,7 +47,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     switch (item.tag) {
         case 1001:{
-            
+            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"NBDownLoadNavigationViewController"] animated:YES completion:^{
+                
+            }];
         }
             
             break;
