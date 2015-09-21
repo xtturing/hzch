@@ -77,7 +77,7 @@
   treeView.separatorStyle = RATreeViewCellSeparatorStyleNone;
   
   [treeView reloadData];
-  [treeView expandRowForItem:phone withRowAnimation:RATreeViewRowAnimationLeft]; //expands Row
+//  [treeView expandRowForItem:phone withRowAnimation:RATreeViewRowAnimationLeft]; //expands Row
   [treeView setBackgroundColor:UIColorFromRGB(0xF7F7F7)];
   
   self.treeView = treeView;
@@ -111,13 +111,13 @@
 
 - (BOOL)treeView:(RATreeView *)treeView shouldExpandItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
 {
-  return YES;
+  return NO;
 }
 
 - (BOOL)treeView:(RATreeView *)treeView shouldItemBeExpandedAfterDataReload:(id)item treeDepthLevel:(NSInteger)treeDepthLevel
 {
   if ([item isEqual:self.expanded]) {
-    return YES;
+    return NO;
   }
   return NO;
 }

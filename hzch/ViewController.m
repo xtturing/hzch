@@ -47,6 +47,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     switch (item.tag) {
         case 1001:{
+            [self.esriView hiddenToolView];
             [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"NBDownLoadNavigationViewController"] animated:YES completion:^{
                 
             }];
@@ -54,6 +55,7 @@
             
             break;
         case 1002:{
+            [self.esriView hiddenToolView];
             [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"BDNavViewController"] animated:YES completion:^{
                 
             }];
@@ -66,6 +68,7 @@
             
             break;
         case 1004:{
+            [self.esriView hiddenToolView];
             [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"SetViewController"] animated:YES completion:^{
                 
             }];

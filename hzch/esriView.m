@@ -297,6 +297,19 @@
 
 }
 
+- (void)hiddenToolView{
+    if(_toolView && (!_toolView.hidden || !_toolLabel.hidden)){
+        [_toolView setHidden:YES];
+        [_toolLabel setHidden:YES];
+        self.sketchLayer = nil;
+        self.sketchLayer.geometry = nil;
+        self.mapView.touchDelegate = nil;
+        [self.mapView removeMapLayerWithName:@"sketchLayer"];
+        [self.mapView.callout removeFromSuperview];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
+    }
+}
+
 - (void)showToolView{
     if(!_toolView.hidden || !_toolLabel.hidden){
         [_toolView setHidden:YES];
@@ -695,7 +708,7 @@
             break;
         case 1005:
         {
-            self.toolLabel.text = @"请在地图上点击两点查询路径";
+            self.toolLabel.text = @"请在地图上点击两点路径查询";
         }
             break;
         case 1006:
