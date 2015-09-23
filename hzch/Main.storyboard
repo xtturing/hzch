@@ -346,13 +346,12 @@
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dNL-ex-eSr">
                                                     <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
-                                                        <segment title="" image="app_options_click"/>
-                                                        <segment title="Second"/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
+                                                        <segment title="" image="6-zhixian"/>
+                                                        <segment title="" image="7-dian"/>
+                                                        <segment title="" image="8-xianduan"/>
+                                                        <segment title="" image="9-yidian"/>
+                                                        <segment title="" image="10-liangdian"/>
                                                     </segments>
-                                                    <color key="tintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </segmentedControl>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -373,6 +372,8 @@
                                                     <state key="normal" image="bh_color_red_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <state key="selected" image="bh_color_red_click"/>
+                                                    <state key="highlighted" image="bh_color_red_click"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DgJ-cF-O5C">
                                                     <rect key="frame" x="127" y="7" width="47" height="26"/>
@@ -408,8 +409,6 @@
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="eYa-WV-i5P">
                                                     <rect key="frame" x="75" y="7" width="195" height="31"/>
-                                                    <color key="minimumTrackTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="thumbTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="6" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMA-Wt-h1M">
                                                     <rect key="frame" x="280" y="11" width="10" height="21"/>
@@ -435,17 +434,22 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="P2t-cg-yXR">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2t-cg-yXR">
                                                     <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
                                                         <segment title="" image="app_options_click"/>
-                                                        <segment title="Second"/>
+                                                        <segment title=""/>
                                                         <segment title=""/>
                                                         <segment title=""/>
                                                         <segment title=""/>
                                                     </segments>
-                                                    <color key="tintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </segmentedControl>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfC-ev-aN4">
+                                                    <rect key="frame" x="124" y="12" width="38" height="23"/>
+                                                    <state key="normal" image="bh_color_blue_click">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -500,8 +504,6 @@
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="kR6-ci-vNX">
                                                     <rect key="frame" x="80" y="7" width="170" height="31"/>
-                                                    <color key="minimumTrackTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="thumbTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rW2-ek-7nk">
                                                     <rect key="frame" x="254" y="11" width="46" height="21"/>
@@ -520,6 +522,8 @@
                             <outlet property="delegate" destination="c0f-xe-lSI" id="OUN-2x-mlY"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aE6-6M-7mw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -914,13 +918,12 @@
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wbv-FJ-gd3">
                                                     <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
-                                                        <segment title="" image="app_options_click"/>
-                                                        <segment title="Second"/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
+                                                        <segment title="" image="1-yuan"/>
+                                                        <segment title="" image="2-jia"/>
+                                                        <segment title="" image="3-ling"/>
+                                                        <segment title="" image="4-fang"/>
+                                                        <segment title="" image="5-cheng"/>
                                                     </segments>
-                                                    <color key="tintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </segmentedControl>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -976,8 +979,6 @@
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="PdT-17-85e">
                                                     <rect key="frame" x="75" y="7" width="195" height="31"/>
-                                                    <color key="minimumTrackTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="thumbTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ao0-Vh-keS">
                                                     <rect key="frame" x="280" y="11" width="20" height="21"/>
@@ -1026,13 +1027,12 @@
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="so5-wt-KZM">
                                                     <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
-                                                        <segment title="" image="app_options_click"/>
-                                                        <segment title="Second"/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
+                                                        <segment title="" image="6-zhixian"/>
+                                                        <segment title="" image="7-dian"/>
+                                                        <segment title="" image="8-xianduan"/>
+                                                        <segment title="" image="9-yidian"/>
+                                                        <segment title="" image="10-liangdian"/>
                                                     </segments>
-                                                    <color key="tintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </segmentedControl>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1088,8 +1088,6 @@
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="TFK-BX-lyL">
                                                     <rect key="frame" x="75" y="7" width="195" height="31"/>
-                                                    <color key="minimumTrackTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="thumbTintColor" red="0.3917760106" green="0.72124176350000002" blue="0.89088408799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1YK-8G-bxm">
                                                     <rect key="frame" x="280" y="11" width="10" height="21"/>
@@ -1115,15 +1113,27 @@
         </scene>
     </scenes>
     <resources>
+        <image name="1-yuan" width="22" height="22"/>
+        <image name="10-liangdian" width="52" height="22"/>
+        <image name="2-jia" width="22" height="22"/>
+        <image name="3-ling" width="22" height="22"/>
+        <image name="4-fang" width="22" height="22"/>
+        <image name="5-cheng" width="22" height="22"/>
+        <image name="6-zhixian" width="52" height="22"/>
+        <image name="7-dian" width="52" height="22"/>
+        <image name="8-xianduan" width="52" height="22"/>
+        <image name="9-yidian" width="52" height="22"/>
         <image name="app_data_show_normal" width="22" height="22"/>
         <image name="app_options_click" width="22" height="22"/>
         <image name="app_options_normal" width="22" height="22"/>
         <image name="app_resource_center_normal" width="22" height="22"/>
         <image name="app_tool_normal" width="22" height="22"/>
         <image name="basemap_open" width="22" height="22"/>
+        <image name="bh_color_blue_click" width="47" height="26"/>
         <image name="bh_color_blue_normal" width="47" height="26"/>
         <image name="bh_color_green_normal" width="47" height="26"/>
         <image name="bh_color_purple_normal" width="47" height="26"/>
+        <image name="bh_color_red_click" width="47" height="26"/>
         <image name="bh_color_red_normal" width="47" height="26"/>
         <image name="btnBg" width="40" height="40"/>
         <image name="delete_line_normal" width="22" height="22"/>
