@@ -15,6 +15,7 @@
 @class esriView;
 @protocol esriViewDelegate <NSObject>
 -(void)esriViewDetails:(esriView *)controller details:(AGSGraphic *)agsGraphic queryParams:(QueryParams *)queryParams;
+-(void)didSelectLineSearch;
 
 @end
 

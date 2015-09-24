@@ -7,7 +7,7 @@
 //
 
 #import "esriView.h"
-
+#import "LineSearchTableViewController.h"
 #define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"杭州档案馆" message:msg delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];[alert show];}
 
 
@@ -709,6 +709,9 @@
         case 1005:
         {
             self.toolLabel.text = @"请在地图上点击两点路径查询";
+            if(_delegate && [_delegate respondsToSelector:@selector(didSelectLineSearch)]){
+                [_delegate didSelectLineSearch];
+            }
         }
             break;
         case 1006:

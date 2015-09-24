@@ -16,6 +16,7 @@
 		4106DFF91BA1D7A900EF997D /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */; };
 		410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A3ABE1BAB041B0025206E /* SetTableViewController.m */; };
 		410A3AC41BAB13830025206E /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410A3AC31BAB13830025206E /* image.xcassets */; };
+		41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41398EE81BB45139008E9222 /* LineSearchTableViewController.m */; };
 		413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE31BAF02CC00D972DB /* DowningCell.m */; };
 		413D7DEC1BAF02CC00D972DB /* DowningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 413D7DE41BAF02CC00D972DB /* DowningCell.xib */; };
 		413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */; };
@@ -107,6 +108,8 @@
 		410A3ABD1BAB041B0025206E /* SetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetTableViewController.h; sourceTree = "<group>"; };
 		410A3ABE1BAB041B0025206E /* SetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetTableViewController.m; sourceTree = "<group>"; };
 		410A3AC31BAB13830025206E /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
+		41398EE71BB45139008E9222 /* LineSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSearchTableViewController.h; sourceTree = "<group>"; };
+		41398EE81BB45139008E9222 /* LineSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineSearchTableViewController.m; sourceTree = "<group>"; };
 		413D7DE21BAF02CC00D972DB /* DowningCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DowningCell.h; sourceTree = "<group>"; };
 		413D7DE31BAF02CC00D972DB /* DowningCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DowningCell.m; sourceTree = "<group>"; };
 		413D7DE41BAF02CC00D972DB /* DowningCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DowningCell.xib; sourceTree = "<group>"; };
@@ -450,6 +453,8 @@
 		416876931BA1CE0800119267 /* tool */ = {
 			isa = PBXGroup;
 			children = (
+				41398EE71BB45139008E9222 /* LineSearchTableViewController.h */,
+				41398EE81BB45139008E9222 /* LineSearchTableViewController.m */,
 			);
 			name = tool;
 			sourceTree = "<group>";
@@ -687,6 +692,7 @@
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				410555F21B9C729400B208E8 /* main.m in Sources */,
 				415A61331BADB4C9001FA3FB /* RATreeNode.m in Sources */,
+				41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */,
 				413D7E121BAF04B900D972DB /* Utility.m in Sources */,
 				415A612E1BADB4C9001FA3FB /* RATreeView+TableViewDelegate.m in Sources */,
 				413D7E201BAF068C00D972DB /* DownloadItem.m in Sources */,

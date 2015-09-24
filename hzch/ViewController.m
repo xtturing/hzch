@@ -80,7 +80,12 @@
     }
 }
 
-
+- (void)didSelectLineSearch{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"LineSearchNavigationViewController"] animated:YES completion:^{
+        
+    }];
+}
 
 /*
 #pragma mark - Navigation

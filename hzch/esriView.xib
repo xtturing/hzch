@@ -91,6 +91,9 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="fqI-Hu-AzS"/>
                         <barButtonItem tag="1006" image="delete_line_click" id="a4O-My-SZK">
                             <color key="tintColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="tool:" destination="g1L-6G-ZfW" id="nIk-cO-Obo"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="ksI-Lx-uPA"/>
                     </items>
