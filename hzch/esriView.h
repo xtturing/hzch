@@ -67,4 +67,8 @@ CLLocationManagerDelegate>
 -(void)showToolView;
 - (void)hiddenToolView;
 -(void)addSubjectLayer:(AGSFeatureSet *)p_features select:(AGSGraphic *)p_selGp queryParams:(QueryParams *) p_queryParams;
+- (void)touchesBegan:(UITouch*)touch;
+- (void)touchesMoved:(UITouch*)touch;
+- (void)touchesEnded:(UITouch*)touch;
+
 @end

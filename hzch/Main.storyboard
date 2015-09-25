@@ -337,14 +337,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jj5-Hc-Oy9" id="BiN-cG-iCi">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMT-TV-sIW">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMT-TV-sIW">
                                                     <rect key="frame" x="20" y="11" width="51" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dNL-ex-eSr">
-                                                    <rect key="frame" x="75" y="8" width="497" height="29"/>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dNL-ex-eSr">
+                                                    <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
                                                         <segment title="" image="6-zhixian"/>
                                                         <segment title="" image="7-dian"/>
@@ -354,14 +354,6 @@
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="OMT-TV-sIW" firstAttribute="top" secondItem="BiN-cG-iCi" secondAttribute="topMargin" constant="3" id="5G7-FH-VkK"/>
-                                                <constraint firstItem="OMT-TV-sIW" firstAttribute="leading" secondItem="BiN-cG-iCi" secondAttribute="leadingMargin" constant="12" id="6xH-yg-mbm"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="dNL-ex-eSr" secondAttribute="bottom" constant="-1" id="KPY-E9-dBJ"/>
-                                                <constraint firstItem="dNL-ex-eSr" firstAttribute="leading" secondItem="OMT-TV-sIW" secondAttribute="trailing" constant="4" id="RRK-JJ-7Bh"/>
-                                                <constraint firstItem="dNL-ex-eSr" firstAttribute="top" secondItem="BiN-cG-iCi" secondAttribute="topMargin" id="SkX-Sh-oON"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="dNL-ex-eSr" secondAttribute="trailing" constant="20" id="m13-Ly-cvS"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="K0g-tL-n2H">
@@ -376,7 +368,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9YA-dr-CIE">
-                                                    <rect key="frame" x="73" y="7" width="52" height="26"/>
+                                                    <rect key="frame" x="73" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_red_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -384,19 +376,19 @@
                                                     <state key="highlighted" image="bh_color_red_click"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DgJ-cF-O5C">
-                                                    <rect key="frame" x="127" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="127" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_blue_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8E4-mr-mMb">
-                                                    <rect key="frame" x="181" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="181" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_green_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KB2-zK-yXk">
-                                                    <rect key="frame" x="235" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="235" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_purple_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -442,23 +434,39 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2t-cg-yXR">
-                                                    <rect key="frame" x="75" y="8" width="497" height="29"/>
-                                                    <segments>
-                                                        <segment title="" image="app_options_click"/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
-                                                        <segment title=""/>
-                                                    </segments>
-                                                </segmentedControl>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-NH-kgw">
+                                                    <rect key="frame" x="73" y="10" width="40" height="22"/>
+                                                    <state key="normal" image="12-sekuai">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZU-L8-juw">
+                                                    <rect key="frame" x="126" y="11" width="40" height="22"/>
+                                                    <state key="normal" image="13-heng">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9W-HY-I2p">
+                                                    <rect key="frame" x="180" y="11" width="40" height="22"/>
+                                                    <state key="normal" image="14-shu">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HeI-LW-F5x">
+                                                    <rect key="frame" x="236" y="11" width="40" height="22"/>
+                                                    <state key="normal" image="15-xie">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9us-47-ToY">
+                                                    <rect key="frame" x="292" y="11" width="40" height="22"/>
+                                                    <state key="normal" image="16-xie">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="P2t-cg-yXR" firstAttribute="top" secondItem="xPT-Gl-GaJ" secondAttribute="topMargin" id="2bx-nA-ZqH"/>
                                                 <constraint firstItem="XP7-vD-mER" firstAttribute="top" secondItem="xPT-Gl-GaJ" secondAttribute="topMargin" constant="3" id="8As-MX-g73"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="P2t-cg-yXR" secondAttribute="bottom" constant="-1" id="Cpd-mc-QxN"/>
-                                                <constraint firstItem="P2t-cg-yXR" firstAttribute="leading" secondItem="XP7-vD-mER" secondAttribute="trailing" constant="4" id="Edh-Ub-ihi"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="P2t-cg-yXR" secondAttribute="trailing" constant="20" id="RlV-qo-IIi"/>
                                                 <constraint firstItem="XP7-vD-mER" firstAttribute="leading" secondItem="xPT-Gl-GaJ" secondAttribute="leadingMargin" constant="12" id="zQB-J8-SRg"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -475,25 +483,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MH5-4N-UHV">
-                                                    <rect key="frame" x="73" y="7" width="52" height="26"/>
+                                                    <rect key="frame" x="73" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_red_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jct-xq-44x">
-                                                    <rect key="frame" x="127" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="127" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_blue_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQQ-3S-rSl">
-                                                    <rect key="frame" x="181" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="181" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_green_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VV-Rh-w2A">
-                                                    <rect key="frame" x="235" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="235" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_purple_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -919,14 +927,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U4U-sp-bj7" id="3oz-Se-rk1">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAv-mG-1aj">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAv-mG-1aj">
                                                     <rect key="frame" x="20" y="11" width="51" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wbv-FJ-gd3">
-                                                    <rect key="frame" x="75" y="8" width="499" height="29"/>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wbv-FJ-gd3">
+                                                    <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
                                                         <segment title="" image="1-yuan"/>
                                                         <segment title="" image="2-jia"/>
@@ -936,14 +944,6 @@
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="mAv-mG-1aj" firstAttribute="top" secondItem="3oz-Se-rk1" secondAttribute="topMargin" constant="3" id="6iG-Ud-scd"/>
-                                                <constraint firstItem="wbv-FJ-gd3" firstAttribute="top" secondItem="3oz-Se-rk1" secondAttribute="topMargin" id="OJb-KF-X2h"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="wbv-FJ-gd3" secondAttribute="bottom" constant="-1" id="PR0-PK-cN2"/>
-                                                <constraint firstItem="mAv-mG-1aj" firstAttribute="leading" secondItem="3oz-Se-rk1" secondAttribute="leadingMargin" constant="12" id="RUV-07-rqO"/>
-                                                <constraint firstItem="wbv-FJ-gd3" firstAttribute="leading" secondItem="mAv-mG-1aj" secondAttribute="trailing" constant="4" id="UaD-YK-DUc"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="wbv-FJ-gd3" secondAttribute="trailing" constant="18" id="lS8-ky-A4J"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ADO-wN-Vnj">
@@ -958,25 +958,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ge-er-BL4">
-                                                    <rect key="frame" x="73" y="7" width="52" height="26"/>
+                                                    <rect key="frame" x="73" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_red_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUr-fp-7Ac">
-                                                    <rect key="frame" x="127" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="127" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_blue_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PxH-Fp-DQr">
-                                                    <rect key="frame" x="181" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="181" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_green_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCO-xh-3QH">
-                                                    <rect key="frame" x="235" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="235" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_purple_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1036,14 +1036,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LmM-yP-ZSx" id="MTw-sD-UMC">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVG-oa-ubk">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVG-oa-ubk">
                                                     <rect key="frame" x="20" y="11" width="51" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="so5-wt-KZM">
-                                                    <rect key="frame" x="75" y="8" width="499" height="29"/>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="so5-wt-KZM">
+                                                    <rect key="frame" x="75" y="8" width="225" height="29"/>
                                                     <segments>
                                                         <segment title="" image="6-zhixian"/>
                                                         <segment title="" image="7-dian"/>
@@ -1053,14 +1053,6 @@
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="so5-wt-KZM" firstAttribute="leading" secondItem="zVG-oa-ubk" secondAttribute="trailing" constant="4" id="30p-RQ-vUK"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="so5-wt-KZM" secondAttribute="trailing" constant="18" id="WtR-Ia-8cn"/>
-                                                <constraint firstItem="so5-wt-KZM" firstAttribute="top" secondItem="MTw-sD-UMC" secondAttribute="topMargin" id="faD-0i-9j0"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="so5-wt-KZM" secondAttribute="bottom" constant="-1" id="jZf-p1-MBO"/>
-                                                <constraint firstItem="zVG-oa-ubk" firstAttribute="top" secondItem="MTw-sD-UMC" secondAttribute="topMargin" constant="3" id="tP8-d7-ipT"/>
-                                                <constraint firstItem="zVG-oa-ubk" firstAttribute="leading" secondItem="MTw-sD-UMC" secondAttribute="leadingMargin" constant="12" id="vXM-D9-g3W"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SPt-EM-vsR">
@@ -1075,25 +1067,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2U-oD-0u4">
-                                                    <rect key="frame" x="73" y="7" width="52" height="26"/>
+                                                    <rect key="frame" x="75" y="11" width="40" height="21"/>
                                                     <state key="normal" image="bh_color_red_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFZ-vR-Gst">
-                                                    <rect key="frame" x="127" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="127" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_blue_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CV-cU-wqV">
-                                                    <rect key="frame" x="181" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="181" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_green_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g37-Kf-5K6">
-                                                    <rect key="frame" x="235" y="7" width="47" height="26"/>
+                                                    <rect key="frame" x="235" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_purple_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1272,6 +1264,11 @@
     <resources>
         <image name="1-yuan" width="22" height="22"/>
         <image name="10-liangdian" width="52" height="22"/>
+        <image name="12-sekuai" width="40" height="22"/>
+        <image name="13-heng" width="40" height="22"/>
+        <image name="14-shu" width="40" height="22"/>
+        <image name="15-xie" width="40" height="22"/>
+        <image name="16-xie" width="40" height="22"/>
         <image name="2-jia" width="22" height="22"/>
         <image name="3-ling" width="22" height="22"/>
         <image name="4-fang" width="22" height="22"/>
@@ -1281,7 +1278,6 @@
         <image name="8-xianduan" width="52" height="22"/>
         <image name="9-yidian" width="52" height="22"/>
         <image name="app_data_show_normal" width="22" height="22"/>
-        <image name="app_options_click" width="22" height="22"/>
         <image name="app_options_normal" width="22" height="22"/>
         <image name="app_resource_center_normal" width="22" height="22"/>
         <image name="app_tool_normal" width="22" height="22"/>

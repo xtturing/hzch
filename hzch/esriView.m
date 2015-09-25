@@ -8,6 +8,7 @@
 
 #import "esriView.h"
 #import "LineSearchTableViewController.h"
+#import "CanvasView.h"
 #define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"杭州档案馆" message:msg delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];[alert show];}
 
 
@@ -18,6 +19,10 @@
     AGSAreaUnits _areaUnit;
 
 }
+@property (nonatomic, strong) NSMutableArray *coordinates;
+@property (nonatomic, strong) NSMutableArray *polygonPoints;
+@property (nonatomic) BOOL isDrawingPolygon;
+@property (nonatomic, strong) CanvasView *canvasView;
 
 @end
 
@@ -291,10 +296,11 @@
 //画图
 -(void)addSketchLayer{
     self.sketchGhLayer= [[AGSGraphicsLayer alloc]init];
+    if([self hasLayer:@"Sketch layer"])
+    {
+        [_mapView removeMapLayerWithName:@"Sketch layer"];
+    }
     [self.mapView addMapLayer:self.sketchGhLayer withName:@"Sketch layer"];
-    
-    self.mapView.touchDelegate = self;
-
 }
 
 - (void)hiddenToolView{
@@ -696,14 +702,8 @@
         case 1004:
         {
             self.toolLabel.text = @"请在地图上用手势画框查询";
-            self.sketchLayer.geometry = [[AGSMutablePoint alloc] initWithSpatialReference:self.mapView.spatialReference];
-            self.mapView.touchDelegate = self.sketchLayer;
-            
-            if([self hasLayer:@"sketchLayer"])
-            {
-                [_mapView removeMapLayerWithName:@"sketchLayer"];
-            }
-            [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+            [self didTouchUpInsideDrawButton];
+            [self addSketchLayer];
         }
             break;
         case 1005:
@@ -718,12 +718,54 @@
         {
             self.toolLabel.text = @"清空所有操作";
             [self.sketchLayer clear];
+            if([self hasLayer:@"Sketch layer"])
+            {
+                [_mapView removeMapLayerWithName:@"Sketch layer"];
+            }
             [self.mapView.callout removeFromSuperview];
         }
             break;
             
         default:
             break;
+    }
+}
+
+- (void)didTouchUpInsideDrawButton
+{
+    if(self.isDrawingPolygon == NO) {
+        
+        self.isDrawingPolygon = YES;
+        [self.coordinates removeAllObjects];
+        [self addSubview:self.canvasView];
+        
+    } else {
+        
+        NSInteger numberOfPoints = [self.coordinates count];
+        
+        if (numberOfPoints > 2)
+        {
+            AGSSimpleFillSymbol
+            *outerSymbol = [AGSSimpleFillSymbol simpleFillSymbol];
+            outerSymbol.color
+            = [[UIColor yellowColor] colorWithAlphaComponent:0.25];
+            outerSymbol.outline.color
+            = [UIColor darkGrayColor];
+            AGSMutablePolygon *polyon =  [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
+            [polyon addRingToPolygon];
+            for (AGSPoint *point in self.coordinates) {
+                [polyon addPointToRing:point];
+            }
+            
+            AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:polyon symbol:outerSymbol attributes:nil];
+            [self.sketchGhLayer addGraphic:graphic];
+            [self.sketchGhLayer refresh];
+        }
+        
+        self.isDrawingPolygon = NO;
+        self.canvasView.image = nil;
+        [self.canvasView removeFromSuperview];
+        
     }
 }
 - (BOOL)hasLayer:(NSString *)name{
@@ -733,5 +775,40 @@
         }
     }
     return NO;
+}
+- (NSMutableArray*)coordinates
+{
+    if(_coordinates == nil) _coordinates = [[NSMutableArray alloc] init];
+    return _coordinates;
+}
+
+
+- (CanvasView*)canvasView
+{
+    if(_canvasView == nil) {
+        _canvasView = [[CanvasView alloc] initWithFrame:self.mapView.frame];
+        _canvasView.userInteractionEnabled = YES;
+        _canvasView.delegate = self;
+    }
+    return _canvasView;
+}
+- (void)touchesBegan:(UITouch*)touch
+{
+    CGPoint location = [touch locationInView:self.mapView];
+    [self.coordinates addObject:[self.mapView toMapPoint:location]];
+}
+
+- (void)touchesMoved:(UITouch*)touch
+{
+    CGPoint location = [touch locationInView:self.mapView];
+    [self.coordinates addObject:[self.mapView toMapPoint:location]];
+}
+
+- (void)touchesEnded:(UITouch*)touch
+{
+    CGPoint location = [touch locationInView:self.mapView];
+    [self.coordinates addObject:[self.mapView toMapPoint:location]];
+    [self didTouchUpInsideDrawButton];
+    
 }
 @end
