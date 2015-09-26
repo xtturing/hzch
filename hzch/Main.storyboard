@@ -428,47 +428,43 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="21c-T2-uuG" id="xPT-Gl-GaJ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XP7-vD-mER">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="样式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XP7-vD-mER">
                                                     <rect key="frame" x="20" y="11" width="51" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-NH-kgw">
-                                                    <rect key="frame" x="73" y="10" width="40" height="22"/>
+                                                    <rect key="frame" x="66" y="11" width="40" height="22"/>
                                                     <state key="normal" image="12-sekuai">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZU-L8-juw">
-                                                    <rect key="frame" x="126" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="116" y="11" width="40" height="22"/>
                                                     <state key="normal" image="13-heng">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9W-HY-I2p">
-                                                    <rect key="frame" x="180" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="166" y="11" width="40" height="22"/>
                                                     <state key="normal" image="14-shu">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HeI-LW-F5x">
-                                                    <rect key="frame" x="236" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="216" y="11" width="40" height="22"/>
                                                     <state key="normal" image="15-xie">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9us-47-ToY">
-                                                    <rect key="frame" x="292" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="266" y="11" width="40" height="22"/>
                                                     <state key="normal" image="16-xie">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="XP7-vD-mER" firstAttribute="top" secondItem="xPT-Gl-GaJ" secondAttribute="topMargin" constant="3" id="8As-MX-g73"/>
-                                                <constraint firstItem="XP7-vD-mER" firstAttribute="leading" secondItem="xPT-Gl-GaJ" secondAttribute="leadingMargin" constant="12" id="zQB-J8-SRg"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="a79-XO-1Dp">
@@ -483,25 +479,25 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MH5-4N-UHV">
-                                                    <rect key="frame" x="73" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="66" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_red_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jct-xq-44x">
-                                                    <rect key="frame" x="127" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="116" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_blue_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQQ-3S-rSl">
-                                                    <rect key="frame" x="181" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="166" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_green_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VV-Rh-w2A">
-                                                    <rect key="frame" x="235" y="11" width="40" height="22"/>
+                                                    <rect key="frame" x="216" y="11" width="40" height="22"/>
                                                     <state key="normal" image="bh_color_purple_normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -530,6 +526,30 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="RvQ-Iy-dzC" userLabel="完成">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1je-6S-LC3">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1je-6S-LC3" id="mOL-AJ-Cu0">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DR4-DU-13a">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                                    <state key="normal" title="完成">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DR4-DU-13a" firstAttribute="leading" secondItem="mOL-AJ-Cu0" secondAttribute="leadingMargin" constant="-8" id="dlN-Zu-kq4"/>
+                                                <constraint firstItem="DR4-DU-13a" firstAttribute="top" secondItem="mOL-AJ-Cu0" secondAttribute="topMargin" constant="-8" id="m8k-Gf-25m"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="DR4-DU-13a" secondAttribute="bottom" constant="-8" id="oTv-Zs-HYf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DR4-DU-13a" secondAttribute="trailing" constant="-8" id="yf0-by-Wrk"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -1009,6 +1029,30 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="zoA-lx-CCa" userLabel="完成">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="X8t-Js-mOj">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X8t-Js-mOj" id="nj0-LL-B5d">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTi-LD-hi4">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                                    <state key="normal" title="完成">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="yTi-LD-hi4" secondAttribute="trailing" constant="-8" id="LPI-Tf-06Z"/>
+                                                <constraint firstItem="yTi-LD-hi4" firstAttribute="top" secondItem="nj0-LL-B5d" secondAttribute="topMargin" constant="-8" id="dOw-EY-xxo"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="yTi-LD-hi4" secondAttribute="bottom" constant="-8" id="kYy-db-Pb7"/>
+                                                <constraint firstItem="yTi-LD-hi4" firstAttribute="leading" secondItem="nj0-LL-B5d" secondAttribute="leadingMargin" constant="-8" id="uuy-jZ-AMv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="yYx-nt-Ms9" id="GKn-ia-GZn"/>
@@ -1114,6 +1158,30 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="fY9-Wg-jlI" userLabel="完成">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0Wa-aG-eDj">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Wa-aG-eDj" id="DpV-bU-3xG">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TbY-8h-RLE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                                    <state key="normal" title="完成">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="TbY-8h-RLE" firstAttribute="leading" secondItem="DpV-bU-3xG" secondAttribute="leadingMargin" constant="-8" id="0KD-mU-Am3"/>
+                                                <constraint firstItem="TbY-8h-RLE" firstAttribute="top" secondItem="DpV-bU-3xG" secondAttribute="topMargin" constant="-8" id="9jG-FZ-fj3"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="TbY-8h-RLE" secondAttribute="bottom" constant="-8" id="Eme-SM-WTh"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="TbY-8h-RLE" secondAttribute="trailing" constant="-8" id="JdA-Xh-ta4"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>

@@ -106,19 +106,143 @@
                     <color key="textColor" red="1" green="0.41419463909999998" blue="0.2229029126" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="e7O-iw-iiX" userLabel="draw">
+                    <rect key="frame" x="0.0" y="206" width="315" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="hj1-EW-FMG"/>
+                        <barButtonItem tag="2001" title="粗细" id="qeY-Fu-Mgn">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="GCM-bo-PRM"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="jjf-mn-T1C"/>
+                        <barButtonItem tag="2002" title="颜色" id="jc7-2I-xKE">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="wMr-aI-t2J"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3IC-h5-nb0"/>
+                        <barButtonItem tag="2003" title="上一步" id="mgV-m7-kKt">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="Q1o-K8-P7E"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="yMO-JM-QFt"/>
+                        <barButtonItem tag="2004" title="下一步" id="jfl-Ic-em8">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="Ml5-P1-JaG"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ha3-4h-ao9"/>
+                        <barButtonItem tag="2005" title="保存" id="8jt-v7-6Vv">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="PJy-lW-VOa"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Xhd-b0-oAp"/>
+                        <barButtonItem tag="2006" title="完成" id="5g9-4n-JHP">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="B4y-8E-lFk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="iBX-ha-MVL"/>
+                        <barButtonItem tag="2007" title="取消" id="yAo-bU-pBd" userLabel="取消">
+                            <connections>
+                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="OJ1-XS-6KF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="bG6-ew-LqV"/>
+                    </items>
+                </toolbar>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="hZA-Sn-zsE" userLabel="cuxi">
+                    <rect key="frame" x="0.0" y="206" width="315" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="1MZ-Q9-U91"/>
+                        <barButtonItem title="1" id="oov-ZX-6wm"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="VA9-wh-3W6"/>
+                        <barButtonItem tag="3001" style="plain" id="yB7-GG-8JO">
+                            <slider key="customView" opaque="NO" tag="3003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="j44-WJ-CZY">
+                                <rect key="frame" x="14" y="7" width="189" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                            <connections>
+                                <action selector="widthTool:" destination="g1L-6G-ZfW" id="EGf-Cp-RoE"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="MmX-F6-gwB"/>
+                        <barButtonItem title="10" id="D4r-ZT-hdd"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="dBR-H8-vIi"/>
+                        <barButtonItem tag="3002" title="完成" style="done" id="pI0-tg-aLv">
+                            <connections>
+                                <action selector="widthTool:" destination="g1L-6G-ZfW" id="VXB-F1-MLC"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="vO3-an-TKz"/>
+                    </items>
+                </toolbar>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="OjE-i7-nUi" userLabel="颜色">
+                    <rect key="frame" x="0.0" y="206" width="315" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JqL-vY-WvX"/>
+                        <barButtonItem tag="4001" image="bh_color_red_normal" id="gPn-T8-wJ4">
+                            <color key="tintColor" red="1" green="0.063398868020889787" blue="0.097716874759746331" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="colorTool:" destination="g1L-6G-ZfW" id="LYP-Ew-gGb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="VOl-ot-3Id"/>
+                        <barButtonItem tag="4002" image="bh_color_blue_click" id="n00-1f-4cn">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="colorTool:" destination="g1L-6G-ZfW" id="aFo-du-MSA"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="AUP-3s-HJX"/>
+                        <barButtonItem tag="4003" image="bh_color_green_click" id="3Lm-vO-JJD">
+                            <color key="tintColor" red="0.04000288631119342" green="1" blue="0.049257655548252788" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="colorTool:" destination="g1L-6G-ZfW" id="Xz9-D5-hG3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="50a-k5-fj2"/>
+                        <barButtonItem tag="4004" image="bh_color_purple_normal" id="Ylo-Dy-Sc6">
+                            <color key="tintColor" red="0.90413259409981594" green="0.18192097851851852" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="colorTool:" destination="g1L-6G-ZfW" id="PpH-vz-dTh"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="AIo-Ex-TIY"/>
+                        <barButtonItem tag="4005" title="完成" id="34d-Ji-RNB">
+                            <connections>
+                                <action selector="colorTool:" destination="g1L-6G-ZfW" id="M5y-lh-A2f"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Z9o-NP-3Le"/>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="colorTool" destination="OjE-i7-nUi" id="U28-ij-igo"/>
+                <outlet property="drawTool" destination="e7O-iw-iiX" id="PlR-hb-qJ8"/>
                 <outlet property="locationBtn" destination="k74-ct-vhm" id="afq-Bp-6bH"/>
                 <outlet property="mapView" destination="kkN-D3-erp" id="E7L-Uv-zyW"/>
                 <outlet property="toolLabel" destination="pAs-hF-KjL" id="dUr-5K-wiF"/>
                 <outlet property="toolView" destination="3k4-qg-hj1" id="uUn-af-qnc"/>
+                <outlet property="widthTool" destination="hZA-Sn-zsE" id="JCH-nC-JCE"/>
             </connections>
         </view>
     </objects>
     <resources>
+        <image name="bh_color_blue_click" width="47" height="26"/>
+        <image name="bh_color_green_click" width="47" height="26"/>
+        <image name="bh_color_purple_normal" width="47" height="26"/>
+        <image name="bh_color_red_normal" width="47" height="26"/>
         <image name="btnBg" width="40" height="40"/>
         <image name="delete_line_click" width="22" height="22"/>
         <image name="gesture_search_click" width="22" height="22"/>

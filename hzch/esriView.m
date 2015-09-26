@@ -17,11 +17,13 @@
     double _area;
     AGSSRUnit _distanceUnit;
     AGSAreaUnits _areaUnit;
-
+    NSInteger _drawWidth;
+    UIColor *_drawColor;
 }
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
 @property (nonatomic) BOOL isDrawingPolygon;
+@property (nonatomic) NSInteger toolTag;
 @property (nonatomic, strong) CanvasView *canvasView;
 
 @end
@@ -294,53 +296,71 @@
 }
 
 //画图
--(void)addSketchLayer{
+-(void)addSketchGhLayer{
     self.sketchGhLayer= [[AGSGraphicsLayer alloc]init];
-    if([self hasLayer:@"Sketch layer"])
+    if([self hasLayer:@"sketchGhLayer"])
     {
-        [_mapView removeMapLayerWithName:@"Sketch layer"];
+        [_mapView removeMapLayerWithName:@"sketchGhLayer"];
     }
-    [self.mapView addMapLayer:self.sketchGhLayer withName:@"Sketch layer"];
+    [self.mapView addMapLayer:self.sketchGhLayer withName:@"sketchGhLayer"];
+}
+
+- (void)addSketchLayer{
+    self.sketchLayer = [AGSSketchGraphicsLayer graphicsLayer];
+    if([self hasLayer:@"sketchLayer"])
+    {
+        [_mapView removeMapLayerWithName:@"sketchLayer"];
+    }
+    
+    [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+    self.mapView.touchDelegate = self.sketchLayer;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondToGeomChanged:) name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
 }
 
 - (void)hiddenToolView{
     if(_toolView && (!_toolView.hidden || !_toolLabel.hidden)){
         [_toolView setHidden:YES];
         [_toolLabel setHidden:YES];
-        self.sketchLayer = nil;
-        self.sketchLayer.geometry = nil;
-        self.mapView.touchDelegate = nil;
-        [self.mapView removeMapLayerWithName:@"sketchLayer"];
-        [self.mapView.callout removeFromSuperview];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
+        [_drawTool setHidden:YES];
+        [_colorTool setHidden:YES];
+        [_widthTool setHidden:YES];
+        [self clearToolAll];
     }
+}
+
+- (void)clearToolAll{
+    self.sketchLayer = nil;
+    self.sketchGhLayer = nil;
+    self.canvasView.image = nil;
+    [self.canvasView removeFromSuperview];
+    [self.coordinates removeAllObjects];
+    self.sketchLayer.geometry = nil;
+    self.mapView.touchDelegate = nil;
+    self.isDrawingPolygon = NO;
+    if([self hasLayer:@"sketchLayer"])
+    {
+        [_mapView removeMapLayerWithName:@"sketchLayer"];
+    }
+    if([self hasLayer:@"sketchGhLayer"])
+    {
+        [_mapView removeMapLayerWithName:@"sketchGhLayer"];
+    }
+    [self.mapView.callout removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
 }
 
 - (void)showToolView{
     if(!_toolView.hidden || !_toolLabel.hidden){
-        [_toolView setHidden:YES];
-        [_toolLabel setHidden:YES];
-        self.sketchLayer = nil;
-        self.sketchLayer.geometry = nil;
-        self.mapView.touchDelegate = nil;
-        [self.mapView removeMapLayerWithName:@"sketchLayer"];
-        [self.mapView.callout removeFromSuperview];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
+        [self hiddenToolView];
     }else{
         [_toolView setHidden:NO];
         [_toolLabel setHidden:NO];
-        self.sketchLayer = [AGSSketchGraphicsLayer graphicsLayer];
-        if([self hasLayer:@"sketchLayer"])
-        {
-            [_mapView removeMapLayerWithName:@"sketchLayer"];
-        }
-        
-        [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
-        self.mapView.touchDelegate = self.sketchLayer;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondToGeomChanged:) name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
+        self.toolLabel.text = @"请选择使用工具";
         // Set the default measures and units
         _distance = 0;
         _area = 0;
+        _drawWidth = 2.0;
+        _drawColor = [UIColor redColor];
         _distanceUnit = AGSSRUnitKilometer;
         _areaUnit = AGSAreaUnitsSquareKilometers;
     }
@@ -621,13 +641,11 @@
         return;
     }
     // Update the distance and area whenever the geometry changes
-    if ([sketchGeometry isKindOfClass:[AGSMutablePolyline class]]) {
+    if ([sketchGeometry isKindOfClass:[AGSMutablePolyline class]] && self.toolTag == 1001 ) {
         [self updateDistance:_distanceUnit];
     }
     else if ([sketchGeometry isKindOfClass:[AGSMutablePolygon class]]){
         [self updateArea:_areaUnit];
-    }else if ([sketchGeometry isKindOfClass:[AGSMutablePoint class]]){
-        
     }
 }
 
@@ -664,9 +682,12 @@
 #pragma mark - toolDelegate
 - (IBAction)tool:(id)sender{
     UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
-    switch (btnItem.tag) {
+    self.toolTag = btnItem.tag;
+    self.drawTool.hidden = YES;
+    switch (self.toolTag) {
         case 1001:
         {
+            [self addSketchLayer];
             self.toolLabel.text = @"请在地图上点击画线测量距离";
             self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
@@ -681,6 +702,7 @@
             
         case 1002:
         {
+            [self addSketchLayer];
             self.toolLabel.text = @"请在地图上点击画面测量面积";
             self.sketchLayer.geometry = [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
@@ -694,8 +716,13 @@
             
         case 1003:
         {
+            [self addSketchLayer];
+            [self addSketchGhLayer];
             self.toolLabel.text = @"请在地图上点击开始标绘";
-            
+            self.drawTool.hidden = NO;
+            self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+            self.mapView.touchDelegate = self.sketchLayer;
+            [self.sketchLayer.undoManager removeAllActions];
         }
             break;
             
@@ -703,7 +730,7 @@
         {
             self.toolLabel.text = @"请在地图上用手势画框查询";
             [self didTouchUpInsideDrawButton];
-            [self addSketchLayer];
+            [self addSketchGhLayer];
         }
             break;
         case 1005:
@@ -716,16 +743,132 @@
             break;
         case 1006:
         {
-            self.toolLabel.text = @"清空所有操作";
-            [self.sketchLayer clear];
-            if([self hasLayer:@"Sketch layer"])
-            {
-                [_mapView removeMapLayerWithName:@"Sketch layer"];
-            }
-            [self.mapView.callout removeFromSuperview];
+            self.toolLabel.text = @"清空所有工具栏操作";
+            [self clearToolAll];
         }
             break;
             
+        default:
+            break;
+    }
+}
+
+- (IBAction)toolDraw:(id)sender{
+    UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
+    switch (btnItem.tag) {
+        case 2001:
+        {
+            self.widthTool.hidden = NO;
+            self.toolLabel.text = @"请选择标绘的线条宽度";
+            [self bringSubviewToFront:self.widthTool];
+        }
+            break;
+            
+        case 2002:
+        {
+            self.colorTool.hidden = NO;
+            self.toolLabel.text = @"请选择标绘的线条颜色";
+            [self bringSubviewToFront:self.colorTool];
+        }
+            break;
+            
+        case 2003:
+        {
+            if([self.sketchLayer.undoManager canUndo]) //extra check, just to be sure
+                [self.sketchLayer.undoManager undo];
+        }
+            break;
+            
+        case 2004:
+        {
+            if([self.sketchLayer.undoManager canRedo]) //extra check, just to be sure
+                [self.sketchLayer.undoManager redo];
+        }
+            break;
+        case 2005:
+        {
+            [self didSaveDrawing];
+        }
+            break;
+        case 2006:
+        {
+            [self didSaveDrawing];
+            self.drawTool.hidden = YES;
+        }
+            break;
+        case 2007:
+        {
+            self.drawTool.hidden = YES;
+            [self.sketchLayer clear];
+            [self.sketchLayer.undoManager removeAllActions];
+            if([self hasLayer:@"sketchGhLayer"])
+            {
+                [_mapView removeMapLayerWithName:@"sketchGhLayer"];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (IBAction)colorTool:(id)sender{
+    UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
+    switch (btnItem.tag) {
+        case 4001:
+        {
+            
+        }
+            break;
+            
+        case 4002:
+        {
+            
+        }
+            break;
+            
+        case 4003:
+        {
+            
+        }
+            break;
+            
+        case 4004:
+        {
+            
+        }
+            break;
+        case 4005:
+        {
+            self.colorTool.hidden = YES;
+            self.toolLabel.text = @"请在地图上点击开始标绘";
+        }
+            break;
+        default:
+            break;
+    }
+}
+- (IBAction)widthTool:(id)sender{
+    UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
+    switch (btnItem.tag) {
+        case 3001:
+        {
+            
+        }
+            break;
+            
+        case 3002:
+        {
+            self.widthTool.hidden = YES;
+            self.toolLabel.text = @"请在地图上点击开始标绘";
+        }
+            break;
+            
+        case 3003:
+        {
+            
+        }
+            break;
         default:
             break;
     }
@@ -737,7 +880,7 @@
         
         self.isDrawingPolygon = YES;
         [self.coordinates removeAllObjects];
-        [self addSubview:self.canvasView];
+        [self.mapView addSubview:self.canvasView];
         
     } else {
         
@@ -765,8 +908,23 @@
         self.isDrawingPolygon = NO;
         self.canvasView.image = nil;
         [self.canvasView removeFromSuperview];
-        
+        self.toolLabel.text = @"请重新点击手势按钮";
     }
+}
+
+- (void)didSaveDrawing
+{
+    AGSGeometry* sketchGeometry = [self.sketchLayer.geometry copy];
+    AGSSimpleLineSymbol
+    *outerSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+    outerSymbol.color
+    = _drawColor;
+    outerSymbol.width = _drawWidth;
+    AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
+    [self.sketchGhLayer addGraphic:graphic];
+    [self.sketchGhLayer refresh];
+    [self.sketchLayer clear];
+    [self.sketchLayer.undoManager removeAllActions];
 }
 - (BOOL)hasLayer:(NSString *)name{
     for(AGSLayer *layer in self.mapView.mapLayers){
@@ -808,7 +966,8 @@
 {
     CGPoint location = [touch locationInView:self.mapView];
     [self.coordinates addObject:[self.mapView toMapPoint:location]];
-    [self didTouchUpInsideDrawButton];
-    
+    if(self.toolTag == 1004){
+        [self didTouchUpInsideDrawButton];
+    }
 }
 @end

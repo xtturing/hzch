@@ -52,6 +52,9 @@ CLLocationManagerDelegate>
 @property (nonatomic,strong)AGSGraphicsLayer *sketchGhLayer;
 
 @property(nonatomic,weak) IBOutlet UIToolbar *toolView;
+@property(nonatomic,weak) IBOutlet UIToolbar *drawTool;
+@property(nonatomic,weak) IBOutlet UIToolbar *widthTool;
+@property(nonatomic,weak) IBOutlet UIToolbar *colorTool;
 @property(nonatomic,weak) IBOutlet UILabel *toolLabel;
 @property (nonatomic, strong) AGSSketchGraphicsLayer *sketchLayer;
 
@@ -61,6 +64,9 @@ CLLocationManagerDelegate>
 - (IBAction)zoomDownAct:(id)sender;
 - (IBAction)locationAct:(id)sender;
 - (IBAction)tool:(id)sender;
+- (IBAction)toolDraw:(id)sender;
+- (IBAction)widthTool:(id)sender;
+- (IBAction)colorTool:(id)sender;
 -(void)addCustLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addSketchLayer;
