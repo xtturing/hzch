@@ -681,6 +681,7 @@
 }
 #pragma mark - toolDelegate
 - (IBAction)tool:(id)sender{
+    [self clearToolAll];
     UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
     self.toolTag = btnItem.tag;
     self.drawTool.hidden = YES;
@@ -729,7 +730,8 @@
         case 1004:
         {
             self.toolLabel.text = @"请在地图上用手势画框查询";
-            [self didTouchUpInsideDrawButton];
+            [self.coordinates removeAllObjects];
+            [self.mapView addSubview:self.canvasView];
             [self addSketchGhLayer];
         }
             break;
@@ -744,7 +746,6 @@
         case 1006:
         {
             self.toolLabel.text = @"清空所有工具栏操作";
-            [self clearToolAll];
         }
             break;
             
@@ -876,40 +877,30 @@
 
 - (void)didTouchUpInsideDrawButton
 {
-    if(self.isDrawingPolygon == NO) {
-        
-        self.isDrawingPolygon = YES;
-        [self.coordinates removeAllObjects];
-        [self.mapView addSubview:self.canvasView];
-        
-    } else {
-        
-        NSInteger numberOfPoints = [self.coordinates count];
-        
-        if (numberOfPoints > 2)
-        {
-            AGSSimpleFillSymbol
-            *outerSymbol = [AGSSimpleFillSymbol simpleFillSymbol];
-            outerSymbol.color
-            = [[UIColor yellowColor] colorWithAlphaComponent:0.25];
-            outerSymbol.outline.color
-            = [UIColor darkGrayColor];
-            AGSMutablePolygon *polyon =  [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
-            [polyon addRingToPolygon];
-            for (AGSPoint *point in self.coordinates) {
-                [polyon addPointToRing:point];
-            }
-            
-            AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:polyon symbol:outerSymbol attributes:nil];
-            [self.sketchGhLayer addGraphic:graphic];
-            [self.sketchGhLayer refresh];
+    NSInteger numberOfPoints = [self.coordinates count];
+    
+    if (numberOfPoints > 2)
+    {
+        AGSSimpleFillSymbol
+        *outerSymbol = [AGSSimpleFillSymbol simpleFillSymbol];
+        outerSymbol.color
+        = [[UIColor yellowColor] colorWithAlphaComponent:0.25];
+        outerSymbol.outline.color
+        = [UIColor darkGrayColor];
+        AGSMutablePolygon *polyon =  [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
+        [polyon addRingToPolygon];
+        for (AGSPoint *point in self.coordinates) {
+            [polyon addPointToRing:point];
         }
         
-        self.isDrawingPolygon = NO;
-        self.canvasView.image = nil;
-        [self.canvasView removeFromSuperview];
-        self.toolLabel.text = @"请重新点击手势按钮";
+        AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:polyon symbol:outerSymbol attributes:nil];
+        [self.sketchGhLayer addGraphic:graphic];
+        [self.sketchGhLayer refresh];
     }
+    
+    self.isDrawingPolygon = NO;
+    self.canvasView.image = nil;
+    [self.coordinates removeAllObjects];
 }
 
 - (void)didSaveDrawing
