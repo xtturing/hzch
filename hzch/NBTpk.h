@@ -10,12 +10,15 @@
 #import "NSDictionaryAdditions.h"
 @interface NBTpk : NSObject
 
-@property (nonatomic, strong) NSString *lastupdatetime;
+@property (nonatomic, strong) NSString *tpkid;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *range;
-@property (nonatomic, strong) NSString *size;
-@property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *type;
+@property (nonatomic, strong) NSString *content;
+@property (nonatomic, strong) NSString *updatetime;
+@property (nonatomic, strong) NSString *news;
+@property (nonatomic, strong) NSString *tpkname;
+@property (nonatomic, strong) NSString *url;
+
 
 - (NBTpk *)initWithJsonDictionary:(NSDictionary*)dic;
 

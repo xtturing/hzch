@@ -10,20 +10,12 @@
 #import "StringUtil.h"
 #import "NSStringAdditions.h"
 
-#define HTTP_LOGIN_URL              @"http://27.223.74.180:8080/esys/plugin/urbanadmin"
-#define HTTP_POSTEVENT_URL          @"http://27.223.74.180:8080/esys/plugin/urbanadmin/publicUserSubmitEvent.htm"
-#define HTTP_SEARCH_HISTORY         @"http://27.223.74.180:8080/esys/plugin/urbanadmin/getHistory.htm"
-#define HTTP_APP_RAISE              @"http://27.223.74.180:8080/esys/plugin/urbanadmin/publicUserAppraise.htm"
+#define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
 
 #define REQUEST_TYPE          @"requestType"
 
 typedef enum {
-    AAPublicUserRegister = 0,
-    AAPublicUserLogin,
-    AAChangePassword,
-    AAPostEvent,
-    AASearchEventHistory,
-    AAAppRaise,
+    AALoadTPK = 0,
     //继续添加
     
 }DataRequestType;
@@ -38,18 +30,7 @@ typedef enum {
 
 - (void)didGetFailed;
 
-- (void)didGetPublicUserRegister:(BOOL)success;
-
-- (void)didGetPublicUserLogin:(BOOL)success;
-
-- (void)didGetChangePassword:(BOOL)success;
-
-- (void)didPostEvent:(BOOL)success;
-
-- (void)didSearchEventHistory:(NSDictionary *)list;
-
-- (void)didGetAppRaise:(BOOL)success;
-
+- (void)didLoadTPK:(NSMutableDictionary *)Dic;
 //继续添加
 @end
 
@@ -63,23 +44,8 @@ typedef enum {
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 
-- (BOOL)isRunning;
-- (void)start;
-- (void)pause;
-- (void)resume;
-- (void)cancel;
+- (void)letLoadTPK;
 
-- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd;
-
-- (void)letPublicUserLogin:(NSString *)userName password:(NSString *)pwd;
-
-- (void)letChangePassword:(NSString *)userName password:(NSString *)pwd;
-
-- (void)letPostEvent:(NSString *)filePath fileName:(NSString *)fileName;
-
-- (void)letSearchEventHistory:(NSString *)uid;
-
-- (void)letAppRaise:(NSString *)uid withRaise:(NSString *)raise;
 
 //继续添加
 @end

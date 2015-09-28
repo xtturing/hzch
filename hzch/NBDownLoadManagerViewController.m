@@ -76,9 +76,9 @@
 {
     
     DownloadItem *findItem=[_tpkList objectForKey:[downItem.url description]];
-    if(findItem.tpk.title.length > 0 ){
-        cell.lblTitle.text=[findItem.tpk.title description];
-        cell.lblPercent.text=[NSString stringWithFormat:@"大小:%0.2fMB  进度:%0.2f%@",[findItem.tpk.size doubleValue]/(1024*1024),downItem.downloadPercent*100,@"%"];
+    if(findItem.tpk.content.length > 0 ){
+        cell.lblTitle.text=[findItem.tpk.content description];
+//        cell.lblPercent.text=[NSString stringWithFormat:@"大小:%0.2fMB  进度:%0.2f%@",[findItem.tpk.size doubleValue]/(1024*1024),downItem.downloadPercent*100,@"%"];
         [cell.btnOperate setTitle:downItem.downloadStateDescription forState:UIControlStateNormal];
     }else{
         cell.lblTitle.text=[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1];

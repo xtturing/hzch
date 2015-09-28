@@ -11,6 +11,7 @@
 #import "ASIFormDataRequest.h"
 #import "XMLReader.h"
 #import "NBTpk.h"
+#import "NBSpatialData.h"
 #import "DownloadItem.h"
 #import "DownloadManager.h"
 
@@ -86,79 +87,18 @@ static dataHttpManager * instance=nil;
 	}
 }
 #pragma mark - Http Operate
-- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@/publicUserRegister.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
+- (void)letLoadTPK{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_LOAD_TPK];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     [request setTimeOutSeconds:TIMEOUT];
     [request setResponseEncoding:NSUTF8StringEncoding];
     NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AAPublicUserRegister];
+    [self setGetUserInfo:request withRequestType:AALoadTPK];
     [_requestQueue addOperation:request];
 }
 
-- (void)letPublicUserLogin:(NSString *)userName password:(NSString *)pwd{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@/publicUserValidate.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AAPublicUserLogin];
-    [_requestQueue addOperation:request];
-}
-
-- (void)letChangePassword:(NSString *)userName password:(NSString *)pwd{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@/changePassword.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AAChangePassword];
-    [_requestQueue addOperation:request];
-}
-
-- (void)letPostEvent:(NSString *)filePath fileName:(NSString *)fileName{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_POSTEVENT_URL];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setData:[NSData dataWithContentsOfFile:filePath] withFileName:fileName andContentType:@"multipart/form-data" forKey:@"file"];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setDelegate:self];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setPostUserInfo:request withRequestType:AAPostEvent];
-    [request startAsynchronous];
-}
-
-- (void)letSearchEventHistory:(NSString *)uid{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@?uid=%@",HTTP_SEARCH_HISTORY,uid];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AASearchEventHistory];
-    [_requestQueue addOperation:request];
-}
-
-- (void)letAppRaise:(NSString *)uid withRaise:(NSString *)raise{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@?jlbs=%@&sjpy=%@",HTTP_APP_RAISE,uid,[raise stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AAAppRaise];
-    [_requestQueue addOperation:request];
-}
 //继续添加
 
 #pragma mark - Operate queue
@@ -216,60 +156,29 @@ static dataHttpManager * instance=nil;
         userArr = (NSArray*)returnObject;
     }
     
-    if(requestType == AAPublicUserRegister){
-        BOOL success = NO;
-        if([responseString isEqualToString:@"0"]){
-            success = YES;
+    if(requestType == AALoadTPK && userInfo){
+        NSString * responseString = [[userInfo objectForKey:@"string"] objectForKey:@"text"];
+        id  returnObject = [parser objectWithString:responseString];
+        NSArray *tpklist = [[[returnObject objectForKey:@"all"] objectForKey:@"allTPK"] objectForKey:@"tpk"];
+        NSArray *dataList = [[[returnObject objectForKey:@"all"] objectForKey:@"allSpatialData"] objectForKey:@"SpatialData"];
+        NSMutableArray *tpkArr = [NSMutableArray arrayWithCapacity:0];
+        NSMutableArray *dataArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *tpkdic in tpklist){
+            NBTpk *tpk = [[NBTpk alloc] initWithJsonDictionary:tpkdic];
+            [tpkArr addObject:tpk];
         }
-        if ([_delegate respondsToSelector:@selector(didGetPublicUserRegister:)]) {
-            [_delegate didGetPublicUserRegister:success];
+        for(NSDictionary *datadic in dataList){
+            NBSpatialData *data = [[NBSpatialData alloc] initWithJsonDictionary:datadic];
+            [dataArr addObject:data];
         }
-    }
-    if(requestType == AAPublicUserLogin){
-        BOOL success = NO;
-        if([responseString isEqualToString:@"-1"]){
-            success = NO;
-        }else{
-            success = YES;
-        }
-        if ([_delegate respondsToSelector:@selector(didGetPublicUserLogin:)]) {
-            [_delegate didGetPublicUserLogin:success];
-        }
-    }
-    if(requestType == AAChangePassword){
-        BOOL success = NO;
-        if([responseString isEqualToString:@"0"]){
-            success = YES;
-        }
-        if ([_delegate respondsToSelector:@selector(didGetChangePassword:)]) {
-            [_delegate didGetChangePassword:success];
+        NSMutableDictionary  *resultDic = [NSMutableDictionary dictionaryWithCapacity:2];
+        [resultDic setObject:tpkArr forKey:@"tpk"];
+        [resultDic setObject:dataArr forKey:@"data"];
+        if ([_delegate respondsToSelector:@selector(didLoadTPK:)]) {
+            [_delegate didLoadTPK:resultDic];
         }
     }
-    
-    if(requestType == AAPostEvent){
-        BOOL success = NO;
-        if([responseString isEqualToString:@"0"]){
-            success = YES;
-        }
-        if ([_delegate respondsToSelector:@selector(didPostEvent:)]) {
-            [_delegate didPostEvent:success];
-        }
-    }
-    if(requestType == AAAppRaise){
-        BOOL success = NO;
-        if([responseString isEqualToString:@"0"]){
-            success = YES;
-        }
-        if ([_delegate respondsToSelector:@selector(didGetAppRaise:)]) {
-            [_delegate didGetAppRaise:success];
-        }
-    }
-    if(requestType == AASearchEventHistory){
-        if ([_delegate respondsToSelector:@selector(didSearchEventHistory:)]) {
-            [_delegate didSearchEventHistory:userInfo];
-        }
-    }
-    
+
     //继续添加
     
     

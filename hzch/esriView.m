@@ -789,6 +789,7 @@
         case 2005:
         {
             [self didSaveDrawing];
+            self.drawTool.hidden = YES;
         }
             break;
         case 2006:
