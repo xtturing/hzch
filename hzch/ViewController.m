@@ -87,6 +87,18 @@
     }];
 }
 
+- (void)didSearch{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"searchNavigationViewController"] animated:YES completion:^{
+        
+    }];
+}
+
+#pragma mark UISearchBarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    [self didSearch];
+    return NO;
+}
 /*
 #pragma mark - Navigation
 

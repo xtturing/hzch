@@ -14,6 +14,7 @@
 #import "NBSpatialData.h"
 #import "DownloadItem.h"
 #import "DownloadManager.h"
+#import "NBDepartMent.h"
 
 #define TIMEOUT 30
 
@@ -99,6 +100,18 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 
+- (void)letGetCatalogDepartment{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_DEPARTMENT];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AACatalogDepartment];
+    [_requestQueue addOperation:request];
+}
+
 //继续添加
 
 #pragma mark - Operate queue
@@ -176,6 +189,18 @@ static dataHttpManager * instance=nil;
         [resultDic setObject:dataArr forKey:@"data"];
         if ([_delegate respondsToSelector:@selector(didLoadTPK:)]) {
             [_delegate didLoadTPK:resultDic];
+        }
+    }
+    
+    if(requestType == AACatalogDepartment && userInfo){
+        NSArray *result = [userInfo objectForKey:@"result"];
+        NSMutableArray *departArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBDepartMent *depart = [[NBDepartMent alloc] initWithJsonDictionary:dataDic];
+            [departArr addObject:depart];
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetCatalogDepartment:)]) {
+            [_delegate didGetCatalogDepartment:departArr];
         }
     }
 

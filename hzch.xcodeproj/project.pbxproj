@@ -18,6 +18,9 @@
 		410A3AC41BAB13830025206E /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410A3AC31BAB13830025206E /* image.xcassets */; };
 		412B398E1BB97B1700DD9151 /* NBSpatialData.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B398D1BB97B1700DD9151 /* NBSpatialData.m */; };
 		41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41398EE81BB45139008E9222 /* LineSearchTableViewController.m */; };
+		413C78FC1BBAE1D3005217F3 /* NBSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413C78FB1BBAE1D3005217F3 /* NBSearchTableViewController.m */; };
+		413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413C78FE1BBAE9D7005217F3 /* ResoureTableViewController.m */; };
+		413C79021BBAEEEC005217F3 /* NBDepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 413C79011BBAEEEC005217F3 /* NBDepartMent.m */; };
 		413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE31BAF02CC00D972DB /* DowningCell.m */; };
 		413D7DEC1BAF02CC00D972DB /* DowningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 413D7DE41BAF02CC00D972DB /* DowningCell.xib */; };
 		413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */; };
@@ -114,6 +117,12 @@
 		412B398D1BB97B1700DD9151 /* NBSpatialData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSpatialData.m; sourceTree = "<group>"; };
 		41398EE71BB45139008E9222 /* LineSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSearchTableViewController.h; sourceTree = "<group>"; };
 		41398EE81BB45139008E9222 /* LineSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineSearchTableViewController.m; sourceTree = "<group>"; };
+		413C78FA1BBAE1D3005217F3 /* NBSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearchTableViewController.h; sourceTree = "<group>"; };
+		413C78FB1BBAE1D3005217F3 /* NBSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSearchTableViewController.m; sourceTree = "<group>"; };
+		413C78FD1BBAE9D7005217F3 /* ResoureTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoureTableViewController.h; sourceTree = "<group>"; };
+		413C78FE1BBAE9D7005217F3 /* ResoureTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoureTableViewController.m; sourceTree = "<group>"; };
+		413C79001BBAEEEC005217F3 /* NBDepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDepartMent.h; sourceTree = "<group>"; };
+		413C79011BBAEEEC005217F3 /* NBDepartMent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDepartMent.m; sourceTree = "<group>"; };
 		413D7DE21BAF02CC00D972DB /* DowningCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DowningCell.h; sourceTree = "<group>"; };
 		413D7DE31BAF02CC00D972DB /* DowningCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DowningCell.m; sourceTree = "<group>"; };
 		413D7DE41BAF02CC00D972DB /* DowningCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DowningCell.xib; sourceTree = "<group>"; };
@@ -284,6 +293,7 @@
 		410555EE1B9C729400B208E8 /* hzch */ = {
 			isa = PBXGroup;
 			children = (
+				413C78F91BBAE19A005217F3 /* search */,
 				417D01B71BA1E4CA00ADD996 /* dataManager */,
 				4106DFE71BA1D78D00EF997D /* categary */,
 				416876951BA1D02500119267 /* map */,
@@ -336,6 +346,15 @@
 				4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */,
 			);
 			name = categary;
+			sourceTree = "<group>";
+		};
+		413C78F91BBAE19A005217F3 /* search */ = {
+			isa = PBXGroup;
+			children = (
+				413C78FA1BBAE1D3005217F3 /* NBSearchTableViewController.h */,
+				413C78FB1BBAE1D3005217F3 /* NBSearchTableViewController.m */,
+			);
+			name = search;
 			sourceTree = "<group>";
 		};
 		413D7DF11BAF02EC00D972DB /* DownloadHelper */ = {
@@ -444,6 +463,10 @@
 				415A61381BADB4E8001FA3FB /* RADataObject.m */,
 				415A61391BADB4E8001FA3FB /* RAViewController.h */,
 				415A613A1BADB4E8001FA3FB /* RAViewController.m */,
+				413C78FD1BBAE9D7005217F3 /* ResoureTableViewController.h */,
+				413C78FE1BBAE9D7005217F3 /* ResoureTableViewController.m */,
+				413C79001BBAEEEC005217F3 /* NBDepartMent.h */,
+				413C79011BBAEEEC005217F3 /* NBDepartMent.m */,
 			);
 			name = resourceCenter;
 			sourceTree = "<group>";
@@ -678,10 +701,12 @@
 				41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */,
 				41E425E01BA86A56009C0581 /* NSConvert.m in Sources */,
 				410555F51B9C729400B208E8 /* AppDelegate.m in Sources */,
+				413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */,
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,
 				41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */,
+				413C79021BBAEEEC005217F3 /* NBDepartMent.m in Sources */,
 				415A61351BADB4C9001FA3FB /* RATreeNodeInfo.m in Sources */,
 				413D7E211BAF068C00D972DB /* DownloadItemEntity.m in Sources */,
 				413D7E221BAF068C00D972DB /* DownloadManager.m in Sources */,
@@ -698,6 +723,7 @@
 				415A612F1BADB4C9001FA3FB /* RATreeView+TableViewDataSource.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
 				413D7E2A1BAF08ED00D972DB /* dataHttpManager.m in Sources */,
+				413C78FC1BBAE1D3005217F3 /* NBSearchTableViewController.m in Sources */,
 				415A613C1BADB4E8001FA3FB /* RAViewController.m in Sources */,
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
 				413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */,

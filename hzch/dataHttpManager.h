@@ -11,11 +11,13 @@
 #import "NSStringAdditions.h"
 
 #define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
-
+#define HTTP_DEPARTMENT        @"http://ditu.zj.cn/catalog?parentid=1&catalogtheme=catalog_department&request=list&page=1&start=0&limit=1000"
+#define HTTP_GOVMENT           @"http://ditu.zj.cn/catalog?parentid=2&catalogtheme=catalog_affairs&request=list&page=1&start=0&limit=20"
 #define REQUEST_TYPE          @"requestType"
 
 typedef enum {
     AALoadTPK = 0,
+    AACatalogDepartment,
     //继续添加
     
 }DataRequestType;
@@ -31,6 +33,8 @@ typedef enum {
 - (void)didGetFailed;
 
 - (void)didLoadTPK:(NSMutableDictionary *)Dic;
+
+- (void)didGetCatalogDepartment:(NSArray *)departmentList;
 //继续添加
 @end
 
@@ -45,6 +49,7 @@ typedef enum {
 - (id)initWithDelegate;
 
 - (void)letLoadTPK;
+- (void)letGetCatalogDepartment;
 
 
 //继续添加

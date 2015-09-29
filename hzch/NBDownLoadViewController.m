@@ -54,6 +54,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [dataHttpManager getInstance].delegate =  nil;
 }
 - (void)dealloc{
