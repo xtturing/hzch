@@ -15,6 +15,8 @@
 #import "DownloadItem.h"
 #import "DownloadManager.h"
 #import "NBDepartMent.h"
+#import "NBGovment.h"
+#import "NBSearch.h"
 
 #define TIMEOUT 30
 
@@ -112,6 +114,54 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 
+- (void)letGetCatalogDepartmentDetail:(NSInteger)catalogID{
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_DEPARTMENT_DETAIL,catalogID];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AACatalogDepartmentDetail];
+    [_requestQueue addOperation:request];
+}
+
+- (void)letGetCatalogGovment{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_GOVMENT];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AACatalogGovment];
+    [_requestQueue addOperation:request];
+}
+
+- (void)letGetCatalogGovmentDetail:(NSInteger)catalogID{
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_DEPARTMENT_DETAIL,catalogID];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AACatalogGovmentDetail];
+    [_requestQueue addOperation:request];
+}
+
+- (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size{
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_SEARCH,searchText,page,size];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AASearchText];
+    [_requestQueue addOperation:request];
+}
+
 //继续添加
 
 #pragma mark - Operate queue
@@ -203,10 +253,59 @@ static dataHttpManager * instance=nil;
             [_delegate didGetCatalogDepartment:departArr];
         }
     }
-
+    if(requestType == AACatalogDepartmentDetail && userInfo){
+        NSArray *result = [userInfo objectForKey:@"parents"];
+        NSMutableArray *departArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBDepartMent *depart = [[NBDepartMent alloc] initWithJsonDictionary:dataDic];
+            [departArr addObject:depart];
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetCatalogDepartmentDetail:)]) {
+            [_delegate didGetCatalogDepartmentDetail:departArr];
+        }
+    }
+    if(requestType == AACatalogGovment && userInfo){
+        NSArray *result = [userInfo objectForKey:@"results"];
+        NSMutableArray *govtArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBGovment *gov = [[NBGovment alloc] initWithJsonDictionary:dataDic];
+            [govtArr addObject:gov];
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetCatalogGovment:)]) {
+            [_delegate didGetCatalogGovment:govtArr];
+        }
+    }
+    if(requestType == AACatalogGovmentDetail && userInfo){
+        NSArray *result = [userInfo objectForKey:@"parents"];
+        NSMutableArray *govtArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBGovment *gov = [[NBGovment alloc] initWithJsonDictionary:dataDic];
+            [govtArr addObject:gov];
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetCatalogGovmentDetail:)]) {
+            [_delegate didGetCatalogGovmentDetail:govtArr];
+        }
+    }
+    if(requestType == AASearchText && userInfo){
+        NSArray *result = [userInfo objectForKey:@"results"];
+        NSMutableArray *searchArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBSearch *search = [[NBSearch alloc] initWithJsonDictionary:dataDic];
+            [searchArr addObject:search];
+        }
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:searchArr forKey:@"results"];
+        [dic setObject:@([userInfo getIntValueForKey:@"totalCount" defaultValue:0]) forKey:@"totalCount"];
+        [dic setObject:[userInfo getStringValueForKey:@"resulttype" defaultValue:@""] forKey:@"resulttype"];
+        [dic setObject:@([userInfo getIntValueForKey:@"page" defaultValue:0]) forKey:@"page"];
+        [dic setObject:@([userInfo getIntValueForKey:@"pagesize" defaultValue:0]) forKey:@"pagesize"];
+        [dic setObject:[userInfo getStringValueForKey:@"city" defaultValue:@""] forKey:@"city"];
+        [dic setObject:@([userInfo getIntValueForKey:@"tableid" defaultValue:0])  forKey:@"tableid"];
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetSearch:)]) {
+            [_delegate didGetSearch:dic];
+        }
+    }
     //继续添加
-    
-    
     
 }
 

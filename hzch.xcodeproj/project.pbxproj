@@ -60,6 +60,9 @@
 		41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */; };
 		41421DC81B9DD7F3000DDFAF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC51B9DD7F3000DDFAF /* Default.png */; };
 		41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC61B9DD7F3000DDFAF /* Default@2x.png */; };
+		41533EF41BBDE543006C7D55 /* NBGovment.m in Sources */ = {isa = PBXBuildFile; fileRef = 41533EF31BBDE543006C7D55 /* NBGovment.m */; };
+		41533EF71BBDED96006C7D55 /* ResoureDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41533EF61BBDED96006C7D55 /* ResoureDetailTableViewController.m */; };
+		41533EFA1BBDF47E006C7D55 /* NBSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 41533EF91BBDF47E006C7D55 /* NBSearch.m */; };
 		415A61101BADADFD001FA3FB /* RATreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 415A610B1BADADFD001FA3FB /* RATreeCell.xib */; };
 		415A612D1BADB4C9001FA3FB /* RATreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A611A1BADB4C9001FA3FB /* RATreeView.m */; };
 		415A612E1BADB4C9001FA3FB /* RATreeView+TableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A611C1BADB4C9001FA3FB /* RATreeView+TableViewDelegate.m */; };
@@ -180,6 +183,12 @@
 		41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41421DC51B9DD7F3000DDFAF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		41421DC61B9DD7F3000DDFAF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		41533EF21BBDE543006C7D55 /* NBGovment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGovment.h; sourceTree = "<group>"; };
+		41533EF31BBDE543006C7D55 /* NBGovment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBGovment.m; sourceTree = "<group>"; };
+		41533EF51BBDED96006C7D55 /* ResoureDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoureDetailTableViewController.h; sourceTree = "<group>"; };
+		41533EF61BBDED96006C7D55 /* ResoureDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoureDetailTableViewController.m; sourceTree = "<group>"; };
+		41533EF81BBDF47E006C7D55 /* NBSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearch.h; sourceTree = "<group>"; };
+		41533EF91BBDF47E006C7D55 /* NBSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSearch.m; sourceTree = "<group>"; };
 		415A610B1BADADFD001FA3FB /* RATreeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RATreeCell.xib; sourceTree = "<group>"; };
 		415A61191BADB4C9001FA3FB /* RATreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeView.h; sourceTree = "<group>"; };
 		415A611A1BADB4C9001FA3FB /* RATreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeView.m; sourceTree = "<group>"; };
@@ -353,6 +362,8 @@
 			children = (
 				413C78FA1BBAE1D3005217F3 /* NBSearchTableViewController.h */,
 				413C78FB1BBAE1D3005217F3 /* NBSearchTableViewController.m */,
+				41533EF81BBDF47E006C7D55 /* NBSearch.h */,
+				41533EF91BBDF47E006C7D55 /* NBSearch.m */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -467,6 +478,10 @@
 				413C78FE1BBAE9D7005217F3 /* ResoureTableViewController.m */,
 				413C79001BBAEEEC005217F3 /* NBDepartMent.h */,
 				413C79011BBAEEEC005217F3 /* NBDepartMent.m */,
+				41533EF21BBDE543006C7D55 /* NBGovment.h */,
+				41533EF31BBDE543006C7D55 /* NBGovment.m */,
+				41533EF51BBDED96006C7D55 /* ResoureDetailTableViewController.h */,
+				41533EF61BBDED96006C7D55 /* ResoureDetailTableViewController.m */,
 			);
 			name = resourceCenter;
 			sourceTree = "<group>";
@@ -705,6 +720,7 @@
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,
+				41533EF71BBDED96006C7D55 /* ResoureDetailTableViewController.m in Sources */,
 				41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */,
 				413C79021BBAEEEC005217F3 /* NBDepartMent.m in Sources */,
 				415A61351BADB4C9001FA3FB /* RATreeNodeInfo.m in Sources */,
@@ -726,7 +742,9 @@
 				413C78FC1BBAE1D3005217F3 /* NBSearchTableViewController.m in Sources */,
 				415A613C1BADB4E8001FA3FB /* RAViewController.m in Sources */,
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
+				41533EF41BBDE543006C7D55 /* NBGovment.m in Sources */,
 				413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */,
+				41533EFA1BBDF47E006C7D55 /* NBSearch.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				410555F21B9C729400B208E8 /* main.m in Sources */,
 				415A61331BADB4C9001FA3FB /* RATreeNode.m in Sources */,

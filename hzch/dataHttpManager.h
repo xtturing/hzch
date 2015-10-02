@@ -12,12 +12,22 @@
 
 #define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
 #define HTTP_DEPARTMENT        @"http://ditu.zj.cn/catalog?parentid=1&catalogtheme=catalog_department&request=list&page=1&start=0&limit=1000"
-#define HTTP_GOVMENT           @"http://ditu.zj.cn/catalog?parentid=2&catalogtheme=catalog_affairs&request=list&page=1&start=0&limit=20"
+#define HTTP_GOVMENT           @"http://ditu.zj.cn/catalog?parentid=2&catalogtheme=catalog_affairs&request=list&page=1&start=0&limit=1000"
+#define HTTP_DEPARTMENT_DETAIL @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_department&request=list&queryType=showAllData&page=1&start=0&limit=1000"
+
+#define HTTP_GOVMENT_DETAIL    @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_affairs&request=list&queryType=showAllData&page=1&start=0&limit=1000"
+
+#define HTTP_SEARCH            @"http://ditu.zj.cn/services/placesearch?searchtype=spatialdata&keywords=%@&page=%d&pagesize=%d&minx=120&maxx=122&miny=28&maxy=29&v=2"
+
 #define REQUEST_TYPE          @"requestType"
 
 typedef enum {
     AALoadTPK = 0,
     AACatalogDepartment,
+    AACatalogGovment,
+    AACatalogDepartmentDetail,
+    AACatalogGovmentDetail,
+    AASearchText,
     //继续添加
     
 }DataRequestType;
@@ -35,6 +45,14 @@ typedef enum {
 - (void)didLoadTPK:(NSMutableDictionary *)Dic;
 
 - (void)didGetCatalogDepartment:(NSArray *)departmentList;
+
+- (void)didGetCatalogDepartmentDetail:(NSArray *)departmentDetailList;
+
+- (void)didGetCatalogGovment:(NSArray *)govmentList;
+
+- (void)didGetCatalogGovmentDetail:(NSArray *)govmentDetailList;
+
+- (void)didGetSearch:(NSMutableDictionary *)searchDic;
 //继续添加
 @end
 
@@ -50,7 +68,10 @@ typedef enum {
 
 - (void)letLoadTPK;
 - (void)letGetCatalogDepartment;
-
+- (void)letGetCatalogDepartmentDetail:(NSInteger)catalogID;
+- (void)letGetCatalogGovment;
+- (void)letGetCatalogGovmentDetail:(NSInteger)catalogID;
+- (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size;
 
 //继续添加
 @end

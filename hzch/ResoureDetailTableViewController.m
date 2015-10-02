@@ -1,39 +1,35 @@
 //
-//  ResoureTableViewController.m
+//  ResoureDetailTableViewController.m
 //  hzch
 //
-//  Created by xtturing on 15/9/29.
+//  Created by xtturing on 15/10/2.
 //  Copyright (c) 2015年 xtturing. All rights reserved.
 //
 
-#import "ResoureTableViewController.h"
+#import "ResoureDetailTableViewController.h"
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
 #import "NBDepartMent.h"
 #import "NBGovment.h"
 
-@interface ResoureTableViewController ()<dataHttpDelegate>
-@property (nonatomic,strong) NSArray *departmentList;
-@property (nonatomic,strong) NSArray *govmentList;
-@property (nonatomic) NSInteger showType;
+@interface ResoureDetailTableViewController ()<dataHttpDelegate>
+@property (nonatomic,strong) NSArray *detailList;
 @end
 
-@implementation ResoureTableViewController
+@implementation ResoureDetailTableViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    self.showType = 0;
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letGetCatalogDepartment];
-        [[dataHttpManager getInstance]  letGetCatalogGovment];
+        if(self.showType == 0){
+            [[dataHttpManager getInstance] letGetCatalogDepartmentDetail:self.catalogID];
+        }else{
+            [[dataHttpManager getInstance]  letGetCatalogGovmentDetail:self.catalogID];
+        }
     });
-    // Do any additional setup after loading the view from its nib.
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [dataHttpManager getInstance].delegate = self;
@@ -49,19 +45,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (IBAction)doBack:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-
-- (IBAction)segmentControl:(id)sender{
-    UISegmentedControl *segment = (UISegmentedControl *)sender;
-    self.showType = segment.selectedSegmentIndex;
-    [self.tableView reloadData];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -69,23 +52,18 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(_showType == 0){
-        return [_departmentList count];
-    }else{
-        return [_govmentList count];
-    }
+    return [_detailList count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
     NSString *detail = nil;
     if(_showType == 0){
-        NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
+        NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
         title = depart.NAME;
         detail = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
     }else{
-        NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
+        NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
         detail = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
     }
@@ -105,25 +83,20 @@
     return cell;
 }
 
-
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
 }
 
-- (void)didGetCatalogDepartment:(NSArray *)departmentList{
+- (void)didGetCatalogDepartmentDetail:(NSArray *)departmentDetailList{
     [SVProgressHUD dismiss];
-    self.departmentList = departmentList;
-    if(self.showType == 0){
-        [self.tableView reloadData];
-    }
+    self.detailList = departmentDetailList;
+    [self.tableView reloadData];
 }
 
-- (void)didGetCatalogGovment:(NSArray *)govmentList{
+- (void)didGetCatalogGovmentDetail:(NSArray *)govmentDetailList{
     [SVProgressHUD dismiss];
-    self.govmentList = govmentList;
-    if(self.showType == 1){
-        [self.tableView reloadData];
-    }
+    self.detailList = govmentDetailList;
+    [self.tableView reloadData];
 }
 
 
