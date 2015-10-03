@@ -17,6 +17,7 @@
 		410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A3ABE1BAB041B0025206E /* SetTableViewController.m */; };
 		410A3AC41BAB13830025206E /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410A3AC31BAB13830025206E /* image.xcassets */; };
 		412B398E1BB97B1700DD9151 /* NBSpatialData.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B398D1BB97B1700DD9151 /* NBSpatialData.m */; };
+		413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413470061BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m */; };
 		41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41398EE81BB45139008E9222 /* LineSearchTableViewController.m */; };
 		413C78FC1BBAE1D3005217F3 /* NBSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413C78FB1BBAE1D3005217F3 /* NBSearchTableViewController.m */; };
 		413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413C78FE1BBAE9D7005217F3 /* ResoureTableViewController.m */; };
@@ -118,6 +119,8 @@
 		410A3AC31BAB13830025206E /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		412B398C1BB97B1700DD9151 /* NBSpatialData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSpatialData.h; sourceTree = "<group>"; };
 		412B398D1BB97B1700DD9151 /* NBSpatialData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSpatialData.m; sourceTree = "<group>"; };
+		413470051BBF46DA00FABEA8 /* NBSearchDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearchDetailTableViewController.h; sourceTree = "<group>"; };
+		413470061BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSearchDetailTableViewController.m; sourceTree = "<group>"; };
 		41398EE71BB45139008E9222 /* LineSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSearchTableViewController.h; sourceTree = "<group>"; };
 		41398EE81BB45139008E9222 /* LineSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineSearchTableViewController.m; sourceTree = "<group>"; };
 		413C78FA1BBAE1D3005217F3 /* NBSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearchTableViewController.h; sourceTree = "<group>"; };
@@ -364,6 +367,8 @@
 				413C78FB1BBAE1D3005217F3 /* NBSearchTableViewController.m */,
 				41533EF81BBDF47E006C7D55 /* NBSearch.h */,
 				41533EF91BBDF47E006C7D55 /* NBSearch.m */,
+				413470051BBF46DA00FABEA8 /* NBSearchDetailTableViewController.h */,
+				413470061BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -717,6 +722,7 @@
 				41E425E01BA86A56009C0581 /* NSConvert.m in Sources */,
 				410555F51B9C729400B208E8 /* AppDelegate.m in Sources */,
 				413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */,
+				413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */,
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,

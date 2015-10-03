@@ -11,4 +11,5 @@
 @interface NBSearchTableViewController : UITableViewController
 
 - (IBAction)doBack:(id)sender;
+- (IBAction)segmentControl:(id)sender;
 @end

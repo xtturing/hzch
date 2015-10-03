@@ -7,8 +7,17 @@
 //
 
 #import "NBSearchTableViewController.h"
+#import "dataHttpManager.h"
+#import "SVProgressHUD.h"
 
-@interface NBSearchTableViewController ()
+#define SEARCH_KEY_WORD @"searchKeyword"
+#define SEARCH_CATALOG @"searchcatalog"
+#define SEARCH_DOWNLOAD @"searchdownload"
+
+@interface NBSearchTableViewController ()<dataHttpDelegate>
+
+@property(nonatomic,strong) NSMutableArray *keywordList;
+@property(nonatomic,assign) NSInteger searchType;
 
 @end
 
@@ -16,17 +25,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.searchType = 0;
+    [self loadSearchList];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate =  nil;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)doBack:(id)sender{
@@ -35,72 +47,118 @@
     }];
 }
 
+- (IBAction)segmentControl:(id)sender{
+    UISegmentedControl *segment = (UISegmentedControl *)sender;
+    self.searchType = segment.selectedSegmentIndex;
+    [self loadSearchList];
+    [self.tableView reloadData];
+}
+
+- (void)loadSearchList{
+    NSArray *array = nil;
+    if(_searchType == 0){
+       array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_KEY_WORD];
+    }
+    if(_searchType == 1){
+        array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_CATALOG];
+    }
+    if(_searchType == 2){
+        array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_DOWNLOAD];
+    }
+    if(array){
+        self.keywordList = [NSMutableArray arrayWithArray:array];
+    }else{
+         _keywordList = [NSMutableArray arrayWithCapacity:0];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 2;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 30;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
+    if(section == 0){
+        return [self.keywordList count];
+    }
+    if(section == 1 && [self.keywordList count] > 0){
+        return 1;
+    }
     return 0;
 }
-
-/*
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if(section == 0 && [self.keywordList count] > 0){
+        return @"查询记录";
+    }
+    return @"";
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+    if(indexPath.section == 1){
+        static NSString *FirstLevelCell = @"NBClearKeyWord";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                 FirstLevelCell];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]
+                    initWithStyle:UITableViewCellStyleValue2
+                    reuseIdentifier: FirstLevelCell];
+        }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.text = @"清空所有查询记录";
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        return cell;
+    }else{
+        NSString *title = nil;
+        title = [self.keywordList objectAtIndex:indexPath.row];
+        static NSString *FirstLevelCell = @"NBDepartMent";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                 FirstLevelCell];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]
+                    initWithStyle:UITableViewCellStyleSubtitle
+                    reuseIdentifier: FirstLevelCell];
+        }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.text = title;
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        return cell;
+    }
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self doSearch:searchBar.text];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)doSearch:(NSString *)keyword{
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [self.keywordList addObject:keyword];
+    [self.tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letGetSearch:keyword page:1 pageSize:15];
+        NSString *key = SEARCH_KEY_WORD;
+        if(_searchType == 0){
+            key = SEARCH_KEY_WORD;
+        }
+        if(_searchType == 1){
+            key = SEARCH_CATALOG;
+        }
+        if(_searchType == 2){
+            key = SEARCH_DOWNLOAD;
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:self.keywordList forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
+
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (void)didGetSearch:(NSMutableDictionary *)searchDic{
+    [SVProgressHUD dismiss];
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
