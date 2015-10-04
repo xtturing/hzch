@@ -127,6 +127,14 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 1){
+        [self deleteAllSearch];
+    }else{
+        
+    }
+}
+
 #pragma mark - UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
@@ -157,8 +165,24 @@
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
 }
-
 - (void)didGetSearch:(NSMutableDictionary *)searchDic{
     [SVProgressHUD dismiss];
+}
+
+- (void)deleteAllSearch{
+    NSString *key = SEARCH_KEY_WORD;
+    if(_searchType == 0){
+        key = SEARCH_KEY_WORD;
+    }
+    if(_searchType == 1){
+        key = SEARCH_CATALOG;
+    }
+    if(_searchType == 2){
+        key = SEARCH_DOWNLOAD;
+    }
+    [self.keywordList removeAllObjects];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.tableView reloadData];
 }
 @end
