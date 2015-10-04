@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#define SEARCH_KEY_WORD @"searchKeyword"
+#define SEARCH_CATALOG @"searchcatalog"
+#define SEARCH_DOWNLOAD @"searchdownload"
 
 @interface NBSearchDetailTableViewController : UITableViewController
+
+@property(nonatomic,strong)NSMutableDictionary *resultDic;
+@property(nonatomic,strong) NSMutableArray *keywordList;
+@property(nonatomic,strong)NSString *keyword;
+@property(nonatomic)NSInteger searchType;
+
+@property(nonatomic,weak)IBOutlet UIToolbar *toolBar;
 
 @end

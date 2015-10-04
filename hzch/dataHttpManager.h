@@ -17,7 +17,7 @@
 
 #define HTTP_GOVMENT_DETAIL    @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_affairs&request=list&queryType=showAllData&page=1&start=0&limit=1000"
 
-#define HTTP_SEARCH            @"http://ditu.zj.cn/services/placesearch?searchtype=spatialdata&keywords=%@&page=%d&pagesize=%d&minx=120&maxx=122&miny=28&maxy=29&v=2"
+#define HTTP_SEARCH            @"http://ditu.zj.cn/services/placesearch?withgeometry=false&searchtype=&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=&minx=&maxx=&miny=&maxy=&lk=false"
 
 #define REQUEST_TYPE          @"requestType"
 

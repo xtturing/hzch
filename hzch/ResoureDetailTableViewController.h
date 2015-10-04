@@ -12,4 +12,5 @@
 
 @property (nonatomic) NSInteger showType;
 @property (nonatomic) NSInteger catalogID;
+@property (nonatomic,strong) NSString *titleName;
 @end

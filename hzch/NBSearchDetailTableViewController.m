@@ -7,21 +7,34 @@
 //
 
 #import "NBSearchDetailTableViewController.h"
-
-@interface NBSearchDetailTableViewController ()
-
+#import "NBSearch.h"
+#import "dataHttpManager.h"
+#import "SVProgressHUD.h"
+@interface NBSearchDetailTableViewController ()<dataHttpDelegate>{
+    int page;
+    int pageSize;
+    NSInteger allCount;
+}
 @end
 
 @implementation NBSearchDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    page = 1;
+    pageSize = 15;
+    [self doSearch:self.keyword];
+    self.title = self.keyword;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate =  nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,69 +45,79 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [[_resultDic objectForKey:@"results"] count];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    NSArray *results = [_resultDic objectForKey:@"results"];
+    NBSearch *search = [results objectAtIndex:indexPath.row];
     
-    // Configure the cell...
-    
+    static NSString *FirstLevelCell = @"NBSearch";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                             FirstLevelCell];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleSubtitle
+                reuseIdentifier: FirstLevelCell];
+    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.text = search.name;
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.detailTextLabel.text = search.address;
+    cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)didGetSearch:(NSMutableDictionary *)searchDic{
+    [SVProgressHUD dismiss];
+    if([[searchDic objectForKey:@"results"] count] > 0){
+        self.resultDic = searchDic;
+        self.toolBar.hidden = NO;
+        [self.tableView reloadData];
+    }else{
+        self.toolBar.hidden = YES;
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)doSearch:(NSString *)keyword{
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    if(![self hasKeyword:keyword]){
+        [self.keywordList addObject:keyword];
+    }
+    [self.tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
+        NSString *key = SEARCH_KEY_WORD;
+        if(_searchType == 0){
+            key = SEARCH_KEY_WORD;
+        }
+        if(_searchType == 1){
+            key = SEARCH_CATALOG;
+        }
+        if(_searchType == 2){
+            key = SEARCH_DOWNLOAD;
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:self.keywordList forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
+    
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (BOOL)hasKeyword:(NSString *)key{
+    for(NSString *word in self.keywordList){
+        if([word isEqualToString:key]){
+            return YES;
+        }
+    }
+    return NO;
 }
-*/
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

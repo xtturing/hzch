@@ -11,6 +11,7 @@
 #import "SVProgressHUD.h"
 #import "NBDepartMent.h"
 #import "NBGovment.h"
+#import "ResoureDetailTableViewController.h"
 
 @interface ResoureTableViewController ()<dataHttpDelegate>
 @property (nonatomic,strong) NSArray *departmentList;
@@ -30,7 +31,7 @@
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[dataHttpManager getInstance] letGetCatalogDepartment];
-        [[dataHttpManager getInstance]  letGetCatalogGovment];
+        [[dataHttpManager getInstance] letGetCatalogGovment];
     });
     // Do any additional setup after loading the view from its nib.
 }
@@ -79,15 +80,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
-    NSString *detail = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
         title = depart.NAME;
-        detail = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
     }else{
         NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
         title = gov.NAME;
-        detail = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -100,11 +98,24 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.detailTextLabel.text = detail;
     
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ResoureDetailTableViewController *detailViewController = [[ResoureDetailTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    detailViewController.showType =self.showType;
+    if(_showType == 0){
+        NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
+        detailViewController.catalogID = depart.CATALOGID;
+        detailViewController.titleName = depart.NAME;
+    }else{
+        NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
+        detailViewController.catalogID = gov.CATALOGID;
+        detailViewController.titleName = gov.NAME;
+    }
+    [self.navigationController pushViewController:detailViewController animated:YES];
+}
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];

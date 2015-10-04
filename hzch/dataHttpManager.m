@@ -139,7 +139,7 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)letGetCatalogGovmentDetail:(NSInteger)catalogID{
-    NSString *baseUrl =[NSString  stringWithFormat:HTTP_DEPARTMENT_DETAIL,catalogID];
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_GOVMENT_DETAIL,catalogID];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
@@ -151,7 +151,7 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size{
-    NSString *baseUrl =[NSString  stringWithFormat:HTTP_SEARCH,searchText,page,size];
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_SEARCH,page,size,searchText];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
@@ -254,7 +254,7 @@ static dataHttpManager * instance=nil;
         }
     }
     if(requestType == AACatalogDepartmentDetail && userInfo){
-        NSArray *result = [userInfo objectForKey:@"parents"];
+        NSArray *result = [userInfo objectForKey:@"result"];
         NSMutableArray *departArr = [NSMutableArray arrayWithCapacity:0];
         for(NSDictionary *dataDic in result){
             NBDepartMent *depart = [[NBDepartMent alloc] initWithJsonDictionary:dataDic];
@@ -265,7 +265,7 @@ static dataHttpManager * instance=nil;
         }
     }
     if(requestType == AACatalogGovment && userInfo){
-        NSArray *result = [userInfo objectForKey:@"results"];
+        NSArray *result = [userInfo objectForKey:@"result"];
         NSMutableArray *govtArr = [NSMutableArray arrayWithCapacity:0];
         for(NSDictionary *dataDic in result){
             NBGovment *gov = [[NBGovment alloc] initWithJsonDictionary:dataDic];
@@ -276,7 +276,7 @@ static dataHttpManager * instance=nil;
         }
     }
     if(requestType == AACatalogGovmentDetail && userInfo){
-        NSArray *result = [userInfo objectForKey:@"parents"];
+        NSArray *result = [userInfo objectForKey:@"result"];
         NSMutableArray *govtArr = [NSMutableArray arrayWithCapacity:0];
         for(NSDictionary *dataDic in result){
             NBGovment *gov = [[NBGovment alloc] initWithJsonDictionary:dataDic];

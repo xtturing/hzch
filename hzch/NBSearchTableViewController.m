@@ -9,10 +9,7 @@
 #import "NBSearchTableViewController.h"
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
-
-#define SEARCH_KEY_WORD @"searchKeyword"
-#define SEARCH_CATALOG @"searchcatalog"
-#define SEARCH_DOWNLOAD @"searchdownload"
+#import "NBSearchDetailTableViewController.h"
 
 @interface NBSearchTableViewController ()<dataHttpDelegate>
 
@@ -26,10 +23,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchType = 0;
-    [self loadSearchList];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self loadSearchList];
     [dataHttpManager getInstance].delegate = self;
 }
 
@@ -58,18 +55,22 @@
     NSArray *array = nil;
     if(_searchType == 0){
        array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_KEY_WORD];
+       self.searchBar.placeholder = @"请输入地名地址，行政区划，兴趣点等关键字";
     }
     if(_searchType == 1){
         array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_CATALOG];
+        self.searchBar.placeholder = @"请输入专题资源关键字";
     }
     if(_searchType == 2){
         array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_DOWNLOAD];
+        self.searchBar.placeholder = @"请输入目录资源关键字";
     }
     if(array){
         self.keywordList = [NSMutableArray arrayWithArray:array];
     }else{
          _keywordList = [NSMutableArray arrayWithCapacity:0];
     }
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -131,42 +132,23 @@
     if(indexPath.section == 1){
         [self deleteAllSearch];
     }else{
-        
+        [self pushSearchView:[self.keywordList objectAtIndex:indexPath.row]];
     }
 }
 
 #pragma mark - UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self doSearch:searchBar.text];
+    [self pushSearchView:searchBar.text];
 }
 
-- (void)doSearch:(NSString *)keyword{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    [self.keywordList addObject:keyword];
-    [self.tableView reloadData];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letGetSearch:keyword page:1 pageSize:15];
-        NSString *key = SEARCH_KEY_WORD;
-        if(_searchType == 0){
-            key = SEARCH_KEY_WORD;
-        }
-        if(_searchType == 1){
-            key = SEARCH_CATALOG;
-        }
-        if(_searchType == 2){
-            key = SEARCH_DOWNLOAD;
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:self.keywordList forKey:key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    });
-
-}
-- (void)didGetFailed{
-    [SVProgressHUD dismiss];
-}
-- (void)didGetSearch:(NSMutableDictionary *)searchDic{
-    [SVProgressHUD dismiss];
+- (void)pushSearchView:(NSString *)searchtext{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NBSearchDetailTableViewController *detailViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchDetailTableViewController"];
+    detailViewController.keyword = searchtext;
+    detailViewController.searchType = self.searchType;
+    detailViewController.keywordList = self.keywordList;
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (void)deleteAllSearch{

@@ -28,6 +28,7 @@
             [[dataHttpManager getInstance]  letGetCatalogGovmentDetail:self.catalogID];
         }
     });
+    self.title = self.titleName;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -57,15 +58,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
-    NSString *detail = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
         title = depart.NAME;
-        detail = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
     }else{
         NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
-        detail = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -78,8 +76,6 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.detailTextLabel.text = detail;
-    
     return cell;
 }
 

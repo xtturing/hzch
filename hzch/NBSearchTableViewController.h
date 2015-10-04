@@ -12,4 +12,5 @@
 
 - (IBAction)doBack:(id)sender;
 - (IBAction)segmentControl:(id)sender;
+@property (nonatomic,weak) IBOutlet UISearchBar *searchBar;
 @end

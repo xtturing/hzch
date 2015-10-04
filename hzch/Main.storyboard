@@ -1565,7 +1565,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="请输入地名地址，行政区划，兴趣点" id="RbR-Ng-7MH">
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="请输入地名地址，行政区划，兴趣点等关键字" id="RbR-Ng-7MH">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
@@ -1607,6 +1607,7 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="RbR-Ng-7MH" id="XQZ-Su-AvI"/>
                         <outlet property="searchDisplayController" destination="t30-Pi-su8" id="czU-Uv-2pq"/>
                     </connections>
                 </tableViewController>
@@ -1614,6 +1615,48 @@
                 <searchDisplayController id="t30-Pi-su8"/>
             </objects>
             <point key="canvasLocation" x="547" y="1697"/>
+        </scene>
+        <!--全文检索结果-->
+        <scene sceneID="LLZ-h2-ZFw">
+            <objects>
+                <tableViewController storyboardIdentifier="NBSearchDetailTableViewController" id="OjP-SJ-f8f" userLabel="全文检索结果" customClass="NBSearchDetailTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="kvo-yx-wsN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <toolbar key="tableFooterView" hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="YIa-ky-lKR">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <items>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="tRk-S4-XVw"/>
+                                <barButtonItem tag="5001" title="上一页" id="CqO-ba-CUc"/>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="Cu5-9i-tOn"/>
+                                <barButtonItem tag="5002" title="第1页／共10页" id="299-Zz-1Dz"/>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="3Ht-kc-TEh"/>
+                                <barButtonItem tag="5003" title="下一页" id="Fjn-Y4-GJ1"/>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="Hs3-pz-zzY"/>
+                            </items>
+                        </toolbar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ajn-dX-5Oz">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ajn-dX-5Oz" id="E8k-5l-hAQ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OjP-SJ-f8f" id="88I-82-Rpb"/>
+                            <outlet property="delegate" destination="OjP-SJ-f8f" id="nuF-6N-pG6"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="toolBar" destination="YIa-ky-lKR" id="goX-dH-wW4"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ahl-Tf-MRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1216" y="1698"/>
         </scene>
         <!--全文检索Navigation-->
         <scene sceneID="QID-f6-7mF">
