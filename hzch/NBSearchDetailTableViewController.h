@@ -19,5 +19,9 @@
 @property(nonatomic)NSInteger searchType;
 
 @property(nonatomic,weak)IBOutlet UIToolbar *toolBar;
+@property(nonatomic,weak)IBOutlet UIBarButtonItem *nextItem;
+@property(nonatomic,weak)IBOutlet UIBarButtonItem *preItem;
+@property(nonatomic,weak)IBOutlet UIBarButtonItem *countItem;
+-(IBAction)toolbarAction:(id)sender;
 
 @end

@@ -47,6 +47,7 @@
     });
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadNotification:) name:kDownloadManagerNotification object:nil];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"返回";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

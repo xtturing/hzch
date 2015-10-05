@@ -151,7 +151,13 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size{
-    NSString *baseUrl =[NSString  stringWithFormat:HTTP_SEARCH,page,size,searchText];
+    NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    kCFAllocatorDefault, /* allocator */
+                                                                                                    (CFStringRef)searchText,
+                                                                                                    NULL, /* charactersToLeaveUnescaped */
+                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    kCFStringEncodingUTF8));
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_SEARCH,page,size,escaped_value];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];

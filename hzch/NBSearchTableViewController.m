@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchType = 0;
+    self.title = @"返回";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

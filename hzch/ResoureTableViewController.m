@@ -33,6 +33,7 @@
         [[dataHttpManager getInstance] letGetCatalogDepartment];
         [[dataHttpManager getInstance] letGetCatalogGovment];
     });
+    self.title = @"返回";
     // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated{

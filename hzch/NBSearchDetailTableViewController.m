@@ -13,7 +13,7 @@
 @interface NBSearchDetailTableViewController ()<dataHttpDelegate>{
     int page;
     int pageSize;
-    NSInteger allCount;
+    int allCount;
 }
 @end
 
@@ -74,15 +74,30 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didGetSearch:(NSMutableDictionary *)searchDic{
     [SVProgressHUD dismiss];
     if([[searchDic objectForKey:@"results"] count] > 0){
+        allCount = [[searchDic objectForKey:@"totalCount"] intValue];
+        allCount = ceil(allCount / (pageSize*1.000));
+        self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
         self.resultDic = searchDic;
         self.toolBar.hidden = NO;
+        if(page > 1){
+            self.preItem.enabled = YES;
+        }else{
+            self.preItem.enabled = NO;
+        }
+        if(page >= allCount){
+            self.nextItem.enabled = NO;
+        }else{
+            self.nextItem.enabled = YES;
+        }
         [self.tableView reloadData];
     }else{
         self.toolBar.hidden = YES;
+         [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -119,5 +134,17 @@
     return NO;
 }
 
+-(IBAction)toolbarAction:(id)sender{
+    UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
+    if(btnItem.tag == 5001){
+        page -=1;
+    }
+    if(btnItem.tag == 5003){
+        page +=1;
+    }
+    if(page > 0 && page <= allCount){
+        [self doSearch:self.keyword];
+    }
+}
 
 @end

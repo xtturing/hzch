@@ -81,18 +81,27 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didGetCatalogDepartmentDetail:(NSArray *)departmentDetailList{
     [SVProgressHUD dismiss];
-    self.detailList = departmentDetailList;
-    [self.tableView reloadData];
+    if([departmentDetailList count] > 0){
+        self.detailList = departmentDetailList;
+        [self.tableView reloadData];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)didGetCatalogGovmentDetail:(NSArray *)govmentDetailList{
     [SVProgressHUD dismiss];
-    self.detailList = govmentDetailList;
-    [self.tableView reloadData];
+    if([govmentDetailList count] > 0){
+        self.detailList = govmentDetailList;
+        [self.tableView reloadData];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 

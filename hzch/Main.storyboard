@@ -1629,11 +1629,19 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <items>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="tRk-S4-XVw"/>
-                                <barButtonItem tag="5001" title="上一页" id="CqO-ba-CUc"/>
+                                <barButtonItem tag="5001" enabled="NO" title="上一页" id="CqO-ba-CUc">
+                                    <connections>
+                                        <action selector="toolbarAction:" destination="OjP-SJ-f8f" id="OMT-8b-QfR"/>
+                                    </connections>
+                                </barButtonItem>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="Cu5-9i-tOn"/>
                                 <barButtonItem tag="5002" title="第1页／共10页" id="299-Zz-1Dz"/>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="3Ht-kc-TEh"/>
-                                <barButtonItem tag="5003" title="下一页" id="Fjn-Y4-GJ1"/>
+                                <barButtonItem tag="5003" title="下一页" id="Fjn-Y4-GJ1">
+                                    <connections>
+                                        <action selector="toolbarAction:" destination="OjP-SJ-f8f" id="iNe-EB-F9e"/>
+                                    </connections>
+                                </barButtonItem>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="Hs3-pz-zzY"/>
                             </items>
                         </toolbar>
@@ -1650,7 +1658,12 @@
                             <outlet property="delegate" destination="OjP-SJ-f8f" id="nuF-6N-pG6"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="countItem" destination="299-Zz-1Dz" id="NjQ-nC-Hv7"/>
+                        <outlet property="nextItem" destination="Fjn-Y4-GJ1" id="M52-mx-rKm"/>
+                        <outlet property="preItem" destination="CqO-ba-CUc" id="zgE-rw-yz2"/>
                         <outlet property="toolBar" destination="YIa-ky-lKR" id="goX-dH-wW4"/>
                     </connections>
                 </tableViewController>
