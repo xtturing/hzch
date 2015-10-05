@@ -17,7 +17,7 @@
 #import "NBDepartMent.h"
 #import "NBGovment.h"
 #import "NBSearch.h"
-
+#import "NBSearchCatalog.h"
 #define TIMEOUT 30
 
 static dataHttpManager * instance=nil;
@@ -167,7 +167,23 @@ static dataHttpManager * instance=nil;
     [self setGetUserInfo:request withRequestType:AASearchText];
     [_requestQueue addOperation:request];
 }
-
+- (void)letGetSearchCatalog:(NSString *)searchText tableID:(NSString *)tableID page:(int)page pageSize:(int)size{
+    NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    kCFAllocatorDefault, /* allocator */
+                                                                                                    (CFStringRef)searchText,
+                                                                                                    NULL, /* charactersToLeaveUnescaped */
+                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    kCFStringEncodingUTF8));
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_CATALOG_SEARCH,page,size,escaped_value,tableID];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AASearchCatalog];
+    [_requestQueue addOperation:request];
+}
 //继续添加
 
 #pragma mark - Operate queue
@@ -309,6 +325,25 @@ static dataHttpManager * instance=nil;
         [dic setObject:@([userInfo getIntValueForKey:@"tableid" defaultValue:0])  forKey:@"tableid"];
         if (_delegate && [_delegate respondsToSelector:@selector(didGetSearch:)]) {
             [_delegate didGetSearch:dic];
+        }
+    }
+    if(requestType == AASearchCatalog && userInfo){
+        NSArray *result = [userInfo objectForKey:@"results"];
+        NSMutableArray *searchArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBSearchCatalog *search = [[NBSearchCatalog alloc] initWithJsonDictionary:dataDic];
+            [searchArr addObject:search];
+        }
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:searchArr forKey:@"results"];
+        [dic setObject:@([userInfo getIntValueForKey:@"totalCount" defaultValue:0]) forKey:@"totalCount"];
+        [dic setObject:[userInfo getStringValueForKey:@"resulttype" defaultValue:@""] forKey:@"resulttype"];
+        [dic setObject:@([userInfo getIntValueForKey:@"page" defaultValue:0]) forKey:@"page"];
+        [dic setObject:@([userInfo getIntValueForKey:@"pagesize" defaultValue:0]) forKey:@"pagesize"];
+        [dic setObject:[userInfo getStringValueForKey:@"city" defaultValue:@""] forKey:@"city"];
+        [dic setObject:@([userInfo getIntValueForKey:@"tableid" defaultValue:0])  forKey:@"tableid"];
+        if (_delegate && [_delegate respondsToSelector:@selector(didgetSearchCatalog:)]) {
+            [_delegate didgetSearchCatalog:dic];
         }
     }
     //继续添加

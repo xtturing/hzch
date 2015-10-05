@@ -11,13 +11,16 @@
 #import "NSStringAdditions.h"
 
 #define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
+
 #define HTTP_DEPARTMENT        @"http://ditu.zj.cn/catalog?parentid=1&catalogtheme=catalog_department&request=list&page=1&start=0&limit=1000"
 #define HTTP_GOVMENT           @"http://ditu.zj.cn/catalog?parentid=2&catalogtheme=catalog_affairs&request=list&page=1&start=0&limit=1000"
-#define HTTP_DEPARTMENT_DETAIL @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_department&request=list&queryType=showAllData&page=1&start=0&limit=1000"
 
+#define HTTP_DEPARTMENT_DETAIL @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_department&request=list&queryType=showAllData&page=1&start=0&limit=1000"
 #define HTTP_GOVMENT_DETAIL    @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_affairs&request=list&queryType=showAllData&page=1&start=0&limit=1000"
 
 #define HTTP_SEARCH            @"http://ditu.zj.cn/services/placesearch?withgeometry=false&searchtype=&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=&minx=&maxx=&miny=&maxy=&lk=false"
+
+#define HTTP_CATALOG_SEARCH    @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=%@&minx=&maxx=&miny=&maxy=&lk=false&geo=&_dc=1419474648386"
 
 #define REQUEST_TYPE          @"requestType"
 
@@ -28,6 +31,7 @@ typedef enum {
     AACatalogDepartmentDetail,
     AACatalogGovmentDetail,
     AASearchText,
+    AASearchCatalog,
     //继续添加
     
 }DataRequestType;
@@ -53,6 +57,8 @@ typedef enum {
 - (void)didGetCatalogGovmentDetail:(NSArray *)govmentDetailList;
 
 - (void)didGetSearch:(NSMutableDictionary *)searchDic;
+
+- (void)didgetSearchCatalog:(NSMutableDictionary *)searchDic;
 //继续添加
 @end
 
@@ -72,6 +78,6 @@ typedef enum {
 - (void)letGetCatalogGovment;
 - (void)letGetCatalogGovmentDetail:(NSInteger)catalogID;
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size;
-
+- (void)letGetSearchCatalog:(NSString *)searchText tableID:(NSString *)tableID page:(int)page pageSize:(int)size;
 //继续添加
 @end

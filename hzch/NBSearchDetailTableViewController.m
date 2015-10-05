@@ -8,6 +8,7 @@
 
 #import "NBSearchDetailTableViewController.h"
 #import "NBSearch.h"
+#import "NBSearchCatalog.h"
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
 @interface NBSearchDetailTableViewController ()<dataHttpDelegate>{
@@ -53,8 +54,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *title= nil;
+    NSString *detail = nil;
     NSArray *results = [_resultDic objectForKey:@"results"];
-    NBSearch *search = [results objectAtIndex:indexPath.row];
+    if(_searchType == 0){
+        NBSearch *search = [results objectAtIndex:indexPath.row];
+        title = search.name;
+        detail = search.address;
+    }
+    if(_searchType == 1){
+        NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
+        title = catalog.name;
+        detail = catalog.aliasname;
+    }
     
     static NSString *FirstLevelCell = @"NBSearch";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -65,9 +77,9 @@
                 reuseIdentifier: FirstLevelCell];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.text = search.name;
+    cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.detailTextLabel.text = search.address;
+    cell.detailTextLabel.text = detail;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
@@ -101,6 +113,31 @@
     }
 }
 
+- (void)didgetSearchCatalog:(NSMutableDictionary *)searchDic{
+    [SVProgressHUD dismiss];
+    if([[searchDic objectForKey:@"results"] count] > 0){
+        allCount = [[searchDic objectForKey:@"totalCount"] intValue];
+        allCount = ceil(allCount / (pageSize*1.000));
+        self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
+        self.resultDic = searchDic;
+        self.toolBar.hidden = NO;
+        if(page > 1){
+            self.preItem.enabled = YES;
+        }else{
+            self.preItem.enabled = NO;
+        }
+        if(page >= allCount){
+            self.nextItem.enabled = NO;
+        }else{
+            self.nextItem.enabled = YES;
+        }
+        [self.tableView reloadData];
+    }else{
+        self.toolBar.hidden = YES;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)doSearch:(NSString *)keyword{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     if(![self hasKeyword:keyword]){
@@ -108,16 +145,18 @@
     }
     [self.tableView reloadData];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
         NSString *key = SEARCH_KEY_WORD;
         if(_searchType == 0){
             key = SEARCH_KEY_WORD;
+            [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
         }
         if(_searchType == 1){
             key = SEARCH_CATALOG;
+            [[dataHttpManager getInstance] letGetSearchCatalog:keyword tableID:@"371853" page:page pageSize:pageSize];
         }
         if(_searchType == 2){
             key = SEARCH_DOWNLOAD;
+            [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
         }
         [[NSUserDefaults standardUserDefaults] setObject:self.keywordList forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];

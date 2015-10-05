@@ -78,7 +78,6 @@
                 
                 AGSPoint *centPoint = [AGSPoint pointWithX:107.3425 y:33.3730 spatialReference:self.mapView.spatialReference];
                 [self.mapView zoomToScale:1.0952406432898982E8 withCenterPoint:centPoint animated:YES];
-                
                 [self locationListenner];
             }else{
                 //layer encountered an error
