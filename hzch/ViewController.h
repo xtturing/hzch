@@ -10,4 +10,10 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)changeMap:(id)sender;
+- (IBAction)deleteMap:(id)sender;
+- (IBAction)layerMap:(id)sender;
+- (IBAction)clearMap:(id)sender;
+
+
 @end

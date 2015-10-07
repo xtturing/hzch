@@ -8,7 +8,7 @@
 
 #import "TianDiTuWMTSTileOperation.h"
 
-#define kURLGetTile @"%@?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=%@&FORMAT=%@&TILEMATRIXSET=%@&TILECOL=%d&TILEROW=%d&TILEMATRIX=%d&STYLE=%@"
+#define kURLGetTile @"%@?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=%@&FORMAT=%@&TILEMATRIXSET=%@&TILECOL=%ld&TILEROW=%ld&TILEMATRIX=%ld&STYLE=%@"
 
 @implementation TianDiTuWMTSTileOperation
 @synthesize tileKey=_tileKey;

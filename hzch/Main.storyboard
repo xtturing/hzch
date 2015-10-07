@@ -32,6 +32,9 @@
                                             <segment title="地图"/>
                                             <segment title="影像"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="changeMap:" destination="cVi-gM-cqZ" eventType="valueChanged" id="qXf-4x-i90"/>
+                                        </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQb-tI-83J">
                                         <rect key="frame" x="536" y="142" width="44" height="44"/>
@@ -43,6 +46,9 @@
                                         <state key="normal" image="delete_line_normal" backgroundImage="btnBg">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="deleteMap:" destination="cVi-gM-cqZ" eventType="touchUpInside" id="EgI-ih-4iz"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4h3-jX-802">
                                         <rect key="frame" x="536" y="194" width="44" height="44"/>
@@ -54,6 +60,9 @@
                                         <state key="normal" image="layer_normal" backgroundImage="btnBg">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="layerMap:" destination="cVi-gM-cqZ" eventType="touchUpInside" id="wBA-TA-zK8"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6B-6O-d36">
                                         <rect key="frame" x="536" y="246" width="44" height="44"/>
@@ -62,9 +71,12 @@
                                             <constraint firstAttribute="width" constant="44" id="sSX-4B-0eT"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                        <state key="normal" image="basemap_open" backgroundImage="btnBg">
+                                        <state key="normal" image="basemap_close" backgroundImage="btnBg">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="clearMap:" destination="cVi-gM-cqZ" eventType="touchUpInside" id="g6t-h2-hDG"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -123,7 +135,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="baseMapBtn" destination="e6B-6O-d36" id="o3Q-gT-QXq"/>
+                        <outlet property="clearBtn" destination="e6B-6O-d36" id="1U4-pu-zqp"/>
                         <outlet property="conView" destination="ylL-Pk-H1K" id="9pm-Y0-yiU"/>
                         <outlet property="deleteBtn" destination="vQb-tI-83J" id="QHL-1w-CL0"/>
                         <outlet property="layerBtn" destination="4h3-jX-802" id="YOB-AW-bKo"/>
@@ -1564,7 +1576,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLK-mX-n8y">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="请输入地名地址，行政区划，兴趣点等关键字" id="RbR-Ng-7MH">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -1708,7 +1720,7 @@
         <image name="app_options_normal" width="22" height="22"/>
         <image name="app_resource_center_normal" width="22" height="22"/>
         <image name="app_tool_normal" width="22" height="22"/>
-        <image name="basemap_open" width="22" height="22"/>
+        <image name="basemap_close" width="22" height="22"/>
         <image name="bh_color_blue_normal" width="47" height="26"/>
         <image name="bh_color_green_normal" width="47" height="26"/>
         <image name="bh_color_purple_normal" width="47" height="26"/>

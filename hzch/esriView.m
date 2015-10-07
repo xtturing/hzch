@@ -56,33 +56,10 @@
             
             self.configData  = [[NSConfigData alloc]init];
             //NSLog(@"连续加载对象 : %@",self.mapView);
-            
-            NSError* err;
-            /* sr:CGCS2000(4490)*/
-            
-            
-            TianDiTuWMTSLayer* TianDiTuLyr = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_VECTOR_2000 LocalServiceURL:nil error:&err];
-            TianDiTuWMTSLayer* TianDiTuLyr_Anno = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_VECTOR_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
-            TianDiTuWMTSLayer* TianDituLyr_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_ZJ_VECTOR LocalServiceURL:nil error:&err];
-            
-            if(TianDiTuLyr!=nil && TianDiTuLyr_Anno !=nil && TianDituLyr_zje != nil)
-            {
-                [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
-                [self.mapView removeMapLayerWithName:@"TianDiTu Annotation Layer"];
-                [self.mapView removeMapLayerWithName:@"TianDiTu zje Layer"];
-                [self.mapView addMapLayer:TianDiTuLyr withName:@"TianDiTu Layer"];
-                [self.mapView addMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer"];
-                [self.mapView addMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer"];
-                
-                self.mapView.layerDelegate = self;
-                
-                AGSPoint *centPoint = [AGSPoint pointWithX:107.3425 y:33.3730 spatialReference:self.mapView.spatialReference];
-                [self.mapView zoomToScale:1.0952406432898982E8 withCenterPoint:centPoint animated:YES];
-                [self locationListenner];
-            }else{
-                //layer encountered an error
-                NSLog(@"Error encountered: %@", err);
-            }
+            [self changeMap:0];
+            self.mapView.layerDelegate = self;
+             [self.mapView zoomToEnvelope:[AGSEnvelope envelopeWithXmin:118.02252449 ymin:27.04527654 xmax:123.1561344 ymax:31.18247145 spatialReference:self.mapView.spatialReference] animated:YES];
+            [self locationListenner];
         }
         
 
@@ -90,14 +67,35 @@
     return self;
 }
 
-//运行崩溃的原因
-//- (void)mapViewDidLoad:(AGSMapView *)mapView  {
-//    // register for pan notifications
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondToEnvChange:) name:AGSMapViewDidEndPanningNotification object:nil];
-//    
-//    // register for "MapDidEndPanning" notifications
-//    
-//}
+- (void)changeMap:(NSInteger)index{
+    [self clearMap:NO index:index];
+    [self clearMap:YES index:index];
+}
+
+- (void)clearMap:(BOOL)show index:(NSInteger)index{
+    if(show){
+        NSError* err;
+        TianDiTuWMTSLayer* TianDiTuLyr = [[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_IMAGE_2000:TIANDITU_VECTOR_2000 LocalServiceURL:nil error:&err];
+        TianDiTuWMTSLayer* TianDiTuLyr_Anno = [[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_IMAGE_ANNOTATION_CHINESE_2000:TIANDITU_VECTOR_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
+        TianDiTuWMTSLayer* TianDituLyr_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_ZJ_IMAGE:TIANDITU_ZJ_VECTOR LocalServiceURL:nil error:&err];
+        TianDiTuWMTSLayer* TianDituLyr_Anno_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_ZJ_IMAGE_ANNOTATION:TIANDITU_ZJ_VECTOR_ANNOTATION LocalServiceURL:nil error:&err];
+        [self.mapView addMapLayer:TianDiTuLyr withName:@"TianDiTu Layer"];
+        [self.mapView addMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer"];
+        [self.mapView addMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer"];
+        [self.mapView addMapLayer:TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer"];
+    }else{
+        [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
+        [self.mapView removeMapLayerWithName:@"TianDiTu Annotation Layer"];
+        [self.mapView removeMapLayerWithName:@"TianDiTu zje Layer"];
+        [self.mapView removeMapLayerWithName:@"TianDiTu Anno zje Layer"];
+    }
+}
+- (void)deleteMap{
+    [self clearToolAll];
+}
+- (void)layerMap{
+    
+}
 
 // The method that should be called when the notification arises
 - (void)respondToEnvChange: (NSNotification*) notification {

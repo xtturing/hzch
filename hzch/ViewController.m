@@ -9,7 +9,10 @@
 #import "ViewController.h"
 #import "esriView.h"
 
-@interface ViewController ()<esriViewDelegate,UITabBarDelegate>
+@interface ViewController ()<esriViewDelegate,UITabBarDelegate>{
+    NSInteger segIndex;
+    BOOL showMap;
+}
 
 @property (strong,nonatomic)  esriView *esriView;
 
@@ -19,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (weak, nonatomic) IBOutlet UIButton *layerBtn;
-@property (weak, nonatomic) IBOutlet UIButton *baseMapBtn;
+@property(nonatomic,weak)IBOutlet UIButton *clearBtn;
 
 @end
 
@@ -30,12 +33,13 @@
     self.esriView               = [[esriView alloc] initWithFrame:self.conView.frame];
     self.esriView.delegate      = self;
     self.tabBar.delegate        = self;
-    
+    segIndex = 0;
+    showMap = YES;
     [self.conView addSubview:self.esriView];
     [self.conView addSubview:self.segmentedView];
     [self.conView addSubview:self.deleteBtn];
     [self.conView addSubview:self.layerBtn];
-    [self.conView addSubview:self.baseMapBtn];
+    [self.conView addSubview:self.clearBtn];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,11 +97,34 @@
         
     }];
 }
-
+- (IBAction)changeMap:(id)sender{
+    UISegmentedControl *segment = (UISegmentedControl *)sender;
+    segIndex = segment.selectedSegmentIndex;
+    [self.esriView changeMap:segIndex];
+}
+- (IBAction)deleteMap:(id)sender{
+    [self.esriView deleteMap];
+}
+- (IBAction)layerMap:(id)sender{
+    
+}
+- (IBAction)clearMap:(id)sender{
+    showMap = !showMap;
+    if(showMap){
+        [self.clearBtn setImage:[UIImage imageNamed:@"basemap_close"] forState:UIControlStateNormal];
+    }else{
+        [self.clearBtn setImage:[UIImage imageNamed:@"basemap_open"] forState:UIControlStateNormal];
+    }
+    [self.esriView clearMap:showMap index:segIndex];
+}
 #pragma mark UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     [self didSearch];
     return NO;
+}
+
+- (void)esriViewDetails:(esriView *)controller details:(AGSGraphic *)agsGraphic queryParams:(QueryParams *)queryParams{
+    
 }
 /*
 #pragma mark - Navigation

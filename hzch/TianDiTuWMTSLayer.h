@@ -9,30 +9,14 @@
 #import <ArcGIS/ArcGIS.h>
 #import "TianDiTuWMTSLayerInfo.h"
 typedef enum {
-    TIANDITU_VECTOR_MERCATOR = 0,	/*!< 天地图矢量墨卡托投影地图服务 */
-    TIANDITU_VECTOR_ANNOTATION_CHINESE_MERCATOR,	/*!< 天地图矢量墨卡托中文标注 */
-    TIANDITU_VECTOR_ANNOTATION_ENGLISH_MERCATOR,     /*!< 天地图矢量墨卡托英文标注 */
-    TIANDITU_IMAGE_MERCATOR,     /*!< 天地图影像墨卡托投影地图服务 */
-    TIANDITU_IMAGE_ANNOTATION_CHINESE_MERCATOR,     /*!< 天地图影像墨卡托投影中文标注 */
-    TIANDITU_IMAGE_ANNOTATION_ENGLISH_MERCATOR,     /*!< 天地图影像墨卡托投影英文标注 */
-    TIANDITU_TERRAIN_MERCATOR,     /*!< 天地图地形墨卡托投影地图服务 */
-    TIANDITU_TERRAIN_ANNOTATION_CHINESE_MERCATOR,     /*!< 天地图地形墨卡托投影中文标注 */
     TIANDITU_VECTOR_2000 = 8,     /*!< 天地图矢量国家2000坐标系地图服务 */
     TIANDITU_VECTOR_ANNOTATION_CHINESE_2000,     /*!< 天地图矢量国家2000坐标系中文标注 */
-    TIANDITU_VECTOR_ANNOTATION_ENGLISH_2000,     /*!< 天地图矢量国家2000坐标系英文标注 */
     TIANDITU_IMAGE_2000,     /*!< 天地图影像国家2000坐标系地图服务 */
     TIANDITU_IMAGE_ANNOTATION_CHINESE_2000,     /*!< 天地图影像国家2000坐标系中文标注 */
-    TIANDITU_IMAGE_ANNOTATION_ENGLISH_2000,     /*!< 天地图影像国家2000坐标系中文标注 */
-    TIANDITU_TERRAIN_2000,     /*!< 天地图地形国家2000坐标系地图服务 */
-    TIANDITU_TERRAIN_ANNOTATION_CHINESE_2000,     /*!< 天地图地形国家2000坐标系中文标注 */
     TIANDITU_ZJ_VECTOR,     /*!< 天地图矢量浙江2000坐标系地图服务 */
     TIANDITU_ZJ_VECTOR_ANNOTATION,  /*!< 天地图矢量浙江2000坐标系中文标注 */
     TIANDITU_ZJ_IMAGE,     /*!< 天地图影像浙江2000坐标系地图服务 */
     TIANDITU_ZJ_IMAGE_ANNOTATION,   /*!< 天地图影像浙江2000坐标系中文标注 */
-    TIANDITU_WZ_VECTOR,     /*!< 天地图矢量温州2000坐标系地图服务 */
-    TIANDITU_WZ_VECTOR_ANNOTATION,  /*!< 天地图矢量温州2000坐标系中文标注 */
-    TIANDITU_WZ_IMAGE,     /*!< 天地图影像温州2000坐标系地图服务 */
-    TIANDITU_WZ_IMAGE_ANNOTATION    /*!< 天地图影像温州2000坐标系中文标注 */
 } TianDiTuLayerTypes;
 
 @interface TianDiTuWMTSLayer : AGSTiledServiceLayer
