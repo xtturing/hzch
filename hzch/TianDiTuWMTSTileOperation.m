@@ -24,6 +24,8 @@
 		self.action = action;
 		self.tileKey = tileKey;
 		self.layerInfo = layerInfo;
+        self.configData = [[NSConfigData alloc]init];
+        self.tianDiTuData = [[TianDiTuData alloc] init];
 	}
     return self;
 }
@@ -37,9 +39,24 @@
         NSString *baseUrl= [NSString stringWithFormat:kURLGetTile,self.layerInfo.url,self.layerInfo.layerName,self.layerInfo.format,self.layerInfo.tileMatrixSet,self.tileKey.column,self.tileKey.row,(self.tileKey.level + 1),self.layerInfo.style];
         //NSString *baseUrl= [NSString stringWithFormat:self.layerInfo.requestURL,self.layerInfo.url,self.layerInfo.layerName,self.layerInfo.format,self.layerInfo.tileMatrixSet,self.tileKey.column,self.tileKey.row,(self.tileKey.level + 1),self.layerInfo.style];
         NSLog(@"%@",baseUrl);
+        NSData *data = [[NSData alloc] init];
         
-		NSURL* aURL = [NSURL URLWithString:baseUrl];
-		self.imageData = [[NSData alloc] initWithContentsOfURL:aURL];
+        data =  [self.tianDiTuData QueryTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 2];
+        
+        if (data == nil || data.length == 0)
+        {
+            NSLog(@"获取网络切片");
+            data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:baseUrl]];
+            
+            [self.tianDiTuData InsertTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 2 tiels:data];
+            
+        }
+        else
+        {
+            NSLog(@"获取本地切片");
+        }
+        
+        self.imageData = data;
 	}
 	@catch (NSException *exception) {
 		NSLog(@"main: Caught Exception %@: %@", [exception name], [exception reason]);

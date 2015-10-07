@@ -43,7 +43,7 @@
 
 
 //
-#define SRID_2000 4326
+#define SRID_2000 4490
 
 #define X_MIN_2000 -180.0
 #define Y_MIN_2000 -90.0
