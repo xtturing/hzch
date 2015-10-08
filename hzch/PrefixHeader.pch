@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #import <ArcGIS/ArcGIS.h>
 #import "DownloadConstants.h"
+#define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"杭州档案馆" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];[alert show];}
 #endif
 #define HEIGHT [UIScreen mainScreen].bounds.size.height//获取屏幕高度
 #define SINGLETON(classname)                            \

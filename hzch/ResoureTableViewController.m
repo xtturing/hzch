@@ -120,21 +120,26 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
+    ALERT(@"请求失败，请确认网络连接");
 }
 
 - (void)didGetCatalogDepartment:(NSArray *)departmentList{
     [SVProgressHUD dismiss];
-    self.departmentList = departmentList;
-    if(self.showType == 0){
+    if(departmentList.count > 0){
+        self.departmentList = departmentList;
         [self.tableView reloadData];
+    }else{
+        ALERT(@"请求数据为空");
     }
 }
 
 - (void)didGetCatalogGovment:(NSArray *)govmentList{
     [SVProgressHUD dismiss];
-    self.govmentList = govmentList;
-    if(self.showType == 1){
+    if(govmentList.count > 0){
+        self.govmentList = govmentList;
         [self.tableView reloadData];
+    }else{
+        ALERT(@"请求数据为空");
     }
 }
 

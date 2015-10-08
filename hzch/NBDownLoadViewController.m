@@ -83,8 +83,7 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
-    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"" message:@"离线下载发生异常" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [view show];
+    ALERT(@"请求失败，请确认网络连接");
 }
 
 -(void)didLoadTPK:(NSMutableDictionary *)Dic{

@@ -67,6 +67,7 @@ CLLocationManagerDelegate>
 - (IBAction)toolDraw:(id)sender;
 - (IBAction)widthTool:(id)sender;
 - (IBAction)colorTool:(id)sender;
+- (IBAction)widthChange:(id)sender;
 -(void)addCustLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addSketchLayer;

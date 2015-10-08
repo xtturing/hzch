@@ -157,9 +157,12 @@
                         <barButtonItem title="1" id="oov-ZX-6wm"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="VA9-wh-3W6"/>
                         <barButtonItem tag="3001" style="plain" id="yB7-GG-8JO">
-                            <slider key="customView" opaque="NO" tag="3003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="j44-WJ-CZY">
+                            <slider key="customView" opaque="NO" tag="3003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="1" maxValue="10" id="j44-WJ-CZY">
                                 <rect key="frame" x="14" y="7" width="189" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="widthChange:" destination="g1L-6G-ZfW" eventType="valueChanged" id="e6Z-Mv-qCJ"/>
+                                </connections>
                             </slider>
                             <connections>
                                 <action selector="widthTool:" destination="g1L-6G-ZfW" id="EGf-Cp-RoE"/>

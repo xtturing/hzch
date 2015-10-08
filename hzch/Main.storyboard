@@ -240,7 +240,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Gal-GR-EdQ" kind="show" id="hsM-5z-8j2"/>
+                                            <segue destination="iMY-Dc-ecc" kind="show" id="RjM-UX-mtC"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="hRX-lH-E5U">
@@ -281,7 +281,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMy-Y1-RhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2204" y="938"/>
+            <point key="canvasLocation" x="-2168" y="918"/>
         </scene>
         <!--设置navigation-->
         <scene sceneID="fCO-RB-iug">
@@ -601,7 +601,7 @@
         <!--图层选择-->
         <scene sceneID="Wwo-qP-3aO">
             <objects>
-                <tableViewController title="图层选择" id="eyl-P4-6zJ" userLabel="图层选择" sceneMemberID="viewController">
+                <tableViewController title="图层选择" id="eyl-P4-6zJ" userLabel="图层选择" customClass="tucengTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Cl4-nc-tSU">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -622,7 +622,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFc-ts-2eX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-404" y="508"/>
+            <point key="canvasLocation" x="292" y="53"/>
         </scene>
         <!--数据展示navigation-->
         <scene sceneID="nUY-MW-09Q">
@@ -736,7 +736,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQi-zE-DFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="539" y="97"/>
+            <point key="canvasLocation" x="1315" y="-663"/>
         </scene>
         <!--样式定制-->
         <scene sceneID="P2K-ci-Qz8">
@@ -891,10 +891,46 @@
             </objects>
             <point key="canvasLocation" x="-1312" y="-758"/>
         </scene>
+        <!--地图缓存下载列表-->
+        <scene sceneID="jmJ-n4-xbe">
+            <objects>
+                <tableViewController id="iMY-Dc-ecc" userLabel="地图缓存下载列表" customClass="cacheTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2yW-2b-tN0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="whQ-7s-rhB">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="whQ-7s-rhB" id="S5k-Ua-085">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="iMY-Dc-ecc" id="9oc-OC-eGM"/>
+                            <outlet property="delegate" destination="iMY-Dc-ecc" id="A4M-Mb-mAH"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="yLK-Es-NE2">
+                        <nil key="title"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tXC-Wu-ROt">
+                            <connections>
+                                <segue destination="Gal-GR-EdQ" kind="show" id="yet-rQ-Ipx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hXj-qL-5Wy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1320" y="960"/>
+        </scene>
         <!--地图缓存下载-->
         <scene sceneID="iui-ht-TBr">
             <objects>
-                <tableViewController title="地图缓存下载" id="Gal-GR-EdQ" sceneMemberID="viewController">
+                <tableViewController title="地图缓存下载" id="Gal-GR-EdQ" customClass="addCacheTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="8zq-oP-H2O">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -965,20 +1001,29 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fUa-jW-ulS">
+                                                <button opaque="NO" tag="6001" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fUa-jW-ulS">
                                                     <rect key="frame" x="79" y="7" width="80" height="30"/>
                                                     <state key="normal" title="1">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <segue destination="Sl8-lh-J0V" kind="show" id="2cY-2Q-Gjd"/>
+                                                    </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9y-p6-3nq">
+                                                <button opaque="NO" tag="6002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9y-p6-3nq">
                                                     <rect key="frame" x="200" y="7" width="80" height="30"/>
                                                     <state key="normal" title="12">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <segue destination="Sl8-lh-J0V" kind="show" id="fFR-5G-cef"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Sl8-lh-J0V" kind="show" id="Tne-zy-3r8"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="tDC-Jb-i2t">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1023,26 +1068,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Uqp-Zu-vmr">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uqp-Zu-vmr" id="GPi-OH-Jrw">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uYF-EV-ANh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                                    <state key="normal" title="停止">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="uYF-EV-ANh" firstAttribute="top" secondItem="GPi-OH-Jrw" secondAttribute="topMargin" constant="-8" id="6gB-fb-3ac"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="uYF-EV-ANh" secondAttribute="trailing" constant="-8" id="IKZ-xR-xOr"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="uYF-EV-ANh" secondAttribute="bottom" constant="-8" id="Z06-8U-76e"/>
-                                                <constraint firstItem="uYF-EV-ANh" firstAttribute="leading" secondItem="GPi-OH-Jrw" secondAttribute="leadingMargin" constant="-8" id="xqm-yr-z0X"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1054,7 +1079,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPD-yF-Ebe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1266" y="895"/>
+            <point key="canvasLocation" x="-582" y="955"/>
         </scene>
         <!--清空缓存-->
         <scene sceneID="PkU-dB-X7L">
@@ -1149,7 +1174,7 @@
         <!--范围选择-->
         <scene sceneID="QSY-za-BW2">
             <objects>
-                <tableViewController title="范围选择" id="YUb-NN-P2n" userLabel="范围选择" sceneMemberID="viewController">
+                <tableViewController title="范围选择" id="YUb-NN-P2n" userLabel="范围选择" customClass="fanweiTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="i54-Nz-KlP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1170,7 +1195,26 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQH-qK-751" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-372" y="1260"/>
+            <point key="canvasLocation" x="308" y="804"/>
+        </scene>
+        <!--层级选择-->
+        <scene sceneID="D93-Mn-NP7">
+            <objects>
+                <tableViewController id="Sl8-lh-J0V" userLabel="层级选择" customClass="cengjiTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rqZ-3n-b7A">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="Sl8-lh-J0V" id="gTe-y1-z3Y"/>
+                            <outlet property="delegate" destination="Sl8-lh-J0V" id="MSO-z3-Bag"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iXk-Gh-1dU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="308" y="1697"/>
         </scene>
         <!--点样式定制-->
         <scene sceneID="yxO-dZ-yUW">
@@ -1626,7 +1670,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FLZ-fz-tcA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="t30-Pi-su8"/>
             </objects>
-            <point key="canvasLocation" x="547" y="1697"/>
+            <point key="canvasLocation" x="1135" y="1705"/>
         </scene>
         <!--全文检索结果-->
         <scene sceneID="LLZ-h2-ZFw">
@@ -1681,7 +1725,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ahl-Tf-MRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1216" y="1698"/>
+            <point key="canvasLocation" x="1844" y="1697"/>
         </scene>
         <!--全文检索Navigation-->
         <scene sceneID="QID-f6-7mF">
@@ -1697,7 +1741,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4f8-AE-ufp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="555" y="772"/>
+            <point key="canvasLocation" x="1135" y="792"/>
         </scene>
     </scenes>
     <resources>
@@ -1731,4 +1775,7 @@
         <image name="gesture_search_click" width="22" height="22"/>
         <image name="layer_normal" width="22" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="fFR-5G-cef"/>
+    </inferredMetricsTieBreakers>
 </document>

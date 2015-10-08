@@ -81,6 +81,7 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
+    ALERT(@"请求失败，请确认网络连接");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -90,6 +91,7 @@
         self.detailList = departmentDetailList;
         [self.tableView reloadData];
     }else{
+        ALERT(@"请求数据为空");
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -100,6 +102,7 @@
         self.detailList = govmentDetailList;
         [self.tableView reloadData];
     }else{
+        ALERT(@"请求数据为空");
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

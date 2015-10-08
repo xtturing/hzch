@@ -16,6 +16,28 @@
 		4106DFF91BA1D7A900EF997D /* CLLocation+Sino.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */; };
 		410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A3ABE1BAB041B0025206E /* SetTableViewController.m */; };
 		410A3AC41BAB13830025206E /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 410A3AC31BAB13830025206E /* image.xcassets */; };
+		412A15181BC68A8D006E87A0 /* cacheTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15171BC68A8D006E87A0 /* cacheTableViewController.m */; };
+		412A151B1BC68AEB006E87A0 /* addCacheTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A151A1BC68AEB006E87A0 /* addCacheTableViewController.m */; };
+		412A152B1BC69318006E87A0 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A151F1BC69318006E87A0 /* AbstractActionSheetPicker.m */; };
+		412A152C1BC69318006E87A0 /* ActionSheetCustomPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15211BC69318006E87A0 /* ActionSheetCustomPicker.m */; };
+		412A152D1BC69318006E87A0 /* ActionSheetDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15241BC69318006E87A0 /* ActionSheetDatePicker.m */; };
+		412A152E1BC69318006E87A0 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15261BC69318006E87A0 /* ActionSheetDistancePicker.m */; };
+		412A152F1BC69318006E87A0 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15281BC69318006E87A0 /* ActionSheetStringPicker.m */; };
+		412A15301BC69318006E87A0 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A152A1BC69318006E87A0 /* DistancePickerView.m */; };
+		412A15351BC6A7F4006E87A0 /* ShpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15341BC6A7F4006E87A0 /* ShpHelper.m */; };
+		412A154C1BC6AB5B006E87A0 /* dbfopen.c in Sources */ = {isa = PBXBuildFile; fileRef = 412A15481BC6AB5B006E87A0 /* dbfopen.c */; };
+		412A154D1BC6AB5B006E87A0 /* shpopen.c in Sources */ = {isa = PBXBuildFile; fileRef = 412A154A1BC6AB5B006E87A0 /* shpopen.c */; };
+		412A154E1BC6AB5B006E87A0 /* shptree.c in Sources */ = {isa = PBXBuildFile; fileRef = 412A154B1BC6AB5B006E87A0 /* shptree.c */; };
+		412A15531BC6AE12006E87A0 /* MapUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15501BC6AE12006E87A0 /* MapUtil.m */; };
+		412A15541BC6AE12006E87A0 /* SketchUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15521BC6AE12006E87A0 /* SketchUtil.m */; };
+		412A15571BC6AFC3006E87A0 /* TiandituQueryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15561BC6AFC3006E87A0 /* TiandituQueryHelper.m */; };
+		412A155F1BC6AFF7006E87A0 /* WFS.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A155A1BC6AFF7006E87A0 /* WFS.m */; };
+		412A15601BC6AFF7006E87A0 /* GMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A155C1BC6AFF7006E87A0 /* GMLParser.m */; };
+		412A15611BC6AFF7006E87A0 /* OGCParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A155E1BC6AFF7006E87A0 /* OGCParser.m */; };
+		412A15651BC6B46B006E87A0 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15641BC6B46B006E87A0 /* XMLDictionary.m */; };
+		412A15681BC6CA37006E87A0 /* tucengTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A15671BC6CA37006E87A0 /* tucengTableViewController.m */; };
+		412A156B1BC6CA48006E87A0 /* fanweiTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A156A1BC6CA48006E87A0 /* fanweiTableViewController.m */; };
+		412A156E1BC6CA56006E87A0 /* cengjiTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A156D1BC6CA56006E87A0 /* cengjiTableViewController.m */; };
 		412B398E1BB97B1700DD9151 /* NBSpatialData.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B398D1BB97B1700DD9151 /* NBSpatialData.m */; };
 		413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413470061BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m */; };
 		41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41398EE81BB45139008E9222 /* LineSearchTableViewController.m */; };
@@ -118,6 +140,50 @@
 		410A3ABD1BAB041B0025206E /* SetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetTableViewController.h; sourceTree = "<group>"; };
 		410A3ABE1BAB041B0025206E /* SetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetTableViewController.m; sourceTree = "<group>"; };
 		410A3AC31BAB13830025206E /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
+		412A15161BC68A8D006E87A0 /* cacheTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cacheTableViewController.h; sourceTree = "<group>"; };
+		412A15171BC68A8D006E87A0 /* cacheTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cacheTableViewController.m; sourceTree = "<group>"; };
+		412A15191BC68AEB006E87A0 /* addCacheTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCacheTableViewController.h; sourceTree = "<group>"; };
+		412A151A1BC68AEB006E87A0 /* addCacheTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCacheTableViewController.m; sourceTree = "<group>"; };
+		412A151D1BC69318006E87A0 /* ActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetPicker.h; sourceTree = "<group>"; };
+		412A151E1BC69318006E87A0 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
+		412A151F1BC69318006E87A0 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
+		412A15201BC69318006E87A0 /* ActionSheetCustomPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetCustomPicker.h; sourceTree = "<group>"; };
+		412A15211BC69318006E87A0 /* ActionSheetCustomPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetCustomPicker.m; sourceTree = "<group>"; };
+		412A15221BC69318006E87A0 /* ActionSheetCustomPickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetCustomPickerDelegate.h; sourceTree = "<group>"; };
+		412A15231BC69318006E87A0 /* ActionSheetDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetDatePicker.h; sourceTree = "<group>"; };
+		412A15241BC69318006E87A0 /* ActionSheetDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetDatePicker.m; sourceTree = "<group>"; };
+		412A15251BC69318006E87A0 /* ActionSheetDistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetDistancePicker.h; sourceTree = "<group>"; };
+		412A15261BC69318006E87A0 /* ActionSheetDistancePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetDistancePicker.m; sourceTree = "<group>"; };
+		412A15271BC69318006E87A0 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
+		412A15281BC69318006E87A0 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
+		412A15291BC69318006E87A0 /* DistancePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePickerView.h; sourceTree = "<group>"; };
+		412A152A1BC69318006E87A0 /* DistancePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePickerView.m; sourceTree = "<group>"; };
+		412A15331BC6A7F4006E87A0 /* ShpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShpHelper.h; sourceTree = "<group>"; };
+		412A15341BC6A7F4006E87A0 /* ShpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShpHelper.m; sourceTree = "<group>"; };
+		412A15481BC6AB5B006E87A0 /* dbfopen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dbfopen.c; path = "shapelib-1.2.10/dbfopen.c"; sourceTree = "<group>"; };
+		412A15491BC6AB5B006E87A0 /* shapefil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shapefil.h; path = "shapelib-1.2.10/shapefil.h"; sourceTree = "<group>"; };
+		412A154A1BC6AB5B006E87A0 /* shpopen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = shpopen.c; path = "shapelib-1.2.10/shpopen.c"; sourceTree = "<group>"; };
+		412A154B1BC6AB5B006E87A0 /* shptree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = shptree.c; path = "shapelib-1.2.10/shptree.c"; sourceTree = "<group>"; };
+		412A154F1BC6AE12006E87A0 /* MapUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUtil.h; sourceTree = "<group>"; };
+		412A15501BC6AE12006E87A0 /* MapUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapUtil.m; sourceTree = "<group>"; };
+		412A15511BC6AE12006E87A0 /* SketchUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchUtil.h; sourceTree = "<group>"; };
+		412A15521BC6AE12006E87A0 /* SketchUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchUtil.m; sourceTree = "<group>"; };
+		412A15551BC6AFC3006E87A0 /* TiandituQueryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiandituQueryHelper.h; sourceTree = "<group>"; };
+		412A15561BC6AFC3006E87A0 /* TiandituQueryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiandituQueryHelper.m; sourceTree = "<group>"; };
+		412A15591BC6AFF7006E87A0 /* WFS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WFS.h; sourceTree = "<group>"; };
+		412A155A1BC6AFF7006E87A0 /* WFS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFS.m; sourceTree = "<group>"; };
+		412A155B1BC6AFF7006E87A0 /* GMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMLParser.h; sourceTree = "<group>"; };
+		412A155C1BC6AFF7006E87A0 /* GMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMLParser.m; sourceTree = "<group>"; };
+		412A155D1BC6AFF7006E87A0 /* OGCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGCParser.h; sourceTree = "<group>"; };
+		412A155E1BC6AFF7006E87A0 /* OGCParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGCParser.m; sourceTree = "<group>"; };
+		412A15631BC6B46B006E87A0 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		412A15641BC6B46B006E87A0 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
+		412A15661BC6CA37006E87A0 /* tucengTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tucengTableViewController.h; sourceTree = "<group>"; };
+		412A15671BC6CA37006E87A0 /* tucengTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tucengTableViewController.m; sourceTree = "<group>"; };
+		412A15691BC6CA48006E87A0 /* fanweiTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fanweiTableViewController.h; sourceTree = "<group>"; };
+		412A156A1BC6CA48006E87A0 /* fanweiTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fanweiTableViewController.m; sourceTree = "<group>"; };
+		412A156C1BC6CA56006E87A0 /* cengjiTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cengjiTableViewController.h; sourceTree = "<group>"; };
+		412A156D1BC6CA56006E87A0 /* cengjiTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cengjiTableViewController.m; sourceTree = "<group>"; };
 		412B398C1BB97B1700DD9151 /* NBSpatialData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSpatialData.h; sourceTree = "<group>"; };
 		412B398D1BB97B1700DD9151 /* NBSpatialData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSpatialData.m; sourceTree = "<group>"; };
 		413470051BBF46DA00FABEA8 /* NBSearchDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearchDetailTableViewController.h; sourceTree = "<group>"; };
@@ -345,10 +411,16 @@
 		4106DFE71BA1D78D00EF997D /* categary */ = {
 			isa = PBXGroup;
 			children = (
+				412A154F1BC6AE12006E87A0 /* MapUtil.h */,
+				412A15501BC6AE12006E87A0 /* MapUtil.m */,
+				412A15511BC6AE12006E87A0 /* SketchUtil.h */,
+				412A15521BC6AE12006E87A0 /* SketchUtil.m */,
 				413D7E101BAF04B900D972DB /* Utility.h */,
 				413D7E111BAF04B900D972DB /* Utility.m */,
 				41E425DE1BA86A56009C0581 /* NSConvert.h */,
 				41E425DF1BA86A56009C0581 /* NSConvert.m */,
+				412A15631BC6B46B006E87A0 /* XMLDictionary.h */,
+				412A15641BC6B46B006E87A0 /* XMLDictionary.m */,
 				41E425DB1BA869B2009C0581 /* NSConfigData.h */,
 				41E425DC1BA869B2009C0581 /* NSConfigData.m */,
 				4106DFEA1BA1D7A900EF997D /* StringUtil.h */,
@@ -361,6 +433,53 @@
 				4106DFF31BA1D7A900EF997D /* CLLocation+Sino.m */,
 			);
 			name = categary;
+			sourceTree = "<group>";
+		};
+		412A151C1BC69305006E87A0 /* picker */ = {
+			isa = PBXGroup;
+			children = (
+				412A151D1BC69318006E87A0 /* ActionSheetPicker.h */,
+				412A151E1BC69318006E87A0 /* AbstractActionSheetPicker.h */,
+				412A151F1BC69318006E87A0 /* AbstractActionSheetPicker.m */,
+				412A15201BC69318006E87A0 /* ActionSheetCustomPicker.h */,
+				412A15211BC69318006E87A0 /* ActionSheetCustomPicker.m */,
+				412A15221BC69318006E87A0 /* ActionSheetCustomPickerDelegate.h */,
+				412A15231BC69318006E87A0 /* ActionSheetDatePicker.h */,
+				412A15241BC69318006E87A0 /* ActionSheetDatePicker.m */,
+				412A15251BC69318006E87A0 /* ActionSheetDistancePicker.h */,
+				412A15261BC69318006E87A0 /* ActionSheetDistancePicker.m */,
+				412A15271BC69318006E87A0 /* ActionSheetStringPicker.h */,
+				412A15281BC69318006E87A0 /* ActionSheetStringPicker.m */,
+				412A15291BC69318006E87A0 /* DistancePickerView.h */,
+				412A152A1BC69318006E87A0 /* DistancePickerView.m */,
+			);
+			name = picker;
+			sourceTree = "<group>";
+		};
+		412A15321BC6A77A006E87A0 /* shp */ = {
+			isa = PBXGroup;
+			children = (
+				412A15481BC6AB5B006E87A0 /* dbfopen.c */,
+				412A15491BC6AB5B006E87A0 /* shapefil.h */,
+				412A154A1BC6AB5B006E87A0 /* shpopen.c */,
+				412A154B1BC6AB5B006E87A0 /* shptree.c */,
+				412A15331BC6A7F4006E87A0 /* ShpHelper.h */,
+				412A15341BC6A7F4006E87A0 /* ShpHelper.m */,
+			);
+			name = shp;
+			sourceTree = "<group>";
+		};
+		412A15581BC6AFE2006E87A0 /* WFS */ = {
+			isa = PBXGroup;
+			children = (
+				412A15591BC6AFF7006E87A0 /* WFS.h */,
+				412A155A1BC6AFF7006E87A0 /* WFS.m */,
+				412A155B1BC6AFF7006E87A0 /* GMLParser.h */,
+				412A155C1BC6AFF7006E87A0 /* GMLParser.m */,
+				412A155D1BC6AFF7006E87A0 /* OGCParser.h */,
+				412A155E1BC6AFF7006E87A0 /* OGCParser.m */,
+			);
+			name = WFS;
 			sourceTree = "<group>";
 		};
 		413C78F91BBAE19A005217F3 /* search */ = {
@@ -440,6 +559,8 @@
 		41421DCA1B9DD954000DDFAF /* kit */ = {
 			isa = PBXGroup;
 			children = (
+				412A15321BC6A77A006E87A0 /* shp */,
+				412A151C1BC69305006E87A0 /* picker */,
 				413D7E301BAF095900D972DB /* XMLReader */,
 				415A61181BADB4BB001FA3FB /* RATreeView */,
 				41E425DA1BA86958009C0581 /* tianditu */,
@@ -520,6 +641,16 @@
 			children = (
 				410A3ABD1BAB041B0025206E /* SetTableViewController.h */,
 				410A3ABE1BAB041B0025206E /* SetTableViewController.m */,
+				412A15161BC68A8D006E87A0 /* cacheTableViewController.h */,
+				412A15171BC68A8D006E87A0 /* cacheTableViewController.m */,
+				412A15191BC68AEB006E87A0 /* addCacheTableViewController.h */,
+				412A151A1BC68AEB006E87A0 /* addCacheTableViewController.m */,
+				412A15661BC6CA37006E87A0 /* tucengTableViewController.h */,
+				412A15671BC6CA37006E87A0 /* tucengTableViewController.m */,
+				412A15691BC6CA48006E87A0 /* fanweiTableViewController.h */,
+				412A156A1BC6CA48006E87A0 /* fanweiTableViewController.m */,
+				412A156C1BC6CA56006E87A0 /* cengjiTableViewController.h */,
+				412A156D1BC6CA56006E87A0 /* cengjiTableViewController.m */,
 			);
 			name = set;
 			sourceTree = "<group>";
@@ -527,6 +658,9 @@
 		416876951BA1D02500119267 /* map */ = {
 			isa = PBXGroup;
 			children = (
+				412A15581BC6AFE2006E87A0 /* WFS */,
+				412A15551BC6AFC3006E87A0 /* TiandituQueryHelper.h */,
+				412A15561BC6AFC3006E87A0 /* TiandituQueryHelper.m */,
 				41B9534C1BB598E200FE6F35 /* CanvasView.m */,
 				41B9534D1BB598E200FE6F35 /* CanvasView.h */,
 				41E425E91BA86B7A009C0581 /* QueryParams.h */,
@@ -718,10 +852,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				413D7E1F1BAF068C00D972DB /* CoreDataManager.m in Sources */,
+				412A15531BC6AE12006E87A0 /* MapUtil.m in Sources */,
 				413D7E231BAF068C00D972DB /* DownloadStoreManager.m in Sources */,
 				412B398E1BB97B1700DD9151 /* NBSpatialData.m in Sources */,
 				41E425DD1BA869B2009C0581 /* NSConfigData.m in Sources */,
+				412A156E1BC6CA56006E87A0 /* cengjiTableViewController.m in Sources */,
 				4106DFF91BA1D7A900EF997D /* CLLocation+Sino.m in Sources */,
+				412A154E1BC6AB5B006E87A0 /* shptree.c in Sources */,
 				41E425EB1BA86B7A009C0581 /* QueryParams.m in Sources */,
 				41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */,
 				41E425E01BA86A56009C0581 /* NSConvert.m in Sources */,
@@ -729,12 +866,18 @@
 				413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */,
 				413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */,
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
+				412A152E1BC69318006E87A0 /* ActionSheetDistancePicker.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,
 				41533EF71BBDED96006C7D55 /* ResoureDetailTableViewController.m in Sources */,
 				41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */,
+				412A15541BC6AE12006E87A0 /* SketchUtil.m in Sources */,
+				412A152D1BC69318006E87A0 /* ActionSheetDatePicker.m in Sources */,
 				413C79021BBAEEEC005217F3 /* NBDepartMent.m in Sources */,
+				412A15301BC69318006E87A0 /* DistancePickerView.m in Sources */,
+				412A15601BC6AFF7006E87A0 /* GMLParser.m in Sources */,
 				415A61351BADB4C9001FA3FB /* RATreeNodeInfo.m in Sources */,
+				412A155F1BC6AFF7006E87A0 /* WFS.m in Sources */,
 				413D7E211BAF068C00D972DB /* DownloadItemEntity.m in Sources */,
 				413D7E221BAF068C00D972DB /* DownloadManager.m in Sources */,
 				413D7E331BAF096400D972DB /* XMLReader.m in Sources */,
@@ -742,24 +885,33 @@
 				415A61301BADB4C9001FA3FB /* RATreeView+Private.m in Sources */,
 				41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */,
 				415A613B1BADB4E8001FA3FB /* RADataObject.m in Sources */,
+				412A152B1BC69318006E87A0 /* AbstractActionSheetPicker.m in Sources */,
 				413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */,
+				412A15681BC6CA37006E87A0 /* tucengTableViewController.m in Sources */,
 				4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */,
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
 				413D7E0F1BAF049F00D972DB /* NBTpk.m in Sources */,
 				410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */,
 				415A612F1BADB4C9001FA3FB /* RATreeView+TableViewDataSource.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
+				412A15351BC6A7F4006E87A0 /* ShpHelper.m in Sources */,
 				413D7E2A1BAF08ED00D972DB /* dataHttpManager.m in Sources */,
 				413C78FC1BBAE1D3005217F3 /* NBSearchTableViewController.m in Sources */,
 				415A613C1BADB4E8001FA3FB /* RAViewController.m in Sources */,
+				412A154D1BC6AB5B006E87A0 /* shpopen.c in Sources */,
+				412A15611BC6AFF7006E87A0 /* OGCParser.m in Sources */,
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
 				41533EF41BBDE543006C7D55 /* NBGovment.m in Sources */,
 				413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */,
 				41533EFA1BBDF47E006C7D55 /* NBSearch.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
+				412A15181BC68A8D006E87A0 /* cacheTableViewController.m in Sources */,
+				412A154C1BC6AB5B006E87A0 /* dbfopen.c in Sources */,
 				410555F21B9C729400B208E8 /* main.m in Sources */,
+				412A15571BC6AFC3006E87A0 /* TiandituQueryHelper.m in Sources */,
 				415A61331BADB4C9001FA3FB /* RATreeNode.m in Sources */,
 				41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */,
+				412A156B1BC6CA48006E87A0 /* fanweiTableViewController.m in Sources */,
 				413D7E121BAF04B900D972DB /* Utility.m in Sources */,
 				415A612E1BADB4C9001FA3FB /* RATreeView+TableViewDelegate.m in Sources */,
 				413D7E201BAF068C00D972DB /* DownloadItem.m in Sources */,
@@ -767,11 +919,15 @@
 				413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */,
 				413D7E241BAF068C00D972DB /* DwonloadModel.xcdatamodel in Sources */,
 				4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */,
+				412A15651BC6B46B006E87A0 /* XMLDictionary.m in Sources */,
 				415A61341BADB4C9001FA3FB /* RATreeNodeCollectionController.m in Sources */,
 				413D7E0B1BAF033000D972DB /* GTMBase64.m in Sources */,
 				41E425E31BA86AAC009C0581 /* TianDiTuData.m in Sources */,
 				413CD51C1BC2BE480069EC23 /* NBSearchCatalog.m in Sources */,
+				412A152C1BC69318006E87A0 /* ActionSheetCustomPicker.m in Sources */,
 				4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */,
+				412A152F1BC69318006E87A0 /* ActionSheetStringPicker.m in Sources */,
+				412A151B1BC68AEB006E87A0 /* addCacheTableViewController.m in Sources */,
 				415A612D1BADB4C9001FA3FB /* RATreeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

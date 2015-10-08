@@ -86,6 +86,7 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
+    ALERT(@"请求失败，请确认网络连接");
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didGetSearch:(NSMutableDictionary *)searchDic{
@@ -109,6 +110,7 @@
         [self.tableView reloadData];
     }else{
         self.toolBar.hidden = YES;
+        ALERT(@"请求数据为空");
          [self.navigationController popViewControllerAnimated:YES];
     }
 }

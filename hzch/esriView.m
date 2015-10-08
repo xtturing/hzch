@@ -9,8 +9,7 @@
 #import "esriView.h"
 #import "LineSearchTableViewController.h"
 #import "CanvasView.h"
-#define ALERT(msg) {UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"杭州档案馆" message:msg delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];[alert show];}
-
+#import "MapUtil.h"
 
 @interface esriView (){
     double _distance;
@@ -91,7 +90,11 @@
     }
 }
 - (void)deleteMap{
-    [self clearToolAll];
+    NSArray* mapLayers = [self.mapView mapLayers];
+    for (AGSLayer* layer in mapLayers)
+    {
+        [self.mapView removeMapLayerWithName:[layer name]];
+    }
 }
 - (void)layerMap{
     
@@ -816,25 +819,25 @@
     switch (btnItem.tag) {
         case 4001:
         {
-            
+            _drawColor = [UIColor redColor];
         }
             break;
             
         case 4002:
         {
-            
+            _drawColor = [UIColor blueColor];
         }
             break;
             
         case 4003:
         {
-            
+            _drawColor = [UIColor greenColor];
         }
             break;
             
         case 4004:
         {
-            
+            _drawColor = [UIColor purpleColor];
         }
             break;
         case 4005:
@@ -850,11 +853,6 @@
 - (IBAction)widthTool:(id)sender{
     UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
     switch (btnItem.tag) {
-        case 3001:
-        {
-            
-        }
-            break;
             
         case 3002:
         {
@@ -862,15 +860,14 @@
             self.toolLabel.text = @"请在地图上点击开始标绘";
         }
             break;
-            
-        case 3003:
-        {
-            
-        }
-            break;
         default:
             break;
     }
+}
+
+- (IBAction)widthChange:(id)sender{
+    UISlider *slider = (UISlider *)sender;
+    _drawWidth = slider.value;
 }
 
 - (void)didTouchUpInsideDrawButton
@@ -959,4 +956,101 @@
         [self didTouchUpInsideDrawButton];
     }
 }
+
+-(void) executeQueryResult:(NSData*)resultData
+{
+    AGSGraphicsLayer* _routeGraphicsLayer = [MapUtil getMapLayerByName:@"路线查询图层" mapView:self.mapView];
+    
+    NSDictionary* result = [NSJSONSerialization JSONObjectWithData:resultData options:NSJSONReadingMutableContainers error:nil];
+    
+    NSDictionary* route = [result objectForKey:@"route"];
+    NSDictionary* shortestTime = [route objectForKey:@"ShortestTime"];
+    
+    NSArray* lines = [shortestTime objectForKey:@"lines"];
+    
+    //路线节点的Symbol
+    // 1.第一个节点添加提示
+    AGSPictureMarkerSymbol* startPointSymbol = [[AGSPictureMarkerSymbol alloc] initWithImage:[UIImage imageNamed:@"route_start.png"]];
+    AGSPictureMarkerSymbol* mainPointSymbol = [[AGSPictureMarkerSymbol alloc] initWithImage:[UIImage imageNamed:@"routePin.png"]];
+    AGSPictureMarkerSymbol* endPointSymbol = [[AGSPictureMarkerSymbol alloc] initWithImage:[UIImage imageNamed:@"route_destination.png"]];
+    // 2.普通节点
+    AGSSimpleMarkerSymbol* generalPointSymbol = [[AGSSimpleMarkerSymbol alloc] init];
+    generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCircle;
+    generalPointSymbol.color = [UIColor greenColor];
+    generalPointSymbol.size = CGSizeMake(5, 5);
+    // 3.连线
+    AGSSimpleLineSymbol* lineSymbol = [[AGSSimpleLineSymbol alloc] init];
+    lineSymbol.style = AGSSimpleLineSymbolStyleDash;
+    lineSymbol.color= [UIColor colorWithRed:149/255.0 green:38/255.0 blue:238/255.0 alpha:1];
+    lineSymbol.width = 5;
+    
+    //for (NSDictionary* line in lines) //获取每一条路线
+    for (int i=0; i<[lines count]; i++)
+    {
+        NSDictionary* line = [lines objectAtIndex:i];
+        NSString* description = [line objectForKey:@"description"];
+        NSArray* points = [line objectForKey:@"points"];
+        
+        // 1.第一个点
+        NSDictionary* pointDic = [points objectAtIndex:0];
+        double x = [[pointDic objectForKey:@"x"] doubleValue];
+        double y = [[pointDic objectForKey:@"y"] doubleValue];
+        
+        AGSPoint* point0 = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
+        NSMutableDictionary* attributes =  [NSMutableDictionary dictionaryWithObjectsAndKeys:description,@"description", nil];
+        AGSGraphic* graphic0 = [AGSGraphic graphicWithGeometry:point0 symbol:mainPointSymbol attributes:attributes infoTemplateDelegate:nil];
+        if (i==0)
+            graphic0.symbol = startPointSymbol;
+        [_routeGraphicsLayer addGraphic:graphic0];
+        
+        
+        AGSPoint* firstPoint = point0;
+        for(int i=1;i<[points count];i++)
+        {
+            pointDic = [points objectAtIndex:i];
+            x = [[pointDic objectForKey:@"x"] doubleValue];
+            y = [[pointDic objectForKey:@"y"] doubleValue];
+            
+            AGSPoint* point = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
+            // AGSGraphic* graphic = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:nil infoTemplateDelegate:nil];
+            // [_routeGraphicsLayer addGraphic:graphic];
+            
+            // 添加线段
+            AGSMutablePolyline* line = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+            [line addPathToPolyline];
+            
+            [line addPointToPath:firstPoint];
+            [line addPointToPath:point];
+            AGSGraphic* lineGraphic = [AGSGraphic graphicWithGeometry:line symbol:lineSymbol attributes:nil infoTemplateDelegate:nil];
+            [_routeGraphicsLayer addGraphic:lineGraphic];
+            
+            firstPoint = point;
+        }
+    }
+    
+    //加最后一个点
+    NSDictionary* line = [lines objectAtIndex:[lines count]-1];
+    NSArray* points = [line objectForKey:@"points"];
+    NSDictionary* pointDic = [points objectAtIndex:[points count]-1];
+    double x = [[pointDic objectForKey:@"x"] doubleValue];
+    double y = [[pointDic objectForKey:@"y"] doubleValue];
+    
+    AGSPoint* pointEnd = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
+    NSMutableDictionary* attributes =  [NSMutableDictionary dictionaryWithObjectsAndKeys:@"到达终点",@"description", nil];
+    AGSGraphic* graphicEnd = [AGSGraphic graphicWithGeometry:pointEnd symbol:endPointSymbol attributes:attributes infoTemplateDelegate:nil];
+    [_routeGraphicsLayer addGraphic:graphicEnd];
+    
+    // zoom to
+    line = [lines objectAtIndex:0];
+    points = [line objectForKey:@"points"];
+    pointDic = [points objectAtIndex:0];
+    x = [[pointDic objectForKey:@"x"] doubleValue];
+    y = [[pointDic objectForKey:@"y"] doubleValue];
+    
+    AGSPoint* pointStart = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
+    [self.mapView zoomToGeometry:pointStart withPadding:20 animated:YES];
+    
+    [_routeGraphicsLayer refresh];
+}
+
 @end
