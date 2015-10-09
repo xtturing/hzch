@@ -231,7 +231,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="in4-eQ-gOx" id="Xne-fF-cDn">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="地图缓存下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IA-71-cDL">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="地图缓存管理" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IA-71-cDL">
                                                     <rect key="frame" x="25" y="8" width="247" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -816,17 +816,69 @@
         <!--我的标绘-->
         <scene sceneID="TsD-NS-Oam">
             <objects>
-                <tableViewController title="我的标绘" id="yHX-Cg-MJ9" sceneMemberID="viewController">
+                <tableViewController title="我的标绘" id="yHX-Cg-MJ9" customClass="myDrawTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="a4e-ms-slN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="BzW-It-jls">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="drawCell" id="BzW-It-jls" customClass="myDrawTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BzW-It-jls" id="7E9-Gw-T5w">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANB-Qt-o5u">
+                                            <rect key="frame" x="50" y="11" width="190" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="Vy2-AX-ApR"/>
+                                                <constraint firstAttribute="width" constant="190" id="pRd-CO-ZKa"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xg-WM-mN5">
+                                            <rect key="frame" x="10" y="11" width="22" height="22"/>
+                                            <state key="normal" image="show_click">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnP-7c-Jtl">
+                                            <rect key="frame" x="560" y="11" width="22" height="22"/>
+                                            <state key="normal" image="delete_line_click">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6En-tm-PJS">
+                                            <rect key="frame" x="520" y="11" width="22" height="22"/>
+                                            <state key="normal" image="plotting_click">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ANB-Qt-o5u" firstAttribute="leading" secondItem="0Xg-WM-mN5" secondAttribute="trailing" constant="18" id="3Cw-Mr-SwX"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ANB-Qt-o5u" secondAttribute="bottom" constant="3" id="ASq-wV-tWq"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="dnP-7c-Jtl" secondAttribute="bottom" constant="2" id="BFA-LJ-NLy"/>
+                                        <constraint firstItem="ANB-Qt-o5u" firstAttribute="leading" secondItem="0Xg-WM-mN5" secondAttribute="trailing" constant="18" id="DjO-QG-qaA"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="dnP-7c-Jtl" secondAttribute="trailing" constant="10" id="FRB-iA-QEv"/>
+                                        <constraint firstItem="dnP-7c-Jtl" firstAttribute="leading" secondItem="6En-tm-PJS" secondAttribute="trailing" constant="18" id="GSQ-1w-eFW"/>
+                                        <constraint firstItem="0Xg-WM-mN5" firstAttribute="leading" secondItem="7E9-Gw-T5w" secondAttribute="leadingMargin" constant="2" id="Kh3-mt-aKg"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="0Xg-WM-mN5" secondAttribute="bottom" constant="2" id="OVv-hK-Dj5"/>
+                                        <constraint firstItem="ANB-Qt-o5u" firstAttribute="top" secondItem="7E9-Gw-T5w" secondAttribute="topMargin" constant="3" id="WJB-cP-J4Z"/>
+                                        <constraint firstItem="0Xg-WM-mN5" firstAttribute="top" secondItem="7E9-Gw-T5w" secondAttribute="topMargin" constant="3" id="XaE-UU-DKA"/>
+                                        <constraint firstItem="dnP-7c-Jtl" firstAttribute="leading" secondItem="6En-tm-PJS" secondAttribute="trailing" constant="18" id="iHl-fS-Ir3"/>
+                                        <constraint firstItem="dnP-7c-Jtl" firstAttribute="top" secondItem="7E9-Gw-T5w" secondAttribute="topMargin" constant="3" id="lUM-6B-F8B"/>
+                                        <constraint firstItem="6En-tm-PJS" firstAttribute="top" secondItem="7E9-Gw-T5w" secondAttribute="topMargin" constant="3" id="sAC-lJ-3Gh"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="6En-tm-PJS" secondAttribute="bottom" constant="2" id="zu7-Eb-Gpg"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="deleteBtn" destination="dnP-7c-Jtl" id="Jll-iS-hiE"/>
+                                    <outlet property="editBtn" destination="6En-tm-PJS" id="K2w-zz-LPy"/>
+                                    <outlet property="showBtn" destination="0Xg-WM-mN5" id="Vzk-X2-gB8"/>
+                                    <outlet property="titleLab" destination="ANB-Qt-o5u" id="PcH-3Q-tWr"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -891,20 +943,72 @@
             </objects>
             <point key="canvasLocation" x="-1312" y="-758"/>
         </scene>
-        <!--地图缓存下载列表-->
+        <!--地图缓存管理-->
         <scene sceneID="jmJ-n4-xbe">
             <objects>
-                <tableViewController id="iMY-Dc-ecc" userLabel="地图缓存下载列表" customClass="cacheTableViewController" sceneMemberID="viewController">
+                <tableViewController id="iMY-Dc-ecc" userLabel="地图缓存管理" customClass="cacheTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2yW-2b-tN0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="whQ-7s-rhB">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="drawCell" id="M10-QT-pp6" customClass="myDrawTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="whQ-7s-rhB" id="S5k-Ua-085">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M10-QT-pp6" id="ITz-xR-yia">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNT-S8-gwg">
+                                            <rect key="frame" x="50" y="11" width="190" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="190" id="eCn-np-tLZ"/>
+                                                <constraint firstAttribute="height" constant="21" id="vUb-86-1eH"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugM-dR-c2m">
+                                            <rect key="frame" x="10" y="11" width="22" height="22"/>
+                                            <state key="normal" image="show_click">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZb-Pb-nF2">
+                                            <rect key="frame" x="560" y="11" width="22" height="22"/>
+                                            <state key="normal" image="delete_line_click">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tod-aX-X70">
+                                            <rect key="frame" x="520" y="11" width="22" height="22"/>
+                                            <state key="normal" image="plotting_click">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ugM-dR-c2m" secondAttribute="bottom" constant="2" id="0T0-6s-yXY"/>
+                                        <constraint firstItem="ugM-dR-c2m" firstAttribute="leading" secondItem="ITz-xR-yia" secondAttribute="leadingMargin" constant="2" id="8W8-da-jYZ"/>
+                                        <constraint firstItem="Tod-aX-X70" firstAttribute="top" secondItem="ITz-xR-yia" secondAttribute="topMargin" constant="3" id="AAU-yc-CRf"/>
+                                        <constraint firstItem="ugM-dR-c2m" firstAttribute="top" secondItem="ITz-xR-yia" secondAttribute="topMargin" constant="3" id="BU4-2E-czo"/>
+                                        <constraint firstItem="FNT-S8-gwg" firstAttribute="leading" secondItem="ugM-dR-c2m" secondAttribute="trailing" constant="18" id="BvL-yW-3BE"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="FNT-S8-gwg" secondAttribute="bottom" constant="3" id="DPK-la-QnT"/>
+                                        <constraint firstItem="QZb-Pb-nF2" firstAttribute="leading" secondItem="Tod-aX-X70" secondAttribute="trailing" constant="18" id="DZO-Tt-eZX"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="QZb-Pb-nF2" secondAttribute="bottom" constant="2" id="H5c-23-7FI"/>
+                                        <constraint firstItem="FNT-S8-gwg" firstAttribute="leading" secondItem="ugM-dR-c2m" secondAttribute="trailing" constant="18" id="KGb-RL-Htv"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Tod-aX-X70" secondAttribute="bottom" constant="2" id="KeH-pe-GEc"/>
+                                        <constraint firstItem="FNT-S8-gwg" firstAttribute="top" secondItem="ITz-xR-yia" secondAttribute="topMargin" constant="3" id="Qgz-p1-MWR"/>
+                                        <constraint firstItem="QZb-Pb-nF2" firstAttribute="top" secondItem="ITz-xR-yia" secondAttribute="topMargin" constant="3" id="WWf-Y0-Snh"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="QZb-Pb-nF2" secondAttribute="trailing" constant="10" id="doE-9D-J8G"/>
+                                        <constraint firstItem="QZb-Pb-nF2" firstAttribute="leading" secondItem="Tod-aX-X70" secondAttribute="trailing" constant="18" id="eVn-dM-OcM"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="deleteBtn" destination="QZb-Pb-nF2" id="enu-dt-cHO"/>
+                                    <outlet property="editBtn" destination="Tod-aX-X70" id="Cfl-hA-HFF"/>
+                                    <outlet property="showBtn" destination="ugM-dR-c2m" id="mpC-Zg-fAz"/>
+                                    <outlet property="titleLab" destination="FNT-S8-gwg" id="05r-P7-Dmq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1200,7 +1304,7 @@
         <!--层级选择-->
         <scene sceneID="D93-Mn-NP7">
             <objects>
-                <tableViewController id="Sl8-lh-J0V" userLabel="层级选择" customClass="cengjiTableViewController" sceneMemberID="viewController">
+                <tableViewController title="层级选择" id="Sl8-lh-J0V" userLabel="层级选择" customClass="cengjiTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rqZ-3n-b7A">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1771,9 +1875,12 @@
         <image name="bh_color_red_click" width="47" height="26"/>
         <image name="bh_color_red_normal" width="47" height="26"/>
         <image name="btnBg" width="40" height="40"/>
+        <image name="delete_line_click" width="22" height="22"/>
         <image name="delete_line_normal" width="22" height="22"/>
         <image name="gesture_search_click" width="22" height="22"/>
         <image name="layer_normal" width="22" height="22"/>
+        <image name="plotting_click" width="22" height="22"/>
+        <image name="show_click" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fFR-5G-cef"/>

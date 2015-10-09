@@ -8,7 +8,7 @@
 
 #import "Utility.h"
 #import <CommonCrypto/CommonDigest.h>
-
+#import <sys/xattr.h>
 @implementation Utility
 
 SINGLETON(Utility);
@@ -142,6 +142,61 @@ SINGLETON(Utility);
     CC_MD5(str, strlen(str), r);
     return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
             r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+}
+
++ (NSString *)databaseDirectory
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"database"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileExists = [fileManager fileExistsAtPath:documentsDirectory];
+    if (!fileExists)
+    {
+        [fileManager createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+        [Utility addSkipBackupAttributeToItemAtPath:documentsDirectory];
+    }
+    
+    return documentsDirectory;
+}
++(BOOL)addSkipBackupAttributeToItemAtPath:(NSString *)path
+{
+    //NSLog(@"path is:----%@",path);
+    NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare:@"5.1" options:NSNumericSearch];
+    //version>=5.1
+    if (order == NSOrderedDescending||order == NSOrderedSame)
+    {
+        //assert([[NSFileManager defaultManager] fileExistsAtPath:path]);
+        if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            return FALSE;
+        }
+        NSError *error = nil;
+        NSURL *URL = [NSURL fileURLWithPath:path];
+        BOOL success = [URL setResourceValue:[NSNumber numberWithBool:YES]
+                                      forKey:NSURLIsExcludedFromBackupKey
+                                       error:&error];
+        if (!success)
+        {
+            NSLog(@"Error excluding %@ from backup %@",[URL lastPathComponent],error);
+        }
+        return success;
+    }
+    else
+    {
+        const char* filePath = [path fileSystemRepresentation];
+        
+        const char* attrName = "com.apple.MobileBackup";
+        u_int8_t attrValue = 1;
+        
+        int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
+        
+        NSLog(@"setxattr result = %d",result);
+        
+        return result == 0;
+    }
+    return FALSE;
 }
 
 @end

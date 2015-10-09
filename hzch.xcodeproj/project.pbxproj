@@ -101,6 +101,10 @@
 		415A613B1BADB4E8001FA3FB /* RADataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A61381BADB4E8001FA3FB /* RADataObject.m */; };
 		415A613C1BADB4E8001FA3FB /* RAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A613A1BADB4E8001FA3FB /* RAViewController.m */; };
 		415A61401BADB7BE001FA3FB /* RATreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415A613E1BADB7BE001FA3FB /* RATreeCell.m */; };
+		415CA73E1BC7D0EA003D8347 /* DBDraws.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA73D1BC7D0EA003D8347 /* DBDraws.m */; };
+		415CA7411BC7D23C003D8347 /* Draw.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA7401BC7D23C003D8347 /* Draw.m */; };
+		415CA7451BC80A9A003D8347 /* myDrawTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA7441BC80A9A003D8347 /* myDrawTableViewController.m */; };
+		415CA7481BC80FDB003D8347 /* myDrawTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA7471BC80FDB003D8347 /* myDrawTableViewCell.m */; };
 		4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525D1BA92A33002DB58D /* libxml2.2.dylib */; };
 		416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525F1BA92BFC002DB58D /* ArcGIS.framework */; };
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
@@ -288,6 +292,14 @@
 		415A613A1BADB4E8001FA3FB /* RAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAViewController.m; sourceTree = "<group>"; };
 		415A613D1BADB7BE001FA3FB /* RATreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeCell.h; sourceTree = "<group>"; };
 		415A613E1BADB7BE001FA3FB /* RATreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeCell.m; sourceTree = "<group>"; };
+		415CA73C1BC7D0EA003D8347 /* DBDraws.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBDraws.h; sourceTree = "<group>"; };
+		415CA73D1BC7D0EA003D8347 /* DBDraws.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBDraws.m; sourceTree = "<group>"; };
+		415CA73F1BC7D23C003D8347 /* Draw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Draw.h; sourceTree = "<group>"; };
+		415CA7401BC7D23C003D8347 /* Draw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Draw.m; sourceTree = "<group>"; };
+		415CA7431BC80A9A003D8347 /* myDrawTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myDrawTableViewController.h; sourceTree = "<group>"; };
+		415CA7441BC80A9A003D8347 /* myDrawTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myDrawTableViewController.m; sourceTree = "<group>"; };
+		415CA7461BC80FDB003D8347 /* myDrawTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myDrawTableViewCell.h; sourceTree = "<group>"; };
+		415CA7471BC80FDB003D8347 /* myDrawTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myDrawTableViewCell.m; sourceTree = "<group>"; };
 		4162525D1BA92A33002DB58D /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		4162525F1BA92BFC002DB58D /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcGIS.framework; sourceTree = "<group>"; };
 		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -374,6 +386,7 @@
 		410555EE1B9C729400B208E8 /* hzch */ = {
 			isa = PBXGroup;
 			children = (
+				415CA73B1BC7D095003D8347 /* DBManager */,
 				413C78F91BBAE19A005217F3 /* search */,
 				417D01B71BA1E4CA00ADD996 /* dataManager */,
 				4106DFE71BA1D78D00EF997D /* categary */,
@@ -598,6 +611,17 @@
 			name = RATreeView;
 			sourceTree = "<group>";
 		};
+		415CA73B1BC7D095003D8347 /* DBManager */ = {
+			isa = PBXGroup;
+			children = (
+				415CA73C1BC7D0EA003D8347 /* DBDraws.h */,
+				415CA73D1BC7D0EA003D8347 /* DBDraws.m */,
+				415CA73F1BC7D23C003D8347 /* Draw.h */,
+				415CA7401BC7D23C003D8347 /* Draw.m */,
+			);
+			name = DBManager;
+			sourceTree = "<group>";
+		};
 		416876911BA1CD9C00119267 /* resourceCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +675,10 @@
 				412A156A1BC6CA48006E87A0 /* fanweiTableViewController.m */,
 				412A156C1BC6CA56006E87A0 /* cengjiTableViewController.h */,
 				412A156D1BC6CA56006E87A0 /* cengjiTableViewController.m */,
+				415CA7431BC80A9A003D8347 /* myDrawTableViewController.h */,
+				415CA7441BC80A9A003D8347 /* myDrawTableViewController.m */,
+				415CA7461BC80FDB003D8347 /* myDrawTableViewCell.h */,
+				415CA7471BC80FDB003D8347 /* myDrawTableViewCell.m */,
 			);
 			name = set;
 			sourceTree = "<group>";
@@ -866,6 +894,7 @@
 				413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */,
 				413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */,
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
+				415CA7411BC7D23C003D8347 /* Draw.m in Sources */,
 				412A152E1BC69318006E87A0 /* ActionSheetDistancePicker.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,
@@ -889,9 +918,11 @@
 				413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */,
 				412A15681BC6CA37006E87A0 /* tucengTableViewController.m in Sources */,
 				4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */,
+				415CA73E1BC7D0EA003D8347 /* DBDraws.m in Sources */,
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
 				413D7E0F1BAF049F00D972DB /* NBTpk.m in Sources */,
 				410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */,
+				415CA7481BC80FDB003D8347 /* myDrawTableViewCell.m in Sources */,
 				415A612F1BADB4C9001FA3FB /* RATreeView+TableViewDataSource.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
 				412A15351BC6A7F4006E87A0 /* ShpHelper.m in Sources */,
@@ -928,6 +959,7 @@
 				4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */,
 				412A152F1BC69318006E87A0 /* ActionSheetStringPicker.m in Sources */,
 				412A151B1BC68AEB006E87A0 /* addCacheTableViewController.m in Sources */,
+				415CA7451BC80A9A003D8347 /* myDrawTableViewController.m in Sources */,
 				415A612D1BADB4C9001FA3FB /* RATreeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

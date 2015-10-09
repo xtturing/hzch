@@ -50,6 +50,8 @@ static dataHttpManager * instance=nil;
 		[_requestQueue setShouldCancelAllRequestsOnFailure:NO];
         [_requestQueue setShowAccurateProgress:YES];
         
+        self.drawDB = [[DBDraws alloc]init];
+        [self.drawDB createTable];
     }
     
     return self;

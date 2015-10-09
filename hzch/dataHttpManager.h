@@ -9,6 +9,7 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "StringUtil.h"
 #import "NSStringAdditions.h"
+#import "DBDraws.h"
 
 #define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
 
@@ -65,10 +66,11 @@ typedef enum {
 
 @interface dataHttpManager : NSObject
 
-@property (nonatomic,retain) ASINetworkQueue *requestQueue;
+@property (nonatomic,strong) ASINetworkQueue *requestQueue;
 @property (nonatomic,strong) NSString *url;
 @property (nonatomic,assign) int type;
 @property (nonatomic,assign) id<dataHttpDelegate> delegate;
+@property (nonatomic,strong) DBDraws *drawDB;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 

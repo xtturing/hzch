@@ -1,23 +1,26 @@
 //
-//  cacheTableViewController.m
+//  myDrawTableViewController.m
 //  hzch
 //
-//  Created by xtturing on 15/10/8.
+//  Created by xtturing on 15/10/9.
 //  Copyright (c) 2015年 xtturing. All rights reserved.
 //
 
-#import "cacheTableViewController.h"
+#import "myDrawTableViewController.h"
+#import "dataHttpManager.h"
+#import "Draw.h"
 #import "myDrawTableViewCell.h"
 
-@interface cacheTableViewController ()
+@interface myDrawTableViewController ()
+@property(nonatomic,strong) NSMutableArray *drawList;
 
 @end
 
-@implementation cacheTableViewController
+@implementation myDrawTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"地图缓存管理";
+    self.drawList = [[dataHttpManager getInstance].drawDB getAllDraws];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -37,21 +40,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [_drawList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Draw *draw = [_drawList objectAtIndex:indexPath.row];
     static NSString *FirstLevelCell = @"drawCell";
     myDrawTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
-                                 FirstLevelCell];
+                             FirstLevelCell];
     if (cell == nil) {
         cell = [[myDrawTableViewCell alloc]
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.titleLab.text = @"adad";
+    cell.titleLab.text = draw.name;
     cell.titleLab.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
+
 
 @end

@@ -30,6 +30,6 @@
 -(BOOL)isExistFileAtPath:(NSString *)path;//是否存在指定文件
 -(BOOL)removeFileAtPath:(NSString *)path;//删除path文件
 +(double)getFileSizeAtPath:(NSString *)path;
-
++ (NSString *)databaseDirectory;
 
 @end

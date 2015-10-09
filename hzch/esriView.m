@@ -10,6 +10,9 @@
 #import "LineSearchTableViewController.h"
 #import "CanvasView.h"
 #import "MapUtil.h"
+#import "dataHttpManager.h"
+#import "Draw.h"
+#import "GTMBase64.h"
 
 @interface esriView (){
     double _distance;
@@ -909,9 +912,25 @@
     AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
     [self.sketchGhLayer addGraphic:graphic];
     [self.sketchGhLayer refresh];
+    [self saveDrawToDB:graphic];
     [self.sketchLayer clear];
     [self.sketchLayer.undoManager removeAllActions];
 }
+
+- (void)saveDrawToDB:(AGSGraphic *)graphic{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        Draw *draw = [[Draw alloc] init];
+        draw.name = @"haha";
+        draw.createDate = [[NSDate date] timeIntervalSince1970]*1000;
+        NSMutableData *data = [[NSMutableData alloc] init];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [archiver encodeObject:graphic.geometry forKey:@"Root"];
+        [archiver finishEncoding];
+        draw.sourceData = data;
+        [[dataHttpManager getInstance].drawDB insertDraw:draw];
+    });
+}
+
 - (BOOL)hasLayer:(NSString *)name{
     for(AGSLayer *layer in self.mapView.mapLayers){
         if([layer.name isEqualToString:name]){
