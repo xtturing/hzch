@@ -105,6 +105,7 @@
 		415CA7411BC7D23C003D8347 /* Draw.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA7401BC7D23C003D8347 /* Draw.m */; };
 		415CA7451BC80A9A003D8347 /* myDrawTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA7441BC80A9A003D8347 /* myDrawTableViewController.m */; };
 		415CA7481BC80FDB003D8347 /* myDrawTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CA7471BC80FDB003D8347 /* myDrawTableViewCell.m */; };
+		415F5E7E1BCAB08C009C0AAA /* mapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415F5E7D1BCAB08C009C0AAA /* mapViewController.m */; };
 		4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525D1BA92A33002DB58D /* libxml2.2.dylib */; };
 		416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525F1BA92BFC002DB58D /* ArcGIS.framework */; };
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
@@ -300,6 +301,8 @@
 		415CA7441BC80A9A003D8347 /* myDrawTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myDrawTableViewController.m; sourceTree = "<group>"; };
 		415CA7461BC80FDB003D8347 /* myDrawTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myDrawTableViewCell.h; sourceTree = "<group>"; };
 		415CA7471BC80FDB003D8347 /* myDrawTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myDrawTableViewCell.m; sourceTree = "<group>"; };
+		415F5E7C1BCAB08C009C0AAA /* mapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapViewController.h; sourceTree = "<group>"; };
+		415F5E7D1BCAB08C009C0AAA /* mapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mapViewController.m; sourceTree = "<group>"; };
 		4162525D1BA92A33002DB58D /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		4162525F1BA92BFC002DB58D /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcGIS.framework; sourceTree = "<group>"; };
 		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -404,6 +407,8 @@
 				417DC3661BA9C69E00FA4394 /* ViewController.h */,
 				417DC3671BA9C69E00FA4394 /* ViewController.m */,
 				410A3AC31BAB13830025206E /* image.xcassets */,
+				415F5E7C1BCAB08C009C0AAA /* mapViewController.h */,
+				415F5E7D1BCAB08C009C0AAA /* mapViewController.m */,
 			);
 			path = hzch;
 			sourceTree = "<group>";
@@ -947,6 +952,7 @@
 				415A612E1BADB4C9001FA3FB /* RATreeView+TableViewDelegate.m in Sources */,
 				413D7E201BAF068C00D972DB /* DownloadItem.m in Sources */,
 				415A61321BADB4C9001FA3FB /* RATreeView+UIScrollView.m in Sources */,
+				415F5E7E1BCAB08C009C0AAA /* mapViewController.m in Sources */,
 				413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */,
 				413D7E241BAF068C00D972DB /* DwonloadModel.xcdatamodel in Sources */,
 				4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */,

@@ -14,8 +14,10 @@
 #import "QueryParams.h"
 @class esriView;
 @protocol esriViewDelegate <NSObject>
+@optional
 -(void)esriViewDetails:(esriView *)controller details:(AGSGraphic *)agsGraphic queryParams:(QueryParams *)queryParams;
 -(void)didSelectLineSearch;
+-(void)mapViewDidLoad;
 
 @end
 
@@ -38,7 +40,7 @@ CLLocationManagerDelegate>
 @property (nonatomic,strong)QueryParams *queryParams;
 @property (nonatomic,strong)NSConfigData *configData;
 @property (nonatomic,strong)NSString *dataType;
-@property (nonatomic,strong)NSDictionary *dataDic;
+@property (nonatomic,strong)NSArray *dataDic;
 @property (nonatomic,strong)AGSGraphicsLayer *ghLayer;
 @property (nonatomic,strong)AGSDynamicMapServiceLayer *dmsLayer;
 @property (strong,nonatomic) AGSQueryTask *queryTask;
@@ -68,7 +70,7 @@ CLLocationManagerDelegate>
 - (IBAction)widthTool:(id)sender;
 - (IBAction)colorTool:(id)sender;
 - (IBAction)widthChange:(id)sender;
--(void)addCustLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
+-(void)addCustLayer:(NSArray *)p_data;
 -(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
 -(void)addSketchLayer;
 -(void)showToolView;

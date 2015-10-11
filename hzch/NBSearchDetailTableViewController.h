@@ -22,6 +22,7 @@
 @property(nonatomic,weak)IBOutlet UIBarButtonItem *nextItem;
 @property(nonatomic,weak)IBOutlet UIBarButtonItem *preItem;
 @property(nonatomic,weak)IBOutlet UIBarButtonItem *countItem;
+@property(nonatomic,weak)IBOutlet UIBarButtonItem *showMapItem;
 -(IBAction)toolbarAction:(id)sender;
-
+-(IBAction)showInMap:(id)sender;
 @end

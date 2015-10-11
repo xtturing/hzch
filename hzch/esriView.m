@@ -13,6 +13,7 @@
 #import "dataHttpManager.h"
 #import "Draw.h"
 #import "GTMBase64.h"
+#import "NBSearch.h"
 
 @interface esriView (){
     double _distance;
@@ -93,11 +94,12 @@
     }
 }
 - (void)deleteMap{
-    NSArray* mapLayers = [self.mapView mapLayers];
-    for (AGSLayer* layer in mapLayers)
-    {
-        [self.mapView removeMapLayerWithName:[layer name]];
-    }
+    [self clearToolAll];
+//    NSArray* mapLayers = [self.mapView mapLayers];
+//    for (AGSLayer* layer in mapLayers)
+//    {
+//        [self.mapView removeMapLayerWithName:[layer name]];
+//    }
 }
 - (void)layerMap{
     
@@ -175,65 +177,60 @@
     
 }
 
+- (void)mapViewDidLoad:(AGSMapView *)mapView{
+    if(_delegate && [_delegate respondsToSelector:@selector(mapViewDidLoad)]){
+        [_delegate mapViewDidLoad];
+    }
+}
 
 //定制地震
--(void)addCustLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic{
+-(void)addCustLayer:(NSArray *)p_data{
     self.mapView.touchDelegate = self;
     self.mapView.callout.delegate = self;
-    
-    self.selectCatalog = selectDic;
     
     self.dataDic = p_data;
     self.dataType = @"CustData";
     
-     [self removeAllLayer];
+    [self removeAllLayer];
     
     self.ghLayer = [[AGSGraphicsLayer alloc]init];
     self.ghLayer.selectionColor = [UIColor redColor];
     [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
     [self topLocationLayer];
     
-    for (int i=self.dataDic.count-1; i>=0; i--) {
+    for (NSInteger i=0; i<self.dataDic.count; i++) {
         @autoreleasepool{
             NSArray *t_arr = (NSArray *)self.dataDic;
-            NSDictionary *t_att = [t_arr objectAtIndex:i];
+            NBSearch *t_att = [t_arr objectAtIndex:i];
             NSString *t_imagePath;
             t_imagePath = @"cus_cz.png";
             
-            AGSPoint *t_point = [AGSPoint pointWithX:[[t_att objectForKey:@"Lon"] doubleValue]
-                                                   y:[[t_att objectForKey:@"Lat"] doubleValue]
+            AGSPoint *t_point = [AGSPoint pointWithX:[t_att.centerx doubleValue]
+                                                   y:[t_att.centery doubleValue]
                                     spatialReference:self.mapView.spatialReference];
             
-            UIImage *t_m;
-            t_m =  [self.configData addImageText:[UIImage imageNamed:t_imagePath] text:[[t_att objectForKey:@"M"] stringValue]];
+//            UIImage *t_m;
+//            t_m =  [self.configData addImageText:[UIImage imageNamed:t_imagePath] text:t_att.name];
             
-            AGSPictureMarkerSymbol *picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:t_m ];
-            
-            AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:t_att infoTemplateDelegate:nil];
+            AGSPictureMarkerSymbol *picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:[UIImage imageNamed:t_imagePath]];
+            NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
+            NSArray *tipvalue=[[NSArray alloc]initWithObjects:t_att.address,t_att.name,t_att,nil];
+            NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
+            AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:tips infoTemplateDelegate:nil];
             
             [self.ghLayer addGraphic:t_gh];
-            
-            
-            if (self.selectCatalog==nil) {
-                [self.mapView.callout dismiss];
-            }else if(self.selectCatalog == t_att){
-                [self showCallOut:t_gh title:[self.configData  jsonDateToDate:[t_gh attributeAsStringForKey:@"Sendtime"] ] detail:nil];
-            }
-        
+            [self showCallOut:t_gh title:t_att.name detail:t_att.address];
         }
         
     }
 
 }
 
-
 //最新地震
 -(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic{
     @autoreleasepool{
     self.mapView.touchDelegate = self;
     self.mapView.callout.delegate = self;
-    
-    self.selectCatalog = selectDic;
     
     self.dataDic = p_data;
     self.dataType = @"EqimData";
@@ -280,7 +277,7 @@
             
             picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:t_m ];
             
-            t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:t_att infoTemplateDelegate:nil];
+            t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:nil infoTemplateDelegate:nil];
             
             [self.ghLayer addGraphic:t_gh];
             
@@ -383,7 +380,7 @@
         if ([self.ghLayer.name isEqualToString:@"EqimLayer"]) {
             [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"LocationCname"] detail:[t_selgh attributeAsStringForKey:@"OTime"]];
         }else if([self.ghLayer.name isEqualToString:@"CustomLayer"]){
-            [self showCallOut:t_selgh title:[self.configData  jsonDateToDate:[t_selgh attributeAsStringForKey:@"Sendtime"] ] detail:nil];
+            [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"title"] detail:[t_selgh attributeAsStringForKey:@"detail"]];
         }else if([self.ghLayer.name isEqualToString:@"SubLayer"]){
             [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:0]] detail:[t_selgh attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:1]]];
         }
@@ -491,7 +488,7 @@
 }
 
 - (void) didClickAccessoryButtonForCallout:(AGSCallout *)callout{
-    [self.delegate esriViewDetails:self details:(AGSGraphic*)callout.representedObject queryParams:self.queryParams];
+
 }
 
 
@@ -922,11 +919,11 @@
         Draw *draw = [[Draw alloc] init];
         draw.name = @"haha";
         draw.createDate = [[NSDate date] timeIntervalSince1970]*1000;
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-        [archiver encodeObject:graphic.geometry forKey:@"Root"];
-        [archiver finishEncoding];
-        draw.sourceData = data;
+//        NSMutableData *data = [[NSMutableData alloc] init];
+//        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+//        [archiver encodeObject:graphic.geometry forKey:@"Root"];
+//        [archiver finishEncoding];
+//        draw.sourceData = data;
         [[dataHttpManager getInstance].drawDB insertDraw:draw];
     });
 }

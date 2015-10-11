@@ -11,6 +11,7 @@
 #import "NBSearchCatalog.h"
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
+#import "mapViewController.h"
 @interface NBSearchDetailTableViewController ()<dataHttpDelegate>{
     int page;
     int pageSize;
@@ -24,6 +25,11 @@
     [super viewDidLoad];
     page = 1;
     pageSize = 15;
+    if(_searchType == 0){
+        self.showMapItem.enabled = YES;
+    }else{
+        self.showMapItem.enabled = NO;
+    }
     [self doSearch:self.keyword];
     self.title = self.keyword;
 }
@@ -185,6 +191,16 @@
     }
     if(page > 0 && page <= allCount){
         [self doSearch:self.keyword];
+    }
+}
+
+-(IBAction)showInMap:(id)sender{
+    NSArray *results = [_resultDic objectForKey:@"results"];
+    if([results count] > 0){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        mapViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
+        mapViewController.resultList = results;
+        [self.navigationController pushViewController:mapViewController animated:YES];
     }
 }
 

@@ -10,7 +10,7 @@
 //cgcs2000
 #define kURL_VECTOR_2000 @"http://t0.tianditu.com/vec_c/wmts"
 #define kURL_VECTOR_ANNOTATION_CHINESE_2000 @"http://t0.tianditu.com/cva_c/wmts"
-#define kURL_VECTOR_ANNOTATION_ENGLISH_2000 @"http://t0.tianditu.com/eva_c/wmts"
+#define kURL_IMAGE_ANNOTATION_CHINESE_2000 @"http://t0.tianditu.com/cia_c/wmts"
 #define kURL_IMAGE_2000 @"http://t0.tianditu.com/img_c/wmts"
 /*浙江*/
 #define kURL_ZJ_VECTOR @"http://srv.zjditu.cn/ZJEMAP_2D/wmts"
@@ -21,12 +21,8 @@
 //services
 #define kLAYER_NAME_VECTOR @"vec"
 #define kLAYER_NAME_VECTOR_ANNOTATION_CHINESE @"cva"
-#define kLAYER_NAME_VECTOR_ANNOTATION_ENGLISH @"eva"
 #define kLAYER_NAME_IMAGE @"img"
 #define kLAYER_NAME_IMAGE_ANNOTATION_CHINESE @"cia"
-#define kLAYER_NAME_IMAGE_ANNOTATION_ENGLISH @"eia"
-#define kLAYER_NAME_TERRAIN @"ter"
-#define kLAYER_NAME_TERRAIN_ANNOTATION_CHINESE @"cta"
 /*浙江*/
 #define kLAYER_NAME_ZJ_VECTOR @"ZJEMAP"
 #define kLAYER_NAME_ZJ_VECTOR_ANNOTATION @"zjemapanno"
@@ -50,8 +46,8 @@
 #define X_MAX_2000 180.0
 #define Y_MAX_2000 90.0
 
-#define _minZoomLevel 0
-#define _maxZoomLevel 13
+#define _minZoomLevel 1
+#define _maxZoomLevel 18
 #define _tileWidth 256
 #define _tileHeight 256
 #define _dpi 96
@@ -112,28 +108,28 @@
             layerInfo.layerName = kLAYER_NAME_VECTOR_ANNOTATION_CHINESE;
             break;
         case 10:
-            layerInfo.url = kURL_VECTOR_ANNOTATION_ENGLISH_2000;
-            layerInfo.layerName = kLAYER_NAME_VECTOR_ANNOTATION_ENGLISH;
-            break;
-        case 11:
             layerInfo.url = kURL_IMAGE_2000;
             layerInfo.layerName = kLAYER_NAME_IMAGE;
+            break;
+        case 11:
+            layerInfo.url = kURL_IMAGE_ANNOTATION_CHINESE_2000;
+            layerInfo.layerName = kLAYER_NAME_IMAGE_ANNOTATION_CHINESE;
             break;
         case 12:
             layerInfo.url = kURL_ZJ_VECTOR;
             layerInfo.layerName = kLAYER_NAME_ZJ_VECTOR;
             layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_VECTOR;
             layerInfo.format = @"image/png";
-            layerInfo.minZoomLevel = 14;
-            layerInfo.maxZoomLevel = 16;
+            layerInfo.minZoomLevel = 3;
+            layerInfo.maxZoomLevel = 17;
             break;
         case 13:
             layerInfo.url = kURL_ZJ_VECTOR_ANNOTATION;
             layerInfo.layerName = kLAYER_NAME_ZJ_VECTOR_ANNOTATION;
             layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_VECTOR_ANNOTATION;
             layerInfo.format = @"image/png";
-            layerInfo.minZoomLevel = 14;
-            layerInfo.maxZoomLevel = 16;
+            layerInfo.minZoomLevel = 3;
+            layerInfo.maxZoomLevel = 17;
             break;
         case 14:
             layerInfo.url = kURL_ZJ_IMAGE;
@@ -141,16 +137,16 @@
             layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_IMAGE;
             layerInfo.style = @"zjdom2w1";
             layerInfo.format = @"image/jpeg";
-            layerInfo.minZoomLevel = 14;
-            layerInfo.maxZoomLevel = 16;
+            layerInfo.minZoomLevel = 3;
+            layerInfo.maxZoomLevel = 17;
             break;
         case 15:
             layerInfo.url = kURL_ZJ_IMAGE_ANNOTATION;
             layerInfo.layerName = kLAYER_NAME_ZJ_IMAGE_ANNOTATION;
             layerInfo.tileMatrixSet = kTILE_MATRIX_SET_ZJ_IMAGE_ANNOTATION;
             layerInfo.format = @"image/png";
-            layerInfo.minZoomLevel = 14;
-            layerInfo.maxZoomLevel = 16;
+            layerInfo.minZoomLevel = 3;
+            layerInfo.maxZoomLevel = 17;
             break;
         default:
             break;

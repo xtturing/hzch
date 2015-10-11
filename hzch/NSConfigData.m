@@ -370,7 +370,7 @@
     CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, kCGImageAlphaPremultipliedFirst);
     CGContextDrawImage(context, CGRectMake(0, 0, w, h), p_img.CGImage);
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
-    char* text = (char *)[p_txt cStringUsingEncoding:NSASCIIStringEncoding];
+    char* text = (char *)[p_txt cStringUsingEncoding:NSUTF8StringEncoding];
     CGContextSelectFont(context, "Arial", 10, kCGEncodingMacRoman);
     CGContextSetTextDrawingMode(context, kCGTextFill);
     CGContextSetRGBFillColor(context, 1, 1, 1, 1);

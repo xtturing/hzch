@@ -1776,6 +1776,24 @@
             </objects>
             <point key="canvasLocation" x="1135" y="1705"/>
         </scene>
+        <!--地图显示-->
+        <scene sceneID="Iug-TN-CLb">
+            <objects>
+                <viewController storyboardIdentifier="mapViewController" id="qBF-NG-DbU" userLabel="地图显示" customClass="mapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hs3-GZ-1Fe"/>
+                        <viewControllerLayoutGuide type="bottom" id="FcD-RS-Rbh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TsK-mU-PsI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RN2-US-W5b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1492" y="2700"/>
+        </scene>
         <!--全文检索结果-->
         <scene sceneID="LLZ-h2-ZFw">
             <objects>
@@ -1819,11 +1837,20 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="k6T-bG-BQi">
+                        <nil key="title"/>
+                        <barButtonItem key="rightBarButtonItem" title="地图查看" id="BEV-NL-Xzd">
+                            <connections>
+                                <action selector="showInMap:" destination="OjP-SJ-f8f" id="phv-FH-c7j"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="countItem" destination="299-Zz-1Dz" id="NjQ-nC-Hv7"/>
                         <outlet property="nextItem" destination="Fjn-Y4-GJ1" id="M52-mx-rKm"/>
                         <outlet property="preItem" destination="CqO-ba-CUc" id="zgE-rw-yz2"/>
+                        <outlet property="showMapItem" destination="BEV-NL-Xzd" id="Ngg-j9-Rd5"/>
                         <outlet property="toolBar" destination="YIa-ky-lKR" id="goX-dH-wW4"/>
                     </connections>
                 </tableViewController>
