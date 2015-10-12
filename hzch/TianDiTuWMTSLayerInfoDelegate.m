@@ -13,10 +13,10 @@
 #define kURL_IMAGE_ANNOTATION_CHINESE_2000 @"http://t0.tianditu.com/cia_c/wmts"
 #define kURL_IMAGE_2000 @"http://t0.tianditu.com/img_c/wmts"
 /*浙江*/
-#define kURL_ZJ_VECTOR @"http://srv.zjditu.cn/ZJEMAP_2D/wmts"
+#define kURL_ZJ_VECTOR @"http://ditu.zj.cn/services/wmts/zjemap"
 #define kURL_ZJ_VECTOR_ANNOTATION @"http://srv.zjditu.cn/ZJEMAPANNO_2D/wmts"
-#define kURL_ZJ_IMAGE @"http://srv.zjditu.cn/ZJDOM_2D/wmts"
-#define kURL_ZJ_IMAGE_ANNOTATION @"http://srv.zjditu.cn/ZJDOMANNO_2D/wmts"
+#define kURL_ZJ_IMAGE @"http://ditu.zj.cn//services/wmts/imgmap"
+#define kURL_ZJ_IMAGE_ANNOTATION @"http://ditu.zj.cn/services/wmts/imgmap_lab"
 
 //services
 #define kLAYER_NAME_VECTOR @"vec"
@@ -24,18 +24,18 @@
 #define kLAYER_NAME_IMAGE @"img"
 #define kLAYER_NAME_IMAGE_ANNOTATION_CHINESE @"cia"
 /*浙江*/
-#define kLAYER_NAME_ZJ_VECTOR @"ZJEMAP"
+#define kLAYER_NAME_ZJ_VECTOR @"zjemap"
 #define kLAYER_NAME_ZJ_VECTOR_ANNOTATION @"zjemapanno"
-#define kLAYER_NAME_ZJ_IMAGE @"zjdom2w1"
-#define kLAYER_NAME_ZJ_IMAGE_ANNOTATION @"zjimganno"
+#define kLAYER_NAME_ZJ_IMAGE @"imgmap"
+#define kLAYER_NAME_ZJ_IMAGE_ANNOTATION @"imgmap_lab"
 
 //sr
 #define kTILE_MATRIX_SET_2000 @"c"
 /*浙江*/
-#define kTILE_MATRIX_SET_ZJ_VECTOR @"TileMatrixSet0"
+#define kTILE_MATRIX_SET_ZJ_VECTOR @"esritilematirx"
 #define kTILE_MATRIX_SET_ZJ_VECTOR_ANNOTATION @"TileMatrixSet0"
-#define kTILE_MATRIX_SET_ZJ_IMAGE @"Matrix_0"
-#define kTILE_MATRIX_SET_ZJ_IMAGE_ANNOTATION @"TileMatrixSet0"
+#define kTILE_MATRIX_SET_ZJ_IMAGE @"esritilematirx"
+#define kTILE_MATRIX_SET_ZJ_IMAGE_ANNOTATION @"esritilematirx"
 
 
 //

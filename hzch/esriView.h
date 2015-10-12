@@ -12,6 +12,8 @@
 #import "NSConfigData.h"
 #import <math.h>
 #import "QueryParams.h"
+
+#import "NBSearch.h"
 @class esriView;
 @protocol esriViewDelegate <NSObject>
 @optional
@@ -71,7 +73,7 @@ CLLocationManagerDelegate>
 - (IBAction)colorTool:(id)sender;
 - (IBAction)widthChange:(id)sender;
 -(void)addCustLayer:(NSArray *)p_data;
--(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic;
+-(void)addOneSearchCustLayer:(NBSearch *)search;
 -(void)addSketchLayer;
 -(void)showToolView;
 - (void)hiddenToolView;

@@ -19,7 +19,7 @@
 #define HTTP_DEPARTMENT_DETAIL @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_department&request=list&queryType=showAllData&page=1&start=0&limit=1000"
 #define HTTP_GOVMENT_DETAIL    @"http://ditu.zj.cn/catalog?parentid=%ld&catalogtheme=catalog_affairs&request=list&queryType=showAllData&page=1&start=0&limit=1000"
 
-#define HTTP_SEARCH            @"http://ditu.zj.cn/services/placesearch?withgeometry=false&searchtype=&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=&minx=&maxx=&miny=&maxy=&lk=false"
+#define HTTP_SEARCH            @"http://ditu.zj.cn/services/placesearch?withgeometry=true&searchtype=&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=&minx=&maxx=&miny=&maxy="
 
 #define HTTP_CATALOG_SEARCH    @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=%@&minx=&maxx=&miny=&maxy=&lk=false&geo=&_dc=1419474648386"
 

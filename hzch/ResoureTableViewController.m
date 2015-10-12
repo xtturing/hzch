@@ -81,22 +81,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
+    NSInteger count = 0;
     if(_showType == 0){
         NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
         title = depart.NAME;
+        count = depart.COUNTS;
     }else{
         NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
         title = gov.NAME;
+        count = gov.COUNTS;
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                              FirstLevelCell];
     if (cell == nil) {
         cell = [[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleSubtitle
+                initWithStyle:UITableViewCellStyleValue1
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if(count > 0){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld",(long)count];
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.detailTextLabel.text = nil;
+    }
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     
@@ -104,18 +113,27 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ResoureDetailTableViewController *detailViewController = [[ResoureDetailTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    detailViewController.showType =self.showType;
+    NSInteger count = 0;
+    NSInteger catalogID  = nil;
+    NSString *titlename = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
-        detailViewController.catalogID = depart.CATALOGID;
-        detailViewController.titleName = depart.NAME;
+        count = depart.COUNTS;
+        catalogID = depart.CATALOGID;
+        titlename = depart.NAME;
     }else{
         NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
-        detailViewController.catalogID = gov.CATALOGID;
-        detailViewController.titleName = gov.NAME;
+        count = gov.COUNTS;
+        catalogID = gov.CATALOGID;
+        titlename = gov.NAME;
     }
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    if(count > 0){
+        ResoureDetailTableViewController *detailViewController = [[ResoureDetailTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        detailViewController.showType =self.showType;
+        detailViewController.catalogID = catalogID;
+        detailViewController.titleName = titlename;
+        [self.navigationController pushViewController:detailViewController animated:YES];
+    }
 }
 
 - (void)didGetFailed{

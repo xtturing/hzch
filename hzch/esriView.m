@@ -13,7 +13,6 @@
 #import "dataHttpManager.h"
 #import "Draw.h"
 #import "GTMBase64.h"
-#import "NBSearch.h"
 
 @interface esriView (){
     double _distance;
@@ -85,7 +84,9 @@
         [self.mapView addMapLayer:TianDiTuLyr withName:@"TianDiTu Layer"];
         [self.mapView addMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer"];
         [self.mapView addMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer"];
-        [self.mapView addMapLayer:TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer"];
+        if(index){
+            [self.mapView addMapLayer:TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer"];
+        }
     }else{
         [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
         [self.mapView removeMapLayerWithName:@"TianDiTu Annotation Layer"];
@@ -225,76 +226,36 @@
     }
 
 }
-
-//最新地震
--(void)addEqimLayer:(NSDictionary *)p_data select:(NSDictionary *)selectDic{
-    @autoreleasepool{
+-(void)addOneSearchCustLayer:(NBSearch *)search{
     self.mapView.touchDelegate = self;
     self.mapView.callout.delegate = self;
     
-    self.dataDic = p_data;
-    self.dataType = @"EqimData";
-    
     [self removeAllLayer];
-
     
     self.ghLayer = [[AGSGraphicsLayer alloc]init];
     self.ghLayer.selectionColor = [UIColor redColor];
-        
-    
+    [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
     [self topLocationLayer];
-    [self.mapView addMapLayer:self.ghLayer withName:@"EqimLayer"];
-        
-    
-    NSDictionary *t_att;
     NSString *t_imagePath;
-    AGSPoint *t_point;
-    UIImage *t_m;
+    t_imagePath = @"new_cz.png";
     
-    AGSPictureMarkerSymbol *picMarkerSymbol;
-    AGSGraphic *t_gh;
+    AGSPoint *t_point = [AGSPoint pointWithX:[search.centerx doubleValue]
+                                           y:[search.centery doubleValue]
+                            spatialReference:self.mapView.spatialReference];
     
+    //            UIImage *t_m;
+    //            t_m =  [self.configData addImageText:[UIImage imageNamed:t_imagePath] text:t_att.name];
     
-    NSArray *t_arr = (NSArray *)self.dataDic;
+    AGSPictureMarkerSymbol *picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:[UIImage imageNamed:t_imagePath]];
+    NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
+    NSArray *tipvalue=[[NSArray alloc]initWithObjects:search.address,search.name,search,nil];
+    NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
+    AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:tips infoTemplateDelegate:nil];
     
-
-    for (int i=t_arr.count-1; i>=0; i--) {
-        @autoreleasepool{
-            t_att = [t_arr objectAtIndex:i];
-            
-            if (i==0) {
-                t_imagePath = @"new_cz.png";
-            }else{
-                t_imagePath = @"last_cz.png";
-            }
-            
-            t_point = [AGSPoint pointWithX:[[t_att objectForKey:@"Lon"] doubleValue]
-                                         y:[[t_att objectForKey:@"Lat"] doubleValue]
-                          spatialReference:self.mapView.spatialReference];
-            
-            
-            t_m =  [self.configData addImageText:[UIImage imageNamed:t_imagePath] text:[[t_att objectForKey:@"M"] stringValue]];
-            
-            picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:t_m ];
-            
-            t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:nil infoTemplateDelegate:nil];
-            
-            [self.ghLayer addGraphic:t_gh];
-            
-            
-            if (i==0&&!self.selectCatalog) {
-                [self showCallOut:t_gh title:[t_gh attributeAsStringForKey:@"LocationCname"] detail:[t_gh attributeAsStringForKey:@"OTime"]];
-            }else if(self.selectCatalog == t_att){
-                [self showCallOut:t_gh title:[t_gh attributeAsStringForKey:@"LocationCname"] detail:[t_gh attributeAsStringForKey:@"OTime"]];
-            }
-        }
-        
-    }
-        NSLog(@"IS NIL TEST %@" ,@"5");
-
-    }
+    [self.ghLayer addGraphic:t_gh];
+    [self showCallOut:t_gh title:search.name detail:search.address];
+    
 }
-
 //画图
 -(void)addSketchGhLayer{
     self.sketchGhLayer= [[AGSGraphicsLayer alloc]init];

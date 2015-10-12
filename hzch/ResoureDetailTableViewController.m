@@ -58,12 +58,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
+    NSInteger ctype = 0;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
         title = depart.NAME;
+        ctype = depart.CTYPE;
     }else{
         NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
+        ctype = gov.CTYPE;
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -73,10 +76,23 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if(ctype == 4){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(_showType == 0){
+        NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
+    }else{
+        NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
+    }
 }
 
 - (void)didGetFailed{

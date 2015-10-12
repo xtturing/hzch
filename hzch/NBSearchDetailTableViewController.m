@@ -194,6 +194,16 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSArray *results = [_resultDic objectForKey:@"results"];
+    if(_searchType == 0){
+        NBSearch *search = [results objectAtIndex:indexPath.row];
+    }
+    if(_searchType == 1){
+        NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
+    }
+}
+
 -(IBAction)showInMap:(id)sender{
     NSArray *results = [_resultDic objectForKey:@"results"];
     if([results count] > 0){
