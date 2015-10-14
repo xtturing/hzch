@@ -94,6 +94,14 @@
         [self.mapView removeMapLayerWithName:@"TianDiTu Anno zje Layer"];
     }
 }
+
+- (void)addWMTSLayer:(NSNotification *)info{
+    NSString *wmtsurl = [info.userInfo objectForKey:@"wmtsurl"];
+    NSString *wmtsname = [info.userInfo objectForKey:@"wmtsname"];
+    [self.mapView removeMapLayerWithName:wmtsname];
+    TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
+    [self.mapView addMapLayer:layer withName:@"TianDiTu Layer"];
+}
 - (void)deleteMap{
     [self clearToolAll];
 //    NSArray* mapLayers = [self.mapView mapLayers];

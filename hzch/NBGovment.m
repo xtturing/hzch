@@ -31,6 +31,11 @@
         _UPDATETIMESTR=[dic getStringValueForKey:@"UPDATETIMESTR" defaultValue:@""];
         _CREATETIMESTR=[dic getStringValueForKey:@"CREATETIMESTR" defaultValue:@""];
         _PHOTOGRAPHDATESTR=[dic getStringValueForKey:@"PHOTOGRAPHDATESTR" defaultValue:@""];
+        NSDictionary *SERVICES = [dic objectForKey:@"SERVICES"];
+        if(SERVICES && [[SERVICES allKeys] count] > 0){
+            _WMS=[SERVICES getStringValueForKey:@"wms" defaultValue:@""];
+            _WMTS=[SERVICES getStringValueForKey:@"wmts" defaultValue:@""];
+        }
     }
     return self;
 }

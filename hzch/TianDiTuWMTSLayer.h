@@ -32,4 +32,6 @@ typedef enum {
 //LocalServiceURL can be nil if use "http://t0.tianditu.cn/vec_c/wmts",otherwise input your local service url.
  */
 -(id)initWithLayerType:(TianDiTuLayerTypes) tiandituType LocalServiceURL:(NSString *)url error:(NSError**) outError;
+
+- (id)initWithLocalServiceURL:(NSString *)url withLayerName:(NSString *)layerName;
 @end

@@ -100,6 +100,39 @@
     return self;
 }
 
+- (id)initWithLocalServiceURL:(NSString *)url withLayerName:(NSString *)layerName{
+     if (self = [super init]) {
+         requestQueue = [[NSOperationQueue alloc] init];
+         [requestQueue setMaxConcurrentOperationCount:16];
+         /*get the currect layer info
+          */
+         layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc]getLayerInfo];
+         
+         layerInfo.url = url;
+         layerInfo.layerName = layerName;
+         
+         AGSSpatialReference* sr = [AGSSpatialReference spatialReferenceWithWKID:layerInfo.srid];
+         _fullEnvelope = [[AGSEnvelope alloc] initWithXmin:layerInfo.xMin
+                                                      ymin:layerInfo.yMin
+                                                      xmax:layerInfo.xMax
+                                                      ymax:layerInfo.yMax
+                                          spatialReference:sr];
+         
+         _tileInfo = [[AGSTileInfo alloc]
+                      initWithDpi:layerInfo.dpi
+                      format :@"PNG"
+                      lods:layerInfo.lods
+                      origin:layerInfo.origin
+                      spatialReference :self.spatialReference
+                      tileSize:CGSizeMake(layerInfo.tileWidth,layerInfo.tileHeight)
+                      ];
+         
+         [_tileInfo computeTileBounds:self.fullEnvelope];
+         [super layerDidLoad];
+     }
+    return self;
+}
+
 #pragma mark -
 #pragma AGSTiledLayer (ForSubclassEyesOnly)
 - (void)requestTileForKey:(AGSTileKey *)key{

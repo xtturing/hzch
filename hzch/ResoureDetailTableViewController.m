@@ -59,14 +59,21 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
     NSInteger ctype = 0;
+    NSString *wmsurl = nil;
+    NSString *wmtsurl = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
         title = depart.NAME;
         ctype = depart.CTYPE;
+        wmsurl = depart.WMS;
+        wmtsurl = depart.WMTS;
+        NSLog(@"++++++++++++++%@",wmsurl);
     }else{
         NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
         ctype = gov.CTYPE;
+        wmsurl = gov.WMS;
+        wmtsurl = gov.WMTS;
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -76,10 +83,15 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if(ctype == 4){
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if(ctype == 4 && (wmsurl.length > 0 || wmsurl.length > 0)){
+        UIButton *eyeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [eyeButton setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
+        [eyeButton setImage:[UIImage imageNamed:@"show_click"] forState:UIControlStateSelected];
+        eyeButton.tag = indexPath.row;
+        [eyeButton addTarget:self action:@selector(showLayerInMap:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = eyeButton;
     }else{
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = nil;
     }
     
     cell.textLabel.text = title;
@@ -88,13 +100,30 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(_showType == 0){
-        NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
-    }else{
-        NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
-    }
+    [self addlayerIndex:indexPath.row];
 }
 
+- (void)showLayerInMap:(id)sender{
+    UIButton *btn = (UIButton *)sender;
+    [self addlayerIndex:btn.tag];
+}
+
+- (void)addlayerIndex:(NSInteger)index{
+    NSString *wmtsname = nil;
+    NSString *wmtsurl = nil;
+    if(_showType == 0){
+        NBDepartMent *depart = [_detailList objectAtIndex:index];
+        wmtsname = depart.CCODE;
+        wmtsurl = depart.WMTS;
+    }else{
+        NBGovment *gov = [_detailList objectAtIndex:index];
+        wmtsname = gov.CCODE;
+        wmtsurl = gov.WMTS;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,}];
+    ALERT(@"已添加到地图");
+
+}
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
     ALERT(@"请求失败，请确认网络连接");

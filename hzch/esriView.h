@@ -81,7 +81,7 @@ CLLocationManagerDelegate>
 - (void)clearMap:(BOOL)show index:(NSInteger)index;
 - (void)deleteMap;
 - (void)layerMap;
-
+- (void)addWMTSLayer:(NSNotification *)info;
 -(void)addSubjectLayer:(AGSFeatureSet *)p_features select:(AGSGraphic *)p_selGp queryParams:(QueryParams *) p_queryParams;
 - (void)touchesBegan:(UITouch*)touch;
 - (void)touchesMoved:(UITouch*)touch;

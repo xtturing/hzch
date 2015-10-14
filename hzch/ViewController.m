@@ -40,6 +40,7 @@
     [self.conView addSubview:self.deleteBtn];
     [self.conView addSubview:self.layerBtn];
     [self.conView addSubview:self.clearBtn];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLayerOnMap:) name:@"ADD_WMTS_LAYER_ON_MAP" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +83,10 @@
         default:
             break;
     }
+}
+
+- (void)addLayerOnMap:(NSNotification *)info{
+    [self.esriView addWMTSLayer:info];
 }
 
 - (void)didSelectLineSearch{

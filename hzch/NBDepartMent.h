@@ -28,7 +28,8 @@
 @property (nonatomic, strong) NSString *UPDATETIMESTR;
 @property (nonatomic, strong) NSString *CREATETIMESTR;
 @property (nonatomic, strong) NSString *PHOTOGRAPHDATESTR;
-
+@property (nonatomic, strong) NSString *WMS;
+@property (nonatomic, strong) NSString *WMTS;
 - (NBDepartMent *)initWithJsonDictionary:(NSDictionary*)dic;
 
 + (NBDepartMent *)departMentWithJsonDictionary:(NSDictionary*)dic;

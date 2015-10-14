@@ -12,4 +12,5 @@
 
 @interface TianDiTuWMTSLayerInfoDelegate : NSObject
 -(TianDiTuWMTSLayerInfo*)getLayerInfo:(TianDiTuLayerTypes) tiandituType;
+-(TianDiTuWMTSLayerInfo*)getLayerInfo;
 @end
