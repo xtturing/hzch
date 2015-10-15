@@ -171,7 +171,7 @@
     layerInfo.yMin = Y_MIN_2000;
     layerInfo.tileMatrixSet = kTILE_MATRIX_SET_2000;
     layerInfo.style = @"default";
-    layerInfo.format = @"tiles";
+    layerInfo.format = @"PNG32";
     layerInfo.origin = [AGSPoint pointWithX:X_MIN_2000 y:Y_MAX_2000 spatialReference:[[AGSSpatialReference alloc]initWithWKID:SRID_2000]];
     layerInfo.lods = [NSMutableArray arrayWithObjects:
                       [[AGSLOD alloc] initWithLevel:1 resolution: 0.7031249999891485 scale: 2.958293554545656E8],

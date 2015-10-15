@@ -61,19 +61,21 @@
     NSInteger ctype = 0;
     NSString *wmsurl = nil;
     NSString *wmtsurl = nil;
+    NSString *wmtsname = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
         title = depart.NAME;
         ctype = depart.CTYPE;
         wmsurl = depart.WMS;
         wmtsurl = depart.WMTS;
-        NSLog(@"++++++++++++++%@",wmsurl);
+        wmtsname = depart.CCODE;
     }else{
         NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
         ctype = gov.CTYPE;
         wmsurl = gov.WMS;
         wmtsurl = gov.WMTS;
+        wmtsname = gov.CCODE;
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -85,8 +87,11 @@
     }
     if(ctype == 4 && (wmsurl.length > 0 || wmsurl.length > 0)){
         UIButton *eyeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-        [eyeButton setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
-        [eyeButton setImage:[UIImage imageNamed:@"show_click"] forState:UIControlStateSelected];
+        if([self hasInMapLayerName:wmtsname]){
+            [eyeButton setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
+        }else{
+            [eyeButton setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
+        }
         eyeButton.tag = indexPath.row;
         [eyeButton addTarget:self action:@selector(showLayerInMap:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = eyeButton;
@@ -97,6 +102,15 @@
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
+}
+
+- (BOOL)hasInMapLayerName:(NSString *)name{
+    for(NSString *layerName in [dataHttpManager getInstance].resourceLayers.allKeys){
+        if([layerName isEqualToString:name]){
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -120,8 +134,18 @@
         wmtsname = gov.CCODE;
         wmtsurl = gov.WMTS;
     }
+    if([self hasInMapLayerName:wmtsname]){
+        UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        UIButton *btn = (UIButton *)cell.accessoryView;
+        [btn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
+        ALERT(@"已从地图移除");
+    }else{
+        UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        UIButton *btn = (UIButton *)cell.accessoryView;
+        [btn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
+        ALERT(@"已添加到地图");
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,}];
-    ALERT(@"已添加到地图");
 
 }
 - (void)didGetFailed{

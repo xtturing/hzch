@@ -39,6 +39,17 @@
     return nil;
 }
 
++ (BOOL)hasLayerName:(NSString *)name  mapView:(AGSMapView*)mapView{
+    NSArray* mapLayers = [mapView mapLayers];
+    for (AGSLayer* mapLayer in mapLayers)
+    {
+        if([mapLayer.name isEqualToString:name]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 + (void) clearMapLayers:(AGSMapView*)mapView
 {
     NSArray* mapLayers = [mapView mapLayers];

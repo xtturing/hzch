@@ -15,6 +15,8 @@
 
 + (id)getMapLayerByName:(NSString*)layerName mapView:(AGSMapView*)mapView;
 
++ (BOOL)hasLayerName:(NSString *)name  mapView:(AGSMapView*)mapView;
+
 + (void) clearMapLayers:(AGSMapView*)mapView;
 
 + (NSMutableArray*)queryGraphicsByAttributes:(NSMutableArray*)graphicList conditionList:(NSMutableArray*)conditionList;

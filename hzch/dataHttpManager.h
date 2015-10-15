@@ -71,6 +71,7 @@ typedef enum {
 @property (nonatomic,assign) int type;
 @property (nonatomic,assign) id<dataHttpDelegate> delegate;
 @property (nonatomic,strong) DBDraws *drawDB;
+@property (nonatomic,strong) NSMutableDictionary *resourceLayers;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 

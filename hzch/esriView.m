@@ -13,6 +13,7 @@
 #import "dataHttpManager.h"
 #import "Draw.h"
 #import "GTMBase64.h"
+#import "MapUtil.h"
 
 @interface esriView (){
     double _distance;
@@ -81,11 +82,11 @@
         TianDiTuWMTSLayer* TianDiTuLyr_Anno = [[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_IMAGE_ANNOTATION_CHINESE_2000:TIANDITU_VECTOR_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
         TianDiTuWMTSLayer* TianDituLyr_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_ZJ_IMAGE:TIANDITU_ZJ_VECTOR LocalServiceURL:nil error:&err];
         TianDiTuWMTSLayer* TianDituLyr_Anno_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_ZJ_IMAGE_ANNOTATION:TIANDITU_ZJ_VECTOR_ANNOTATION LocalServiceURL:nil error:&err];
-        [self.mapView addMapLayer:TianDiTuLyr withName:@"TianDiTu Layer"];
-        [self.mapView addMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer"];
-        [self.mapView addMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer"];
+        [self.mapView insertMapLayer:TianDiTuLyr withName:@"TianDiTu Layer" atIndex:0];
+        [self.mapView insertMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer" atIndex:1];
+        [self.mapView insertMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer" atIndex:2];
         if(index){
-            [self.mapView addMapLayer:TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer"];
+            [self.mapView insertMapLayer:TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer" atIndex:3];
         }
     }else{
         [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
@@ -98,10 +99,17 @@
 - (void)addWMTSLayer:(NSNotification *)info{
     NSString *wmtsurl = [info.userInfo objectForKey:@"wmtsurl"];
     NSString *wmtsname = [info.userInfo objectForKey:@"wmtsname"];
-    [self.mapView removeMapLayerWithName:wmtsname];
-    TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
-    [self.mapView addMapLayer:layer withName:@"TianDiTu Layer"];
+    if([MapUtil hasLayerName:wmtsname mapView:self.mapView]){
+        [self.mapView removeMapLayerWithName:wmtsname];
+        [[dataHttpManager getInstance].resourceLayers removeObjectForKey:wmtsname];
+    }else{
+        TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
+        [self.mapView addMapLayer:layer withName:wmtsname];
+        [[dataHttpManager getInstance].resourceLayers setObject:wmtsurl forKey:wmtsname];
+    }
 }
+
+
 - (void)deleteMap{
     [self clearToolAll];
 //    NSArray* mapLayers = [self.mapView mapLayers];
@@ -192,7 +200,6 @@
     }
 }
 
-//定制地震
 -(void)addCustLayer:(NSArray *)p_data{
     self.mapView.touchDelegate = self;
     self.mapView.callout.delegate = self;
