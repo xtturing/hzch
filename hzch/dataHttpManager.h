@@ -23,6 +23,8 @@
 
 #define HTTP_CATALOG_SEARCH    @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=%@&minx=&maxx=&miny=&maxy=&lk=false&geo=&_dc=1419474648386"
 
+#define HTTP_DRAW_SEARCH       @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=&city=&v=2&frontRequest=true&tableid=%@&minx=%f&maxx=%f&miny=%f&maxy=%f&lk=false&geo=&_dc=1419474648386"
+
 #define REQUEST_TYPE          @"requestType"
 
 typedef enum {
@@ -33,6 +35,7 @@ typedef enum {
     AACatalogGovmentDetail,
     AASearchText,
     AASearchCatalog,
+    AASearchDraw,
     //继续添加
     
 }DataRequestType;
@@ -47,6 +50,8 @@ typedef enum {
 
 - (void)didGetFailed;
 
+- (void)didGetTableIDFailed;
+
 - (void)didLoadTPK:(NSMutableDictionary *)Dic;
 
 - (void)didGetCatalogDepartment:(NSArray *)departmentList;
@@ -60,6 +65,8 @@ typedef enum {
 - (void)didGetSearch:(NSMutableDictionary *)searchDic;
 
 - (void)didgetSearchCatalog:(NSMutableDictionary *)searchDic;
+
+- (void)didGetDraw:(NSMutableDictionary *)searchDic;
 //继续添加
 @end
 
@@ -72,6 +79,7 @@ typedef enum {
 @property (nonatomic,assign) id<dataHttpDelegate> delegate;
 @property (nonatomic,strong) DBDraws *drawDB;
 @property (nonatomic,strong) NSMutableDictionary *resourceLayers;
+@property (nonatomic,strong) NSMutableArray *tableIDArray;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 
@@ -81,6 +89,7 @@ typedef enum {
 - (void)letGetCatalogGovment;
 - (void)letGetCatalogGovmentDetail:(NSInteger)catalogID;
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size;
-- (void)letGetSearchCatalog:(NSString *)searchText tableID:(NSString *)tableID page:(int)page pageSize:(int)size;
+- (void)letGetSearchCatalog:(NSString *)searchText page:(int)page pageSize:(int)size;
+- (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size;
 //继续添加
 @end

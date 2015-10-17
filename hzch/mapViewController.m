@@ -36,7 +36,8 @@
 }
 
 - (void)addMapPoint{
-    [self.esriView addCustLayer:self.resultList];
+    [self.esriView addAllWmtsLayers];
+    [self.esriView addCustLayer:self.resultList withType:self.searchType];
 }
 
 /*

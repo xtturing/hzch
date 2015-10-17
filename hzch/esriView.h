@@ -12,7 +12,7 @@
 #import "NSConfigData.h"
 #import <math.h>
 #import "QueryParams.h"
-
+#import "NBSearchCatalog.h"
 #import "NBSearch.h"
 @class esriView;
 @protocol esriViewDelegate <NSObject>
@@ -72,7 +72,7 @@ CLLocationManagerDelegate>
 - (IBAction)widthTool:(id)sender;
 - (IBAction)colorTool:(id)sender;
 - (IBAction)widthChange:(id)sender;
--(void)addCustLayer:(NSArray *)p_data;
+-(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType;
 -(void)addOneSearchCustLayer:(NBSearch *)search;
 -(void)addSketchLayer;
 -(void)showToolView;
@@ -82,6 +82,7 @@ CLLocationManagerDelegate>
 - (void)deleteMap;
 - (void)layerMap;
 - (void)addWMTSLayer:(NSNotification *)info;
+- (void)addAllWmtsLayers;
 -(void)addSubjectLayer:(AGSFeatureSet *)p_features select:(AGSGraphic *)p_selGp queryParams:(QueryParams *) p_queryParams;
 - (void)touchesBegan:(UITouch*)touch;
 - (void)touchesMoved:(UITouch*)touch;

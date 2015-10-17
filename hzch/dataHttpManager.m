@@ -54,6 +54,7 @@ static dataHttpManager * instance=nil;
         [self.drawDB createTable];
         
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
+        self.tableIDArray = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -171,22 +172,77 @@ static dataHttpManager * instance=nil;
     [self setGetUserInfo:request withRequestType:AASearchText];
     [_requestQueue addOperation:request];
 }
-- (void)letGetSearchCatalog:(NSString *)searchText tableID:(NSString *)tableID page:(int)page pageSize:(int)size{
-    NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                    kCFAllocatorDefault, /* allocator */
-                                                                                                    (CFStringRef)searchText,
-                                                                                                    NULL, /* charactersToLeaveUnescaped */
-                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                    kCFStringEncodingUTF8));
-    NSString *baseUrl =[NSString  stringWithFormat:HTTP_CATALOG_SEARCH,page,size,escaped_value,tableID];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AASearchCatalog];
-    [_requestQueue addOperation:request];
+- (void)letGetSearchCatalog:(NSString *)searchText page:(int)page pageSize:(int)size{
+    if(self.tableIDArray && self.tableIDArray.count > 0){
+        NSString *tableIds = @"";
+        for(NSString *tableId in self.tableIDArray){
+            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
+        }
+        if(tableIds.length > 0){
+            NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                            kCFAllocatorDefault, /* allocator */
+                                                                                                            (CFStringRef)searchText,
+                                                                                                            NULL, /* charactersToLeaveUnescaped */
+                                                                                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                            kCFStringEncodingUTF8));
+            NSString *baseUrl =[NSString  stringWithFormat:HTTP_CATALOG_SEARCH,page,size,escaped_value,tableIds];
+            NSURL  *url = [NSURL URLWithString:baseUrl];
+            ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+            [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+            [request setTimeOutSeconds:TIMEOUT];
+            [request setResponseEncoding:NSUTF8StringEncoding];
+            NSLog(@"url=%@",url);
+            [self setGetUserInfo:request withRequestType:AASearchCatalog];
+            [_requestQueue addOperation:request];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([_delegate respondsToSelector:@selector(didGetTableIDFailed)]) {
+                    [_delegate didGetTableIDFailed];
+                }
+            });
+        }
+        
+    }else{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([_delegate respondsToSelector:@selector(didGetTableIDFailed)]) {
+                [_delegate didGetTableIDFailed];
+            }
+        });
+    }
+}
+
+- (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size{
+    if(self.tableIDArray.count > 0){
+        NSString *tableIds = @"";
+        for(NSString *tableId in self.tableIDArray){
+            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
+        }
+        if(tableIds.length > 0){
+            NSString *baseUrl =[NSString  stringWithFormat:HTTP_DRAW_SEARCH,page,size,tableIds,minx,maxx,miny,maxy];
+            NSURL  *url = [NSURL URLWithString:baseUrl];
+            ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+            [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+            [request setTimeOutSeconds:TIMEOUT];
+            [request setResponseEncoding:NSUTF8StringEncoding];
+            NSLog(@"url=%@",url);
+            [self setGetUserInfo:request withRequestType:AASearchDraw];
+            [_requestQueue addOperation:request];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([_delegate respondsToSelector:@selector(didGetTableIDFailed)]) {
+                    [_delegate didGetTableIDFailed];
+                }
+            });
+        }
+        
+    }else{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([_delegate respondsToSelector:@selector(didGetTableIDFailed)]) {
+                [_delegate didGetTableIDFailed];
+            }
+        });
+    }
+    
 }
 //继续添加
 
@@ -349,6 +405,9 @@ static dataHttpManager * instance=nil;
         if (_delegate && [_delegate respondsToSelector:@selector(didgetSearchCatalog:)]) {
             [_delegate didgetSearchCatalog:dic];
         }
+    }
+    if(requestType == AASearchDraw && userInfo){
+        
     }
     //继续添加
     

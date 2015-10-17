@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *fbjj;
 @property (nonatomic, strong) NSString *metadataid;
 @property (nonatomic, strong) NSString *tablename;
-@property (nonatomic, strong) NSString *aliasname;
+@property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *objectid;
 @property (nonatomic, strong) NSString *type;

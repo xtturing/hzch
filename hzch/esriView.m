@@ -14,6 +14,7 @@
 #import "Draw.h"
 #import "GTMBase64.h"
 #import "MapUtil.h"
+#import "SVProgressHUD.h"
 
 @interface esriView (){
     double _distance;
@@ -22,6 +23,10 @@
     AGSAreaUnits _areaUnit;
     NSInteger _drawWidth;
     UIColor *_drawColor;
+    double minx;
+    double miny;
+    double maxx;
+    double maxy;
 }
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
@@ -99,13 +104,25 @@
 - (void)addWMTSLayer:(NSNotification *)info{
     NSString *wmtsurl = [info.userInfo objectForKey:@"wmtsurl"];
     NSString *wmtsname = [info.userInfo objectForKey:@"wmtsname"];
+    NSString *wmtsID = [info.userInfo objectForKey:@"wmtsID"];
     if([MapUtil hasLayerName:wmtsname mapView:self.mapView]){
         [self.mapView removeMapLayerWithName:wmtsname];
         [[dataHttpManager getInstance].resourceLayers removeObjectForKey:wmtsname];
+        [[dataHttpManager getInstance].tableIDArray removeObject:wmtsID];
     }else{
         TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
         [self.mapView addMapLayer:layer withName:wmtsname];
         [[dataHttpManager getInstance].resourceLayers setObject:wmtsurl forKey:wmtsname];
+        [[dataHttpManager getInstance].tableIDArray addObject:wmtsID];
+    }
+}
+
+- (void)addAllWmtsLayers{
+    for(NSInteger i = 0; i<[dataHttpManager getInstance].resourceLayers.count ; i++){
+        NSString *wmtsname = [[[dataHttpManager getInstance].resourceLayers allKeys] objectAtIndex:i];
+        NSString *wmtsurl = [[dataHttpManager getInstance].resourceLayers objectForKey:wmtsname];
+        TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
+        [self.mapView addMapLayer:layer withName:wmtsname];
     }
 }
 
@@ -200,7 +217,7 @@
     }
 }
 
--(void)addCustLayer:(NSArray *)p_data{
+-(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType{
     self.mapView.touchDelegate = self;
     self.mapView.callout.delegate = self;
     
@@ -217,25 +234,42 @@
     for (NSInteger i=0; i<self.dataDic.count; i++) {
         @autoreleasepool{
             NSArray *t_arr = (NSArray *)self.dataDic;
-            NBSearch *t_att = [t_arr objectAtIndex:i];
+            double x = 0;
+            double y = 0;
+            NSString *name = @"";
+            NSString *address = @"";
+            if(searchType == 0){
+                NBSearch *t_att = [t_arr objectAtIndex:i];
+                x = [t_att.centerx doubleValue];
+                y = [t_att.centery doubleValue];
+                address = t_att.address;
+                name = t_att.name;
+            }else if(searchType == 1){
+                NBSearchCatalog *t_att = [t_arr objectAtIndex:i];
+                x = [t_att.labelx doubleValue];
+                y = [t_att.labely doubleValue];
+                address = t_att.address;
+                name = t_att.name;
+            }
+            
             NSString *t_imagePath;
             t_imagePath = @"cus_cz.png";
             
-            AGSPoint *t_point = [AGSPoint pointWithX:[t_att.centerx doubleValue]
-                                                   y:[t_att.centery doubleValue]
+            AGSPoint *t_point = [AGSPoint pointWithX:x
+                                                   y:y
                                     spatialReference:self.mapView.spatialReference];
             
 //            UIImage *t_m;
 //            t_m =  [self.configData addImageText:[UIImage imageNamed:t_imagePath] text:t_att.name];
             
             AGSPictureMarkerSymbol *picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:[UIImage imageNamed:t_imagePath]];
-            NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
-            NSArray *tipvalue=[[NSArray alloc]initWithObjects:t_att.address,t_att.name,t_att,nil];
+            NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"type",@"object",nil];
+            NSArray *tipvalue=[[NSArray alloc]initWithObjects:address,name,@(searchType),[t_arr objectAtIndex:i],nil];
             NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
             AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:tips infoTemplateDelegate:nil];
             
             [self.ghLayer addGraphic:t_gh];
-            [self showCallOut:t_gh title:t_att.name detail:t_att.address];
+            [self showCallOut:t_gh title:name detail:address];
         }
         
     }
@@ -867,6 +901,7 @@
         AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:polyon symbol:outerSymbol attributes:nil];
         [self.sketchGhLayer addGraphic:graphic];
         [self.sketchGhLayer refresh];
+        [self doTouchDrawSearch];
     }
     
     self.isDrawingPolygon = NO;
@@ -931,22 +966,58 @@
 - (void)touchesBegan:(UITouch*)touch
 {
     CGPoint location = [touch locationInView:self.mapView];
-    [self.coordinates addObject:[self.mapView toMapPoint:location]];
+    AGSPoint *point = [self.mapView toMapPoint:location];
+    [self.coordinates addObject:point];
+    [self getMinMax:point];
 }
 
 - (void)touchesMoved:(UITouch*)touch
 {
     CGPoint location = [touch locationInView:self.mapView];
-    [self.coordinates addObject:[self.mapView toMapPoint:location]];
+    AGSPoint *point = [self.mapView toMapPoint:location];
+    [self.coordinates addObject:point];
+    [self getMinMax:point];
 }
 
 - (void)touchesEnded:(UITouch*)touch
 {
     CGPoint location = [touch locationInView:self.mapView];
-    [self.coordinates addObject:[self.mapView toMapPoint:location]];
+    AGSPoint *point = [self.mapView toMapPoint:location];
+    [self.coordinates addObject:point];
+    [self getMinMax:point];
     if(self.toolTag == 1004){
         [self didTouchUpInsideDrawButton];
     }
+}
+
+- (void)getMinMax:(AGSPoint *)point{
+    double x = point.x;
+    double y = point.y;
+    if(x < minx){
+        minx = x;
+    }else if(x > maxx){
+        maxx = x;
+    }else{
+        minx = x;
+        maxx = x;
+    }
+    
+    if(y < miny){
+        miny = y;
+    }else if(y > maxy){
+        maxy = y;
+    }else{
+        miny = y;
+        maxy = y;
+    }
+    
+}
+
+- (void)doTouchDrawSearch{
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] doTouchDrawSearchMinx:minx miny:miny maxx:maxx maxy:maxy page:1 pageSize:15];
+    });
 }
 
 -(void) executeQueryResult:(NSData*)resultData

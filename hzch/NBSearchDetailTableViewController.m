@@ -25,11 +25,7 @@
     [super viewDidLoad];
     page = 1;
     pageSize = 15;
-    if(_searchType == 0){
-        self.showMapItem.enabled = YES;
-    }else{
-        self.showMapItem.enabled = NO;
-    }
+    self.showMapItem.enabled = NO;
     [self doSearch:self.keyword];
     self.title = self.keyword;
 }
@@ -71,7 +67,7 @@
     if(_searchType == 1){
         NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
         title = catalog.name;
-        detail = catalog.aliasname;
+        detail = catalog.address;
     }
     
     static NSString *FirstLevelCell = @"NBSearch";
@@ -95,9 +91,16 @@
     ALERT(@"请求失败，请确认网络连接");
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void)didGetTableIDFailed{
+    [SVProgressHUD dismiss];
+    ALERT(@"没有可以查询的图层");
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)didGetSearch:(NSMutableDictionary *)searchDic{
     [SVProgressHUD dismiss];
     if([[searchDic objectForKey:@"results"] count] > 0){
+        self.showMapItem.enabled = YES;
         allCount = [[searchDic objectForKey:@"totalCount"] intValue];
         allCount = ceil(allCount / (pageSize*1.000));
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
@@ -124,6 +127,7 @@
 - (void)didgetSearchCatalog:(NSMutableDictionary *)searchDic{
     [SVProgressHUD dismiss];
     if([[searchDic objectForKey:@"results"] count] > 0){
+        self.showMapItem.enabled = YES;
         allCount = [[searchDic objectForKey:@"totalCount"] intValue];
         allCount = ceil(allCount / (pageSize*1.000));
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
@@ -160,7 +164,7 @@
         }
         if(_searchType == 1){
             key = SEARCH_CATALOG;
-            [[dataHttpManager getInstance] letGetSearchCatalog:keyword tableID:@"371853" page:page pageSize:pageSize];
+            [[dataHttpManager getInstance] letGetSearchCatalog:keyword page:page pageSize:pageSize];
         }
         if(_searchType == 2){
             key = SEARCH_DOWNLOAD;
@@ -210,6 +214,7 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         mapViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
         mapViewController.resultList = results;
+        mapViewController.searchType = _searchType;
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
 }

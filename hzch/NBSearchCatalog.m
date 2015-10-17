@@ -14,7 +14,7 @@
         _fbjj=[dic getStringValueForKey:@"fbjj" defaultValue:@""];
         _metadataid=[dic getStringValueForKey:@"metadataid" defaultValue:@""];
         _tablename=[dic getStringValueForKey:@"tablename" defaultValue:@""];
-        _aliasname=[dic getStringValueForKey:@"aliasname" defaultValue:@""];
+        _address=[dic getStringValueForKey:@"address" defaultValue:@""];
         _objectid=[dic getStringValueForKey:@"objectid" defaultValue:@""];
         _type=[dic getStringValueForKey:@"type" defaultValue:@""];
         _labely=[dic getStringValueForKey:@"labely" defaultValue:@""];

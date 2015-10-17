@@ -11,5 +11,6 @@
 @interface mapViewController : UIViewController
 
 @property (nonatomic,strong) NSArray *resultList;
+@property (nonatomic,assign) NSInteger searchType;
 
 @end
