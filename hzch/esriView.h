@@ -19,6 +19,7 @@
 @optional
 -(void)esriViewDetails:(esriView *)controller details:(AGSGraphic *)agsGraphic queryParams:(QueryParams *)queryParams;
 -(void)didSelectLineSearch;
+- (void)didDrawSearch;
 -(void)mapViewDidLoad;
 
 @end

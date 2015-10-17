@@ -8,8 +8,10 @@
 
 #import "ViewController.h"
 #import "esriView.h"
-
-@interface ViewController ()<esriViewDelegate,UITabBarDelegate>{
+#import "dataHttpManager.h"
+#import "SVProgressHUD.h"
+#import "DrawSearchDetailTableViewController.h"
+@interface ViewController ()<esriViewDelegate,UITabBarDelegate,dataHttpDelegate>{
     NSInteger segIndex;
     BOOL showMap;
 }
@@ -41,11 +43,21 @@
     [self.conView addSubview:self.layerBtn];
     [self.conView addSubview:self.clearBtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLayerOnMap:) name:@"ADD_WMTS_LAYER_ON_MAP" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPointsOnMap:) name:@"ADD_POINTS_ON_MAP" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate =  nil;
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
@@ -85,6 +97,12 @@
     }
 }
 
+- (void)addPointsOnMap:(NSNotification *)info{
+    NSArray *resultList = [info.userInfo objectForKey:@"results"];
+    NSInteger searchType = [[info.userInfo objectForKey:@"searchType"] integerValue];
+    [self.esriView addCustLayer:resultList withType:searchType];
+}
+
 - (void)addLayerOnMap:(NSNotification *)info{
     [self.esriView addWMTSLayer:info];
 }
@@ -94,6 +112,32 @@
     [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"LineSearchNavigationViewController"] animated:YES completion:^{
         
     }];
+}
+
+- (void)didDrawSearch{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"SearchDetailNavigationViewController"] animated:YES completion:^{
+        
+    }];
+}
+
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
+    ALERT(@"请求失败，请确认网络连接");
+}
+
+- (void)didGetTableIDFailed{
+    [SVProgressHUD dismiss];
+    ALERT(@"没有可以查询的图层");
+}
+- (void)didGetDraw:(NSMutableDictionary *)searchDic{
+    [SVProgressHUD dismiss];
+    if(searchDic.count > 0){
+        
+
+    }else{
+        ALERT(@"手势查询结果为空");
+    }
 }
 
 - (void)didSearch{
@@ -111,6 +155,14 @@
     [self.esriView deleteMap];
 }
 - (IBAction)layerMap:(id)sender{
+    if([dataHttpManager getInstance].namelayers.count > 0){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"LayersManagerTableViewController"] animated:YES completion:^{
+            
+        }];
+    }else{
+        ALERT(@"没有添加可视专题图层");
+    }
     
 }
 - (IBAction)clearMap:(id)sender{

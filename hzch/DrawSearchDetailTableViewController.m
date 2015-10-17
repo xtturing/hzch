@@ -1,34 +1,33 @@
 //
-//  NBSearchDetailTableViewController.m
+//  DrawSearchDetailTableViewController.m
 //  hzch
 //
-//  Created by xtturing on 15/10/3.
+//  Created by xtturing on 15/10/18.
 //  Copyright (c) 2015年 xtturing. All rights reserved.
 //
 
-#import "NBSearchDetailTableViewController.h"
-#import "NBSearch.h"
+#import "DrawSearchDetailTableViewController.h"
 #import "NBSearchCatalog.h"
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
 #import "mapViewController.h"
 #import "NBSearchCatalogDetailTableViewController.h"
-@interface NBSearchDetailTableViewController ()<dataHttpDelegate>{
+@interface DrawSearchDetailTableViewController ()<dataHttpDelegate>{
     int page;
     int pageSize;
     int allCount;
 }
+
 @end
 
-@implementation NBSearchDetailTableViewController
+@implementation DrawSearchDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     page = 1;
     pageSize = 15;
-    self.showMapItem.enabled = NO;
-    [self doSearch:self.keyword];
-    self.title = self.keyword;
+    [self doSearch];
+    self.navigationItem.backBarButtonItem.title = @"返回";
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -46,6 +45,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)doBack:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -60,18 +65,10 @@
     NSString *title= nil;
     NSString *detail = nil;
     NSArray *results = [_resultDic objectForKey:@"results"];
-    if(_searchType == 0){
-        NBSearch *search = [results objectAtIndex:indexPath.row];
-        title = search.name;
-        detail = search.address;
-    }
-    if(_searchType == 1){
-        NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-        title = catalog.name;
-        detail = catalog.address;
-    }
-    
-    static NSString *FirstLevelCell = @"NBSearch";
+    NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
+    title = catalog.name;
+    detail = catalog.address;
+    static NSString *FirstLevelCell = @"NBSearchCatalog";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                              FirstLevelCell];
     if (cell == nil) {
@@ -79,12 +76,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if(_searchType == 0){
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    if(_searchType == 1){
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.detailTextLabel.text = detail;
@@ -103,34 +95,9 @@
     ALERT(@"没有可以查询的图层");
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)didGetSearch:(NSMutableDictionary *)searchDic{
-    [SVProgressHUD dismiss];
-    if([[searchDic objectForKey:@"results"] count] > 0){
-        self.showMapItem.enabled = YES;
-        allCount = [[searchDic objectForKey:@"totalCount"] intValue];
-        allCount = ceil(allCount / (pageSize*1.000));
-        self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
-        self.resultDic = searchDic;
-        self.toolBar.hidden = NO;
-        if(page > 1){
-            self.preItem.enabled = YES;
-        }else{
-            self.preItem.enabled = NO;
-        }
-        if(page >= allCount){
-            self.nextItem.enabled = NO;
-        }else{
-            self.nextItem.enabled = YES;
-        }
-        [self.tableView reloadData];
-    }else{
-        self.toolBar.hidden = YES;
-        ALERT(@"请求数据为空");
-         [self.navigationController popViewControllerAnimated:YES];
-    }
-}
 
-- (void)didgetSearchCatalog:(NSMutableDictionary *)searchDic{
+
+- (void)didGetDraw:(NSMutableDictionary *)searchDic{
     [SVProgressHUD dismiss];
     if([[searchDic objectForKey:@"results"] count] > 0){
         self.showMapItem.enabled = YES;
@@ -156,39 +123,14 @@
     }
 }
 
-- (void)doSearch:(NSString *)keyword{
+- (void)doSearch{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    if(![self hasKeyword:keyword]){
-        [self.keywordList addObject:keyword];
-    }
     [self.tableView reloadData];
+    NSArray *array = [dataHttpManager getInstance].drawPoints;
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *key = SEARCH_KEY_WORD;
-        if(_searchType == 0){
-            key = SEARCH_KEY_WORD;
-            [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
-        }
-        if(_searchType == 1){
-            key = SEARCH_CATALOG;
-            [[dataHttpManager getInstance] letGetSearchCatalog:keyword page:page pageSize:pageSize];
-        }
-        if(_searchType == 2){
-            key = SEARCH_DOWNLOAD;
-            [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:self.keywordList forKey:key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[dataHttpManager getInstance] doTouchDrawSearchMinx:[[array objectAtIndex:0] doubleValue] miny:[[array objectAtIndex:1] doubleValue] maxx:[[array objectAtIndex:2] doubleValue] maxy:[[array objectAtIndex:3] doubleValue] page:page pageSize:pageSize];
     });
-    
-}
-
-- (BOOL)hasKeyword:(NSString *)key{
-    for(NSString *word in self.keywordList){
-        if([word isEqualToString:key]){
-            return YES;
-        }
-    }
-    return NO;
 }
 
 -(IBAction)toolbarAction:(id)sender{
@@ -200,19 +142,17 @@
         page +=1;
     }
     if(page > 0 && page <= allCount){
-        [self doSearch:self.keyword];
+        [self doSearch];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(_searchType == 1){
-        NSArray *results = [_resultDic objectForKey:@"results"];
-        NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
-        mapViewController.catalog = catalog;
-        [self.navigationController pushViewController:mapViewController animated:YES];
-    }
+    NSArray *results = [_resultDic objectForKey:@"results"];
+    NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
+    mapViewController.catalog = catalog;
+    [self.navigationController pushViewController:mapViewController animated:YES];
 }
 
 -(IBAction)showInMap:(id)sender{
@@ -221,9 +161,9 @@
 //        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //        mapViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
 //        mapViewController.resultList = results;
-//        mapViewController.searchType = _searchType;
+//        mapViewController.searchType = 1;
 //        [self.navigationController pushViewController:mapViewController animated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(1)}];
     }
 }
 

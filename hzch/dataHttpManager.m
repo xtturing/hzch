@@ -54,7 +54,7 @@ static dataHttpManager * instance=nil;
         [self.drawDB createTable];
         
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
-        self.tableIDArray = [[NSMutableArray alloc] init];
+        self.namelayers = [[NSMutableDictionary alloc] initWithCapacity:0];
     }
     
     return self;
@@ -173,10 +173,10 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 - (void)letGetSearchCatalog:(NSString *)searchText page:(int)page pageSize:(int)size{
-    if(self.tableIDArray && self.tableIDArray.count > 0){
+    if(self.namelayers && self.namelayers.allKeys.count > 0){
         NSString *tableIds = @"";
-        for(NSString *tableId in self.tableIDArray){
-            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
+        for(NSString *tableId in self.namelayers.allKeys){
+            tableIds = [NSString stringWithFormat:@"%@%@%@",tableIds,tableId,@"%2C"];
         }
         if(tableIds.length > 0){
             NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
@@ -212,10 +212,10 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size{
-    if(self.tableIDArray.count > 0){
+    if(self.namelayers.allKeys.count > 0){
         NSString *tableIds = @"";
-        for(NSString *tableId in self.tableIDArray){
-            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
+        for(NSString *tableId in self.namelayers.allKeys){
+            tableIds = [NSString stringWithFormat:@"%@%@%@",tableIds,tableId,@"%2C"];
         }
         if(tableIds.length > 0){
             NSString *baseUrl =[NSString  stringWithFormat:HTTP_DRAW_SEARCH,page,size,tableIds,minx,maxx,miny,maxy];
@@ -407,7 +407,23 @@ static dataHttpManager * instance=nil;
         }
     }
     if(requestType == AASearchDraw && userInfo){
-        
+        NSArray *result = [userInfo objectForKey:@"results"];
+        NSMutableArray *searchArr = [NSMutableArray arrayWithCapacity:0];
+        for(NSDictionary *dataDic in result){
+            NBSearchCatalog *search = [[NBSearchCatalog alloc] initWithJsonDictionary:dataDic];
+            [searchArr addObject:search];
+        }
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dic setObject:searchArr forKey:@"results"];
+        [dic setObject:@([userInfo getIntValueForKey:@"totalCount" defaultValue:0]) forKey:@"totalCount"];
+        [dic setObject:[userInfo getStringValueForKey:@"resulttype" defaultValue:@""] forKey:@"resulttype"];
+        [dic setObject:@([userInfo getIntValueForKey:@"page" defaultValue:0]) forKey:@"page"];
+        [dic setObject:@([userInfo getIntValueForKey:@"pagesize" defaultValue:0]) forKey:@"pagesize"];
+        [dic setObject:[userInfo getStringValueForKey:@"city" defaultValue:@""] forKey:@"city"];
+        [dic setObject:@([userInfo getIntValueForKey:@"tableid" defaultValue:0])  forKey:@"tableid"];
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetDraw:)]) {
+            [_delegate didGetDraw:dic];
+        }
     }
     //继续添加
     

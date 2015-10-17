@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSString *clasid;
 @property (nonatomic, strong) NSString *elemid;
 @property (nonatomic, strong) NSString *shape_le_1;
+@property (nonatomic, strong) NSMutableDictionary *catalogDic;
 
 - (NBSearchCatalog *)initWithJsonDictionary:(NSDictionary*)dic;
 

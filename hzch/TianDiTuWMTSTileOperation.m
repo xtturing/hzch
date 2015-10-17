@@ -57,6 +57,7 @@
         }
         
         self.imageData = data;
+        data = nil;
 	}
 	@catch (NSException *exception) {
 		NSLog(@"main: Caught Exception %@: %@", [exception name], [exception reason]);

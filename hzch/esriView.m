@@ -14,7 +14,6 @@
 #import "Draw.h"
 #import "GTMBase64.h"
 #import "MapUtil.h"
-#import "SVProgressHUD.h"
 
 @interface esriView (){
     double _distance;
@@ -30,7 +29,6 @@
 }
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
-@property (nonatomic) BOOL isDrawingPolygon;
 @property (nonatomic) NSInteger toolTag;
 @property (nonatomic, strong) CanvasView *canvasView;
 
@@ -105,15 +103,17 @@
     NSString *wmtsurl = [info.userInfo objectForKey:@"wmtsurl"];
     NSString *wmtsname = [info.userInfo objectForKey:@"wmtsname"];
     NSString *wmtsID = [info.userInfo objectForKey:@"wmtsID"];
+    NSString *name = [info.userInfo objectForKey:@"name"];
+    [self removeAllLayer];
     if([MapUtil hasLayerName:wmtsname mapView:self.mapView]){
         [self.mapView removeMapLayerWithName:wmtsname];
         [[dataHttpManager getInstance].resourceLayers removeObjectForKey:wmtsname];
-        [[dataHttpManager getInstance].tableIDArray removeObject:wmtsID];
+        [[dataHttpManager getInstance].namelayers removeObjectForKey:wmtsID];
     }else{
         TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
         [self.mapView addMapLayer:layer withName:wmtsname];
         [[dataHttpManager getInstance].resourceLayers setObject:wmtsurl forKey:wmtsname];
-        [[dataHttpManager getInstance].tableIDArray addObject:wmtsID];
+        [[dataHttpManager getInstance].namelayers setObject:name forKey:wmtsID];
     }
 }
 
@@ -124,6 +124,9 @@
         TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
         [self.mapView addMapLayer:layer withName:wmtsname];
     }
+    if([dataHttpManager getInstance].drawGhLayer){
+        [self.mapView addMapLayer:[dataHttpManager getInstance].drawGhLayer];
+    }    
 }
 
 
@@ -224,11 +227,12 @@
     self.dataDic = p_data;
     self.dataType = @"CustData";
     
-    [self removeAllLayer];
-    
-    self.ghLayer = [[AGSGraphicsLayer alloc]init];
+//    [self removeAllLayer];
+    if(self.ghLayer == nil){
+        self.ghLayer = [[AGSGraphicsLayer alloc]init];
+        [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
+    }
     self.ghLayer.selectionColor = [UIColor redColor];
-    [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
     [self topLocationLayer];
     
     for (NSInteger i=0; i<self.dataDic.count; i++) {
@@ -238,22 +242,24 @@
             double y = 0;
             NSString *name = @"";
             NSString *address = @"";
+            NSString *t_imagePath;
             if(searchType == 0){
                 NBSearch *t_att = [t_arr objectAtIndex:i];
                 x = [t_att.centerx doubleValue];
                 y = [t_att.centery doubleValue];
                 address = t_att.address;
                 name = t_att.name;
+                t_imagePath = @"new_cz.png";
             }else if(searchType == 1){
                 NBSearchCatalog *t_att = [t_arr objectAtIndex:i];
                 x = [t_att.labelx doubleValue];
                 y = [t_att.labely doubleValue];
                 address = t_att.address;
                 name = t_att.name;
+                t_imagePath = @"cus_cz.png";
             }
             
-            NSString *t_imagePath;
-            t_imagePath = @"cus_cz.png";
+            
             
             AGSPoint *t_point = [AGSPoint pointWithX:x
                                                    y:y
@@ -271,8 +277,9 @@
             [self.ghLayer addGraphic:t_gh];
             [self showCallOut:t_gh title:name detail:address];
         }
-        
     }
+    [self.ghLayer refresh];
+    ALERT(@"已添加到地图");
 
 }
 -(void)addOneSearchCustLayer:(NBSearch *)search{
@@ -334,19 +341,18 @@
         [_drawTool setHidden:YES];
         [_colorTool setHidden:YES];
         [_widthTool setHidden:YES];
-        [self clearToolAll];
     }
 }
 
 - (void)clearToolAll{
     self.sketchLayer = nil;
     self.sketchGhLayer = nil;
+    [dataHttpManager getInstance].drawGhLayer=nil;
     self.canvasView.image = nil;
     [self.canvasView removeFromSuperview];
     [self.coordinates removeAllObjects];
     self.sketchLayer.geometry = nil;
     self.mapView.touchDelegate = nil;
-    self.isDrawingPolygon = NO;
     if([self hasLayer:@"sketchLayer"])
     {
         [_mapView removeMapLayerWithName:@"sketchLayer"];
@@ -356,6 +362,7 @@
         [_mapView removeMapLayerWithName:@"sketchGhLayer"];
     }
     [self.mapView.callout removeFromSuperview];
+    [self removeAllLayer];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
 }
 
@@ -739,10 +746,15 @@
             
         case 1004:
         {
-            self.toolLabel.text = @"请在地图上用手势画框查询";
-            [self.coordinates removeAllObjects];
-            [self.mapView addSubview:self.canvasView];
-            [self addSketchGhLayer];
+            if([dataHttpManager getInstance].resourceLayers.count > 0){
+                self.toolLabel.text = @"请在地图上用手势画框查询";
+                [self.coordinates removeAllObjects];
+                [self.mapView addSubview:self.canvasView];
+                [self addSketchGhLayer];
+            }else{
+                ALERT(@"请先添加专题图层！");
+            }
+            
         }
             break;
         case 1005:
@@ -903,10 +915,9 @@
         [self.sketchGhLayer refresh];
         [self doTouchDrawSearch];
     }
-    
-    self.isDrawingPolygon = NO;
     self.canvasView.image = nil;
     [self.coordinates removeAllObjects];
+    [self.canvasView removeFromSuperview];
 }
 
 - (void)didSaveDrawing
@@ -968,7 +979,10 @@
     CGPoint location = [touch locationInView:self.mapView];
     AGSPoint *point = [self.mapView toMapPoint:location];
     [self.coordinates addObject:point];
-    [self getMinMax:point];
+    minx = point.x;
+    miny = point.y;
+    maxx = point.x;
+    maxy = point.y;
 }
 
 - (void)touchesMoved:(UITouch*)touch
@@ -995,29 +1009,25 @@
     double y = point.y;
     if(x < minx){
         minx = x;
-    }else if(x > maxx){
-        maxx = x;
-    }else{
-        minx = x;
+    }
+    if(x > maxx){
         maxx = x;
     }
     
     if(y < miny){
         miny = y;
-    }else if(y > maxy){
-        maxy = y;
-    }else{
-        miny = y;
+    }
+    if(y > maxy){
         maxy = y;
     }
-    
 }
 
 - (void)doTouchDrawSearch{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] doTouchDrawSearchMinx:minx miny:miny maxx:maxx maxy:maxy page:1 pageSize:15];
-    });
+    [dataHttpManager getInstance].drawPoints = @[@(minx),@(miny),@(maxx),@(maxy)];
+    [dataHttpManager getInstance].drawGhLayer = self.sketchGhLayer;
+    if(_delegate && [_delegate respondsToSelector:@selector(didDrawSearch)]){
+        [_delegate didDrawSearch];
+    }
 }
 
 -(void) executeQueryResult:(NSData*)resultData

@@ -39,7 +39,7 @@
     if (self = [super init]) {
 
         requestQueue = [[NSOperationQueue alloc] init];
-        [requestQueue setMaxConcurrentOperationCount:16];
+        [requestQueue setMaxConcurrentOperationCount:8];
         /*get the currect layer info
          */
         layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc]getLayerInfo:tiandituType];
@@ -103,7 +103,7 @@
 - (id)initWithLocalServiceURL:(NSString *)url withLayerName:(NSString *)layerName{
      if (self = [super init]) {
          requestQueue = [[NSOperationQueue alloc] init];
-         [requestQueue setMaxConcurrentOperationCount:16];
+         [requestQueue setMaxConcurrentOperationCount:8];
          /*get the currect layer info
           */
          layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc]getLayerInfo];

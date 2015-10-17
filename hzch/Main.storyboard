@@ -1794,6 +1794,22 @@
             </objects>
             <point key="canvasLocation" x="1492" y="2700"/>
         </scene>
+        <!--手势查询结果NAv-->
+        <scene sceneID="lQQ-4l-PMf">
+            <objects>
+                <navigationController storyboardIdentifier="SearchDetailNavigationViewController" id="7xD-zT-vah" userLabel="手势查询结果NAv" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4dU-nu-rUL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="nbi-vx-RoW" kind="relationship" relationship="rootViewController" id="aO9-MX-kSX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IKc-N6-2p7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1828" y="976"/>
+        </scene>
         <!--全文检索结果-->
         <scene sceneID="LLZ-h2-ZFw">
             <objects>
@@ -1809,7 +1825,7 @@
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="tRk-S4-XVw"/>
                                 <barButtonItem tag="5001" enabled="NO" title="上一页" id="CqO-ba-CUc">
                                     <connections>
-                                        <action selector="toolbarAction:" destination="OjP-SJ-f8f" id="OMT-8b-QfR"/>
+                                        <action selector="toolbarAction:" destination="OjP-SJ-f8f" id="Z0o-a3-Ggc"/>
                                     </connections>
                                 </barButtonItem>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="Cu5-9i-tOn"/>
@@ -1817,7 +1833,7 @@
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="3Ht-kc-TEh"/>
                                 <barButtonItem tag="5003" title="下一页" id="Fjn-Y4-GJ1">
                                     <connections>
-                                        <action selector="toolbarAction:" destination="OjP-SJ-f8f" id="iNe-EB-F9e"/>
+                                        <action selector="toolbarAction:" destination="OjP-SJ-f8f" id="OpP-ap-hbh"/>
                                     </connections>
                                 </barButtonItem>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="Hs3-pz-zzY"/>
@@ -1839,7 +1855,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="k6T-bG-BQi">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="地图查看" id="BEV-NL-Xzd">
+                        <barButtonItem key="rightBarButtonItem" title="添加到地图" id="BEV-NL-Xzd">
                             <connections>
                                 <action selector="showInMap:" destination="OjP-SJ-f8f" id="phv-FH-c7j"/>
                             </connections>
@@ -1858,6 +1874,147 @@
             </objects>
             <point key="canvasLocation" x="1844" y="1697"/>
         </scene>
+        <!--手势查询结果-->
+        <scene sceneID="F4N-kg-ztd">
+            <objects>
+                <tableViewController id="nbi-vx-RoW" userLabel="手势查询结果" customClass="DrawSearchDetailTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sTd-Mq-91a">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <toolbar key="tableFooterView" hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Efo-yb-KnT">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <items>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="qUB-5B-UWK"/>
+                                <barButtonItem tag="5001" enabled="NO" title="上一页" id="Roj-LF-dgr">
+                                    <connections>
+                                        <action selector="toolbarAction:" destination="nbi-vx-RoW" id="KtN-Kf-ZUg"/>
+                                    </connections>
+                                </barButtonItem>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="fm9-G9-nJE"/>
+                                <barButtonItem tag="5002" title="第1页／共10页" id="nA6-3I-3db"/>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="biW-yN-1mM"/>
+                                <barButtonItem tag="5003" title="下一页" id="jLk-6g-J5a">
+                                    <connections>
+                                        <action selector="toolbarAction:" destination="nbi-vx-RoW" id="T0D-hW-AJu"/>
+                                    </connections>
+                                </barButtonItem>
+                                <barButtonItem style="plain" systemItem="flexibleSpace" id="vwz-8W-8R9"/>
+                            </items>
+                        </toolbar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wa5-bP-u73">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wa5-bP-u73" id="inA-Vx-tNb">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nbi-vx-RoW" id="k8C-Fz-Wob"/>
+                            <outlet property="delegate" destination="nbi-vx-RoW" id="9Fs-gW-dLy"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="手势查询结果" id="ELG-Zu-gTc">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="bQA-yT-z4B">
+                            <connections>
+                                <action selector="doBack:" destination="nbi-vx-RoW" id="4ry-BE-r7N"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="添加到地图" id="XKY-Tq-jpA">
+                            <connections>
+                                <action selector="showInMap:" destination="nbi-vx-RoW" id="ss8-hu-4ww"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="countItem" destination="nA6-3I-3db" id="gw1-g0-f0T"/>
+                        <outlet property="nextItem" destination="jLk-6g-J5a" id="fwm-Ys-lyC"/>
+                        <outlet property="preItem" destination="Roj-LF-dgr" id="Hqb-Uu-aSh"/>
+                        <outlet property="showMapItem" destination="XKY-Tq-jpA" id="xQ5-Bu-xN9"/>
+                        <outlet property="toolBar" destination="Efo-yb-KnT" id="xFW-7K-rVt"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BWe-WW-ftw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2616" y="984"/>
+        </scene>
+        <!--专题结果详情-->
+        <scene sceneID="7le-zf-uS4">
+            <objects>
+                <tableViewController storyboardIdentifier="NBSearchCatalogDetailTableViewController" id="U9Z-3t-Shm" userLabel="专题结果详情" customClass="NBSearchCatalogDetailTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2Oe-IP-bn5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QAI-Ic-iqE">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAI-Ic-iqE" id="Htf-F4-1YJ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="U9Z-3t-Shm" id="pmu-Kx-TfR"/>
+                            <outlet property="delegate" destination="U9Z-3t-Shm" id="PwB-Qw-y23"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uga-Zg-jMc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2556" y="1680"/>
+        </scene>
+        <!--可见图层管理-->
+        <scene sceneID="MHw-Ib-Zfg">
+            <objects>
+                <tableViewController title="可视图层管理" id="cEY-4R-qng" userLabel="可见图层管理" customClass="LayersManagerTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mB6-Lq-r4X">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="43z-XZ-C0u">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="43z-XZ-C0u" id="zky-Yh-rnw">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cEY-4R-qng" id="rlO-YW-Lv7"/>
+                            <outlet property="delegate" destination="cEY-4R-qng" id="MfT-Zm-rlm"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="可视图层管理" id="RoW-et-7jo">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="eqr-G6-B6I">
+                            <connections>
+                                <action selector="doBack:" destination="cEY-4R-qng" id="jeP-E0-f1r"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J1X-Rf-kNW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3168" y="2896"/>
+        </scene>
+        <!--可见图层管理Nav-->
+        <scene sceneID="rp0-5g-hj2">
+            <objects>
+                <navigationController storyboardIdentifier="LayersManagerTableViewController" title="可视图层管理" id="zM3-Lu-Gqf" userLabel="可见图层管理Nav" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="x30-nA-hCj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cEY-4R-qng" kind="relationship" relationship="rootViewController" id="y2o-I3-Bwg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GLS-br-jHU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2371" y="2908"/>
+        </scene>
         <!--全文检索Navigation-->
         <scene sceneID="QID-f6-7mF">
             <objects>
@@ -1871,6 +2028,45 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4f8-AE-ufp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="1jg-tf-gDA">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="uYe-el-daX"/>
+                        <barButtonItem tag="5001" enabled="NO" title="上一页" id="6h4-XQ-eqM"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="6IE-h4-fn7"/>
+                        <barButtonItem tag="5002" title="第1页／共10页" id="NVF-R0-pZW"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="iLB-2d-7X0"/>
+                        <barButtonItem tag="5003" title="下一页" id="ktJ-pp-uIz"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="vg0-lm-L5A"/>
+                    </items>
+                </toolbar>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="3et-j7-OtS">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3cE-rM-X7h"/>
+                        <barButtonItem tag="5001" enabled="NO" title="上一页" id="BuA-b0-c3r"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Mnp-OC-XTV"/>
+                        <barButtonItem tag="5002" title="第1页／共10页" id="7Pm-RX-O0M"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="iIE-3N-Uf9"/>
+                        <barButtonItem tag="5003" title="下一页" id="pMj-Dr-zkb"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="mzA-2g-RDB"/>
+                    </items>
+                </toolbar>
+                <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="jiU-KO-a8U">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="sRH-gD-BlX"/>
+                        <barButtonItem tag="5001" enabled="NO" title="上一页" id="Ajw-FT-Gs6"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Xys-rE-V32"/>
+                        <barButtonItem tag="5002" title="第1页／共10页" id="qH9-s9-AzX"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="atU-ql-pbW"/>
+                        <barButtonItem tag="5003" title="下一页" id="E7o-us-OJZ"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="oKC-Ja-grN"/>
+                    </items>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="1135" y="792"/>
         </scene>

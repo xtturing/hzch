@@ -108,6 +108,9 @@
 		415F5E7E1BCAB08C009C0AAA /* mapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415F5E7D1BCAB08C009C0AAA /* mapViewController.m */; };
 		4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525D1BA92A33002DB58D /* libxml2.2.dylib */; };
 		416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4162525F1BA92BFC002DB58D /* ArcGIS.framework */; };
+		41750E1E1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E1D1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m */; };
+		41750E211BD2978500A99384 /* LayersManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E201BD2978500A99384 /* LayersManagerTableViewController.m */; };
+		41750E241BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E231BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m */; };
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
 		417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC3671BA9C69E00FA4394 /* ViewController.m */; };
 		41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B9534C1BB598E200FE6F35 /* CanvasView.m */; };
@@ -305,6 +308,12 @@
 		415F5E7D1BCAB08C009C0AAA /* mapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mapViewController.m; sourceTree = "<group>"; };
 		4162525D1BA92A33002DB58D /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		4162525F1BA92BFC002DB58D /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcGIS.framework; sourceTree = "<group>"; };
+		41750E1C1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearchCatalogDetailTableViewController.h; sourceTree = "<group>"; };
+		41750E1D1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSearchCatalogDetailTableViewController.m; sourceTree = "<group>"; };
+		41750E1F1BD2978500A99384 /* LayersManagerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayersManagerTableViewController.h; sourceTree = "<group>"; };
+		41750E201BD2978500A99384 /* LayersManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayersManagerTableViewController.m; sourceTree = "<group>"; };
+		41750E221BD2ACAF00A99384 /* DrawSearchDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSearchDetailTableViewController.h; sourceTree = "<group>"; };
+		41750E231BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSearchDetailTableViewController.m; sourceTree = "<group>"; };
 		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		417DC3661BA9C69E00FA4394 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		417DC3671BA9C69E00FA4394 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -511,6 +520,10 @@
 				413470061BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m */,
 				413CD51A1BC2BE480069EC23 /* NBSearchCatalog.h */,
 				413CD51B1BC2BE480069EC23 /* NBSearchCatalog.m */,
+				41750E1C1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.h */,
+				41750E1D1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m */,
+				41750E221BD2ACAF00A99384 /* DrawSearchDetailTableViewController.h */,
+				41750E231BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -701,6 +714,8 @@
 				41E425E41BA86B26009C0581 /* esriView.h */,
 				41E425E51BA86B26009C0581 /* esriView.m */,
 				41E425E61BA86B26009C0581 /* esriView.xib */,
+				41750E1F1BD2978500A99384 /* LayersManagerTableViewController.h */,
+				41750E201BD2978500A99384 /* LayersManagerTableViewController.m */,
 			);
 			name = map;
 			sourceTree = "<group>";
@@ -911,6 +926,7 @@
 				412A15301BC69318006E87A0 /* DistancePickerView.m in Sources */,
 				412A15601BC6AFF7006E87A0 /* GMLParser.m in Sources */,
 				415A61351BADB4C9001FA3FB /* RATreeNodeInfo.m in Sources */,
+				41750E211BD2978500A99384 /* LayersManagerTableViewController.m in Sources */,
 				412A155F1BC6AFF7006E87A0 /* WFS.m in Sources */,
 				413D7E211BAF068C00D972DB /* DownloadItemEntity.m in Sources */,
 				413D7E221BAF068C00D972DB /* DownloadManager.m in Sources */,
@@ -953,6 +969,7 @@
 				413D7E201BAF068C00D972DB /* DownloadItem.m in Sources */,
 				415A61321BADB4C9001FA3FB /* RATreeView+UIScrollView.m in Sources */,
 				415F5E7E1BCAB08C009C0AAA /* mapViewController.m in Sources */,
+				41750E241BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m in Sources */,
 				413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */,
 				413D7E241BAF068C00D972DB /* DwonloadModel.xcdatamodel in Sources */,
 				4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */,
@@ -960,6 +977,7 @@
 				415A61341BADB4C9001FA3FB /* RATreeNodeCollectionController.m in Sources */,
 				413D7E0B1BAF033000D972DB /* GTMBase64.m in Sources */,
 				41E425E31BA86AAC009C0581 /* TianDiTuData.m in Sources */,
+				41750E1E1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m in Sources */,
 				413CD51C1BC2BE480069EC23 /* NBSearchCatalog.m in Sources */,
 				412A152C1BC69318006E87A0 /* ActionSheetCustomPicker.m in Sources */,
 				4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */,
