@@ -16,6 +16,7 @@
     int page;
     int pageSize;
     int allCount;
+    NSInteger tableID;
 }
 
 @end
@@ -92,7 +93,7 @@
 
 - (void)didGetTableIDFailed{
     [SVProgressHUD dismiss];
-    ALERT(@"没有可以查询的图层");
+    ALERT(@"没有可以查询的图层或图层数大于1");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -101,6 +102,7 @@
     [SVProgressHUD dismiss];
     if([[searchDic objectForKey:@"results"] count] > 0){
         self.showMapItem.enabled = YES;
+        tableID = [[searchDic objectForKey:@"tableid"] integerValue];
         allCount = [[searchDic objectForKey:@"totalCount"] intValue];
         allCount = ceil(allCount / (pageSize*1.000));
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
@@ -152,6 +154,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
     mapViewController.catalog = catalog;
+    mapViewController.tableID = tableID;
     [self.navigationController pushViewController:mapViewController animated:YES];
 }
 

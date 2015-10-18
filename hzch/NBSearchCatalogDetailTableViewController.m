@@ -7,6 +7,7 @@
 //
 
 #import "NBSearchCatalogDetailTableViewController.h"
+#import "NBSearchImageViewController.h"
 
 @interface NBSearchCatalogDetailTableViewController ()
 
@@ -57,4 +58,22 @@
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *key = [self.catalog.catalogDic.allKeys objectAtIndex:indexPath.row];
+    NSString *value = [self.catalog.catalogDic objectForKey:key];
+    if([key isEqualToString:@"image"] && value.length > 0){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        NBSearchImageViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchImageViewController"];
+        mapViewController.catalogID = self.tableID;
+        mapViewController.imageUrl = value;
+        mapViewController.titleName = self.catalog.name;
+        [self.navigationController pushViewController:mapViewController animated:YES];
+    }
+    if([key isEqualToString:@"video"]){
+        
+    }
+    
+}
+
 @end

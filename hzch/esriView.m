@@ -105,24 +105,22 @@
     NSString *wmtsID = [info.userInfo objectForKey:@"wmtsID"];
     NSString *name = [info.userInfo objectForKey:@"name"];
     [self removeAllLayer];
-    if([MapUtil hasLayerName:wmtsname mapView:self.mapView]){
-        [self.mapView removeMapLayerWithName:wmtsname];
-        [[dataHttpManager getInstance].resourceLayers removeObjectForKey:wmtsname];
-        [[dataHttpManager getInstance].namelayers removeObjectForKey:wmtsID];
+    if([MapUtil hasLayerName:wmtsID mapView:self.mapView]){
+        [self.mapView removeMapLayerWithName:wmtsID];
+        [[dataHttpManager getInstance].resourceLayers removeObjectForKey:wmtsID];
     }else{
-        TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
-        [self.mapView addMapLayer:layer withName:wmtsname];
-        [[dataHttpManager getInstance].resourceLayers setObject:wmtsurl forKey:wmtsname];
-        [[dataHttpManager getInstance].namelayers setObject:name forKey:wmtsID];
+        TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsID];
+        [self.mapView addMapLayer:layer withName:wmtsID];
+        [[dataHttpManager getInstance].resourceLayers setObject:@[wmtsurl,wmtsname,name] forKey:wmtsID];
     }
 }
 
 - (void)addAllWmtsLayers{
     for(NSInteger i = 0; i<[dataHttpManager getInstance].resourceLayers.count ; i++){
-        NSString *wmtsname = [[[dataHttpManager getInstance].resourceLayers allKeys] objectAtIndex:i];
-        NSString *wmtsurl = [[dataHttpManager getInstance].resourceLayers objectForKey:wmtsname];
-        TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsname];
-        [self.mapView addMapLayer:layer withName:wmtsname];
+        NSString *wmtsid = [[[dataHttpManager getInstance].resourceLayers allKeys] objectAtIndex:i];
+        NSString *wmtsurl = [[dataHttpManager getInstance].resourceLayers objectForKey:wmtsid];
+        TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsid];
+        [self.mapView addMapLayer:layer withName:wmtsid];
     }
     if([dataHttpManager getInstance].drawGhLayer){
         [self.mapView addMapLayer:[dataHttpManager getInstance].drawGhLayer];

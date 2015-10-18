@@ -155,7 +155,7 @@
     [self.esriView deleteMap];
 }
 - (IBAction)layerMap:(id)sender{
-    if([dataHttpManager getInstance].namelayers.count > 0){
+    if([dataHttpManager getInstance].resourceLayers.count > 0){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"LayersManagerTableViewController"] animated:YES completion:^{
             

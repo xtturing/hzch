@@ -54,7 +54,6 @@ static dataHttpManager * instance=nil;
         [self.drawDB createTable];
         
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
-        self.namelayers = [[NSMutableDictionary alloc] initWithCapacity:0];
     }
     
     return self;
@@ -173,10 +172,10 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 - (void)letGetSearchCatalog:(NSString *)searchText page:(int)page pageSize:(int)size{
-    if(self.namelayers && self.namelayers.allKeys.count > 0){
+    if(self.resourceLayers && self.resourceLayers.allKeys.count == 1){
         NSString *tableIds = @"";
-        for(NSString *tableId in self.namelayers.allKeys){
-            tableIds = [NSString stringWithFormat:@"%@%@%@",tableIds,tableId,@"%2C"];
+        for(NSString *tableId in self.resourceLayers.allKeys){
+            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
         }
         if(tableIds.length > 0){
             NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
@@ -212,10 +211,10 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size{
-    if(self.namelayers.allKeys.count > 0){
+    if(self.resourceLayers && self.resourceLayers.allKeys.count == 1){
         NSString *tableIds = @"";
-        for(NSString *tableId in self.namelayers.allKeys){
-            tableIds = [NSString stringWithFormat:@"%@%@%@",tableIds,tableId,@"%2C"];
+        for(NSString *tableId in self.resourceLayers.allKeys){
+            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
         }
         if(tableIds.length > 0){
             NSString *baseUrl =[NSString  stringWithFormat:HTTP_DRAW_SEARCH,page,size,tableIds,minx,maxx,miny,maxy];

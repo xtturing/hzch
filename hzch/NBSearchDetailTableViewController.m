@@ -100,7 +100,7 @@
 
 - (void)didGetTableIDFailed{
     [SVProgressHUD dismiss];
-    ALERT(@"没有可以查询的图层");
+    ALERT(@"没有可以查询的图层或图层数大于1");
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)didGetSearch:(NSMutableDictionary *)searchDic{

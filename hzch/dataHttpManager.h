@@ -79,7 +79,6 @@ typedef enum {
 @property (nonatomic,assign) id<dataHttpDelegate> delegate;
 @property (nonatomic,strong) DBDraws *drawDB;
 @property (nonatomic,strong) NSMutableDictionary *resourceLayers;
-@property (nonatomic,strong) NSMutableDictionary *namelayers;
 @property (nonatomic,strong) NSArray *drawPoints;
 @property (nonatomic,strong)AGSGraphicsLayer *drawGhLayer;
 +(dataHttpManager*)getInstance;

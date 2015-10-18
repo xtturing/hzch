@@ -40,13 +40,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[dataHttpManager getInstance].namelayers.allKeys count];
+    return [[dataHttpManager getInstance].resourceLayers.allKeys count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *key = [[dataHttpManager getInstance].namelayers.allKeys  objectAtIndex:indexPath.row];
-    NSString *title = [[dataHttpManager getInstance].namelayers objectForKey:key];
-    
+    NSString *key = [[dataHttpManager getInstance].resourceLayers.allKeys  objectAtIndex:indexPath.row];
+    NSArray *array = [[dataHttpManager getInstance].resourceLayers objectForKey:key];
+    NSString *title = [array objectAtIndex:2];
     static NSString *FirstLevelCell = @"NBLayer";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                              FirstLevelCell];
@@ -76,15 +76,16 @@
 }
 
 - (void)addlayerIndex:(NSInteger)index{
-    NSString *wmtsname = [[dataHttpManager getInstance].resourceLayers.allKeys objectAtIndex:index];
-    NSString *wmtsurl = [[dataHttpManager getInstance].resourceLayers objectForKey:wmtsname];
-    NSString *wmtsID = [[dataHttpManager getInstance].namelayers.allKeys  objectAtIndex:index];
-    NSString *name = [[dataHttpManager getInstance].namelayers objectForKey:wmtsID];
+    NSString *wmtsid = [[dataHttpManager getInstance].resourceLayers.allKeys objectAtIndex:index];
+    NSArray *array = [[dataHttpManager getInstance].resourceLayers objectForKey:wmtsid];
+    NSString *wmtsurl = [array objectAtIndex:0];
+    NSString *wmtsname = [array objectAtIndex:1];
+    NSString *name = [array objectAtIndex:2];
     UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     UIButton *btn = (UIButton *)cell.accessoryView;
     [btn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
     ALERT(@"已从地图移除");
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,@"wmtsID":wmtsID,@"name":name}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,@"wmtsID":wmtsid,@"name":name}];
     [self.tableView reloadData];
     
 }

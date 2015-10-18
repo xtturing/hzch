@@ -11,5 +11,5 @@
 @interface NBSearchCatalogDetailTableViewController : UITableViewController
 
 @property (nonatomic,strong) NBSearchCatalog *catalog;
-
+@property (nonatomic,assign) NSInteger tableID;
 @end

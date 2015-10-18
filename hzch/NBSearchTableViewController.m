@@ -56,7 +56,7 @@
     NSArray *array = nil;
     if(_searchType == 0){
        array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_KEY_WORD];
-       self.searchBar.placeholder = @"请输入地名地址，行政区划，兴趣点等关键字";
+       self.searchBar.placeholder = @"请输入地名地址，行政区划等关键字";
     }
     if(_searchType == 1){
         array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_CATALOG];
@@ -64,7 +64,7 @@
     }
     if(_searchType == 2){
         array = [[NSUserDefaults standardUserDefaults] objectForKey:SEARCH_DOWNLOAD];
-        self.searchBar.placeholder = @"请输入目录资源关键字";
+        self.searchBar.placeholder = @"请输入离线数据关键字";
     }
     if(array){
         self.keywordList = [NSMutableArray arrayWithArray:array];
