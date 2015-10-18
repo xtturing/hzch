@@ -62,6 +62,7 @@
     NSString *wmsurl = nil;
     NSString *wmtsurl = nil;
     NSString *wmtsname = nil;
+    NSString *wmtsID = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:indexPath.row];
         title = depart.NAME;
@@ -69,6 +70,7 @@
         wmsurl = depart.WMS;
         wmtsurl = depart.WMTS;
         wmtsname = depart.CCODE;
+        wmtsID = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
     }else{
         NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
@@ -76,6 +78,7 @@
         wmsurl = gov.WMS;
         wmtsurl = gov.WMTS;
         wmtsname = gov.CCODE;
+        wmtsID = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -87,7 +90,7 @@
     }
     if(ctype == 4 && (wmsurl.length > 0 || wmsurl.length > 0)){
         UIButton *eyeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-        if([self hasInMapLayerName:wmtsname]){
+        if([self hasInMapLayerName:wmtsID]){
             [eyeButton setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
         }else{
             [eyeButton setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
@@ -152,6 +155,7 @@
         ALERT(@"已添加到地图");
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,@"wmtsID":wmtsID,@"name":name}];
+    [self.tableView reloadData];
 
 }
 - (void)didGetFailed{

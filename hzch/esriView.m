@@ -109,6 +109,19 @@
         [self.mapView removeMapLayerWithName:wmtsID];
         [[dataHttpManager getInstance].resourceLayers removeObjectForKey:wmtsID];
     }else{
+         NSInteger type = [[[NSUserDefaults standardUserDefaults] objectForKey:@"SHOWRESOURCETYPE"] integerValue];
+        if(type == 0){
+            if([dataHttpManager getInstance].resourceLayers.count > 0){
+                NSArray *array = [NSArray arrayWithArray:[dataHttpManager getInstance].resourceLayers.allKeys];
+                for(NSString *key in array){
+                    if([MapUtil hasLayerName:key mapView:self.mapView]){
+                        [self.mapView removeMapLayerWithName:key];
+                        [[dataHttpManager getInstance].resourceLayers removeObjectForKey:key];
+                    }
+                }
+                
+            }
+        }
         TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsID];
         [self.mapView addMapLayer:layer withName:wmtsID];
         [[dataHttpManager getInstance].resourceLayers setObject:@[wmtsurl,wmtsname,name] forKey:wmtsID];

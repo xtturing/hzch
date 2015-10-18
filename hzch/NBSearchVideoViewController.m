@@ -7,15 +7,36 @@
 //
 
 #import "NBSearchVideoViewController.h"
-
+#import <MediaPlayer/MediaPlayer.h>  
+#define HTTP_IMAGE  @"http://ditu.zj.cn/MEDIA/%ld/VIDEO/%@"
 @interface NBSearchVideoViewController ()
-
 @end
 
 @implementation NBSearchVideoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.backBarButtonItem.title = @"返回";
+    self.title = self.titleName;
+    NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    kCFAllocatorDefault, /* allocator */
+                                                                                                    (CFStringRef)self.imageUrl,
+                                                                                                    NULL, /* charactersToLeaveUnescaped */
+                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    kCFStringEncodingUTF8));
+    NSString *url = [NSString stringWithFormat:HTTP_IMAGE,(long)self.catalogID,escaped_value];
+    NSLog(@"video url %@", url);
+    MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:url]];
+    // add to view
+    [self.view addSubview:playerViewController.view];
+    // play movie
+    MPMoviePlayerController *player = [playerViewController moviePlayer];
+    player.controlStyle = MPMovieControlStyleNone;
+    player.shouldAutoplay = YES;
+    player.repeatMode = MPMovieRepeatModeOne;
+    [player setFullscreen:YES animated:YES];
+    player.scalingMode = MPMovieScalingModeAspectFit;
+    [player play];
     // Do any additional setup after loading the view.
 }
 
@@ -24,14 +45,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

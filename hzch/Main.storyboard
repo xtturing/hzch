@@ -894,7 +894,7 @@
         <!--资源显示方式-->
         <scene sceneID="2Sq-cz-2Lr">
             <objects>
-                <tableViewController title="资源显示方式" id="c2T-Hh-aDg" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ShowResourceTypeTableViewController" title="资源显示方式" id="c2T-Hh-aDg" customClass="ShowResourceTypeTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="XRp-Bh-JlS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -902,7 +902,7 @@
                         <sections>
                             <tableViewSection id="CeB-Kq-c61">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" id="T0c-3C-xDp">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="T0c-3C-xDp">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T0c-3C-xDp" id="7MK-6a-jaA">
                                             <autoresizingMask key="autoresizingMask"/>

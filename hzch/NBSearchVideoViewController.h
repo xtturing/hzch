@@ -10,4 +10,8 @@
 
 @interface NBSearchVideoViewController : UIViewController
 
+
+@property(nonatomic,strong) NSString *imageUrl;
+@property(nonatomic,assign) NSInteger catalogID;
+@property (nonatomic,strong) NSString *titleName;
 @end

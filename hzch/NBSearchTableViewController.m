@@ -164,7 +164,7 @@
         key = SEARCH_DOWNLOAD;
     }
     [self.keywordList removeAllObjects];
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.tableView reloadData];
 }

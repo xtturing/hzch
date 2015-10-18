@@ -8,6 +8,7 @@
 
 #import "NBSearchCatalogDetailTableViewController.h"
 #import "NBSearchImageViewController.h"
+#import "NBSearchVideoViewController.h"
 
 @interface NBSearchCatalogDetailTableViewController ()
 
@@ -71,7 +72,12 @@
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
     if([key isEqualToString:@"video"]){
-        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        NBSearchVideoViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchVideoViewController"];
+        mapViewController.catalogID = self.tableID;
+        mapViewController.imageUrl = value;
+        mapViewController.titleName = self.catalog.name;
+        [self.navigationController pushViewController:mapViewController animated:YES];
     }
     
 }
