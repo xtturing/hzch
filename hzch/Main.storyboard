@@ -842,18 +842,27 @@
                                             <state key="normal" image="show_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="showDraw:" destination="BzW-It-jls" eventType="touchUpInside" id="Gok-uy-edb"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnP-7c-Jtl">
                                             <rect key="frame" x="560" y="11" width="22" height="22"/>
                                             <state key="normal" image="delete_line_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="deleteDraw:" destination="BzW-It-jls" eventType="touchUpInside" id="2qc-d4-uWS"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6En-tm-PJS">
                                             <rect key="frame" x="520" y="11" width="22" height="22"/>
                                             <state key="normal" image="plotting_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="editDraw:" destination="BzW-It-jls" eventType="touchUpInside" id="Z00-mR-oFm"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

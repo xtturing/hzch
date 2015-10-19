@@ -81,6 +81,7 @@ typedef enum {
 @property (nonatomic,strong) NSMutableDictionary *resourceLayers;
 @property (nonatomic,strong) NSArray *drawPoints;
 @property (nonatomic,strong)AGSGraphicsLayer *drawGhLayer;
+@property (nonatomic,strong) NSMutableArray *drawLayers;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 

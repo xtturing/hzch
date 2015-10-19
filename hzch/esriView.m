@@ -22,6 +22,7 @@
     AGSAreaUnits _areaUnit;
     NSInteger _drawWidth;
     UIColor *_drawColor;
+    NSInteger _drawIndex;
     double minx;
     double miny;
     double maxx;
@@ -65,6 +66,7 @@
             [self changeMap:0];
             self.mapView.layerDelegate = self;
              [self.mapView zoomToEnvelope:[AGSEnvelope envelopeWithXmin:118.02252449 ymin:27.04527654 xmax:123.1561344 ymax:31.18247145 spatialReference:self.mapView.spatialReference] animated:YES];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addDrawLayer:) name:@"ADD_DRAW_LAYER" object:nil];
             [self locationListenner];
         }
         
@@ -325,22 +327,23 @@
 }
 //画图
 -(void)addSketchGhLayer{
-    self.sketchGhLayer= [[AGSGraphicsLayer alloc]init];
-    if([self hasLayer:@"sketchGhLayer"])
+    
+    if(![self hasLayer:@"sketchGhLayer"])
     {
-        [_mapView removeMapLayerWithName:@"sketchGhLayer"];
+        self.sketchGhLayer= [[AGSGraphicsLayer alloc]init];
+        [[dataHttpManager getInstance].drawLayers removeAllObjects];
+        [self.mapView addMapLayer:self.sketchGhLayer withName:@"sketchGhLayer"];
+        
     }
-    [self.mapView addMapLayer:self.sketchGhLayer withName:@"sketchGhLayer"];
 }
 
 - (void)addSketchLayer{
-    self.sketchLayer = [AGSSketchGraphicsLayer graphicsLayer];
-    if([self hasLayer:@"sketchLayer"])
-    {
-        [_mapView removeMapLayerWithName:@"sketchLayer"];
-    }
     
-    [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+    if(![self hasLayer:@"sketchLayer"])
+    {
+        self.sketchLayer = [AGSSketchGraphicsLayer graphicsLayer];
+         [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
+    }
     self.mapView.touchDelegate = self.sketchLayer;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondToGeomChanged:) name:AGSSketchGraphicsLayerGeometryDidChangeNotification object:nil];
 }
@@ -359,6 +362,7 @@
     self.sketchLayer = nil;
     self.sketchGhLayer = nil;
     [dataHttpManager getInstance].drawGhLayer=nil;
+    [[dataHttpManager getInstance].drawLayers removeAllObjects];
     self.canvasView.image = nil;
     [self.canvasView removeFromSuperview];
     [self.coordinates removeAllObjects];
@@ -388,6 +392,7 @@
         _distance = 0;
         _area = 0;
         _drawWidth = 2.0;
+        _drawIndex = 4001;
         _drawColor = [UIColor redColor];
         _distanceUnit = AGSSRUnitKilometer;
         _areaUnit = AGSAreaUnitsSquareKilometers;
@@ -720,12 +725,6 @@
             self.toolLabel.text = @"请在地图上点击画线测量距离";
             self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
-            
-            if([self hasLayer:@"sketchLayer"])
-            {
-                [_mapView removeMapLayerWithName:@"sketchLayer"];
-            }
-            [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
         }
             break;
             
@@ -735,11 +734,6 @@
             self.toolLabel.text = @"请在地图上点击画面测量面积";
             self.sketchLayer.geometry = [[AGSMutablePolygon alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;
-            if([self hasLayer:@"sketchLayer"])
-            {
-                [_mapView removeMapLayerWithName:@"sketchLayer"];
-            }
-            [self.mapView addMapLayer:self.sketchLayer withName:@"sketchLayer"];
         }
             break;
             
@@ -822,7 +816,6 @@
         case 2005:
         {
             [self didSaveDrawing];
-            self.drawTool.hidden = YES;
         }
             break;
         case 2006:
@@ -834,12 +827,6 @@
         case 2007:
         {
             self.drawTool.hidden = YES;
-            [self.sketchLayer clear];
-            [self.sketchLayer.undoManager removeAllActions];
-            if([self hasLayer:@"sketchGhLayer"])
-            {
-                [_mapView removeMapLayerWithName:@"sketchGhLayer"];
-            }
         }
             break;
         default:
@@ -853,24 +840,28 @@
         case 4001:
         {
             _drawColor = [UIColor redColor];
+            _drawIndex = btnItem.tag;
         }
             break;
             
         case 4002:
         {
             _drawColor = [UIColor blueColor];
+            _drawIndex = btnItem.tag;
         }
             break;
             
         case 4003:
         {
             _drawColor = [UIColor greenColor];
+            _drawIndex = btnItem.tag;
         }
             break;
             
         case 4004:
         {
             _drawColor = [UIColor purpleColor];
+            _drawIndex = btnItem.tag;
         }
             break;
         case 4005:
@@ -933,33 +924,121 @@
 
 - (void)didSaveDrawing
 {
-    AGSGeometry* sketchGeometry = [self.sketchLayer.geometry copy];
-    AGSSimpleLineSymbol
-    *outerSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
-    outerSymbol.color
-    = _drawColor;
-    outerSymbol.width = _drawWidth;
-    AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
-    [self.sketchGhLayer addGraphic:graphic];
-    [self.sketchGhLayer refresh];
-    [self saveDrawToDB:graphic];
-    [self.sketchLayer clear];
-    [self.sketchLayer.undoManager removeAllActions];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"标绘名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 70009;
+    UITextField *textfield =  [alert textFieldAtIndex: 0];
+    textfield.placeholder = @"请输入标绘名称";
+    textfield.clearButtonMode = UITextFieldViewModeAlways;
+    [alert show];
 }
 
-- (void)saveDrawToDB:(AGSGraphic *)graphic{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        Draw *draw = [[Draw alloc] init];
-        draw.name = @"haha";
-        draw.createDate = [[NSDate date] timeIntervalSince1970]*1000;
-//        NSMutableData *data = [[NSMutableData alloc] init];
-//        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-//        [archiver encodeObject:graphic.geometry forKey:@"Root"];
-//        [archiver finishEncoding];
-//        draw.sourceData = data;
-        [[dataHttpManager getInstance].drawDB insertDraw:draw];
-    });
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 70009)
+    {
+        if (buttonIndex == 1)
+        {
+            UITextField *textfield =  [alertView textFieldAtIndex: 0];
+            if(textfield.text.length > 1){
+                AGSGeometry* sketchGeometry = [self.sketchLayer.geometry copy];
+                AGSSimpleLineSymbol
+                *outerSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+                outerSymbol.color
+                = _drawColor;
+                outerSymbol.width = _drawWidth;
+                AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
+                [self.sketchGhLayer addGraphic:graphic];
+                [self.sketchGhLayer refresh];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    Draw *draw = [[Draw alloc] init];
+                    draw.name = textfield.text;
+                    draw.createDate = [[NSDate date] timeIntervalSince1970]*1000;
+                    NSDictionary *dic = @{@"color":@(_drawIndex),@"width":@(_drawWidth),@"geometry":[[sketchGeometry encodeToJSON] ags_JSONRepresentation]};
+                    NSError *error;
+                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+                                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                                         error:&error];
+                    draw.sourceData = jsonData;
+                    [[dataHttpManager getInstance].drawDB insertDraw:draw];
+                    [[dataHttpManager getInstance].drawLayers addObject:@(draw.createDate)];
+                });
+                [self.sketchLayer clear];
+                [self.sketchLayer.undoManager removeAllActions];
+            }
+            
+        }
+    }
+    return;
 }
+
+- (void)addDrawLayer:(NSNotification *)info{
+    [self addSketchGhLayer];
+    Draw *draw = [info.userInfo objectForKey:@"draw"];
+    if(![self hasShowDraw:draw.createDate]){
+        [[dataHttpManager getInstance].drawLayers addObject:@(draw.createDate)];
+        ALERT(@"标绘已添加到地图");
+    }else{
+        [[dataHttpManager getInstance].drawLayers removeObject:@(draw.createDate)];
+        ALERT(@"标绘已从地图移除");
+    }
+    NSArray *allDraws = [[dataHttpManager getInstance].drawDB getAllDraws];
+    for(NSNumber *createDate in [dataHttpManager getInstance].drawLayers){
+        for(Draw *newdraw in allDraws){
+            if(newdraw.createDate == [createDate longValue]){
+                NSDictionary *dic = [newdraw.sourceData ags_JSONValue];
+                AGSGeometry* sketchGeometry = AGSGeometryWithJSON([[dic objectForKey:@"geometry"] ags_JSONValue]);
+                AGSSimpleLineSymbol
+                *outerSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+                switch ([[dic objectForKey:@"color"] integerValue]) {
+                    case 4001:
+                    {
+                        outerSymbol.color = [UIColor redColor];
+                    }
+                        break;
+                        
+                    case 4002:
+                    {
+                        outerSymbol.color = [UIColor blueColor];
+                    }
+                        break;
+                        
+                    case 4003:
+                    {
+                        outerSymbol.color = [UIColor greenColor];
+                    }
+                        break;
+                        
+                    case 4004:
+                    {
+                        outerSymbol.color = [UIColor purpleColor];
+                    }
+                        break;
+                    default:
+                        outerSymbol.color = [UIColor redColor];
+                        break;
+                }
+                outerSymbol.width = [[dic objectForKey:@"width"] floatValue];
+                AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
+                
+                [self.sketchGhLayer addGraphic:graphic];
+                [self.sketchGhLayer refresh];
+            }
+        }
+    }
+    
+}
+
+- (BOOL)hasShowDraw:(long)cellTag{
+    for (id tag in [dataHttpManager getInstance].drawLayers) {
+        if(cellTag == [tag longValue]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 - (BOOL)hasLayer:(NSString *)name{
     for(AGSLayer *layer in self.mapView.mapLayers){

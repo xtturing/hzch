@@ -23,6 +23,7 @@
 -(void)insertDraw:(Draw *)theDraw;
 -(NSMutableArray *)getAllDraws;
 -(void)deleteDraw:(long)createDate;
+- (void)updateDraw:(Draw *)theDraw;
 -(int)getCount;
 
 

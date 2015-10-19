@@ -92,6 +92,22 @@
     }
 }
 
+- (void)updateDraw:(Draw *)theDraw{
+    if(theDraw == NULL)
+        return;
+    NSString *update = @"update DRAWS set NAME = ? WHERE CREATE_DATE =";
+    update = [update stringByAppendingString:@"\""];
+    update = [update stringByAppendingString:[NSString stringWithFormat:@"%ld",theDraw.createDate]];
+    update = [update stringByAppendingString:@"\""];
+    BOOL bSucceed = [database executeUpdate:update,
+                     theDraw.name];
+    
+    if (!bSucceed)
+    {
+        NSLog(@"DBSchedule updateRecord Faild to update table. Error:%@",[database lastErrorMessage]);
+    }
+}
+
 -(NSMutableArray *)getAllDraws{
     NSMutableArray * recordList = [NSMutableArray arrayWithCapacity:1];
     

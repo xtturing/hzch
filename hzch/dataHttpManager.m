@@ -54,6 +54,7 @@ static dataHttpManager * instance=nil;
         [self.drawDB createTable];
         
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
+        self.drawLayers = [NSMutableArray arrayWithCapacity:0];
     }
     
     return self;

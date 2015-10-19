@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Draw.h"
 @interface myDrawTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) IBOutlet UIButton *showBtn;
 @property (nonatomic,strong) IBOutlet UIButton *editBtn;
 @property (nonatomic,strong) IBOutlet UIButton *deleteBtn;
 @property (nonatomic,strong) IBOutlet UILabel *titleLab;
+@property (nonatomic,strong) Draw *draw;
+- (IBAction)showDraw:(id)sender;
+- (IBAction)editDraw:(id)sender;
+- (IBAction)deleteDraw:(id)sender;
+
+
 
 @end
