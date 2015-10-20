@@ -7,15 +7,21 @@
 //
 
 #import "NBDownLoadManagerViewController.h"
-#import "DownloadItem.h"
+#import "dataHttpManager.h"
+#import "NBTpk.h"
+#import "NBSpatialData.h"
+#import "SVProgressHUD.h"
+#import "Reachability.h"
 #import "DownloadManager.h"
-#import "Utility.h"
 #import "DowningCell.h"
-
-@interface NBDownLoadManagerViewController (){
-    NSMutableDictionary *_downlist;
+#import "Utility.h"
+#import "myDrawTableViewCell.h"
+@interface NBDownLoadManagerViewController ()<dataHttpDelegate>{
+   
 }
-
+@property (nonatomic ,strong) NSMutableDictionary *downlist;
+@property (nonatomic ,strong) NSMutableDictionary *tpkList;
+@property (nonatomic ,strong) NSMutableDictionary *dataList;
 @end
 
 @implementation NBDownLoadManagerViewController
@@ -32,28 +38,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"正在下载",@"已完成", nil]];
-    segment.frame = CGRectMake(0, 7, 140, 30);
-    segment.segmentedControlStyle = UISegmentedControlStyleBar;
-    if(_segIndex){
-        segment.selectedSegmentIndex = _segIndex;
-    }else{
-        
-        segment.selectedSegmentIndex = 0;
-    }
-    if(segment.selectedSegmentIndex == 0){
-        _downlist = [[DownloadManager sharedInstance]getDownloadingTask];
-    }else{
-        _downlist = [[DownloadManager sharedInstance]getFinishedTask];
-    }
-    [segment addTarget:self action:@selector(segmentAction:)forControlEvents:UIControlEventValueChanged];
-    
-    self.navigationItem.titleView = segment;
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadNotification:) name:kDownloadManagerNotification object:nil];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letLoadTPK];
+    });
+    [_segment addTarget:self action:@selector(segmentAction:)forControlEvents:UIControlEventValueChanged];
     // Do any additional setup after loading the view from its nib.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate =  nil;
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -63,121 +62,97 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)doBack:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
 
 -(void)segmentAction:(UISegmentedControl *)Seg{
-    if(Seg.selectedSegmentIndex == 0){
-        _downlist = [[DownloadManager sharedInstance]getDownloadingTask];
-    }else{
-         _downlist = [[DownloadManager sharedInstance]getFinishedTask];
-    }
     [self.table reloadData];
 }
--(void)updateCell:(DowningCell *)cell withDownItem:(DownloadItem *)downItem
-{
-    
-    DownloadItem *findItem=[_tpkList objectForKey:[downItem.url description]];
-    if(findItem.tpk.content.length > 0 ){
-        cell.lblTitle.text=[findItem.tpk.content description];
-//        cell.lblPercent.text=[NSString stringWithFormat:@"大小:%0.2fMB  进度:%0.2f%@",[findItem.tpk.size doubleValue]/(1024*1024),downItem.downloadPercent*100,@"%"];
-        [cell.btnOperate setTitle:downItem.downloadStateDescription forState:UIControlStateNormal];
-    }else{
-        cell.lblTitle.text=[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1];
-        cell.lblPercent.text=[NSString stringWithFormat:@"大小:%0.2fMB  进度:%0.2f%@",downItem.totalLength/(1024*1024),downItem.downloadPercent*100,@"%"];
-        [cell.btnOperate setTitle:downItem.downloadStateDescription forState:UIControlStateNormal];
-    }
-    
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
+    ALERT(@"请求失败，请确认网络连接");
 }
--(void)updateUIByDownloadItem:(DownloadItem *)downItem
-{
-    DownloadItem *findItem=[_downlist objectForKey:[downItem.url description]];
-    
+
+-(void)didLoadTPK:(NSMutableDictionary *)Dic{
+    [SVProgressHUD dismiss];
+    NSArray *tpks = [Dic objectForKey:@"tpk"];
+    NSArray *datas = [Dic objectForKey:@"data"];
+    self.dataList = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.tpkList = [[NSMutableDictionary alloc] initWithCapacity:0];
+    for(NBTpk *tpk in tpks){
+        DownloadItem *downItem=[[DownloadItem alloc] init];
+        downItem.tpk = tpk;
+        NSURL  *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",tpk.url]];
+        downItem.url=url;
+        DownloadItem *task=[[DownloadManager sharedInstance] getDownloadItemByUrl:[downItem.url description]];
+        downItem.downloadPercent=task.downloadPercent;
+        if(task)
+        {
+            downItem.downloadState=task.downloadState;
+        }
+        else
+        {
+            downItem.downloadState=DownloadNotStart;
+        }
+        [self.tpkList setObject:downItem forKey:[downItem.url description]];
+    }
+    for(NBSpatialData *data in datas){
+        DownloadItem *downItem=[[DownloadItem alloc] init];
+        downItem.data = data;
+        NSURL  *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",data.url]];
+        downItem.url=url;
+        DownloadItem *task=[[DownloadManager sharedInstance] getDownloadItemByUrl:[downItem.url description]];
+        downItem.downloadPercent=task.downloadPercent;
+        if(task)
+        {
+            downItem.downloadState=task.downloadState;
+        }
+        else
+        {
+            downItem.downloadState=DownloadNotStart;
+        }
+        [self.dataList setObject:downItem forKey:[downItem.url description]];
+    }
+    self.downlist = [[DownloadManager sharedInstance]getFinishedTask];
+    [self.table reloadData];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *urlKey = [self.downlist.allKeys objectAtIndex:indexPath.row];
+    DownloadItem *findItem=[_tpkList objectForKey:urlKey];
+    NSString *name = nil;
     if(findItem==nil)
     {
-        return;
+        findItem=[_dataList objectForKey:urlKey];
+        name = findItem.data.note;
+    }else{
+        name = findItem.tpk.content;
     }
-    findItem.downloadStateDescription=downItem.downloadStateDescription;
-    findItem.downloadPercent=downItem.downloadPercent;
-    findItem.downloadState=downItem.downloadState;
-    switch (downItem.downloadState) {
-        case DownloadFinished:
-        {
-            
-        }
-            break;
-        case DownloadFailed:
-        {
-            
-        }
-            break;
-            
-        default:
-            break;
+    static NSString *FirstLevelCell = @"downLoadCell";
+    myDrawTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                 FirstLevelCell];
+    if (cell == nil) {
+        cell = [[myDrawTableViewCell alloc]
+                initWithStyle:UITableViewCellStyleSubtitle
+                reuseIdentifier: FirstLevelCell];
     }
-    
-    
-    NSInteger index=[_downlist.allKeys indexOfObject:[downItem.url description]];
-    DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    [self updateCell:cell withDownItem:downItem];
-}
-
--(void)downloadNotification:(NSNotification *)notif
-{
-    DownloadItem *notifItem=notif.object;
-    //    NSLog(@"%@,%d,%f",notifItem.url,notifItem.downloadState,notifItem.downloadPercent);
-    [self updateUIByDownloadItem:notifItem];
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 66;
-    
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    DownloadItem *downItem = [_downlist.allValues objectAtIndex:indexPath.row];
-
-    NSString *url=[downItem.url description];
-    NSString *name = [downItem.tpk.name description];
-
-    static NSString *cellIdentity=@"DowningCell";
-    DowningCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentity];
-    if(cell==nil)
-    {
-        cell=[[[NSBundle mainBundle]loadNibNamed:@"DowningCell" owner:self options:nil] lastObject];
-        cell.DowningCellOperateClick=^(DowningCell *cell){
-            
-            if([[DownloadManager sharedInstance]isExistInDowningQueue:url])
-            {
-                [[DownloadManager sharedInstance]pauseDownload:url];
-                return;
-            }
-            NSString *desPath=[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:name];
-            [[DownloadManager sharedInstance]startDownload:url withLocalPath:desPath];
-        };
-        cell.DowningCellCancelClick=^(DowningCell *cell)
-        {
-            [[DownloadManager sharedInstance]cancelDownload:url];
-            
-        };
-    }
-    [self updateCell:cell withDownItem:downItem];
-    if([cell.btnOperate.titleLabel.text isEqualToString:@"下载完成"] && [self hasAddLocalLayer:[name stringByDeletingPathExtension]]){
-        [cell.btnOperate setTitle:@"已加载" forState:UIControlStateNormal];
-    }
+    cell.titleLab.text = name;
+    cell.titleLab.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_downlist count];
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.downlist count];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:indexPath];
-    DownloadItem *downItem = [_downlist.allValues objectAtIndex:indexPath.row];
-    if([cell.btnOperate.titleLabel.text isEqualToString:@"下载完成"] && downItem.downloadPercent == 1){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-    }
-    if([cell.btnOperate.titleLabel.text isEqualToString:@"已加载"]){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
-        [self.table reloadData];
-    }
+    
 }
 - (BOOL)hasAddLocalLayer:(NSString *)name{
     if(self.layers == nil || self.layers.count == 0){

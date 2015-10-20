@@ -41,7 +41,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *FirstLevelCell = @"drawCell";
+    static NSString *FirstLevelCell = @"cacheCell";
     myDrawTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                                  FirstLevelCell];
     if (cell == nil) {

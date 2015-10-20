@@ -19,8 +19,8 @@
 
 @interface NBDownLoadViewController ()<dataHttpDelegate>
 
-@property (nonatomic ,strong) NSArray *tpkList;
-@property (nonatomic ,strong) NSArray *dataList;
+@property (nonatomic ,strong) NSMutableDictionary *tpkList;
+@property (nonatomic ,strong) NSMutableDictionary *dataList;
 - (IBAction)doBack:(id)sender;
 @end
 
@@ -66,14 +66,6 @@
     }];
 }
 
-- (void)downloadManager{
-    NBDownLoadManagerViewController *manager = [[NBDownLoadManagerViewController alloc]initWithNibName:@"NBDownLoadManagerViewController" bundle:nil];
-//     manager.tpkList = _tpkList;
-    manager.layers =self.layers;
-    [self.navigationController pushViewController:manager animated:YES];
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -87,38 +79,105 @@
 
 -(void)didLoadTPK:(NSMutableDictionary *)Dic{
     [SVProgressHUD dismiss];
-    self.tpkList = [Dic objectForKey:@"tpk"];
-    self.dataList = [Dic objectForKey:@"data"];
+    NSArray *tpks = [Dic objectForKey:@"tpk"];
+    NSArray *datas = [Dic objectForKey:@"data"];
+    self.dataList = [[NSMutableDictionary alloc] initWithCapacity:0];
+    self.tpkList = [[NSMutableDictionary alloc] initWithCapacity:0];
+    for(NBTpk *tpk in tpks){
+        DownloadItem *downItem=[[DownloadItem alloc] init];
+        downItem.tpk = tpk;
+        NSURL  *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",tpk.url]];
+        downItem.url=url;
+        DownloadItem *task=[[DownloadManager sharedInstance] getDownloadItemByUrl:[downItem.url description]];
+        downItem.downloadPercent=task.downloadPercent;
+        if(task)
+        {
+            downItem.downloadState=task.downloadState;
+        }
+        else
+        {
+            downItem.downloadState=DownloadNotStart;
+        }
+        [self.tpkList setObject:downItem forKey:[downItem.url description]];
+    }
+    for(NBSpatialData *data in datas){
+        DownloadItem *downItem=[[DownloadItem alloc] init];
+        downItem.data = data;
+        NSURL  *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",data.url]];
+        downItem.url=url;
+        DownloadItem *task=[[DownloadManager sharedInstance] getDownloadItemByUrl:[downItem.url description]];
+        downItem.downloadPercent=task.downloadPercent;
+        if(task)
+        {
+            downItem.downloadState=task.downloadState;
+        }
+        else
+        {
+            downItem.downloadState=DownloadNotStart;
+        }
+        [self.dataList setObject:downItem forKey:[downItem.url description]];
+    }
     [self.table reloadData];
+}
+
+-(void)updateCell:(DowningCell *)cell withDownItem:(DownloadItem *)downItem withIndexPath:(NSIndexPath *)indexPath
+{
+    DownloadItem *findItem = nil;
+    if(indexPath.section == 0){
+        findItem=[_tpkList objectForKey:[downItem.url description]];
+        cell.lblTitle.text=[findItem.tpk.content description];
+    }else{
+        findItem=[_dataList objectForKey:[downItem.url description]];
+        cell.lblTitle.text=[findItem.data.note description];
+    }
+    cell.lblPercent.text=[NSString stringWithFormat:@"下载进度:%0.2f%@",downItem.downloadPercent*100,@"%"];
+    [cell.btnOperate setTitle:downItem.downloadStateDescription forState:UIControlStateNormal];
+}
+-(void)updateUIByDownloadItem:(DownloadItem *)downItem
+{
+    DownloadItem *findItem=[_tpkList objectForKey:[downItem.url description]];
+    NSInteger section = 0;
+    NSInteger index= 0;
+    if(findItem==nil)
+    {
+        findItem=[_dataList objectForKey:[downItem.url description]];
+        if(findItem == nil){
+            return;
+        }
+        index=[_dataList.allKeys indexOfObject:[downItem.url description]];
+        section = 1;
+    }else{
+        index=[_tpkList.allKeys indexOfObject:[downItem.url description]];
+    }
+    findItem.downloadStateDescription=downItem.downloadStateDescription;
+    findItem.downloadPercent=downItem.downloadPercent;
+    findItem.downloadState=downItem.downloadState;
+    NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:section];
+    DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:path];
+    [self updateCell:cell withDownItem:downItem withIndexPath:path];
 }
 
 -(void)downloadNotification:(NSNotification *)notif
 {
     DownloadItem *notifItem=notif.object;
-    //    NSLog(@"%@,%d,%f",notifItem.url,notifItem.downloadState,notifItem.downloadPercent);
+    [self updateUIByDownloadItem:notifItem];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 66;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    DownloadItem *downItem = nil;
+    NSString *url= nil;
     NSString *name = nil;
-    NSString *content = nil;
-    NSString *url = nil;
-    NSString *date = nil;
     if(indexPath.section == 0){
-        NBTpk *tpk = [self.tpkList objectAtIndex:indexPath.row];
-        name = tpk.content;
-        content = tpk.news;
-        url = [NSString stringWithFormat:@"http://%@",tpk.url];
-        date = tpk.updatetime;
+        downItem = [_tpkList.allValues objectAtIndex:indexPath.row];
     }else{
-        NBSpatialData *data = [self.dataList objectAtIndex:indexPath.row];
-        name = data.note;
-        content = data.news;
-        url = [NSString stringWithFormat:@"http://%@",data.url];
-        date = data.updatetime;
+        downItem = [_dataList.allValues objectAtIndex:indexPath.row];
     }
+    url=[downItem.url description];
+    NSArray *array = [[downItem.url description] componentsSeparatedByString:@"/"];
+    name = [array objectAtIndex:(array.count-1)];
     static NSString *cellIdentity=@"DowningCell";
     DowningCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentity];
     if(cell==nil)
@@ -131,7 +190,8 @@
                 [[DownloadManager sharedInstance]pauseDownload:url];
                 return;
             }
-            NSString *desPath=[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:name];
+            NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+            NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
             [[DownloadManager sharedInstance]startDownload:url withLocalPath:desPath];
         };
         cell.DowningCellCancelClick=^(DowningCell *cell)
@@ -139,11 +199,10 @@
             [[DownloadManager sharedInstance]cancelDownload:url];
         };
     }
-    cell.lblTitle.text=name;
-    cell.lblPercent.text = content;
-    [cell.btnOperate setTitle:date forState:UIControlStateNormal];
+    [self updateCell:cell withDownItem:downItem withIndexPath:indexPath];
     return cell;
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -156,19 +215,6 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:indexPath];
-//    DownloadItem *downItem = [_tpkList.allValues objectAtIndex:indexPath.row];
-//    if([cell.btnOperate.titleLabel.text isEqualToString:@"下载完成"] && downItem.downloadPercent == 1){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//    }else if([cell.btnOperate.titleLabel.text isEqualToString:@"已加载"]){
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
-//        [self.table reloadData];
-//    }else{
-//        [self downloadManager];
-//    }
-}
 
 - (BOOL)hasAddLocalLayer:(NSString *)name{
     if(self.layers == nil || self.layers.count == 0){

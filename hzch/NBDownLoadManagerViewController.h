@@ -10,7 +10,8 @@
 
 @interface NBDownLoadManagerViewController : UIViewController
 @property (nonatomic, strong) IBOutlet UITableView *table;
-@property (nonatomic, strong) NSMutableDictionary *tpkList;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *segment;
 @property (nonatomic, strong) NSArray *layers;
 @property (nonatomic, assign) int segIndex;
+- (IBAction)doBack:(id)sender;
 @end

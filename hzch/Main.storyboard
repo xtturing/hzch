@@ -643,7 +643,7 @@
         <!--数据展示-->
         <scene sceneID="Wa5-Ev-URS">
             <objects>
-                <viewController storyboardIdentifier="NBDownLoadViewController" title="数据展示" id="hKS-vS-pg7" customClass="NBDownLoadViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NBDownLoadManagerViewController" title="数据展示" id="hKS-vS-pg7" customClass="NBDownLoadManagerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ULh-W5-tXW"/>
                         <viewControllerLayoutGuide type="bottom" id="5Dd-lZ-8iT"/>
@@ -655,6 +655,76 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="1zA-QK-ZJy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="downLoadCell" id="geT-L6-gbS" customClass="myDrawTableViewCell">
+                                        <rect key="frame" x="0.0" y="278" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="geT-L6-gbS" id="EtV-T1-rcw">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kC6-Ct-4qs">
+                                                    <rect key="frame" x="50" y="11" width="190" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="49u-tr-w6F"/>
+                                                        <constraint firstAttribute="width" constant="190" id="Ocd-Se-spR"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQ5-LC-12U">
+                                                    <rect key="frame" x="10" y="11" width="22" height="22"/>
+                                                    <state key="normal" image="show_click">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showDraw:" destination="geT-L6-gbS" eventType="touchUpInside" id="CTN-kd-iVk"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wH7-ui-krv">
+                                                    <rect key="frame" x="560" y="11" width="22" height="22"/>
+                                                    <state key="normal" image="delete_line_click">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteDraw:" destination="geT-L6-gbS" eventType="touchUpInside" id="nDz-rB-HC6"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ssl-iz-Mnl">
+                                                    <rect key="frame" x="520" y="11" width="22" height="22"/>
+                                                    <state key="normal" image="plotting_click">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="editDraw:" destination="geT-L6-gbS" eventType="touchUpInside" id="8bz-9D-uDD"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kC6-Ct-4qs" firstAttribute="top" secondItem="EtV-T1-rcw" secondAttribute="topMargin" constant="3" id="0Jj-V9-fRw"/>
+                                                <constraint firstItem="kC6-Ct-4qs" firstAttribute="leading" secondItem="uQ5-LC-12U" secondAttribute="trailing" constant="18" id="1VG-yO-Iqa"/>
+                                                <constraint firstItem="kC6-Ct-4qs" firstAttribute="leading" secondItem="uQ5-LC-12U" secondAttribute="trailing" constant="18" id="2FU-He-nWB"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="wH7-ui-krv" secondAttribute="bottom" constant="2" id="ADy-VJ-rfb"/>
+                                                <constraint firstItem="uQ5-LC-12U" firstAttribute="top" secondItem="EtV-T1-rcw" secondAttribute="topMargin" constant="3" id="Eag-OS-KpO"/>
+                                                <constraint firstItem="wH7-ui-krv" firstAttribute="top" secondItem="EtV-T1-rcw" secondAttribute="topMargin" constant="3" id="JE0-9l-6Q3"/>
+                                                <constraint firstItem="uQ5-LC-12U" firstAttribute="leading" secondItem="EtV-T1-rcw" secondAttribute="leadingMargin" constant="2" id="LHS-xQ-BWC"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="kC6-Ct-4qs" secondAttribute="bottom" constant="3" id="MxJ-a5-aSm"/>
+                                                <constraint firstItem="wH7-ui-krv" firstAttribute="leading" secondItem="ssl-iz-Mnl" secondAttribute="trailing" constant="18" id="Wao-ge-Bh7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="wH7-ui-krv" secondAttribute="trailing" constant="10" id="YSs-Sn-SZO"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="uQ5-LC-12U" secondAttribute="bottom" constant="2" id="btj-Tq-T5s"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ssl-iz-Mnl" secondAttribute="bottom" constant="2" id="qHk-5h-wYV"/>
+                                                <constraint firstItem="wH7-ui-krv" firstAttribute="leading" secondItem="ssl-iz-Mnl" secondAttribute="trailing" constant="18" id="tL5-dQ-ehF"/>
+                                                <constraint firstItem="ssl-iz-Mnl" firstAttribute="top" secondItem="EtV-T1-rcw" secondAttribute="topMargin" constant="3" id="v6e-1h-5TC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="deleteBtn" destination="wH7-ui-krv" id="XYy-Cw-NQz"/>
+                                            <outlet property="editBtn" destination="ssl-iz-Mnl" id="khf-8q-4OF"/>
+                                            <outlet property="showBtn" destination="uQ5-LC-12U" id="E9I-f9-VbT"/>
+                                            <outlet property="titleLab" destination="kC6-Ct-4qs" id="S75-ch-G07"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="hKS-vS-pg7" id="fpH-rT-BLh"/>
                                     <outlet property="delegate" destination="hKS-vS-pg7" id="2kv-xX-T3f"/>
@@ -663,9 +733,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="5Dd-lZ-8iT" firstAttribute="top" secondItem="1zA-QK-ZJy" secondAttribute="bottom" id="Hys-81-15M"/>
                             <constraint firstItem="1zA-QK-ZJy" firstAttribute="leading" secondItem="yd2-8h-oFi" secondAttribute="leadingMargin" constant="-16" id="NY0-Bj-KzD"/>
                             <constraint firstItem="1zA-QK-ZJy" firstAttribute="top" secondItem="yd2-8h-oFi" secondAttribute="topMargin" id="uJY-Of-cfa"/>
-                            <constraint firstItem="5Dd-lZ-8iT" firstAttribute="top" secondItem="1zA-QK-ZJy" secondAttribute="bottom" id="vNk-hL-dWm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1zA-QK-ZJy" secondAttribute="trailing" constant="-16" id="vbv-Y1-qlX"/>
                         </constraints>
                     </view>
@@ -673,7 +743,7 @@
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="返回" id="NWN-Dk-xbb">
                             <connections>
-                                <action selector="doBack:" destination="hKS-vS-pg7" id="nC0-Ee-u1e"/>
+                                <action selector="doBack:" destination="hKS-vS-pg7" id="Gqx-sn-UhZ"/>
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="XBn-Pt-Ekk">
@@ -686,6 +756,7 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
+                        <outlet property="segment" destination="XBn-Pt-Ekk" id="gcY-LN-07C"/>
                         <outlet property="table" destination="1zA-QK-ZJy" id="D3T-Vu-h4e"/>
                     </connections>
                 </viewController>
@@ -834,7 +905,7 @@
                                                 <constraint firstAttribute="width" constant="190" id="pRd-CO-ZKa"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xg-WM-mN5">
@@ -961,7 +1032,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="drawCell" id="M10-QT-pp6" customClass="myDrawTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cacheCell" id="M10-QT-pp6" customClass="myDrawTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M10-QT-pp6" id="ITz-xR-yia">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -973,7 +1044,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="vUb-86-1eH"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugM-dR-c2m">

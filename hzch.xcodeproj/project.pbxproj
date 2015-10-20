@@ -51,7 +51,6 @@
 		413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE31BAF02CC00D972DB /* DowningCell.m */; };
 		413D7DEC1BAF02CC00D972DB /* DowningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 413D7DE41BAF02CC00D972DB /* DowningCell.xib */; };
 		413D7DED1BAF02CC00D972DB /* NBDownLoadManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */; };
-		413D7DEE1BAF02CC00D972DB /* NBDownLoadManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 413D7DE71BAF02CC00D972DB /* NBDownLoadManagerViewController.xib */; };
 		413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */; };
 		413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E061BAF033000D972DB /* DesEncrypt.m */; };
 		413D7E0B1BAF033000D972DB /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 413D7E081BAF033000D972DB /* GTMBase64.m */; };
@@ -220,7 +219,6 @@
 		413D7DE41BAF02CC00D972DB /* DowningCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DowningCell.xib; sourceTree = "<group>"; };
 		413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDownLoadManagerViewController.m; sourceTree = "<group>"; };
 		413D7DE61BAF02CC00D972DB /* NBDownLoadManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDownLoadManagerViewController.h; sourceTree = "<group>"; };
-		413D7DE71BAF02CC00D972DB /* NBDownLoadManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NBDownLoadManagerViewController.xib; sourceTree = "<group>"; };
 		413D7DE81BAF02CC00D972DB /* NBDownLoadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDownLoadViewController.h; sourceTree = "<group>"; };
 		413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDownLoadViewController.m; sourceTree = "<group>"; };
 		413D7E051BAF033000D972DB /* DesEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesEncrypt.h; sourceTree = "<group>"; };
@@ -582,7 +580,6 @@
 				413D7DE41BAF02CC00D972DB /* DowningCell.xib */,
 				413D7DE51BAF02CC00D972DB /* NBDownLoadManagerViewController.m */,
 				413D7DE61BAF02CC00D972DB /* NBDownLoadManagerViewController.h */,
-				413D7DE71BAF02CC00D972DB /* NBDownLoadManagerViewController.xib */,
 				413D7DE81BAF02CC00D972DB /* NBDownLoadViewController.h */,
 				413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */,
 				412B398C1BB97B1700DD9151 /* NBSpatialData.h */,
@@ -863,7 +860,6 @@
 			files = (
 				41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */,
 				415A61101BADADFD001FA3FB /* RATreeCell.xib in Resources */,
-				413D7DEE1BAF02CC00D972DB /* NBDownLoadManagerViewController.xib in Resources */,
 				417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */,
 				413D7DEC1BAF02CC00D972DB /* DowningCell.xib in Resources */,
 				41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */,

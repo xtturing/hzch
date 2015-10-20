@@ -8,6 +8,7 @@
 
 #import "ASIHTTPRequest.h"
 #import "NBTpk.h"
+#import "NBSpatialData.h"
 typedef enum  {
     DownloadNotStart=0,
     DownloadWait=1,
@@ -22,6 +23,7 @@ typedef enum  {
 
 @interface DownloadItem : ASIHTTPRequest<ASIProgressDelegate,ASIHTTPRequestDelegate>
 @property(nonatomic,retain)NBTpk *tpk;
+@property(nonatomic,retain)NBSpatialData *data;
 @property(nonatomic,assign)DownloadItemState downloadState;
 @property(nonatomic,retain)NSString *downloadStateDescription;
 @property(nonatomic,retain)NSDate *createDate;
