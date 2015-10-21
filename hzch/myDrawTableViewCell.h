@@ -15,6 +15,8 @@
 @property (nonatomic,strong) IBOutlet UIButton *deleteBtn;
 @property (nonatomic,strong) IBOutlet UILabel *titleLab;
 @property (nonatomic,strong) Draw *draw;
+@property (nonatomic,strong) NSString *layerUrl;
+@property (nonatomic,assign) NSInteger type;
 - (IBAction)showDraw:(id)sender;
 - (IBAction)editDraw:(id)sender;
 - (IBAction)deleteDraw:(id)sender;

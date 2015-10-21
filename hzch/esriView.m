@@ -15,7 +15,7 @@
 #import "GTMBase64.h"
 #import "MapUtil.h"
 
-@interface esriView (){
+@interface esriView ()<AGSLayerDelegate>{
     double _distance;
     double _area;
     AGSSRUnit _distanceUnit;
@@ -67,6 +67,7 @@
             self.mapView.layerDelegate = self;
              [self.mapView zoomToEnvelope:[AGSEnvelope envelopeWithXmin:118.02252449 ymin:27.04527654 xmax:123.1561344 ymax:31.18247145 spatialReference:self.mapView.spatialReference] animated:YES];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addDrawLayer:) name:@"ADD_DRAW_LAYER" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocalLayer:) name:@"ADD_LOCAL_LAYER" object:nil];
             [self locationListenner];
         }
         
@@ -973,6 +974,70 @@
     return;
 }
 
+- (void)addLocalLayer:(NSNotification *)info{
+    NSString *layerurl = [info.userInfo objectForKey:@"localurl"];
+    NSArray *array = [[layerurl description] componentsSeparatedByString:@"/"];
+    NSString *name = [array objectAtIndex:(array.count-1)];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
+    if(![self hasAddLocalLayer:layerurl]){
+        [[dataHttpManager getInstance].localLayers addObject:layerurl];
+        if([[name pathExtension] isEqualToString:@"tpk"]){
+            AGSLocalTiledLayer *localTileLayer = [[AGSLocalTiledLayer alloc] initWithPath:desPath];
+            localTileLayer.delegate =self;
+            if(localTileLayer != nil){
+                [self.mapView addMapLayer:localTileLayer withName:name];
+                [self.mapView zoomIn:YES];
+            }
+        }
+        
+    }else{
+        [self.mapView removeMapLayerWithName:name];
+        [[dataHttpManager getInstance].localLayers removeObject:layerurl];
+        ALERT(@"离线数据已从地图移除");
+    }
+}
+
+-(void)layerDidLoad:(AGSLayer *)layer{
+    if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
+        ALERT(@"离线数据已添加到地图");
+    }
+}
+
+
+-(void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error{
+    if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
+        ALERT(@"加载离线数据失败");
+    }
+}
+
+- (void)addLocalTileLayerWithName:(NSString *)fileName{
+    NSString *name = [fileName stringByDeletingPathExtension];
+    NSString *extension = @"tpk";
+    if(![self hasAddLocalLayer:name] && [[fileName pathExtension] isEqualToString:extension]){
+        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:fileName];
+        AGSLocalTiledLayer *localTileLayer = [[AGSLocalTiledLayer alloc] initWithPath:desPath];
+        localTileLayer.delegate =self;
+        if(localTileLayer != nil){
+            [self.mapView reset];
+            [self.mapView addMapLayer:localTileLayer withName:name];
+            [self.mapView zoomIn:YES];
+            // Do any additional setup after loading the view from its nib.
+            
+        }
+    }else{
+        [self.mapView removeMapLayerWithName:name];
+    }
+}
+
+- (void)removeLocalTileLayer:(NSNotification *)notification{
+    NSString *fileName = [notification.userInfo objectForKey:@"name"];
+    NSString *name = [fileName stringByDeletingPathExtension];
+    [self.mapView removeMapLayerWithName:name];
+}
+
+
 - (void)addDrawLayer:(NSNotification *)info{
     [self addSketchGhLayer];
     Draw *draw = [info.userInfo objectForKey:@"draw"];
@@ -1039,6 +1104,14 @@
     return NO;
 }
 
+- (BOOL)hasAddLocalLayer:(NSString *)name{
+    for(NSString *layerurl in [dataHttpManager getInstance].localLayers){
+        if([layerurl isEqualToString:name]){
+            return YES;
+        }
+    }
+    return NO;
+}
 
 - (BOOL)hasLayer:(NSString *)name{
     for(AGSLayer *layer in self.mapView.mapLayers){

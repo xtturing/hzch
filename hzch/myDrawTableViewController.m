@@ -66,6 +66,7 @@
     }
     cell.titleLab.text = draw.name;
     cell.titleLab.tag = draw.createDate;
+    cell.type = 0;
     if([self hasShowDraw:draw.createDate]){
         [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
     }else{

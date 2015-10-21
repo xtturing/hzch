@@ -197,6 +197,9 @@
         cell.DowningCellCancelClick=^(DowningCell *cell)
         {
             [[DownloadManager sharedInstance]cancelDownload:url];
+            if([self hasAddLocalLayer:url]){
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":url}];
+            }
         };
     }
     [self updateCell:cell withDownItem:downItem withIndexPath:indexPath];
@@ -215,13 +218,9 @@
     
 }
 
-
 - (BOOL)hasAddLocalLayer:(NSString *)name{
-    if(self.layers == nil || self.layers.count == 0){
-        return NO;
-    }
-    for(AGSTiledLayer *layer in self.layers){
-        if([layer isKindOfClass:[AGSLocalTiledLayer class]] && [layer.name isEqualToString:name]){
+    for(NSString *layerurl in [dataHttpManager getInstance].localLayers){
+        if([layerurl isEqualToString:name]){
             return YES;
         }
     }

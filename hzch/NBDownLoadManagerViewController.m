@@ -43,6 +43,7 @@
         [[dataHttpManager getInstance] letLoadTPK];
     });
     [_segment addTarget:self action:@selector(segmentAction:)forControlEvents:UIControlEventValueChanged];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:@"RELOADTABLE" object:nil];
     // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -56,6 +57,10 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)reload{
+    self.downlist = [[DownloadManager sharedInstance]getFinishedTask];
+    [self.table performSelector:@selector(reloadData) withObject:nil afterDelay:1.0];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -140,7 +145,15 @@
                 reuseIdentifier: FirstLevelCell];
     }
     cell.titleLab.text = name;
+    cell.type = 1;
+    cell.layerUrl = urlKey;
+    cell.editBtn.hidden = YES;
     cell.titleLab.adjustsFontSizeToFitWidth = YES;
+    if([self hasAddLocalLayer:urlKey]){
+        [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
+    }else{
+        [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
+    }
     return cell;
 }
 
@@ -155,11 +168,8 @@
     
 }
 - (BOOL)hasAddLocalLayer:(NSString *)name{
-    if(self.layers == nil || self.layers.count == 0){
-        return NO;
-    }
-    for(AGSTiledLayer *layer in self.layers){
-        if([layer isKindOfClass:[AGSLocalTiledLayer class]] && [layer.name isEqualToString:name]){
+    for(NSString *layerurl in [dataHttpManager getInstance].localLayers){
+        if([layerurl isEqualToString:name]){
             return YES;
         }
     }

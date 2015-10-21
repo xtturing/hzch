@@ -50,6 +50,7 @@
                 reuseIdentifier: FirstLevelCell];
     }
     cell.titleLab.text = @"adad";
+    cell.type = 2;
     cell.titleLab.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
