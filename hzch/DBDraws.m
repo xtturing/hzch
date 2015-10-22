@@ -28,10 +28,10 @@
 
 -(void)openDatabase
 {
-    NSString * documentDir = [Utility databaseDirectory];
-    documentDir = [documentDir stringByAppendingPathComponent:@"mydraws.db"];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:@"mydraws.db"];
     
-    database = [FMDatabase databaseWithPath:documentDir];
+    database = [FMDatabase databaseWithPath:desPath];
     if ([database open])
     {
         [database setShouldCacheStatements:YES];
