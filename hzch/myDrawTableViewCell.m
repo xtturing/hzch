@@ -21,7 +21,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_DRAW_LAYER" object:nil userInfo:@{@"draw":self.draw}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
     }else if(_type == 1){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl,@"name":self.titleLab.text}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
     }else if (_type == 2){
         
@@ -69,7 +69,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [[dataHttpManager getInstance].drawDB deleteDraw:self.titleLab.tag];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if([self hasShowDraw:self.titleLab.tag]){
+                    if([self hasShowDraw:[NSString stringWithFormat:@"%ld",self.titleLab.tag]]){
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_DRAW_LAYER" object:nil userInfo:@{@"draw":self.draw}];
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
@@ -93,9 +93,9 @@
     return;
 }
 
-- (BOOL)hasShowDraw:(long)cellTag{
+- (BOOL)hasShowDraw:(NSString *)cellTag{
     for (id tag in [dataHttpManager getInstance].drawLayers) {
-        if(cellTag == [tag longValue]){
+        if([cellTag isEqualToString: tag]){
             return YES;
         }
     }

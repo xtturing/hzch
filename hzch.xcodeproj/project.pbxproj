@@ -355,9 +355,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41E425ED1BA86CBE009C0581 /* libsqlite3.0.dylib in Frameworks */,
 				416252601BA92BFC002DB58D /* ArcGIS.framework in Frameworks */,
 				4162525E1BA92A33002DB58D /* libxml2.2.dylib in Frameworks */,
-				41E425ED1BA86CBE009C0581 /* libsqlite3.0.dylib in Frameworks */,
 				41421DC01B9DD743000DDFAF /* MobileCoreServices.framework in Frameworks */,
 				41421DBE1B9DD73B000DDFAF /* libz.dylib in Frameworks */,
 				41421DBC1B9DD72F000DDFAF /* MediaPlayer.framework in Frameworks */,

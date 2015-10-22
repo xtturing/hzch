@@ -11,6 +11,7 @@
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
 #import "DrawSearchDetailTableViewController.h"
+
 @interface ViewController ()<esriViewDelegate,UITabBarDelegate,dataHttpDelegate>{
     NSInteger segIndex;
     BOOL showMap;
@@ -25,7 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 @property (weak, nonatomic) IBOutlet UIButton *layerBtn;
 @property(nonatomic,weak)IBOutlet UIButton *clearBtn;
-
+@property (nonatomic,strong) UINavigationController *resoureViewController;
+@property (nonatomic,strong) UINavigationController *searchViewController;
 @end
 
 @implementation ViewController
@@ -63,17 +65,20 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     switch (item.tag) {
-        case 1001:{
+        case 1002:{
             [self.esriView hiddenToolView];
-            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"NBDownLoadNavigationViewController"] animated:YES completion:^{
+            if(_resoureViewController == nil){
+                self.resoureViewController = [storyboard instantiateViewControllerWithIdentifier:@"BDNavViewController"];
+            }
+            [self presentViewController:_resoureViewController animated:YES completion:^{
                 
             }];
         }
             
             break;
-        case 1002:{
+        case 1001:{
             [self.esriView hiddenToolView];
-            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"BDNavViewController"] animated:YES completion:^{
+            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"NBDownLoadNavigationViewController"] animated:YES completion:^{
                 
             }];
         }
@@ -142,7 +147,10 @@
 
 - (void)didSearch{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"searchNavigationViewController"] animated:YES completion:^{
+    if(_searchViewController == nil){
+        self.searchViewController = [storyboard instantiateViewControllerWithIdentifier:@"searchNavigationViewController"] ;
+    }
+    [self presentViewController:_searchViewController animated:YES completion:^{
         
     }];
 }

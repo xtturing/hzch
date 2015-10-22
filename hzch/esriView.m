@@ -14,6 +14,7 @@
 #import "Draw.h"
 #import "GTMBase64.h"
 #import "MapUtil.h"
+#import <sqlite3.h> 
 
 @interface esriView ()<AGSLayerDelegate>{
     double _distance;
@@ -27,6 +28,7 @@
     double miny;
     double maxx;
     double maxy;
+    sqlite3 *db;
 }
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
@@ -963,7 +965,7 @@
                                                                          error:&error];
                     draw.sourceData = jsonData;
                     [[dataHttpManager getInstance].drawDB insertDraw:draw];
-                    [[dataHttpManager getInstance].drawLayers addObject:@(draw.createDate)];
+                    [[dataHttpManager getInstance].drawLayers addObject:[NSString stringWithFormat:@"%ld",draw.createDate]];
                 });
                 [self.sketchLayer clear];
                 [self.sketchLayer.undoManager removeAllActions];
@@ -976,25 +978,56 @@
 
 - (void)addLocalLayer:(NSNotification *)info{
     NSString *layerurl = [info.userInfo objectForKey:@"localurl"];
+    NSString *layername = [info.userInfo objectForKey:@"name"];
     NSArray *array = [[layerurl description] componentsSeparatedByString:@"/"];
     NSString *name = [array objectAtIndex:(array.count-1)];
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
-    if(![self hasAddLocalLayer:layerurl]){
-        [[dataHttpManager getInstance].localLayers addObject:layerurl];
-        if([[name pathExtension] isEqualToString:@"tpk"]){
+    if([[name pathExtension] isEqualToString:@"tpk"]){
+        if(![self hasAddLocalLayer:layerurl]){
+            [[dataHttpManager getInstance].localLayers addObject:layerurl];
             AGSLocalTiledLayer *localTileLayer = [[AGSLocalTiledLayer alloc] initWithPath:desPath];
             localTileLayer.delegate =self;
             if(localTileLayer != nil){
                 [self.mapView addMapLayer:localTileLayer withName:name];
                 [self.mapView zoomIn:YES];
             }
+        }else{
+            [self.mapView removeMapLayerWithName:name];
+            [[dataHttpManager getInstance].localLayers removeObject:layerurl];
+            ALERT(@"离线数据已从地图移除");
+        }
+    }
+    
+    if([[name pathExtension] isEqualToString:@"sqlite"] ){
+        if(![self hasShowDraw:layername]){
+            if (sqlite3_open([desPath UTF8String], &db) != SQLITE_OK) {
+                sqlite3_close(db);
+                NSLog(@"数据库打开失败");
+            }
+            NSString *sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@"
+                                  ,layername];
+            sqlite3_stmt * statement;
+            if (sqlite3_prepare_v2(db, [sqlQuery UTF8String], -1, &statement, nil) == SQLITE_OK) {
+                [[dataHttpManager getInstance].drawLayers addObject:layername];
+                while (sqlite3_step(statement) == SQLITE_ROW) {
+                    char *name = (char*)sqlite3_column_text(statement, 1);
+                    NSString *nsNameStr = [[NSString alloc]initWithUTF8String:name];
+                    
+                    //                    int age = sqlite3_column_int(statement, 2);
+                    //
+                    //                    char *address = (char*)sqlite3_column_text(statement, 3);
+                    //                    NSString *nsAddressStr = [[NSString alloc]initWithUTF8String:address];
+                    
+                    NSLog(@"------name:%@",nsNameStr);
+                }
+            }
+            sqlite3_close(db);
+        }else{
+            [[dataHttpManager getInstance].drawLayers removeObject:layername];
+            ALERT(@"离线数据已从地图移除");
         }
         
-    }else{
-        [self.mapView removeMapLayerWithName:name];
-        [[dataHttpManager getInstance].localLayers removeObject:layerurl];
-        ALERT(@"离线数据已从地图移除");
     }
 }
 
@@ -1041,17 +1074,17 @@
 - (void)addDrawLayer:(NSNotification *)info{
     [self addSketchGhLayer];
     Draw *draw = [info.userInfo objectForKey:@"draw"];
-    if(![self hasShowDraw:draw.createDate]){
-        [[dataHttpManager getInstance].drawLayers addObject:@(draw.createDate)];
+    if(![self hasShowDraw:[NSString stringWithFormat:@"%ld",draw.createDate]]){
+        [[dataHttpManager getInstance].drawLayers addObject:[NSString stringWithFormat:@"%ld",draw.createDate]];
         ALERT(@"标绘已添加到地图");
     }else{
-        [[dataHttpManager getInstance].drawLayers removeObject:@(draw.createDate)];
+        [[dataHttpManager getInstance].drawLayers removeObject:[NSString stringWithFormat:@"%ld",draw.createDate]];
         ALERT(@"标绘已从地图移除");
     }
     NSArray *allDraws = [[dataHttpManager getInstance].drawDB getAllDraws];
-    for(NSNumber *createDate in [dataHttpManager getInstance].drawLayers){
+    for(NSString *createDate in [dataHttpManager getInstance].drawLayers){
         for(Draw *newdraw in allDraws){
-            if(newdraw.createDate == [createDate longValue]){
+            if(newdraw.createDate == [createDate longLongValue]){
                 NSDictionary *dic = [newdraw.sourceData ags_JSONValue];
                 AGSGeometry* sketchGeometry = AGSGeometryWithJSON([[dic objectForKey:@"geometry"] ags_JSONValue]);
                 AGSSimpleLineSymbol
@@ -1095,9 +1128,9 @@
     
 }
 
-- (BOOL)hasShowDraw:(long)cellTag{
+- (BOOL)hasShowDraw:(NSString *)cellTag{
     for (id tag in [dataHttpManager getInstance].drawLayers) {
-        if(cellTag == [tag longValue]){
+        if([cellTag isEqualToString: tag]){
             return YES;
         }
     }
@@ -1288,5 +1321,6 @@
     
     [_routeGraphicsLayer refresh];
 }
+
 
 @end

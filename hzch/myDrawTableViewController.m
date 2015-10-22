@@ -67,7 +67,7 @@
     cell.titleLab.text = draw.name;
     cell.titleLab.tag = draw.createDate;
     cell.type = 0;
-    if([self hasShowDraw:draw.createDate]){
+    if([self hasShowDraw:[NSString stringWithFormat:@"%ld",draw.createDate]]){
         [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
     }else{
         [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
@@ -77,9 +77,9 @@
     return cell;
 }
 
-- (BOOL)hasShowDraw:(long)cellTag{
+- (BOOL)hasShowDraw:(NSString *)cellTag{
     for (id tag in [dataHttpManager getInstance].drawLayers) {
-        if(cellTag == [tag longValue]){
+        if([cellTag isEqualToString: tag]){
             return YES;
         }
     }
