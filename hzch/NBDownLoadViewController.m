@@ -81,6 +81,9 @@
     [SVProgressHUD dismiss];
     NSArray *tpks = [Dic objectForKey:@"tpk"];
     NSArray *datas = [Dic objectForKey:@"data"];
+    if(tpks == nil || tpks.count == 0 || datas == nil || datas.count == 0){
+        ALERT(@"请在设置->数据离线下载中下载资源");
+    }
     self.dataList = [[NSMutableDictionary alloc] initWithCapacity:0];
     self.tpkList = [[NSMutableDictionary alloc] initWithCapacity:0];
     for(NBTpk *tpk in tpks){

@@ -1010,16 +1010,40 @@
             sqlite3_stmt * statement;
             if (sqlite3_prepare_v2(db, [sqlQuery UTF8String], -1, &statement, nil) == SQLITE_OK) {
                 [[dataHttpManager getInstance].drawLayers addObject:layername];
+                NSMutableArray *list = [NSMutableArray arrayWithCapacity:0];
+                NSMutableArray *column = nil;
                 while (sqlite3_step(statement) == SQLITE_ROW) {
-                    char *name = (char*)sqlite3_column_text(statement, 1);
-                    NSString *nsNameStr = [[NSString alloc]initWithUTF8String:name];
-                    
-                    //                    int age = sqlite3_column_int(statement, 2);
-                    //
-                    //                    char *address = (char*)sqlite3_column_text(statement, 3);
-                    //                    NSString *nsAddressStr = [[NSString alloc]initWithUTF8String:address];
-                    
-                    NSLog(@"------name:%@",nsNameStr);
+                    int count = sqlite3_data_count(statement);
+                    column = [NSMutableArray arrayWithCapacity:0];
+                    for(int i = 0;i<count;i++){
+                        int type = sqlite3_column_type(statement, i);
+                        switch (type) {
+                            case SQLITE_INTEGER:{
+                                int age = sqlite3_column_int(statement, i);
+                                [column addObject:@(age)];
+                            }
+                                break;
+                            case SQLITE_TEXT:{
+                                char *name = (char*)sqlite3_column_text(statement, i);
+                                NSString *nsNameStr = [[NSString alloc]initWithUTF8String:name];
+                                if(nsNameStr &&  [nsNameStr stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
+                                    [column addObject:nsNameStr];
+                                }
+                            }
+                                break;
+                            case SQLITE_BLOB:{
+                                const void *op = sqlite3_column_blob(statement, i);
+                                int size = sqlite3_column_bytes(statement,i);
+                                NSData *data = [[NSData alloc]initWithBytes:op length:size];
+                                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                
+                            }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                   [list addObject:column];
                 }
             }
             sqlite3_close(db);
