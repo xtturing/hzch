@@ -156,6 +156,18 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 
+- (void)letGetLineSearch:(NSString *)start end:(NSString *)end{
+    NSString *baseUrl =[NSString  stringWithFormat:HTTP_LINE_SEARCH,start,end];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AAGetLineSearch];
+    [_requestQueue addOperation:request];
+}
+
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size{
     NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                                     kCFAllocatorDefault, /* allocator */
@@ -425,6 +437,9 @@ static dataHttpManager * instance=nil;
         if (_delegate && [_delegate respondsToSelector:@selector(didGetDraw:)]) {
             [_delegate didGetDraw:dic];
         }
+    }
+    if(requestType == AAGetLineSearch && userInfo){
+        
     }
     //继续添加
     

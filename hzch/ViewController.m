@@ -28,6 +28,7 @@
 @property(nonatomic,weak)IBOutlet UIButton *clearBtn;
 @property (nonatomic,strong) UINavigationController *resoureViewController;
 @property (nonatomic,strong) UINavigationController *searchViewController;
+@property (nonatomic,strong) UINavigationController *lineSearchViewController;
 @end
 
 @implementation ViewController
@@ -114,7 +115,10 @@
 
 - (void)didSelectLineSearch{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"LineSearchNavigationViewController"] animated:YES completion:^{
+    if(_lineSearchViewController == nil){
+        self.lineSearchViewController = [storyboard instantiateViewControllerWithIdentifier:@"LineSearchNavigationViewController"];
+    }
+    [self presentViewController:self.lineSearchViewController animated:YES completion:^{
         
     }];
 }
