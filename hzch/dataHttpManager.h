@@ -10,7 +10,7 @@
 #import "StringUtil.h"
 #import "NSStringAdditions.h"
 #import "DBDraws.h"
-
+#import "NBRoute.h"
 #define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
 
 #define HTTP_DEPARTMENT        @"http://ditu.zj.cn/catalog?parentid=1&catalogtheme=catalog_department&request=list&page=1&start=0&limit=1000"
@@ -71,7 +71,7 @@ typedef enum {
 
 - (void)didGetDraw:(NSMutableDictionary *)searchDic;
 
-- (void)didGetLineSearch:(NSMutableDictionary *)lineDic;
+-(void)didGetRoute:(NBRoute *)route;
 //继续添加
 @end
 

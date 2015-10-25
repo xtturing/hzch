@@ -116,6 +116,9 @@
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
 		417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC3671BA9C69E00FA4394 /* ViewController.m */; };
 		41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B9534C1BB598E200FE6F35 /* CanvasView.m */; };
+		41C735591BDD13F800E01B84 /* NBRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735561BDD13F800E01B84 /* NBRoute.m */; };
+		41C7355A1BDD13F800E01B84 /* NBRouteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735581BDD13F800E01B84 /* NBRouteItem.m */; };
+		41C7355D1BDD163500E01B84 /* NBSimpleRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C7355C1BDD163500E01B84 /* NBSimpleRoute.m */; };
 		41E425D61BA8694D009C0581 /* TianDiTuWMTSLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */; };
 		41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D11BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m */; };
 		41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E425D31BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m */; };
@@ -326,6 +329,12 @@
 		417DC3671BA9C69E00FA4394 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		41B9534C1BB598E200FE6F35 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
 		41B9534D1BB598E200FE6F35 /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
+		41C735551BDD13F800E01B84 /* NBRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRoute.h; sourceTree = "<group>"; };
+		41C735561BDD13F800E01B84 /* NBRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBRoute.m; sourceTree = "<group>"; };
+		41C735571BDD13F800E01B84 /* NBRouteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRouteItem.h; sourceTree = "<group>"; };
+		41C735581BDD13F800E01B84 /* NBRouteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBRouteItem.m; sourceTree = "<group>"; };
+		41C7355B1BDD163500E01B84 /* NBSimpleRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSimpleRoute.h; sourceTree = "<group>"; };
+		41C7355C1BDD163500E01B84 /* NBSimpleRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSimpleRoute.m; sourceTree = "<group>"; };
 		41E425CE1BA8694D009C0581 /* TianDiTuWMTSLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayer.h; sourceTree = "<group>"; };
 		41E425CF1BA8694D009C0581 /* TianDiTuWMTSLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TianDiTuWMTSLayer.m; sourceTree = "<group>"; };
 		41E425D01BA8694D009C0581 /* TianDiTuWMTSLayerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TianDiTuWMTSLayerInfo.h; sourceTree = "<group>"; };
@@ -684,6 +693,12 @@
 		416876931BA1CE0800119267 /* tool */ = {
 			isa = PBXGroup;
 			children = (
+				41C7355B1BDD163500E01B84 /* NBSimpleRoute.h */,
+				41C7355C1BDD163500E01B84 /* NBSimpleRoute.m */,
+				41C735551BDD13F800E01B84 /* NBRoute.h */,
+				41C735561BDD13F800E01B84 /* NBRoute.m */,
+				41C735571BDD13F800E01B84 /* NBRouteItem.h */,
+				41C735581BDD13F800E01B84 /* NBRouteItem.m */,
 				41398EE71BB45139008E9222 /* LineSearchTableViewController.h */,
 				41398EE81BB45139008E9222 /* LineSearchTableViewController.m */,
 			);
@@ -925,6 +940,7 @@
 				410555F51B9C729400B208E8 /* AppDelegate.m in Sources */,
 				413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */,
 				413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */,
+				41C7355A1BDD13F800E01B84 /* NBRouteItem.m in Sources */,
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
 				415CA7411BC7D23C003D8347 /* Draw.m in Sources */,
 				412A152E1BC69318006E87A0 /* ActionSheetDistancePicker.m in Sources */,
@@ -967,6 +983,7 @@
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,
 				413D2B9B1BD34D7600490CC2 /* NBSearchImageViewController.m in Sources */,
 				41533EF41BBDE543006C7D55 /* NBGovment.m in Sources */,
+				41C735591BDD13F800E01B84 /* NBRoute.m in Sources */,
 				413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */,
 				41533EFA1BBDF47E006C7D55 /* NBSearch.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
@@ -995,6 +1012,7 @@
 				413CD51C1BC2BE480069EC23 /* NBSearchCatalog.m in Sources */,
 				412A152C1BC69318006E87A0 /* ActionSheetCustomPicker.m in Sources */,
 				4106DFF71BA1D7A900EF997D /* NSDataAdditions.m in Sources */,
+				41C7355D1BDD163500E01B84 /* NBSimpleRoute.m in Sources */,
 				412A152F1BC69318006E87A0 /* ActionSheetStringPicker.m in Sources */,
 				412A151B1BC68AEB006E87A0 /* addCacheTableViewController.m in Sources */,
 				415CA7451BC80A9A003D8347 /* myDrawTableViewController.m in Sources */,

@@ -17,6 +17,7 @@
     int page;
     int pageSize;
     int allCount;
+    NSInteger tableID;
 }
 @end
 
@@ -138,6 +139,7 @@
         allCount = ceil(allCount / (pageSize*1.000));
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
         self.resultDic = searchDic;
+        tableID = [[searchDic objectForKey:@"tableid"] integerValue];
         self.toolBar.hidden = NO;
         if(page > 1){
             self.preItem.enabled = YES;
@@ -211,6 +213,7 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
         mapViewController.catalog = catalog;
+        mapViewController.tableID = tableID;
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
 }

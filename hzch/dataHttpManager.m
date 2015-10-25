@@ -18,6 +18,7 @@
 #import "NBGovment.h"
 #import "NBSearch.h"
 #import "NBSearchCatalog.h"
+
 #define TIMEOUT 30
 
 static dataHttpManager * instance=nil;
@@ -160,7 +161,7 @@ static dataHttpManager * instance=nil;
     NSString *baseUrl = HTTP_LINE_SEARCH;
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:[NSString stringWithFormat:@"{'orig':'%@','dest':'%@','style':'0'}",start,end] forKey:@"routeStr"];
+    [request setPostValue:[NSString stringWithFormat:@"{'orig':'%@','dest':'%@','mid':'','style':'0'}",start,end] forKey:@"postStr"];
     [request setPostValue:@"search" forKey:@"type"];
     [request setTimeOutSeconds:TIMEOUT];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
@@ -442,7 +443,14 @@ static dataHttpManager * instance=nil;
         }
     }
     if(requestType == AAGetLineSearch && userInfo){
-        
+        NSDictionary *result = [userInfo objectForKey:@"result"];
+        NBRoute *route = nil;
+        if([result count] > 0 ){
+            route = [NBRoute routeWithJsonDictionary:result];
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetRoute:)] && route) {
+            [_delegate didGetRoute:route];
+        }
     }
     //继续添加
     

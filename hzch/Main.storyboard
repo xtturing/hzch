@@ -1684,6 +1684,7 @@
                                         <constraint firstAttribute="width" constant="45" id="zpz-5j-dDo"/>
                                     </constraints>
                                     <state key="normal" title="起点：">
+                                        <color key="titleColor" red="0.02512903935068166" green="0.64675414364640882" blue="0.035113960263446452" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
@@ -1693,6 +1694,7 @@
                                         <constraint firstAttribute="width" constant="45" id="lG7-U6-vpz"/>
                                     </constraints>
                                     <state key="normal" title="终点：">
+                                        <color key="titleColor" red="0.71359202348066297" green="0.046312392092895782" blue="0.076276409222712838" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
@@ -1725,7 +1727,7 @@
                                         <constraint firstAttribute="width" constant="60" id="poH-gq-l66"/>
                                         <constraint firstAttribute="height" constant="62" id="r1y-sr-a1i"/>
                                     </constraints>
-                                    <state key="normal" title="路径查询">
+                                    <state key="normal" title="开始查询">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -1812,7 +1814,7 @@
                                 <action selector="doBack:" destination="F09-Or-D7e" id="X2Y-9O-2LJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="地图查看" id="Fgz-k3-Uh9">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="地图查看" id="Fgz-k3-Uh9">
                             <connections>
                                 <action selector="showLineInMap:" destination="F09-Or-D7e" id="zBJ-lc-KvG"/>
                             </connections>
@@ -1821,6 +1823,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="endText" destination="a1d-B6-R0X" id="Wg3-kN-BiG"/>
+                        <outlet property="rightBar" destination="Fgz-k3-Uh9" id="IB7-rW-RUR"/>
                         <outlet property="startText" destination="XLt-IG-VCO" id="hWA-90-kTN"/>
                     </connections>
                 </tableViewController>

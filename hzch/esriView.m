@@ -32,6 +32,7 @@
     BOOL isGetStartPoint;
     BOOL isGetEndPoint;
     AGSGraphic * startGra;
+    AGSGraphic * endGra;
 }
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
@@ -76,6 +77,7 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocalLayer:) name:@"ADD_LOCAL_LAYER" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStartPointInMap) name:@"START_POINT_IN_MAP" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEndPointInMap) name:@"END_POINT_IN_MAP" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doRouteInMap:) name:@"ADD_ROUTE_IN_MAP" object:nil];
             [self locationListenner];
         }
         
@@ -154,6 +156,10 @@
 
 - (void)deleteMap{
     [self clearToolAll];
+    if(self.lineLayer){
+        [self.mapView removeMapLayerWithName:@"lineLayer"];
+        self.lineLayer = nil;
+    }
 //    NSArray* mapLayers = [self.mapView mapLayers];
 //    for (AGSLayer* layer in mapLayers)
 //    {
@@ -1223,24 +1229,30 @@
 - (void)getStartPointInMap{
     self.mapView.touchDelegate = self;
     isGetStartPoint = YES;
+    self.toolLabel.adjustsFontSizeToFitWidth = YES;
     self.toolLabel.text = @"请在地图上选择起始点，完成后继续点击路径查询";
 }
 
 - (void)getEndPointInMap{
     self.mapView.touchDelegate = self;
     isGetEndPoint = YES;
+    self.toolLabel.adjustsFontSizeToFitWidth = YES;
     self.toolLabel.text = @"请在地图上选择终止点，完成后继续点击路径查询";
 }
 
 -(void)addLineStartEndPoint:(AGSPoint *)mappoint{
     
-    if(startGra){
-        [self.ghLayer removeGraphic:startGra];
+    if(startGra && isGetStartPoint){
+        [self.lineLayer removeGraphic:startGra];
         startGra = nil;
     }
-    if(self.ghLayer == nil){
-        self.ghLayer = [[AGSGraphicsLayer alloc]init];
-        [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
+    if(endGra && isGetEndPoint){
+        [self.lineLayer removeGraphic:endGra];
+        endGra = nil;
+    }
+    if(self.lineLayer == nil){
+        self.lineLayer = [[AGSGraphicsLayer alloc]init];
+        [self.mapView addMapLayer:self.lineLayer withName:@"lineLayer"];
     }
     AGSPictureMarkerSymbol * dian = nil;
     if(isGetStartPoint){
@@ -1250,18 +1262,86 @@
         dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"zhongdian"];
     }
     dian.size = CGSizeMake(32,47);
+    dian.offset = CGPointMake(0, 24);
     if(mappoint.x == 0 || mappoint.y == 0 ){
         return;
     }
-    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil];
-    startGra.symbol = dian;
-    [self.ghLayer addGraphic:startGra];
-    [self.ghLayer refresh];
     if(isGetStartPoint){
+        startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil];
+        startGra.symbol = dian;
+        [self.lineLayer addGraphic:startGra];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"ADD_START_POINT" object:nil userInfo:@{@"point":[NSString stringWithFormat:@"%f,%f",mappoint.x,mappoint.y]}];
     }
     if(isGetEndPoint){
+        endGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil];
+        endGra.symbol = dian;
+        [self.lineLayer addGraphic:endGra];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"ADD_END_POINT" object:nil userInfo:@{@"point":[NSString stringWithFormat:@"%f,%f",mappoint.x,mappoint.y]}];
     }
+    [self.lineLayer refresh];
+}
+-(void)doRouteInMap:(NSNotification *)info{
+    NBRoute *route = [info.userInfo objectForKey:@"route"];
+    AGSPictureMarkerSymbol * jingguo = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"last_cz"];
+    AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+    lineSymbol.color =[UIColor colorWithRed:45.0/255.0 green:140.0/255.0  blue:58.0/255.0 alpha:1.0];
+    lineSymbol.width = 4;
+    
+    NSMutableArray *points = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *lines = [[NSMutableArray alloc] initWithCapacity:0];
+    [self.lineLayer removeAllGraphics];
+    [self.lineLayer refresh];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        for(NBSimpleRoute *item in route.simpleRouteList){
+            if(item.turnlatlon.length > 0 && item.streetLatLon.length > 0){
+                AGSGraphic * pointgra= nil;
+                AGSGraphic * linegra=nil;
+                AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+                [poly addPathToPolyline];
+                
+                NSArray *array = [item.turnlatlon componentsSeparatedByString:@","];
+                if(array.count == 2){
+                    AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
+                    pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil infoTemplateDelegate:nil];
+                    pointgra.symbol = jingguo;
+                    [points addObject:pointgra];
+                }
+                
+                NSArray *latlon=[item.streetLatLon componentsSeparatedByString:@";"];
+                for (int i=0; i<latlon.count; i++) {
+                    NSString *str=[latlon objectAtIndex:i];
+                    NSArray *coor=[str componentsSeparatedByString:@","];
+                    if(coor.count==2){
+                        AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
+                        [poly addPointToPath:point];
+                    }
+                }
+                linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil infoTemplateDelegate:nil];
+                [lines addObject:linegra];
+                
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.lineLayer addGraphics:lines];
+            [self.lineLayer addGraphics:points];
+            NSArray *array = [route.orig componentsSeparatedByString:@","];
+            if(array.count == 2){
+                isGetStartPoint = YES;
+                [self addLineStartEndPoint:[AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:nil]];
+                isGetStartPoint = NO;
+            }
+            array = [route.dest componentsSeparatedByString:@","];
+            if(array.count == 2){
+                isGetEndPoint = YES;
+                [self addLineStartEndPoint:[AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:nil]];
+                isGetEndPoint = NO;
+            }
+            [self.lineLayer refresh];
+            if(route.scale.length>0 && route.center.length > 0){
+                array = [route.center componentsSeparatedByString:@","];
+            }
+        });
+    });
 }
 @end

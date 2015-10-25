@@ -16,4 +16,5 @@
 - (IBAction)doLineSearch:(id)sender;
 @property(nonatomic,weak)IBOutlet UITextField *startText;
 @property(nonatomic,weak)IBOutlet UITextField *endText;
+@property(nonatomic,weak)IBOutlet UIBarButtonItem *rightBar;
 @end

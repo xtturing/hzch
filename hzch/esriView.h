@@ -45,6 +45,7 @@ CLLocationManagerDelegate>
 @property (nonatomic,strong)NSString *dataType;
 @property (nonatomic,strong)NSArray *dataDic;
 @property (nonatomic,strong)AGSGraphicsLayer *ghLayer;
+@property (nonatomic,strong)AGSGraphicsLayer *lineLayer;
 @property (nonatomic,strong)AGSDynamicMapServiceLayer *dmsLayer;
 @property (strong,nonatomic) AGSQueryTask *queryTask;
 @property (strong,nonatomic) AGSQuery *query;
