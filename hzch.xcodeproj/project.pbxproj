@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		410555F21B9C729400B208E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 410555F11B9C729400B208E8 /* main.m */; };
+		410555F21B9C729400B208E8 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 410555F11B9C729400B208E8 /* main.mm */; };
 		410555F51B9C729400B208E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 410555F41B9C729400B208E8 /* AppDelegate.m */; };
 		410556031B9C729400B208E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410556011B9C729400B208E8 /* LaunchScreen.xib */; };
 		4106DFF51BA1D7A900EF997D /* StringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4106DFEB1BA1D7A900EF997D /* StringUtil.m */; };
@@ -137,7 +137,7 @@
 		3FA55E223829CAB96C6F7376 /* Pods-hzch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hzch.release.xcconfig"; path = "Pods/Target Support Files/Pods-hzch/Pods-hzch.release.xcconfig"; sourceTree = "<group>"; };
 		410555EC1B9C729400B208E8 /* hzch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hzch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		410555F01B9C729400B208E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		410555F11B9C729400B208E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		410555F11B9C729400B208E8 /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		410555F31B9C729400B208E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		410555F41B9C729400B208E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		410556021B9C729400B208E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -445,7 +445,7 @@
 				41421DC51B9DD7F3000DDFAF /* Default.png */,
 				41421DC61B9DD7F3000DDFAF /* Default@2x.png */,
 				410555F01B9C729400B208E8 /* Info.plist */,
-				410555F11B9C729400B208E8 /* main.m */,
+				410555F11B9C729400B208E8 /* main.mm */,
 				4106DFDC1BA1D68200EF997D /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
@@ -989,7 +989,7 @@
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				412A15181BC68A8D006E87A0 /* cacheTableViewController.m in Sources */,
 				412A154C1BC6AB5B006E87A0 /* dbfopen.c in Sources */,
-				410555F21B9C729400B208E8 /* main.m in Sources */,
+				410555F21B9C729400B208E8 /* main.mm in Sources */,
 				412A15571BC6AFC3006E87A0 /* TiandituQueryHelper.m in Sources */,
 				415A61331BADB4C9001FA3FB /* RATreeNode.m in Sources */,
 				41398EE91BB45139008E9222 /* LineSearchTableViewController.m in Sources */,

@@ -1,0 +1,2 @@
+GEOS_CLANG_CXX_LIBRARY = libstdc++
+GEOS_HEADER_SEARCH_PATHS = ${PODS_ROOT}/geos/include ${PODS_ROOT}/geos/capi

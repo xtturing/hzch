@@ -1,0 +1,3 @@
+SHAPEKIT_CLANG_CXX_LIBRARY = libstdc++
+SHAPEKIT_HEADER_SEARCH_PATHS = ${PODS_ROOT}/geos/include ${PODS_ROOT}/geos/capi
+SHAPEKIT_OTHER_LDFLAGS = -ObjC -l"stdc++" -framework "CoreLocation"

@@ -1,0 +1,7 @@
+#include "spatialite.xcconfig"
+CLANG_ENABLE_MODULES = ${SPATIALITE_CLANG_ENABLE_MODULES}
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/." "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/spatialite" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/ASIHTTPRequest" "${PODS_ROOT}/Headers/Public/EGOTableViewPullRefreshAndLoadMore" "${PODS_ROOT}/Headers/Public/FMDB" "${PODS_ROOT}/Headers/Public/Reachability" "${PODS_ROOT}/Headers/Public/SBJson" "${PODS_ROOT}/Headers/Public/SVProgressHUD" "${PODS_ROOT}/Headers/Public/ShapeKit" "${PODS_ROOT}/Headers/Public/SpatialDBKit" "${PODS_ROOT}/Headers/Public/geos" "${PODS_ROOT}/Headers/Public/proj4" "${PODS_ROOT}/Headers/Public/spatialite" "${PODS_ROOT}/Headers/Public/spatialite/spatialite" "${PODS_ROOT}/Headers/Public/sqlite3" ${SPATIALITE_HEADER_SEARCH_PATHS}
+OTHER_LDFLAGS = ${SPATIALITE_OTHER_LDFLAGS}
+PODS_ROOT = ${SRCROOT}
+SKIP_INSTALL = YES

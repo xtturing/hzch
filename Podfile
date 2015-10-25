@@ -10,4 +10,5 @@ platform :ios, '7.0'
    pod 'SVProgressHUD', '~> 1.1.3'
    pod 'ASIHTTPRequest', '~> 1.8.1’
    pod 'SBJson', '~> 4.0.2'
+   pod 'SpatialDBKit'
 end
