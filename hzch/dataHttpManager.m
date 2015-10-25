@@ -157,12 +157,15 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)letGetLineSearch:(NSString *)start end:(NSString *)end{
-    NSString *baseUrl =[NSString  stringWithFormat:HTTP_LINE_SEARCH,start,end];
+    NSString *baseUrl = HTTP_LINE_SEARCH;
     NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:[NSString stringWithFormat:@"{'orig':'%@','dest':'%@','style':'0'}",start,end] forKey:@"routeStr"];
+    [request setPostValue:@"search" forKey:@"type"];
     [request setTimeOutSeconds:TIMEOUT];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     [request setResponseEncoding:NSUTF8StringEncoding];
+    [request setDelegate:self];
     NSLog(@"url=%@",url);
     [self setGetUserInfo:request withRequestType:AAGetLineSearch];
     [_requestQueue addOperation:request];

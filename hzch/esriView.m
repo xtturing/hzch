@@ -640,6 +640,8 @@
         case 1005:
         {
             self.toolLabel.text = @"请在地图上点击两点路径查询";
+            isGetStartPoint = NO;
+            isGetEndPoint = NO;
             if(_delegate && [_delegate respondsToSelector:@selector(didSelectLineSearch)]){
                 [_delegate didSelectLineSearch];
             }
@@ -1219,11 +1221,13 @@
 }
 
 - (void)getStartPointInMap{
+    self.mapView.touchDelegate = self;
     isGetStartPoint = YES;
     self.toolLabel.text = @"请在地图上选择起始点，完成后继续点击路径查询";
 }
 
 - (void)getEndPointInMap{
+    self.mapView.touchDelegate = self;
     isGetEndPoint = YES;
     self.toolLabel.text = @"请在地图上选择终止点，完成后继续点击路径查询";
 }

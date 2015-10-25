@@ -25,7 +25,7 @@
 
 #define HTTP_DRAW_SEARCH       @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=&city=&v=2&frontRequest=true&tableid=%@&minx=%f&maxx=%f&miny=%f&maxy=%f&lk=false&geo=&_dc=1419474648386"
 
-#define HTTP_LINE_SEARCH       @"http://www.tianditu.com/query.shtml?postStr={\"orig\":\"%@\",\"dest\":\"%@\",\"mid\":\"\",\"style\":\"0\"}&type=search"
+#define HTTP_LINE_SEARCH       @"http://www.tianditu.com/query.shtml"
 
 #define REQUEST_TYPE          @"requestType"
 
