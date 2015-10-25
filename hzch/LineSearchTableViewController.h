@@ -10,4 +10,10 @@
 
 @interface LineSearchTableViewController : UITableViewController
 
+- (IBAction)getStartPointInMap:(id)sender;
+- (IBAction)getEndPointInMap:(id)sender;
+- (IBAction)showLineInMap:(id)sender;
+- (IBAction)doLineSearch:(id)sender;
+@property(nonatomic,weak)IBOutlet UITextField *startText;
+@property(nonatomic,weak)IBOutlet UITextField *endText;
 @end

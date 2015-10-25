@@ -29,6 +29,9 @@
     double maxx;
     double maxy;
     sqlite3 *db;
+    BOOL isGetStartPoint;
+    BOOL isGetEndPoint;
+    AGSGraphic * startGra;
 }
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
@@ -62,7 +65,8 @@
             CGRect r1 = CGRectMake(0, 0, frame.size.width, frame.size.height);
             
             self.frame = r1;
-            
+            isGetStartPoint = NO;
+            isGetEndPoint = NO;
             self.configData  = [[NSConfigData alloc]init];
             //NSLog(@"连续加载对象 : %@",self.mapView);
             [self changeMap:0];
@@ -70,6 +74,8 @@
              [self.mapView zoomToEnvelope:[AGSEnvelope envelopeWithXmin:118.02252449 ymin:27.04527654 xmax:123.1561344 ymax:31.18247145 spatialReference:self.mapView.spatialReference] animated:YES];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addDrawLayer:) name:@"ADD_DRAW_LAYER" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocalLayer:) name:@"ADD_LOCAL_LAYER" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStartPointInMap) name:@"START_POINT_IN_MAP" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEndPointInMap) name:@"END_POINT_IN_MAP" object:nil];
             [self locationListenner];
         }
         
@@ -171,64 +177,6 @@
 }
 
 
--(void)addSubjectLayer:(AGSFeatureSet *)p_features select:(AGSGraphic *)p_selGp queryParams:(QueryParams *) p_queryParams{
-    self.mapView.touchDelegate = self;
-    self.mapView.callout.delegate = self;
-    self.queryParams = p_queryParams;
-    [self removeAllLayer];
-    
-    NSString *dmsUrl;
-    NSString *dmsLayer;
-    switch (p_features.geometryType) {
-        case AGSGeometryTypePolyline:
-
-            dmsUrl = [self.queryParams.layerUrl substringToIndex:self.queryParams.layerUrl.length-2];
-            dmsLayer = [self.queryParams.layerUrl substringFromIndex:self.queryParams.layerUrl.length-1];
-             self.dmsLayer = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL: [NSURL URLWithString:dmsUrl]];
-            self.dmsLayer.visibleLayers = [NSArray arrayWithObjects:[NSNumber numberWithInt:dmsLayer.intValue], nil];
-            [self.mapView addMapLayer:self.dmsLayer withName:@"SubLayer"];
-            [self topLocationLayer];
-            
-            [self.mapView zoomToScale:9234299.95533859 withCenterPoint:[AGSPoint pointWithX:119.896901
-                                                                                          y:29.071736
-                                                                           spatialReference:self.mapView.spatialReference] animated:YES];
-            if (p_selGp==nil) {
-                [self.mapView.callout dismiss];
-            }else {
-                
-                AGSPolyline *line = (AGSPolyline *)p_selGp.geometry;
-                
-                AGSPoint *point = (AGSPoint *)[line pointOnPath:line.numPaths atIndex:([line numPointsInPath:line.numPaths]/2)];
-                p_selGp.geometry = point;
-                
-                [self showCallOut:p_selGp title:[ p_selGp attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:0]] detail:[ p_selGp attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:1]]];
-            }
-            break;
-        default:
-            self.ghLayer = [[AGSGraphicsLayer alloc]init];
-            [self.ghLayer addGraphics:p_features.features];
-            self.ghLayer.selectionColor = [UIColor redColor];
-            [self.mapView addMapLayer:self.ghLayer withName:@"SubLayer"];
-            [self topLocationLayer];
-            
-            if ([self.queryParams.layerType isEqualToString:@"bncsLayer"]) {
-                [self.mapView zoomToScale:92342.95533859 withCenterPoint:(AGSPoint *)self.locationGrp.geometry animated:YES];
-            }else{
-                [self.mapView zoomToScale:9234299.95533859 withCenterPoint:[AGSPoint pointWithX:119.896901
-                                                                                              y:29.071736
-                                                                               spatialReference:self.mapView.spatialReference] animated:YES];
-            }
-            if (p_selGp==nil) {
-                [self.mapView.callout dismiss];
-                
-            }else {
-                [self showCallOut:p_selGp title:[ p_selGp attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:0]] detail:[ p_selGp attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:1]]];
-            }
-
-            break;
-    }
-    
-}
 
 - (void)mapViewDidLoad:(AGSMapView *)mapView{
     if(_delegate && [_delegate respondsToSelector:@selector(mapViewDidLoad)]){
@@ -403,96 +351,25 @@
 }
 
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
-    if ([self.ghLayer graphicsCount]>0) {
-        AGSGraphic *t_selgh ;
-        for (AGSGraphic *t_gh in [self.ghLayer graphics]) {
-            
-            CGPoint pointVar = [mapView toScreenPoint:(AGSPoint *)[t_gh geometry]];
-            if (sqrt((screen.x-pointVar.x)*(screen.x-pointVar.x)+(screen.y-pointVar.y)*(screen.y-pointVar.y))<20) {
-                t_selgh = t_gh;
-                break;
+    if(isGetEndPoint || isGetStartPoint){
+        [self addLineStartEndPoint:mappoint];
+    }else{
+        if ([self.ghLayer graphicsCount]>0) {
+            AGSGraphic *t_selgh ;
+            for (AGSGraphic *t_gh in [self.ghLayer graphics]) {
+                
+                CGPoint pointVar = [mapView toScreenPoint:(AGSPoint *)[t_gh geometry]];
+                if (sqrt((screen.x-pointVar.x)*(screen.x-pointVar.x)+(screen.y-pointVar.y)*(screen.y-pointVar.y))<20) {
+                    t_selgh = t_gh;
+                    break;
+                }
+            }
+            if([self.ghLayer.name isEqualToString:@"CustomLayer"]){
+                [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"title"] detail:[t_selgh attributeAsStringForKey:@"detail"]];
             }
         }
-        if ([self.ghLayer.name isEqualToString:@"EqimLayer"]) {
-            [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"LocationCname"] detail:[t_selgh attributeAsStringForKey:@"OTime"]];
-        }else if([self.ghLayer.name isEqualToString:@"CustomLayer"]){
-            [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"title"] detail:[t_selgh attributeAsStringForKey:@"detail"]];
-        }else if([self.ghLayer.name isEqualToString:@"SubLayer"]){
-            [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:0]] detail:[t_selgh attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:1]]];
-        }
-        
-    }else if (self.dmsLayer !=nil){
-        
-        AGSEnvelope *t_mapE = [[AGSEnvelope alloc]
-                                 initWithXmin:mappoint.x-0.02
-                                 ymin:mappoint.y-0.02
-                                 xmax:mappoint.x+0.02
-                                 ymax:mappoint.y+0.02
-                                 spatialReference:[[AGSSpatialReference alloc]initWithWKID:4490]];
-        //set up query task against layer, specify the delegate
-        self.queryTask = [AGSQueryTask queryTaskWithURL:[NSURL URLWithString:self.queryParams.layerUrl]];
-        self.queryTask.delegate = self;
-        
-        //return all fields in query
-        self.query = [AGSQuery query];
-        self.query.outSpatialReference = self.queryParams.layerSpr;
-        self.query.where = self.queryParams.layerWhere;
-        self.query.returnGeometry = YES;
-        self.query.geometry =t_mapE;
-        self.query.outFields = self.queryParams.fieldOut;
-        [self.queryTask executeWithQuery:self.query];
-    
-    }else if (self.sketchGhLayer!=nil)
-    {
-        if (self.beginPoint==nil) {
-            self.beginPoint = mappoint;
-            
-            AGSGraphic *t_agsGh = [[AGSGraphic alloc]initWithGeometry:self.beginPoint symbol:[AGSSimpleMarkerSymbol simpleMarkerSymbol] attributes:nil infoTemplateDelegate:nil];
-            
-            [self.sketchGhLayer addGraphic:t_agsGh];
-        }else if (self.endPoint == nil&&self.beginPoint!=nil){
-            self.endPoint =mappoint;
-            AGSGraphic *t_agsGhPoint = [[AGSGraphic alloc]initWithGeometry:self.endPoint symbol:[AGSSimpleMarkerSymbol simpleMarkerSymbol] attributes:nil infoTemplateDelegate:nil];
-            
-            [self.sketchGhLayer addGraphic:t_agsGhPoint];
-            
-            self.envelope =  [[AGSEnvelope alloc]initWithXmin:self.beginPoint.x ymin:self.beginPoint.y xmax:self.endPoint.x ymax:self.endPoint.y spatialReference:self.mapView.spatialReference];
-            AGSGraphic *t_agsGh = [[AGSGraphic alloc]initWithGeometry:self.envelope symbol:[AGSSimpleFillSymbol simpleFillSymbol] attributes:nil infoTemplateDelegate:nil];
-            
-            [self.sketchGhLayer addGraphic:t_agsGh];
-        }else if (self.endPoint !=nil && self.beginPoint!=nil){
-            self.endPoint = nil;
-            self.beginPoint = nil;
-            [self.sketchGhLayer removeAllGraphics];
-        }
-        
-    }
-}
-
-- (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation*)op didExecuteWithFeatureSetResult:(AGSFeatureSet *)featureSet{
-    if (featureSet.features.count>0) {
-
-    AGSGraphic *feature = [featureSet.features objectAtIndex:0];
-    AGSPolyline *line = (AGSPolyline *)feature.geometry;
-        
-        if (line.numPaths>0) {
-                AGSPoint *point = (AGSPoint *)[line pointOnPath:line.numPaths atIndex:([line numPointsInPath:line.numPaths]/2)];
-            AGSGraphic *t_agsGh = [[AGSGraphic alloc]initWithGeometry:point symbol:nil attributes:feature.allAttributes infoTemplateDelegate:nil];
-            
-            [self showCallOut:t_agsGh title:[feature attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:0]] detail:[feature attributeAsStringForKey:[self.queryParams.itemField objectAtIndex:1]]];
-        }
     }
     
-}
-
-//if there's an error with the query display it to the user
-- (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation *)op didFailWithError:(NSError *)error {
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-														message:[error localizedDescription]
-													   delegate:nil
-											  cancelButtonTitle:@"确定"
-											  otherButtonTitles:nil];
-	[alertView show];
 }
 
 -(void)showCallOut:(AGSGraphic *)p_selectGp title:(NSString *)p_title detail:(NSString *)p_detail{
@@ -582,11 +459,6 @@
     self.locationLayer = [self getLocationLayer:self.mapView x:loc.longitude y:loc.latitude];
     [self.mapView removeMapLayerWithName:@"GPS Location Layer"];
     [self.mapView addMapLayer:self.locationLayer withName:@"GPS Location Layer"];
-    
-    if (self.locationState) {
-        [self.mapView zoomToScale:9017.87105013534 withCenterPoint:[AGSPoint pointWithX:loc.longitude y:loc.latitude spatialReference:self.mapView.spatialReference] animated:YES];
-    }
-    
 }
 -(void)topLocationLayer{
     if (self.locationLayer !=nil) {
@@ -1346,5 +1218,46 @@
     [_routeGraphicsLayer refresh];
 }
 
+- (void)getStartPointInMap{
+    isGetStartPoint = YES;
+    self.toolLabel.text = @"请在地图上选择起始点，完成后继续点击路径查询";
+}
 
+- (void)getEndPointInMap{
+    isGetEndPoint = YES;
+    self.toolLabel.text = @"请在地图上选择终止点，完成后继续点击路径查询";
+}
+
+-(void)addLineStartEndPoint:(AGSPoint *)mappoint{
+    
+    if(startGra){
+        [self.ghLayer removeGraphic:startGra];
+        startGra = nil;
+    }
+    if(self.ghLayer == nil){
+        self.ghLayer = [[AGSGraphicsLayer alloc]init];
+        [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
+    }
+    AGSPictureMarkerSymbol * dian = nil;
+    if(isGetStartPoint){
+        dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qidian"];
+    }
+    if(isGetEndPoint){
+        dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"zhongdian"];
+    }
+    dian.size = CGSizeMake(32,47);
+    if(mappoint.x == 0 || mappoint.y == 0 ){
+        return;
+    }
+    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil];
+    startGra.symbol = dian;
+    [self.ghLayer addGraphic:startGra];
+    [self.ghLayer refresh];
+    if(isGetStartPoint){
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"ADD_START_POINT" object:nil userInfo:@{@"point":[NSString stringWithFormat:@"%f,%f",mappoint.x,mappoint.y]}];
+    }
+    if(isGetEndPoint){
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"ADD_END_POINT" object:nil userInfo:@{@"point":[NSString stringWithFormat:@"%f,%f",mappoint.x,mappoint.y]}];
+    }
+}
 @end

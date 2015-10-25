@@ -71,7 +71,7 @@ typedef enum {
 
 - (void)didGetDraw:(NSMutableDictionary *)searchDic;
 
-- (void)didgetLineSearch:(NSMutableDictionary *)lineDic;
+- (void)didGetLineSearch:(NSMutableDictionary *)lineDic;
 //继续添加
 @end
 
