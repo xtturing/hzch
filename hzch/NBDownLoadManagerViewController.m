@@ -16,7 +16,7 @@
 #import "DowningCell.h"
 #import "Utility.h"
 #import "myDrawTableViewCell.h"
-#import <sqlite3.h>
+#import "SpatialDatabase.h"
 @interface NBDownLoadManagerViewController ()<dataHttpDelegate>{
     sqlite3 *db;
 }
@@ -177,26 +177,16 @@
         NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
         NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
         if([[name pathExtension] isEqualToString:@"sqlite"]){
-            if (sqlite3_open([desPath UTF8String], &db) != SQLITE_OK) {
-                sqlite3_close(db);
-                NSLog(@"数据库打开失败");
+            SpatialDatabase *db = [SpatialDatabase databaseWithPath:desPath];
+            [db open];
+            FMResultSet *rs = [db executeQuery:@"SELECT * FROM geometry_columns"];
+            NSDictionary *column = nil;
+            while ([rs next]) {
+                column = [rs resultDictionary];
+                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:column];
+                [dic setObject:downItemurl forKey:@"url"];
+                [self.dbArray addObject:dic];
             }
-            NSString *sqlQuery = @"SELECT * FROM geometry_columns";
-            sqlite3_stmt * statement;
-            if (sqlite3_prepare_v2(db, [sqlQuery UTF8String], -1, &statement, nil) == SQLITE_OK) {
-                while (sqlite3_step(statement) == SQLITE_ROW) {
-                    char *name = (char*)sqlite3_column_text(statement, 0);
-                    NSString *nameStr = [[NSString alloc]initWithUTF8String:name];
-                    char *geo = (char*)sqlite3_column_text(statement, 1);
-                    NSString *geoStr = [[NSString alloc]initWithUTF8String:geo];
-                    char *type = (char*)sqlite3_column_text(statement, 2);
-                    NSString *typeStr = [[NSString alloc]initWithUTF8String:type];
-                    int srid = sqlite3_column_int(statement, 4);
-                    [self.dbArray addObject:@[downItemurl,nameStr,geoStr,typeStr, @(srid)]];
-                    NSLog(@"------name:%@ %@  %@ %d",geoStr,nameStr,typeStr,srid);
-                }
-            }
-            sqlite3_close(db);
         }
     }
 }
@@ -211,10 +201,10 @@
         findItem=[_tpkList objectForKey:urlKey];
         name = findItem.tpk.content;
     }else{
-        NSArray *array =[_dbArray objectAtIndex:indexPath.row];
-        urlKey = [array objectAtIndex:0];
+        NSMutableDictionary *array =[_dbArray objectAtIndex:indexPath.row];
+        urlKey = [array objectForKey:@"url"];
         findItem=[_dataList objectForKey:urlKey];
-        name = [array objectAtIndex:1];
+        name = [array objectForKey:@"f_table_name"];
     }
     static NSString *FirstLevelCell = @"downLoadCell";
     myDrawTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -263,7 +253,7 @@
     
 }
 - (BOOL)hasShowDraw:(NSString *)cellTag{
-    for (id tag in [dataHttpManager getInstance].drawLayers) {
+    for (id tag in [dataHttpManager getInstance].sqliteLayers) {
         if([cellTag isEqualToString: tag]){
             return YES;
         }

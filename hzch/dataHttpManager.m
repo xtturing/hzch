@@ -56,6 +56,7 @@ static dataHttpManager * instance=nil;
         
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
         self.drawLayers = [NSMutableArray arrayWithCapacity:0];
+        self.sqliteLayers = [NSMutableArray arrayWithCapacity:0];
         self.localLayers = [NSMutableArray arrayWithCapacity:0];
     }
     

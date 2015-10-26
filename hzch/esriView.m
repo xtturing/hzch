@@ -14,7 +14,7 @@
 #import "Draw.h"
 #import "GTMBase64.h"
 #import "MapUtil.h"
-#import <sqlite3.h> 
+#import "SpatialDatabase.h"
 
 @interface esriView ()<AGSLayerDelegate>{
     double _distance;
@@ -28,7 +28,6 @@
     double miny;
     double maxx;
     double maxy;
-    sqlite3 *db;
     BOOL isGetStartPoint;
     BOOL isGetEndPoint;
     AGSGraphic * startGra;
@@ -68,7 +67,6 @@
             self.frame = r1;
             isGetStartPoint = NO;
             isGetEndPoint = NO;
-            self.configData  = [[NSConfigData alloc]init];
             //NSLog(@"连续加载对象 : %@",self.mapView);
             [self changeMap:0];
             self.mapView.layerDelegate = self;
@@ -195,7 +193,6 @@
     self.mapView.callout.delegate = self;
     
     self.dataDic = p_data;
-    self.dataType = @"CustData";
     
 //    [self removeAllLayer];
     if(self.ghLayer == nil){
@@ -373,6 +370,22 @@
             if([self.ghLayer.name isEqualToString:@"CustomLayer"]){
                 [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"title"] detail:[t_selgh attributeAsStringForKey:@"detail"]];
             }
+            
+        }
+        for (NSString *name in [dataHttpManager getInstance].sqliteLayers) {
+            AGSGraphicsLayer *localLayer = (AGSGraphicsLayer *)[self.mapView mapLayerForName:name];
+            if( localLayer && [localLayer graphicsCount] > 0){
+                AGSGraphic *t_selgh ;
+                for (AGSGraphic *t_gh in [localLayer graphics]) {
+                    
+                    CGPoint pointVar = [mapView toScreenPoint:(AGSPoint *)[t_gh geometry]];
+                    if (sqrt((screen.x-pointVar.x)*(screen.x-pointVar.x)+(screen.y-pointVar.y)*(screen.y-pointVar.y))<15) {
+                        t_selgh = t_gh;
+                        break;
+                    }
+                }
+                [self showCallOut:t_selgh title:[t_selgh attributeAsStringForKey:@"title"] detail:[t_selgh attributeAsStringForKey:@"detail"]];
+            }
         }
     }
     
@@ -482,12 +495,6 @@
         [self.mapView removeMapLayer:self.ghLayer];
         self.ghLayer = nil;
     }
-    if (self.dmsLayer !=nil) {
-        [self.mapView removeMapLayer:self.dmsLayer];
-        self.dmsLayer = nil;
-
-    }
-
 }
 
 //活的定位图层
@@ -865,13 +872,22 @@
     NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
     if([[name pathExtension] isEqualToString:@"tpk"]){
         if(![self hasAddLocalLayer:layerurl]){
-            [[dataHttpManager getInstance].localLayers addObject:layerurl];
+            NSInteger type = [[[NSUserDefaults standardUserDefaults] objectForKey:@"SHOWRESOURCETYPE"] integerValue];
+            if(type == 0){
+                for(NSString *url in [dataHttpManager getInstance].localLayers){
+                    NSArray *arrayurl = [[url description] componentsSeparatedByString:@"/"];
+                    NSString *layername = [arrayurl objectAtIndex:(arrayurl.count-1)];
+                    [self.mapView removeMapLayerWithName:layername];
+                }
+                [[dataHttpManager getInstance].localLayers removeAllObjects];
+            }
             AGSLocalTiledLayer *localTileLayer = [[AGSLocalTiledLayer alloc] initWithPath:desPath];
             localTileLayer.delegate =self;
             if(localTileLayer != nil){
                 [self.mapView addMapLayer:localTileLayer withName:name];
                 [self.mapView zoomIn:YES];
             }
+            [[dataHttpManager getInstance].localLayers addObject:layerurl];
         }else{
             [self.mapView removeMapLayerWithName:name];
             [[dataHttpManager getInstance].localLayers removeObject:layerurl];
@@ -880,59 +896,83 @@
     }
     
     if([[name pathExtension] isEqualToString:@"sqlite"] ){
-        if(![self hasShowDraw:layername]){
-            if (sqlite3_open([desPath UTF8String], &db) != SQLITE_OK) {
-                sqlite3_close(db);
-                NSLog(@"数据库打开失败");
-            }
-            NSString *sqlQuery = [NSString stringWithFormat:@"SELECT * FROM %@"
-                                  ,layername];
-            sqlite3_stmt * statement;
-            if (sqlite3_prepare_v2(db, [sqlQuery UTF8String], -1, &statement, nil) == SQLITE_OK) {
-                [[dataHttpManager getInstance].drawLayers addObject:layername];
+        if(![self hasShowSqlite:layername]){
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                SpatialDatabase *db = [SpatialDatabase databaseWithPath:desPath];
+                [db open];
+                FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"select *, AsGeoJSON(Geometry) AS GEOJSON FROM %@",layername]];
                 NSMutableArray *list = [NSMutableArray arrayWithCapacity:0];
-                NSMutableArray *column = nil;
-                while (sqlite3_step(statement) == SQLITE_ROW) {
-                    int count = sqlite3_data_count(statement);
-                    column = [NSMutableArray arrayWithCapacity:0];
-                    for(int i = 0;i<count;i++){
-                        int type = sqlite3_column_type(statement, i);
-                        switch (type) {
-                            case SQLITE_INTEGER:{
-                                int age = sqlite3_column_int(statement, i);
-                                [column addObject:@(age)];
-                            }
-                                break;
-                            case SQLITE_TEXT:{
-                                char *name = (char*)sqlite3_column_text(statement, i);
-                                NSString *nsNameStr = [[NSString alloc]initWithUTF8String:name];
-                                if(nsNameStr &&  [nsNameStr stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
-                                    [column addObject:nsNameStr];
-                                }
-                            }
-                                break;
-                            case SQLITE_BLOB:{
-                                const void *op = sqlite3_column_blob(statement, i);
-                                int size = sqlite3_column_bytes(statement,i);
-                                NSData *data = [[NSData alloc]initWithBytes:op length:size];
-                                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                                
-                            }
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                   [list addObject:column];
+                NSDictionary *column = nil;
+                while ([rs next]) {
+                    column = [rs resultDictionary];
+                    [list addObject:column];
                 }
-            }
-            sqlite3_close(db);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(list.count > 0){
+                        [self addLocalGeomery:list layerName:layername];
+                        [[dataHttpManager getInstance].sqliteLayers addObject:layername];
+                        ALERT(@"离线数据已添加到地图");
+                    }else{
+                        ALERT(@"离线数据为空");
+                    }
+                });
+            });
         }else{
-            [[dataHttpManager getInstance].drawLayers removeObject:layername];
+            [[dataHttpManager getInstance].sqliteLayers removeObject:layername];
+            [self.mapView removeMapLayerWithName:layername];
+            [self.mapView.callout removeFromSuperview];
             ALERT(@"离线数据已从地图移除");
         }
         
     }
+}
+
+- (void)addLocalGeomery:(NSMutableArray *)list layerName:(NSString *)name{
+    self.mapView.touchDelegate = self;
+    self.mapView.callout.delegate = self;
+     NSInteger type = [[[NSUserDefaults standardUserDefaults] objectForKey:@"SHOWRESOURCETYPE"] integerValue];
+    if(type == 0){
+        for(NSString *name in [dataHttpManager getInstance].sqliteLayers){
+            [self.mapView removeMapLayerWithName:name];
+        }
+        [[dataHttpManager getInstance].sqliteLayers removeAllObjects];
+        [self.mapView.callout removeFromSuperview];
+    }
+    AGSGraphicsLayer *localLayer = [[AGSGraphicsLayer alloc]init];
+    [self.mapView addMapLayer:localLayer withName:name];
+    localLayer.selectionColor = [UIColor redColor];
+    
+    for (NSDictionary *dic in list) {
+        @autoreleasepool{
+            NSString *name = [dic objectForKey:@"NAME"];
+            NSString *address = [dic objectForKey:@"ADDRESS"];
+            NSString *jsonString  = [dic objectForKey:@"GEOJSON"];
+            NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *err;
+            NSDictionary *geoDic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                options:NSJSONReadingMutableContainers
+                                                                  error:&err];
+            if([[geoDic objectForKey:@"type"] isEqualToString:@"Point"]){
+                NSArray *array = [geoDic objectForKey:@"coordinates"];
+                if(array.count == 2){
+                    AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
+                    AGSSimpleMarkerSymbol* generalPointSymbol = [[AGSSimpleMarkerSymbol alloc] init];
+                    generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCross;
+                    generalPointSymbol.color = [UIColor redColor];
+                    generalPointSymbol.size = CGSizeMake(15, 15);
+                    NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
+                    NSArray *tipvalue=[[NSArray alloc]initWithObjects:address,name,dic,nil];
+                    NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
+                    AGSGraphic *gra = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:tips infoTemplateDelegate:nil];
+                    [localLayer addGraphic:gra];
+                    [self showCallOut:gra title:name detail:address];
+                }
+                
+            }
+            
+        }
+    }
+    [localLayer refresh];
 }
 
 -(void)layerDidLoad:(AGSLayer *)layer{
@@ -1032,6 +1072,15 @@
     
 }
 
+- (BOOL)hasShowSqlite:(NSString *)cellTag{
+    for (id tag in [dataHttpManager getInstance].sqliteLayers) {
+        if([cellTag isEqualToString: tag]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (BOOL)hasShowDraw:(NSString *)cellTag{
     for (id tag in [dataHttpManager getInstance].drawLayers) {
         if([cellTag isEqualToString: tag]){
@@ -1128,102 +1177,6 @@
     if(_delegate && [_delegate respondsToSelector:@selector(didDrawSearch)]){
         [_delegate didDrawSearch];
     }
-}
-
--(void) executeQueryResult:(NSData*)resultData
-{
-    AGSGraphicsLayer* _routeGraphicsLayer = [MapUtil getMapLayerByName:@"路线查询图层" mapView:self.mapView];
-    
-    NSDictionary* result = [NSJSONSerialization JSONObjectWithData:resultData options:NSJSONReadingMutableContainers error:nil];
-    
-    NSDictionary* route = [result objectForKey:@"route"];
-    NSDictionary* shortestTime = [route objectForKey:@"ShortestTime"];
-    
-    NSArray* lines = [shortestTime objectForKey:@"lines"];
-    
-    //路线节点的Symbol
-    // 1.第一个节点添加提示
-    AGSPictureMarkerSymbol* startPointSymbol = [[AGSPictureMarkerSymbol alloc] initWithImage:[UIImage imageNamed:@"route_start.png"]];
-    AGSPictureMarkerSymbol* mainPointSymbol = [[AGSPictureMarkerSymbol alloc] initWithImage:[UIImage imageNamed:@"routePin.png"]];
-    AGSPictureMarkerSymbol* endPointSymbol = [[AGSPictureMarkerSymbol alloc] initWithImage:[UIImage imageNamed:@"route_destination.png"]];
-    // 2.普通节点
-    AGSSimpleMarkerSymbol* generalPointSymbol = [[AGSSimpleMarkerSymbol alloc] init];
-    generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCircle;
-    generalPointSymbol.color = [UIColor greenColor];
-    generalPointSymbol.size = CGSizeMake(5, 5);
-    // 3.连线
-    AGSSimpleLineSymbol* lineSymbol = [[AGSSimpleLineSymbol alloc] init];
-    lineSymbol.style = AGSSimpleLineSymbolStyleDash;
-    lineSymbol.color= [UIColor colorWithRed:149/255.0 green:38/255.0 blue:238/255.0 alpha:1];
-    lineSymbol.width = 5;
-    
-    //for (NSDictionary* line in lines) //获取每一条路线
-    for (int i=0; i<[lines count]; i++)
-    {
-        NSDictionary* line = [lines objectAtIndex:i];
-        NSString* description = [line objectForKey:@"description"];
-        NSArray* points = [line objectForKey:@"points"];
-        
-        // 1.第一个点
-        NSDictionary* pointDic = [points objectAtIndex:0];
-        double x = [[pointDic objectForKey:@"x"] doubleValue];
-        double y = [[pointDic objectForKey:@"y"] doubleValue];
-        
-        AGSPoint* point0 = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
-        NSMutableDictionary* attributes =  [NSMutableDictionary dictionaryWithObjectsAndKeys:description,@"description", nil];
-        AGSGraphic* graphic0 = [AGSGraphic graphicWithGeometry:point0 symbol:mainPointSymbol attributes:attributes infoTemplateDelegate:nil];
-        if (i==0)
-            graphic0.symbol = startPointSymbol;
-        [_routeGraphicsLayer addGraphic:graphic0];
-        
-        
-        AGSPoint* firstPoint = point0;
-        for(int i=1;i<[points count];i++)
-        {
-            pointDic = [points objectAtIndex:i];
-            x = [[pointDic objectForKey:@"x"] doubleValue];
-            y = [[pointDic objectForKey:@"y"] doubleValue];
-            
-            AGSPoint* point = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
-            // AGSGraphic* graphic = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:nil infoTemplateDelegate:nil];
-            // [_routeGraphicsLayer addGraphic:graphic];
-            
-            // 添加线段
-            AGSMutablePolyline* line = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
-            [line addPathToPolyline];
-            
-            [line addPointToPath:firstPoint];
-            [line addPointToPath:point];
-            AGSGraphic* lineGraphic = [AGSGraphic graphicWithGeometry:line symbol:lineSymbol attributes:nil infoTemplateDelegate:nil];
-            [_routeGraphicsLayer addGraphic:lineGraphic];
-            
-            firstPoint = point;
-        }
-    }
-    
-    //加最后一个点
-    NSDictionary* line = [lines objectAtIndex:[lines count]-1];
-    NSArray* points = [line objectForKey:@"points"];
-    NSDictionary* pointDic = [points objectAtIndex:[points count]-1];
-    double x = [[pointDic objectForKey:@"x"] doubleValue];
-    double y = [[pointDic objectForKey:@"y"] doubleValue];
-    
-    AGSPoint* pointEnd = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
-    NSMutableDictionary* attributes =  [NSMutableDictionary dictionaryWithObjectsAndKeys:@"到达终点",@"description", nil];
-    AGSGraphic* graphicEnd = [AGSGraphic graphicWithGeometry:pointEnd symbol:endPointSymbol attributes:attributes infoTemplateDelegate:nil];
-    [_routeGraphicsLayer addGraphic:graphicEnd];
-    
-    // zoom to
-    line = [lines objectAtIndex:0];
-    points = [line objectForKey:@"points"];
-    pointDic = [points objectAtIndex:0];
-    x = [[pointDic objectForKey:@"x"] doubleValue];
-    y = [[pointDic objectForKey:@"y"] doubleValue];
-    
-    AGSPoint* pointStart = [AGSPoint pointWithX:x y:y spatialReference:self.mapView.spatialReference];
-    [self.mapView zoomToGeometry:pointStart withPadding:20 animated:YES];
-    
-    [_routeGraphicsLayer refresh];
 }
 
 - (void)getStartPointInMap{

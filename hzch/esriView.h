@@ -40,21 +40,9 @@ CLLocationManagerDelegate>
 
 
 //叠加层
-@property (nonatomic,strong)QueryParams *queryParams;
-@property (nonatomic,strong)NSConfigData *configData;
-@property (nonatomic,strong)NSString *dataType;
 @property (nonatomic,strong)NSArray *dataDic;
 @property (nonatomic,strong)AGSGraphicsLayer *ghLayer;
 @property (nonatomic,strong)AGSGraphicsLayer *lineLayer;
-@property (nonatomic,strong)AGSDynamicMapServiceLayer *dmsLayer;
-@property (strong,nonatomic) AGSQueryTask *queryTask;
-@property (strong,nonatomic) AGSQuery *query;
-
-//@property (nonatomic,weak)NSDictionary *newsCatalog;
-@property (nonatomic,weak)NSDictionary *selectCatalog;
-@property (nonatomic,strong)AGSEnvelope *envelope;
-@property (nonatomic,strong)AGSPoint *beginPoint;
-@property (nonatomic,strong)AGSPoint *endPoint;
 @property (nonatomic,strong)AGSGraphicsLayer *sketchGhLayer;
 
 @property(nonatomic,weak) IBOutlet UIToolbar *toolView;
@@ -85,7 +73,6 @@ CLLocationManagerDelegate>
 - (void)layerMap;
 - (void)addWMTSLayer:(NSNotification *)info;
 - (void)addAllWmtsLayers;
--(void)addSubjectLayer:(AGSFeatureSet *)p_features select:(AGSGraphic *)p_selGp queryParams:(QueryParams *) p_queryParams;
 - (void)touchesBegan:(UITouch*)touch;
 - (void)touchesMoved:(UITouch*)touch;
 - (void)touchesEnded:(UITouch*)touch;
