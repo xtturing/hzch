@@ -86,6 +86,9 @@
 		41421DC71B9DD7F3000DDFAF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */; };
 		41421DC81B9DD7F3000DDFAF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC51B9DD7F3000DDFAF /* Default.png */; };
 		41421DC91B9DD7F3000DDFAF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41421DC61B9DD7F3000DDFAF /* Default@2x.png */; };
+		41483E7E1BDFC55900C251CE /* PointTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41483E7D1BDFC55900C251CE /* PointTableViewController.m */; };
+		41483E811BDFC5A600C251CE /* lineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41483E801BDFC5A600C251CE /* lineTableViewController.m */; };
+		41483E841BDFC5C700C251CE /* polyonTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41483E831BDFC5C700C251CE /* polyonTableViewController.m */; };
 		41533EF41BBDE543006C7D55 /* NBGovment.m in Sources */ = {isa = PBXBuildFile; fileRef = 41533EF31BBDE543006C7D55 /* NBGovment.m */; };
 		41533EF71BBDED96006C7D55 /* ResoureDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41533EF61BBDED96006C7D55 /* ResoureDetailTableViewController.m */; };
 		41533EFA1BBDF47E006C7D55 /* NBSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 41533EF91BBDF47E006C7D55 /* NBSearch.m */; };
@@ -273,6 +276,12 @@
 		41421DC41B9DD7F3000DDFAF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41421DC51B9DD7F3000DDFAF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		41421DC61B9DD7F3000DDFAF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		41483E7C1BDFC55900C251CE /* PointTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointTableViewController.h; sourceTree = "<group>"; };
+		41483E7D1BDFC55900C251CE /* PointTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointTableViewController.m; sourceTree = "<group>"; };
+		41483E7F1BDFC5A600C251CE /* lineTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lineTableViewController.h; sourceTree = "<group>"; };
+		41483E801BDFC5A600C251CE /* lineTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = lineTableViewController.m; sourceTree = "<group>"; };
+		41483E821BDFC5C700C251CE /* polyonTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polyonTableViewController.h; sourceTree = "<group>"; };
+		41483E831BDFC5C700C251CE /* polyonTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = polyonTableViewController.m; sourceTree = "<group>"; };
 		41533EF21BBDE543006C7D55 /* NBGovment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGovment.h; sourceTree = "<group>"; };
 		41533EF31BBDE543006C7D55 /* NBGovment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBGovment.m; sourceTree = "<group>"; };
 		41533EF51BBDED96006C7D55 /* ResoureDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoureDetailTableViewController.h; sourceTree = "<group>"; };
@@ -724,6 +733,12 @@
 				415CA7441BC80A9A003D8347 /* myDrawTableViewController.m */,
 				415CA7461BC80FDB003D8347 /* myDrawTableViewCell.h */,
 				415CA7471BC80FDB003D8347 /* myDrawTableViewCell.m */,
+				41483E7C1BDFC55900C251CE /* PointTableViewController.h */,
+				41483E7D1BDFC55900C251CE /* PointTableViewController.m */,
+				41483E7F1BDFC5A600C251CE /* lineTableViewController.h */,
+				41483E801BDFC5A600C251CE /* lineTableViewController.m */,
+				41483E821BDFC5C700C251CE /* polyonTableViewController.h */,
+				41483E831BDFC5C700C251CE /* polyonTableViewController.m */,
 			);
 			name = set;
 			sourceTree = "<group>";
@@ -941,8 +956,10 @@
 				413C78FF1BBAE9D7005217F3 /* ResoureTableViewController.m in Sources */,
 				413470071BBF46DA00FABEA8 /* NBSearchDetailTableViewController.m in Sources */,
 				41C7355A1BDD13F800E01B84 /* NBRouteItem.m in Sources */,
+				41483E7E1BDFC55900C251CE /* PointTableViewController.m in Sources */,
 				413D7DEF1BAF02CC00D972DB /* NBDownLoadViewController.m in Sources */,
 				415CA7411BC7D23C003D8347 /* Draw.m in Sources */,
+				41483E811BDFC5A600C251CE /* lineTableViewController.m in Sources */,
 				412A152E1BC69318006E87A0 /* ActionSheetDistancePicker.m in Sources */,
 				415A61361BADB4C9001FA3FB /* RATreeNodeInfo+Private.m in Sources */,
 				415A61311BADB4C9001FA3FB /* RATreeView+Enums.m in Sources */,
@@ -973,6 +990,7 @@
 				410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */,
 				415CA7481BC80FDB003D8347 /* myDrawTableViewCell.m in Sources */,
 				415A612F1BADB4C9001FA3FB /* RATreeView+TableViewDataSource.m in Sources */,
+				41483E841BDFC5C700C251CE /* polyonTableViewController.m in Sources */,
 				41E425D71BA8694D009C0581 /* TianDiTuWMTSLayerInfo.m in Sources */,
 				412A15351BC6A7F4006E87A0 /* ShpHelper.m in Sources */,
 				413D7E2A1BAF08ED00D972DB /* dataHttpManager.m in Sources */,

@@ -955,17 +955,60 @@
             if([[geoDic objectForKey:@"type"] isEqualToString:@"Point"]){
                 NSArray *array = [geoDic objectForKey:@"coordinates"];
                 if(array.count == 2){
+                    NSInteger style = 0;
+                    NSInteger width = 15;
+                    NSInteger color = 10001;
+                    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]  objectForKey:@"point"];
+                    if(dic){
+                        style = [[dic objectForKey:@"style"] integerValue];
+                        width = [[dic objectForKey:@"width"] integerValue];
+                        color = [[dic objectForKey:@"color"] integerValue];
+                    }
                     AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
                     AGSSimpleMarkerSymbol* generalPointSymbol = [[AGSSimpleMarkerSymbol alloc] init];
-                    generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCross;
-                    generalPointSymbol.color = [UIColor redColor];
-                    generalPointSymbol.size = CGSizeMake(15, 15);
+                    switch (style) {
+                        case 0:
+                            generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCircle;
+                            break;
+                        case 1:
+                            generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCross;
+                            break;
+                        case 2:
+                            generalPointSymbol.style = AGSSimpleMarkerSymbolStyleDiamond;
+                            break;
+                        case 3:
+                            generalPointSymbol.style = AGSSimpleMarkerSymbolStyleSquare;
+                            break;
+                        case 4:
+                            generalPointSymbol.style = AGSSimpleMarkerSymbolStyleX;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (color) {
+                        case 10001:
+                            generalPointSymbol.color = [UIColor redColor];
+                            break;
+                        case 10002:
+                            generalPointSymbol.color = [UIColor blueColor];
+                            break;
+                        case 10003:
+                            generalPointSymbol.color = [UIColor greenColor];
+                            break;
+                        case 10004:
+                            generalPointSymbol.color = [UIColor purpleColor];
+                            break;
+                        default:
+                            break;
+                    }
+                    generalPointSymbol.size = CGSizeMake(width, width);
                     NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
                     NSArray *tipvalue=[[NSArray alloc]initWithObjects:address,name,dic,nil];
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:tips infoTemplateDelegate:nil];
                     [localLayer addGraphic:gra];
                     [self showCallOut:gra title:name detail:address];
+
                 }
                 
             }
