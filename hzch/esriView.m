@@ -965,7 +965,7 @@
                         color = [[dic objectForKey:@"color"] integerValue];
                     }
                     AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
-                    AGSSimpleMarkerSymbol* generalPointSymbol = [[AGSSimpleMarkerSymbol alloc] init];
+                    AGSSimpleMarkerSymbol* generalPointSymbol = [AGSSimpleMarkerSymbol simpleMarkerSymbol];
                     switch (style) {
                         case 0:
                             generalPointSymbol.style = AGSSimpleMarkerSymbolStyleCircle;
@@ -1009,6 +1009,165 @@
                     [localLayer addGraphic:gra];
                     [self showCallOut:gra title:name detail:address];
 
+                }
+                
+            }else if([[geoDic objectForKey:@"type"] isEqualToString:@"MultiPolygon"]){
+                NSArray *array = [geoDic objectForKey:@"coordinates"];
+                if(array){
+                    NSInteger style = 0;
+                    NSInteger width = 2;
+                    NSInteger color = 10001;
+                    NSInteger color2 = 30001;
+                    NSInteger apla = 50;
+                    NSInteger stylePolyon = 20001;
+                    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]  objectForKey:@"polyon"];
+                    if(dic){
+                        style = [[dic objectForKey:@"style"] integerValue];
+                        width = [[dic objectForKey:@"width"] integerValue];
+                        color = [[dic objectForKey:@"color"] integerValue];
+                        color2 = [[dic objectForKey:@"color2"] integerValue];
+                        apla = [[dic objectForKey:@"aplaValue"] integerValue];
+                        stylePolyon = [[dic objectForKey:@"stylePolyon"] integerValue];
+                    }
+                    AGSMutablePolygon *polyon = [AGSMutablePolygon polygonWithJSON:@{@"rings":array,@"spatialReference":@{@"wkid" : @(4326)}}];
+                    AGSSimpleFillSymbol* generalPolygonSymbol = [AGSSimpleFillSymbol simpleFillSymbol];
+                    switch (style) {
+                        case 0:
+                            generalPolygonSymbol.outline.style = AGSSimpleLineSymbolStyleDash;
+                            break;
+                        case 1:
+                            generalPolygonSymbol.outline.style = AGSSimpleLineSymbolStyleDot;
+                            break;
+                        case 2:
+                            generalPolygonSymbol.outline.style = AGSSimpleLineSymbolStyleDashDot;
+                            break;
+                        case 3:
+                            generalPolygonSymbol.outline.style = AGSSimpleLineSymbolStyleDashDotDot;
+                            break;
+                        case 4:
+                            generalPolygonSymbol.outline.style = AGSSimpleLineSymbolStyleInsideFrame;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (stylePolyon) {
+                        case 20001:
+                            generalPolygonSymbol.style = AGSSimpleFillSymbolStyleSolid;
+                            break;
+                        case 20002:
+                            generalPolygonSymbol.style = AGSSimpleFillSymbolStyleHorizontal;
+                            break;
+                        case 20003:
+                            generalPolygonSymbol.style = AGSSimpleFillSymbolStyleVertical;
+                            break;
+                        case 20004:
+                            generalPolygonSymbol.style = AGSSimpleFillSymbolStyleBackwardDiagonal;
+                            break;
+                        case 20005:
+                            generalPolygonSymbol.style = AGSSimpleFillSymbolStyleForwardDiagonal;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (color) {
+                        case 10001:
+                            generalPolygonSymbol.outline.color = [UIColor redColor];
+                            break;
+                        case 10002:
+                            generalPolygonSymbol.outline.color = [UIColor blueColor];
+                            break;
+                        case 10003:
+                            generalPolygonSymbol.outline.color = [UIColor greenColor];
+                            break;
+                        case 10004:
+                            generalPolygonSymbol.outline.color = [UIColor purpleColor];
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (color2) {
+                        case 30001:
+                            generalPolygonSymbol.color = [[UIColor redColor ] colorWithAlphaComponent:apla/100.0];
+                            break;
+                        case 30002:
+                            generalPolygonSymbol.color = [[UIColor blueColor] colorWithAlphaComponent:apla/100.0];
+                            break;
+                        case 30003:
+                            generalPolygonSymbol.color = [[UIColor greenColor] colorWithAlphaComponent:apla/100.0];
+                            break;
+                        case 30004:
+                            generalPolygonSymbol.color = [[UIColor purpleColor] colorWithAlphaComponent:apla/100.0];
+                            break;
+                        default:
+                            break;
+                    }
+                    generalPolygonSymbol.outline.width = width;
+                    NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
+                    NSArray *tipvalue=[[NSArray alloc]initWithObjects:address,name,dic,nil];
+                    NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
+                    AGSGraphic *gra = [AGSGraphic graphicWithGeometry:polyon symbol:generalPolygonSymbol attributes:tips infoTemplateDelegate:nil];
+                    [localLayer addGraphic:gra];
+                    [self showCallOut:gra title:name detail:address];
+                    
+                }
+                
+            }else if([[geoDic objectForKey:@"type"] isEqualToString:@"MultiLineString"]){
+                NSArray *array = [geoDic objectForKey:@"coordinates"];
+                if(array){
+                    NSInteger style = 0;
+                    NSInteger width = 5;
+                    NSInteger color = 10001;
+                    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]  objectForKey:@"line"];
+                    if(dic){
+                        style = [[dic objectForKey:@"style"] integerValue];
+                        width = [[dic objectForKey:@"width"] integerValue];
+                        color = [[dic objectForKey:@"color"] integerValue];
+                    }
+                    AGSMutablePolyline *line = [AGSMutablePolyline polylineWithJSON:@{@"paths":array,@"spatialReference":@{@"wkid" : @(4326)}}];
+                    AGSSimpleLineSymbol* generallineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+                    switch (style) {
+                        case 0:
+                            generallineSymbol.style = AGSSimpleLineSymbolStyleDash;
+                            break;
+                        case 1:
+                            generallineSymbol.style = AGSSimpleLineSymbolStyleDot;
+                            break;
+                        case 2:
+                            generallineSymbol.style = AGSSimpleLineSymbolStyleDashDot;
+                            break;
+                        case 3:
+                            generallineSymbol.style = AGSSimpleLineSymbolStyleDashDotDot;
+                            break;
+                        case 4:
+                            generallineSymbol.style = AGSSimpleLineSymbolStyleInsideFrame;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (color) {
+                        case 10001:
+                            generallineSymbol.color = [UIColor redColor];
+                            break;
+                        case 10002:
+                            generallineSymbol.color = [UIColor blueColor];
+                            break;
+                        case 10003:
+                            generallineSymbol.color = [UIColor greenColor];
+                            break;
+                        case 10004:
+                            generallineSymbol.color = [UIColor purpleColor];
+                            break;
+                        default:
+                            break;
+                    }
+                    generallineSymbol.width = width;
+                    NSArray *tipkey=[[NSArray alloc]initWithObjects:@"detail",@"title",@"object",nil];
+                    NSArray *tipvalue=[[NSArray alloc]initWithObjects:address,name,dic,nil];
+                    NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
+                    AGSGraphic *gra = [AGSGraphic graphicWithGeometry:line symbol:generallineSymbol attributes:tips infoTemplateDelegate:nil];
+                    [localLayer addGraphic:gra];
+                    [self showCallOut:gra title:name detail:address];
+                    
                 }
                 
             }

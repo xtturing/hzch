@@ -23,9 +23,7 @@
     NSDictionary *dic = [[NSUserDefaults standardUserDefaults]  objectForKey:@"point"];
     if(dic){
         self.segment.selectedSegmentIndex = [[dic objectForKey:@"style"] integerValue];
-        self.styleIndex = self.segment.selectedSegmentIndex;
         self.slider.value = [[dic objectForKey:@"width"] integerValue];
-        self.widthIndex = self.slider.value;
         self.widthValue.text = [NSString stringWithFormat:@"%d",(int)self.slider.value];
         self.colorIndex = [[dic objectForKey:@"color"] integerValue];
         if(self.colorIndex == self.btn1.tag){
@@ -40,7 +38,12 @@
         if(self.colorIndex == self.btn4.tag){
             [self.btn4.layer setBorderWidth:2.0];
         }
+    }else{
+        self.colorIndex = self.btn1.tag;
+        [self.btn1.layer setBorderWidth:2.0];
     }
+    self.styleIndex = self.segment.selectedSegmentIndex;
+    self.widthIndex = self.slider.value;
 }
 
 - (void)didReceiveMemoryWarning {

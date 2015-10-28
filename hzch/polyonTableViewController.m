@@ -9,19 +9,82 @@
 #import "polyonTableViewController.h"
 
 @interface polyonTableViewController ()
-
+@property(nonatomic)NSInteger styleIndex;
+@property(nonatomic)NSInteger color2Index;
+@property(nonatomic)NSInteger colorIndex;
+@property(nonatomic)NSInteger stylePolyonIndex;
+@property(nonatomic)NSInteger widthIndex;
+@property(nonatomic)NSInteger aplaIndex;
 @end
 
 @implementation polyonTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]  objectForKey:@"polyon"];
+    if(dic){
+        self.segment.selectedSegmentIndex = [[dic objectForKey:@"style"] integerValue];
+        self.slider.value = [[dic objectForKey:@"width"] integerValue];
+        self.widthValue.text = [NSString stringWithFormat:@"%d",(int)self.slider.value];
+        
+        self.slider2.value = [[dic objectForKey:@"aplaValue"] integerValue];
+        self.aplaValue.text = [NSString stringWithFormat:@"%d%@",(int)self.slider2.value,@"%"];
+        
+        self.colorIndex = [[dic objectForKey:@"color"] integerValue];
+        if(self.colorIndex == self.btn11.tag){
+            [self.btn11.layer setBorderWidth:2.0];
+        }
+        if(self.colorIndex == self.btn12.tag){
+            [self.btn12.layer setBorderWidth:2.0];
+        }
+        if(self.colorIndex == self.btn13.tag){
+            [self.btn13.layer setBorderWidth:2.0];
+        }
+        if(self.colorIndex == self.btn14.tag){
+            [self.btn14.layer setBorderWidth:2.0];
+        }
+        
+        self.color2Index = [[dic objectForKey:@"color2"] integerValue];
+        if(self.color2Index == self.btn31.tag){
+            [self.btn31.layer setBorderWidth:2.0];
+        }
+        if(self.color2Index == self.btn32.tag){
+            [self.btn32.layer setBorderWidth:2.0];
+        }
+        if(self.color2Index == self.btn33.tag){
+            [self.btn33.layer setBorderWidth:2.0];
+        }
+        if(self.color2Index == self.btn34.tag){
+            [self.btn34.layer setBorderWidth:2.0];
+        }
+        
+        self.stylePolyonIndex = [[dic objectForKey:@"stylePolyon"] integerValue];
+        if(self.stylePolyonIndex == self.btn21.tag){
+            [self.btn21.layer setBorderWidth:2.0];
+        }
+        if(self.stylePolyonIndex == self.btn22.tag){
+            [self.btn22.layer setBorderWidth:2.0];
+        }
+        if(self.stylePolyonIndex == self.btn23.tag){
+            [self.btn23.layer setBorderWidth:2.0];
+        }
+        if(self.stylePolyonIndex == self.btn24.tag){
+            [self.btn24.layer setBorderWidth:2.0];
+        }
+        if(self.stylePolyonIndex == self.btn25.tag){
+            [self.btn25.layer setBorderWidth:2.0];
+        }
+    }else{
+        self.colorIndex = self.btn11.tag;
+        [self.btn11.layer setBorderWidth:2.0];
+        self.color2Index = self.btn31.tag;
+        [self.btn31.layer setBorderWidth:2.0];
+        self.stylePolyonIndex = self.btn21.tag;
+        [self.btn21.layer setBorderWidth:2.0];
+    }
+    self.styleIndex = self.segment.selectedSegmentIndex;
+    self.widthIndex = self.slider.value;
+    self.aplaIndex = self.slider2.value;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,72 +92,57 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+- (IBAction)segment:(id)sender{
+    UISegmentedControl *seg = (UISegmentedControl *)sender;
+    self.styleIndex = seg.selectedSegmentIndex;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (IBAction)save:(id)sender{
+    [[NSUserDefaults standardUserDefaults] setObject:@{@"style":@(self.styleIndex),@"color":@(self.colorIndex),@"width":@(self.widthIndex),@"aplaValue":@(self.aplaIndex),@"stylePolyon":@(self.stylePolyonIndex),@"color2":@(self.color2Index)} forKey:@"polyon"];
+    [[NSUserDefaults standardUserDefaults]  synchronize];
+    ALERT(@"面样式保存完成");
 }
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+- (IBAction)slider:(id)sender{
+    UISlider *slid = (UISlider *)sender;
+    self.widthIndex = slid.value;
+    self.widthValue.text = [NSString stringWithFormat:@"%d",(int)slid.value];
+}
+- (IBAction)sliderApla:(id)sender{
+    UISlider *slid = (UISlider *)sender;
+    self.aplaIndex = slid.value;
+    self.aplaValue.text = [NSString stringWithFormat:@"%d%@",(int)slid.value,@"%"];
+}
+- (IBAction)color:(id)sender{
+    UIButton *btn = (UIButton *)sender;
+    self.colorIndex = btn.tag;
+    [self.btn11.layer setBorderWidth:0];
+    [self.btn12.layer setBorderWidth:0];
+    [self.btn13.layer setBorderWidth:0];
+    [self.btn14.layer setBorderWidth:0];
     
-    // Configure the cell...
+    [btn.layer setBorderWidth:2.0];
+    [self.tableView reloadData];
+}
+- (IBAction)styleButton:(id)sender{
+    UIButton *btn = (UIButton *)sender;
+    self.stylePolyonIndex = btn.tag;
+    [self.btn21.layer setBorderWidth:0];
+    [self.btn22.layer setBorderWidth:0];
+    [self.btn23.layer setBorderWidth:0];
+    [self.btn24.layer setBorderWidth:0];
+    [self.btn25.layer setBorderWidth:0];
+    [btn.layer setBorderWidth:2.0];
+    [self.tableView reloadData];
+}
+- (IBAction)color2:(id)sender{
+    UIButton *btn = (UIButton *)sender;
+    self.color2Index = btn.tag;
+    [self.btn31.layer setBorderWidth:0];
+    [self.btn32.layer setBorderWidth:0];
+    [self.btn33.layer setBorderWidth:0];
+    [self.btn34.layer setBorderWidth:0];
     
-    return cell;
+    [btn.layer setBorderWidth:2.0];
+    [self.tableView reloadData];
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
