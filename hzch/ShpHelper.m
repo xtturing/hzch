@@ -54,7 +54,7 @@ NSMutableArray * shp2AGSGraphics(NSString * shpPath,NSString * shpName)
             case SHPT_POINT:
             {
                 AGSPoint *point =	[AGSPoint pointWithX:psShape->padfX[0] y:psShape->padfY[0] spatialReference:nil];
-                gra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil infoTemplateDelegate:nil];
+                gra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
             }
                 break;
             case SHPT_ARC:
@@ -77,7 +77,7 @@ NSMutableArray * shp2AGSGraphics(NSString * shpPath,NSString * shpName)
                         [line addPoint:point toPath:partNumber];
                     }
                 }
-                gra = [AGSGraphic graphicWithGeometry:line symbol:nil attributes:nil infoTemplateDelegate:nil];
+                gra = [AGSGraphic graphicWithGeometry:line symbol:nil attributes:nil];
             }
                 break;
             case SHPT_POLYGON:
@@ -100,7 +100,7 @@ NSMutableArray * shp2AGSGraphics(NSString * shpPath,NSString * shpName)
                         [polygon addPointToRing:point];
                     }
                 }
-                gra = [AGSGraphic graphicWithGeometry:polygon symbol:nil attributes:nil infoTemplateDelegate:nil];
+                gra = [AGSGraphic graphicWithGeometry:polygon symbol:nil attributes:nil];
             }
                 break;
             default:

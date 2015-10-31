@@ -12,4 +12,6 @@
 
 @property (nonatomic,strong) NBSearchCatalog *catalog;
 @property (nonatomic,assign) NSInteger tableID;
+
+- (IBAction)doBack:(id)sender;
 @end

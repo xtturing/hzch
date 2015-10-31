@@ -891,7 +891,7 @@
         <!--样式定制-->
         <scene sceneID="P2K-ci-Qz8">
             <objects>
-                <tableViewController title="样式定制" id="A5C-5c-AxG" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="yangshiTableViewController" title="样式定制" id="A5C-5c-AxG" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="xbw-ZK-PRc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2267,6 +2267,22 @@
             </objects>
             <point key="canvasLocation" x="2616" y="984"/>
         </scene>
+        <!--sqlite详情Nav-->
+        <scene sceneID="gVq-bX-ip1">
+            <objects>
+                <navigationController storyboardIdentifier="SearchCatalogDetailNavigation" id="j3z-mQ-KZ0" userLabel="sqlite详情Nav" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f71-zx-fFJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Ynt-ZB-mfW" kind="relationship" relationship="rootViewController" id="ljJ-ca-0dQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DIW-wN-sgL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3759" y="731"/>
+        </scene>
         <!--专题结果详情-->
         <scene sceneID="7le-zf-uS4">
             <objects>
@@ -2288,6 +2304,9 @@
                             <outlet property="delegate" destination="U9Z-3t-Shm" id="PwB-Qw-y23"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="YOv-ht-Aqg"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uga-Zg-jMc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2396,6 +2415,39 @@
                 </toolbar>
             </objects>
             <point key="canvasLocation" x="1135" y="792"/>
+        </scene>
+        <!--sqlite详情-->
+        <scene sceneID="GyS-0M-VZQ">
+            <objects>
+                <tableViewController title="可视图层管理" id="Ynt-ZB-mfW" userLabel="sqlite详情" customClass="SqliteDetailTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ddK-bV-9SY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wpa-TE-hHT">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wpa-TE-hHT" id="POi-mM-lWY">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ynt-ZB-mfW" id="e04-Kj-5yt"/>
+                            <outlet property="delegate" destination="Ynt-ZB-mfW" id="MGW-sA-5kQ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Gms-aU-bsh">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="2zK-FZ-ANv">
+                            <connections>
+                                <action selector="doBack:" destination="Ynt-ZB-mfW" id="ev4-5X-tXN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yCU-0X-nQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4528" y="748"/>
         </scene>
     </scenes>
     <resources>

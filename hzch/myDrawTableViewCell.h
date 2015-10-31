@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Draw.h"
+
 @interface myDrawTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) IBOutlet UIButton *showBtn;
@@ -17,6 +18,7 @@
 @property (nonatomic,strong) Draw *draw;
 @property (nonatomic,strong) NSString *layerUrl;
 @property (nonatomic,assign) NSInteger type;
+@property (nonatomic,copy) void(^editSqlitBlock)(void);
 - (IBAction)showDraw:(id)sender;
 - (IBAction)editDraw:(id)sender;
 - (IBAction)deleteDraw:(id)sender;

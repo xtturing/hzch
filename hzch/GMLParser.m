@@ -437,7 +437,7 @@ DEF_SINGLETON(GMLParser)
         geometry = [self decodeGMLMultiLineString:[geom objectForKey:gmlType]];
     }
     
-    return [AGSGraphic graphicWithGeometry:geometry symbol:nil attributes:attributes infoTemplateDelegate:nil];
+    return [AGSGraphic graphicWithGeometry:geometry symbol:nil attributes:attributes];
 }
 
 @end

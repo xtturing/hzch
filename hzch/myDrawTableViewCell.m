@@ -10,6 +10,7 @@
 #import "dataHttpManager.h"
 #import "DBDraws.h"
 #import "DownloadManager.h"
+#import "SpatialDatabase.h"
 @implementation myDrawTableViewCell
 
 - (void)awakeFromNib {
@@ -20,28 +21,27 @@
     if(_type == 0){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_DRAW_LAYER" object:nil userInfo:@{@"draw":self.draw}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
-    }else if(_type == 1){
+    }else if(_type == 1 || _type == 2){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl,@"name":self.titleLab.text}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
-    }else if (_type == 2){
-        
     }
 }
 
 - (IBAction)editDraw:(id)sender{
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"修改名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     if(_type == 0){
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"修改名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = 70009;
-    }else if(_type == 1){
-        alert.tag = 80009;
+        UITextField *textfield =  [alert textFieldAtIndex: 0];
+        textfield.text = self.titleLab.text;
+        textfield.clearButtonMode = UITextFieldViewModeAlways;
+        [alert show];
     }else if (_type == 2){
-        alert.tag = 90009;
+        if(self.editSqlitBlock){
+            self.editSqlitBlock();
+        }
     }
-    UITextField *textfield =  [alert textFieldAtIndex: 0];
-    textfield.text = self.titleLab.text;
-    textfield.clearButtonMode = UITextFieldViewModeAlways;
-    [alert show];
+    
 }
 #pragma mark - UIAlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -90,9 +90,41 @@
             });
         }
     }
+    if(alertView.tag == 90008){
+        if(buttonIndex == 1){
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                [[DownloadManager sharedInstance]cancelDownload:self.layerUrl];
+                NSArray *array = [self.layerUrl componentsSeparatedByString:@"/"];
+                NSString *name = [array objectAtIndex:(array.count-1)];
+                NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+                NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
+                if([[name pathExtension] isEqualToString:@"sqlite"]){
+                    SpatialDatabase *db = [SpatialDatabase databaseWithPath:desPath];
+                    [db open];
+                    if(![db executeQuery:[NSString stringWithFormat:@"DROP TABLE %@",self.titleLab.text]]){
+                        NSLog(@"删除sqlite失败！");
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if([self hasShowSqliteLayer:self.layerUrl]){
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl}];
+                    }
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
+                });
+            });
+        }
+    }
     return;
 }
 
+- (BOOL)hasShowSqliteLayer:(NSString *)cellTag{
+    for (id tag in [dataHttpManager getInstance].sqliteLayers) {
+        if([cellTag isEqualToString: tag]){
+            return YES;
+        }
+    }
+    return NO;
+}
 - (BOOL)hasShowDraw:(NSString *)cellTag{
     for (id tag in [dataHttpManager getInstance].drawLayers) {
         if([cellTag isEqualToString: tag]){
@@ -121,7 +153,7 @@
         alert.tag = 80008;
         [alert show];
     }else if (_type == 2){
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除缓存数据？", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除离线数据库？", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
         alert.tag = 90008;
         [alert show];
     }

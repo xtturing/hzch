@@ -118,6 +118,7 @@
 		41750E241BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E231BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m */; };
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
 		417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC3671BA9C69E00FA4394 /* ViewController.m */; };
+		4186EC401BE525AC00E8FBD3 /* SqliteDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */; };
 		41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B9534C1BB598E200FE6F35 /* CanvasView.m */; };
 		41C735591BDD13F800E01B84 /* NBRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735561BDD13F800E01B84 /* NBRoute.m */; };
 		41C7355A1BDD13F800E01B84 /* NBRouteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735581BDD13F800E01B84 /* NBRouteItem.m */; };
@@ -336,6 +337,8 @@
 		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		417DC3661BA9C69E00FA4394 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		417DC3671BA9C69E00FA4394 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4186EC3E1BE525AC00E8FBD3 /* SqliteDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteDetailTableViewController.h; sourceTree = "<group>"; };
+		4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SqliteDetailTableViewController.m; sourceTree = "<group>"; };
 		41B9534C1BB598E200FE6F35 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
 		41B9534D1BB598E200FE6F35 /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
 		41C735551BDD13F800E01B84 /* NBRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRoute.h; sourceTree = "<group>"; };
@@ -758,6 +761,8 @@
 				41E425E61BA86B26009C0581 /* esriView.xib */,
 				41750E1F1BD2978500A99384 /* LayersManagerTableViewController.h */,
 				41750E201BD2978500A99384 /* LayersManagerTableViewController.m */,
+				4186EC3E1BE525AC00E8FBD3 /* SqliteDetailTableViewController.h */,
+				4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */,
 			);
 			name = map;
 			sourceTree = "<group>";
@@ -996,6 +1001,7 @@
 				413D7E2A1BAF08ED00D972DB /* dataHttpManager.m in Sources */,
 				413C78FC1BBAE1D3005217F3 /* NBSearchTableViewController.m in Sources */,
 				415A613C1BADB4E8001FA3FB /* RAViewController.m in Sources */,
+				4186EC401BE525AC00E8FBD3 /* SqliteDetailTableViewController.m in Sources */,
 				412A154D1BC6AB5B006E87A0 /* shpopen.c in Sources */,
 				412A15611BC6AFF7006E87A0 /* OGCParser.m in Sources */,
 				417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */,

@@ -47,6 +47,7 @@
     });
     [_segment addTarget:self action:@selector(segmentAction:)forControlEvents:UIControlEventValueChanged];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:@"RELOADTABLE" object:nil];
+    self.title = @"返回";
     // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -96,7 +97,7 @@
         }
     }
     [self loadDataDB];
-    [self.table performSelector:@selector(reloadData) withObject:nil afterDelay:1.0];
+    [self.table performSelector:@selector(reloadData) withObject:nil afterDelay:2.0];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -215,10 +216,10 @@
                 reuseIdentifier: FirstLevelCell];
     }
     cell.titleLab.text = name;
-    cell.type = 1;
     cell.layerUrl = urlKey;
     if(_segment.selectedSegmentIndex==0)
     {
+        cell.type = 1;
         cell.editBtn.hidden = YES;
         if([self hasAddLocalLayer:urlKey]){
             [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
@@ -226,7 +227,13 @@
             [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
         }
     }else{
+        cell.type = 2;
         cell.editBtn.hidden = NO;
+        cell.deleteBtn.hidden = YES;
+        cell.editSqlitBlock = ^(){
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            [self.navigationController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"yangshiTableViewController"] animated:YES];
+        };
         if([self hasShowDraw:name]){
             [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
         }else{
@@ -250,7 +257,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
 }
 - (BOOL)hasShowDraw:(NSString *)cellTag{
     for (id tag in [dataHttpManager getInstance].sqliteLayers) {

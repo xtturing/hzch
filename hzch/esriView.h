@@ -54,6 +54,7 @@ CLLocationManagerDelegate>
 
 @property (nonatomic, weak) IBOutlet AGSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIButton *locationBtn;
+@property (nonatomic,copy) void(^ClickCalloutBlock)(NSDictionary *dic);
 - (IBAction)zoomUpAct:(id)sender;
 - (IBAction)zoomDownAct:(id)sender;
 - (IBAction)locationAct:(id)sender;

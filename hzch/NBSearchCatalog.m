@@ -38,13 +38,20 @@
 - (void)CatalogShowDictionary:(NSDictionary *)dic{
     _catalogDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     for(NSString *key in dic.allKeys){
-        NSString *value = [dic objectForKey:key];
-        if( value == nil || value.length == 0 || [value isEqualToString:@" "]){
+        if([dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null])
+        {
             [_catalogDic removeObjectForKey:key];
-        }
-        if([key isEqualToString:@"fcode"] || [key isEqualToString:@"updatestatus"]
-           || [key isEqualToString:@"refsource"] || [key isEqualToString:@"techmethod"]|| [key isEqualToString:@"featureguid"]|| [key isEqualToString:@"labelx"]|| [key isEqualToString:@"labely"]|| [key isEqualToString:@"minx"]|| [key isEqualToString:@"miny"]|| [key isEqualToString:@"centerx"]|| [key isEqualToString:@"centery"]|| [key isEqualToString:@"maxx"]|| [key isEqualToString:@"maxy"]|| [key isEqualToString:@"note"]|| [key isEqualToString:@"tablename"]|| [key isEqualToString:@"metadataid"]|| [key isEqualToString:@"aliasname"]|| [key isEqualToString:@"remark"]|| [key isEqualToString:@"updatetime"]|| [key isEqualToString:@"destroytime"]|| [key isEqualToString:@"destroytim"]|| [key isEqualToString:@"updatetim"]|| [key isEqualToString:@"destroyti"]|| [key isEqualToString:@"featuregui"]|| [key isEqualToString:@"techmetho"]|| [key isEqualToString:@"updatesta"]|| [key isEqualToString:@"featuregu"]){
-            [_catalogDic removeObjectForKey:key];
+        }else{
+            if([[dic objectForKey:key] isKindOfClass:[NSString class]]){
+                NSString *value = [dic objectForKey:key];
+                if([value stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0 || [value isEqualToString:@"<null>"]){
+                    [_catalogDic removeObjectForKey:key];
+                }
+            }
+            if([key isEqualToString:@"fcode"] || [key isEqualToString:@"updatestatus"]
+               || [key isEqualToString:@"refsource"] || [key isEqualToString:@"techmethod"]|| [key isEqualToString:@"featureguid"]|| [key isEqualToString:@"labelx"]|| [key isEqualToString:@"labely"]|| [key isEqualToString:@"minx"]|| [key isEqualToString:@"miny"]|| [key isEqualToString:@"centerx"]|| [key isEqualToString:@"centery"]|| [key isEqualToString:@"maxx"]|| [key isEqualToString:@"maxy"]|| [key isEqualToString:@"note"]|| [key isEqualToString:@"tablename"]|| [key isEqualToString:@"metadataid"]|| [key isEqualToString:@"aliasname"]|| [key isEqualToString:@"remark"]|| [key isEqualToString:@"updatetime"]|| [key isEqualToString:@"destroytime"]|| [key isEqualToString:@"destroytim"]|| [key isEqualToString:@"updatetim"]|| [key isEqualToString:@"destroyti"]|| [key isEqualToString:@"featuregui"]|| [key isEqualToString:@"techmetho"]|| [key isEqualToString:@"updatesta"]|| [key isEqualToString:@"featuregu"]){
+                [_catalogDic removeObjectForKey:key];
+            }
         }
     }
 }

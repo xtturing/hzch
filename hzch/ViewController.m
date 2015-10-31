@@ -11,7 +11,7 @@
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
 #import "DrawSearchDetailTableViewController.h"
-
+#import "NBSearchCatalogDetailTableViewController.h"
 @interface ViewController ()<esriViewDelegate,UITabBarDelegate,dataHttpDelegate>{
     NSInteger segIndex;
     BOOL showMap;
@@ -41,6 +41,27 @@
     segIndex = 0;
     showMap = YES;
     [self.conView addSubview:self.esriView];
+    self.esriView.ClickCalloutBlock = ^(NSDictionary *dic){
+        [dataHttpManager getInstance].sqliteCalloutDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        for(NSString *key in dic.allKeys){
+            if([dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null])
+            {
+                [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+            }else{
+                if([[dic objectForKey:key] isKindOfClass:[NSString class]]){
+                    NSString *value = [dic objectForKey:key];
+                    if([value stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0 || [value isEqualToString:@"<null>"]){
+                        [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+                    }
+                }
+                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"type"] || [key isEqualToString:@"NAME"] || [key isEqualToString:@"ADDRESS"] || [key isEqualToString:@"FNAME"] || [key isEqualToString:@"COUNTRY"]){
+                    [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+                }
+            }
+        }
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"SearchCatalogDetailNavigation"] animated:YES completion:nil];
+    };
     [self.conView addSubview:self.segmentedView];
     [self.conView addSubview:self.deleteBtn];
     [self.conView addSubview:self.layerBtn];
