@@ -2419,7 +2419,7 @@
         <!--sqlite详情-->
         <scene sceneID="GyS-0M-VZQ">
             <objects>
-                <tableViewController title="可视图层管理" id="Ynt-ZB-mfW" userLabel="sqlite详情" customClass="SqliteDetailTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SqliteDetailTableViewController" title="可视图层管理" id="Ynt-ZB-mfW" userLabel="sqlite详情" customClass="SqliteDetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ddK-bV-9SY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

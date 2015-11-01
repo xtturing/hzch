@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SqliteDetailTableViewController : UITableViewController
+
+@property(nonatomic,assign)BOOL isPush;
+
 - (IBAction)doBack:(id)sender;
 @end

@@ -54,7 +54,7 @@
                         [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                     }
                 }
-                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"type"] || [key isEqualToString:@"NAME"] || [key isEqualToString:@"ADDRESS"] || [key isEqualToString:@"FNAME"] || [key isEqualToString:@"COUNTRY"]){
+                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"type"]){
                     [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                 }
             }

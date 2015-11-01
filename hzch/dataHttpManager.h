@@ -69,6 +69,8 @@ typedef enum {
 
 - (void)didgetSearchCatalog:(NSMutableDictionary *)searchDic;
 
+- (void)didgetSearchSqlite:(NSMutableDictionary *)searchDic;
+
 - (void)didGetDraw:(NSMutableDictionary *)searchDic;
 
 -(void)didGetRoute:(NBRoute *)route;
@@ -100,6 +102,7 @@ typedef enum {
 - (void)letGetCatalogGovmentDetail:(NSInteger)catalogID;
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size;
 - (void)letGetSearchCatalog:(NSString *)searchText page:(int)page pageSize:(int)size;
+- (void)letGetSearchSqlite:(NSString *)searchText;
 - (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size;
 - (void)letGetLineSearch:(NSString *)start end:(NSString *)end;
 //继续添加

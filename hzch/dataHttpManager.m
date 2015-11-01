@@ -18,6 +18,7 @@
 #import "NBGovment.h"
 #import "NBSearch.h"
 #import "NBSearchCatalog.h"
+#import "SpatialDatabase.h"
 
 #define TIMEOUT 30
 
@@ -220,6 +221,45 @@ static dataHttpManager * instance=nil;
             });
         }
         
+    }else{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([_delegate respondsToSelector:@selector(didGetTableIDFailed)]) {
+                [_delegate didGetTableIDFailed];
+            }
+        });
+    }
+}
+
+- (void)letGetSearchSqlite:(NSString *)searchText{
+    if(self.sqliteLayers && self.sqliteLayers.count == 1){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *layerUrl = [self.sqliteLayers.allValues objectAtIndex:0];
+            NSString *tableName = [self.sqliteLayers.allKeys objectAtIndex:0];
+            NSMutableDictionary  *resultDic = [NSMutableDictionary dictionaryWithCapacity:0];
+            NSArray *array = [layerUrl componentsSeparatedByString:@"/"];
+            NSString *name = [array objectAtIndex:(array.count-1)];
+            NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+            NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
+            if([[name pathExtension] isEqualToString:@"sqlite"]){
+                SpatialDatabase *db = [SpatialDatabase databaseWithPath:desPath];
+                [db open];
+                NSString *sql = [NSString stringWithFormat:@"select *, AsGeoJSON(Geometry) AS GEOJSON FROM %@ where NAME like \"%@%@%@\" or ADDRESS like \"%@%@%@\"",tableName,@"%",searchText ,@"%",@"%",searchText ,@"%"];
+                NSLog(@"%@",sql);
+                FMResultSet *rs = [db executeQuery:sql];
+                NSMutableArray *list = [NSMutableArray arrayWithCapacity:0];
+                NSDictionary *column = nil;
+                while ([rs next]) {
+                    column = [rs resultDictionary];
+                    [list addObject:column];
+                }
+                [resultDic setObject:list forKey:@"results"];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([_delegate respondsToSelector:@selector(didgetSearchSqlite:)]) {
+                    [_delegate didgetSearchSqlite:resultDic];
+                }
+            });
+        });
     }else{
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([_delegate respondsToSelector:@selector(didGetTableIDFailed)]) {

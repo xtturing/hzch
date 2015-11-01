@@ -898,8 +898,6 @@
                     }
                     generalPointSymbol.size = CGSizeMake(width, width);
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
-                    [tips setObject:address forKey:@"detail"];
-                    [tips setObject:name forKey:@"title"];
                     [tips setObject:@(3) forKey:@"type"];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:tips];
                     [localLayer addGraphic:gra];
@@ -998,8 +996,6 @@
                     }
                     generalPolygonSymbol.outline.width = width;
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
-                    [tips setObject:address forKey:@"detail"];
-                    [tips setObject:name forKey:@"title"];
                     [tips setObject:@(5) forKey:@"type"];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:polyon symbol:generalPolygonSymbol attributes:tips];
                     [localLayer addGraphic:gra];
@@ -1057,8 +1053,6 @@
                     }
                     generallineSymbol.width = width;
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
-                    [tips setObject:address forKey:@"detail"];
-                    [tips setObject:name forKey:@"title"];
                     [tips setObject:@(4) forKey:@"type"];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:line symbol:generallineSymbol attributes:tips];
                     [localLayer addGraphic:gra];

@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import "mapViewController.h"
 #import "NBSearchCatalogDetailTableViewController.h"
+#import "SqliteDetailTableViewController.h"
 @interface NBSearchDetailTableViewController ()<dataHttpDelegate>{
     int page;
     int pageSize;
@@ -30,6 +31,9 @@
     self.showMapItem.enabled = NO;
     [self doSearch:self.keyword];
     self.title = self.keyword;
+    if(self.searchType == 2){
+        self.toolBar.hidden = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -71,6 +75,11 @@
         title = catalog.name;
         detail = catalog.address;
     }
+    if(_searchType == 2){
+        NSDictionary *dic = [results objectAtIndex:indexPath.row];
+        title = [dic objectForKey:@"NAME"]?[dic objectForKey:@"NAME"]:[dic objectForKey:@"FNAME"];
+        detail = [dic objectForKey:@"ADDRESS"]?[dic objectForKey:@"ADDRESS"]:[dic objectForKey:@"COUNTRY"];
+    }
     
     static NSString *FirstLevelCell = @"NBSearch";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -83,7 +92,7 @@
     if(_searchType == 0){
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    if(_searchType == 1){
+    if(_searchType == 1 || _searchType == 2){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.textLabel.text = title;
@@ -158,6 +167,19 @@
     }
 }
 
+- (void)didgetSearchSqlite:(NSMutableDictionary *)searchDic{
+    [SVProgressHUD dismiss];
+    if([[searchDic objectForKey:@"results"] count] > 0){
+        self.showMapItem.enabled = YES;
+        self.resultDic = searchDic;
+        self.toolBar.hidden = YES;
+        [self.tableView reloadData];
+    }else{
+        self.toolBar.hidden = YES;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)doSearch:(NSString *)keyword{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     if(![self hasKeyword:keyword]){
@@ -176,7 +198,7 @@
         }
         if(_searchType == 2){
             key = SEARCH_DOWNLOAD;
-            [[dataHttpManager getInstance] letGetSearch:keyword page:page pageSize:pageSize];
+            [[dataHttpManager getInstance] letGetSearchSqlite:keyword];
         }
         [[NSUserDefaults standardUserDefaults] setObject:self.keywordList forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -216,6 +238,31 @@
         mapViewController.tableID = tableID;
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
+    if(_searchType == 2){
+        NSArray *results = [_resultDic objectForKey:@"results"];
+        NSDictionary *dic =[results objectAtIndex:indexPath.row];
+        [dataHttpManager getInstance].sqliteCalloutDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        for(NSString *key in dic.allKeys){
+            if([dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null])
+            {
+                [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+            }else{
+                if([[dic objectForKey:key] isKindOfClass:[NSString class]]){
+                    NSString *value = [dic objectForKey:key];
+                    if([value stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0 || [value isEqualToString:@"<null>"]){
+                        [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+                    }
+                }
+                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"type"] || [key isEqualToString:@"Geometry"]){
+                    [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+                }
+            }
+        }
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        SqliteDetailTableViewController *sqliteViewContoller = [storyboard instantiateViewControllerWithIdentifier:@"SqliteDetailTableViewController"];
+        sqliteViewContoller.isPush = YES;
+        [self.navigationController pushViewController:sqliteViewContoller animated:YES];
+    }
 }
 
 -(IBAction)showInMap:(id)sender{
@@ -226,7 +273,12 @@
 //        mapViewController.resultList = results;
 //        mapViewController.searchType = _searchType;
 //        [self.navigationController pushViewController:mapViewController animated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType)}];
+        if(_searchType == 0 || _searchType == 1){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType)}];
+        }else{
+            
+        }
+        
     }
 }
 

@@ -18,12 +18,7 @@
     [super viewDidLoad];
     self.navigationItem.backBarButtonItem.title = @"返回";
     self.title = self.titleName;
-    NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                    kCFAllocatorDefault, /* allocator */
-                                                                                                    (CFStringRef)self.imageUrl,
-                                                                                                    NULL, /* charactersToLeaveUnescaped */
-                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                    kCFStringEncodingUTF8));
+     NSString* escaped_value = [self.imageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *url = [NSString stringWithFormat:HTTP_IMAGE,(long)self.catalogID,escaped_value];
     NSLog(@"video url %@", url);
     MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:url]];

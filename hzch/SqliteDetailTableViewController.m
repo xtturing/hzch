@@ -23,10 +23,14 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.title = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"title"];
+    self.title = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]:[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"FNAME"];
 }
 
 - (IBAction)doBack:(id)sender{
+    if(self.isPush){
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];

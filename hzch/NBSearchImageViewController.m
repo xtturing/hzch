@@ -22,13 +22,8 @@
     self.title = self.titleName;
     if([self.imageUrl containsString:@";"]){
         NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
-        for (NSString *url in [self.imageUrl componentsSeparatedByString:@";"]) {
-            NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                            kCFAllocatorDefault, /* allocator */
-                                                                                                            (CFStringRef)url,
-                                                                                                            NULL, /* charactersToLeaveUnescaped */
-                                                                                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                            kCFStringEncodingUTF8));
+        for (NSString *imageurl in [self.imageUrl componentsSeparatedByString:@";"]) {
+            NSString* escaped_value = [imageurl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             NSString *url = [NSString stringWithFormat:HTTP_IMAGE,(long)self.catalogID,escaped_value];
             NSLog(@"image url %@", url);
             NSData *Data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
