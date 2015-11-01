@@ -87,7 +87,7 @@ typedef enum {
 @property (nonatomic,strong) NSArray *drawPoints;
 @property (nonatomic,strong)AGSGraphicsLayer *drawGhLayer;
 @property (nonatomic,strong) NSMutableArray *drawLayers;
-@property (nonatomic,strong) NSMutableArray *sqliteLayers;
+@property (nonatomic,strong) NSMutableDictionary *sqliteLayers;
 @property (nonatomic,strong) NSMutableArray *localLayers;
 @property (nonatomic,strong) NSMutableDictionary *sqliteCalloutDic;
 +(dataHttpManager*)getInstance;

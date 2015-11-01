@@ -83,7 +83,7 @@
                 [[DownloadManager sharedInstance]cancelDownload:self.layerUrl];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if([self hasAddLocalLayer:self.layerUrl]){
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl}];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl,@"name":self.titleLab.text}];
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
                 });
@@ -101,13 +101,19 @@
                 if([[name pathExtension] isEqualToString:@"sqlite"]){
                     SpatialDatabase *db = [SpatialDatabase databaseWithPath:desPath];
                     [db open];
-                    if(![db executeQuery:[NSString stringWithFormat:@"DROP TABLE %@",self.titleLab.text]]){
-                        NSLog(@"删除sqlite失败！");
+                    
+                    NSString *sql = [NSString stringWithFormat:@"DELETE FROM geometry_columns where f_table_name = \"%@\"",self.titleLab.text];
+                    if([db executeUpdate:sql]){
+                        sql = [NSString stringWithFormat:@"DROP TABLE %@",self.titleLab.text];
+                        if(![db executeUpdate:sql]){
+                            NSLog(@"删除sqlite失败！");
+                        }
                     }
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if([self hasShowSqliteLayer:self.layerUrl]){
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl}];
+                    
+                    if([self hasShowSqliteLayer:self.titleLab.text] && [self hasShowSqliteValue:self.layerUrl]){
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl,@"name":self.titleLab.text}];
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
                 });
@@ -118,8 +124,16 @@
 }
 
 - (BOOL)hasShowSqliteLayer:(NSString *)cellTag{
-    for (id tag in [dataHttpManager getInstance].sqliteLayers) {
+    for (id tag in [dataHttpManager getInstance].sqliteLayers.allKeys) {
         if([cellTag isEqualToString: tag]){
+            return YES;
+        }
+    }
+    return NO;
+}
+- (BOOL)hasShowSqliteValue:(NSString *)layerurl{
+    for (id tag in [dataHttpManager getInstance].sqliteLayers.allValues) {
+        if([layerurl isEqualToString: tag]){
             return YES;
         }
     }

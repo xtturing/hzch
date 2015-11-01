@@ -792,7 +792,7 @@
     }
     
     if([[name pathExtension] isEqualToString:@"sqlite"] ){
-        if(![self hasShowSqlite:layername]){
+        if(!([self hasShowSqlite:layername] && [self hasShowSqliteValue:layerurl])){
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 SpatialDatabase *db = [SpatialDatabase databaseWithPath:desPath];
                 [db open];
@@ -806,7 +806,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if(list.count > 0){
                         [self addLocalGeomery:list layerName:layername];
-                        [[dataHttpManager getInstance].sqliteLayers addObject:layername];
+                        [[dataHttpManager getInstance].sqliteLayers setObject:layerurl forKey:layername];
                         ALERT(@"离线数据已添加到地图");
                     }else{
                         ALERT(@"离线数据为空");
@@ -814,7 +814,7 @@
                 });
             });
         }else{
-            [[dataHttpManager getInstance].sqliteLayers removeObject:layername];
+            [[dataHttpManager getInstance].sqliteLayers removeObjectForKey:layername];
             [self.mapView removeMapLayerWithName:layername];
             [self.mapView.callout removeFromSuperview];
             ALERT(@"离线数据已从地图移除");
@@ -827,7 +827,7 @@
      self.mapView.callout.delegate = self;
      NSInteger type = [[[NSUserDefaults standardUserDefaults] objectForKey:@"SHOWRESOURCETYPE"] integerValue];
     if(type == 0){
-        for(NSString *name in [dataHttpManager getInstance].sqliteLayers){
+        for(NSString *name in [dataHttpManager getInstance].sqliteLayers.allKeys){
             [self.mapView removeMapLayerWithName:name];
         }
         [[dataHttpManager getInstance].sqliteLayers removeAllObjects];
@@ -1207,8 +1207,17 @@
 }
 
 - (BOOL)hasShowSqlite:(NSString *)cellTag{
-    for (id tag in [dataHttpManager getInstance].sqliteLayers) {
+    for (id tag in [dataHttpManager getInstance].sqliteLayers.allKeys) {
         if([cellTag isEqualToString: tag]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)hasShowSqliteValue:(NSString *)layerurl{
+    for (id tag in [dataHttpManager getInstance].sqliteLayers.allValues) {
+        if([layerurl isEqualToString: tag]){
             return YES;
         }
     }

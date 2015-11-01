@@ -229,12 +229,11 @@
     }else{
         cell.type = 2;
         cell.editBtn.hidden = NO;
-        cell.deleteBtn.hidden = YES;
         cell.editSqlitBlock = ^(){
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             [self.navigationController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"yangshiTableViewController"] animated:YES];
         };
-        if([self hasShowDraw:name]){
+        if([self hasShowSqlit:name] && [self hasShowSqliteValue:urlKey]){
             [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
         }else{
             [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
@@ -258,9 +257,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 }
-- (BOOL)hasShowDraw:(NSString *)cellTag{
-    for (id tag in [dataHttpManager getInstance].sqliteLayers) {
+- (BOOL)hasShowSqlit:(NSString *)cellTag{
+    for (id tag in [dataHttpManager getInstance].sqliteLayers.allKeys) {
         if([cellTag isEqualToString: tag]){
+            return YES;
+        }
+    }
+    return NO;
+}
+- (BOOL)hasShowSqliteValue:(NSString *)layerurl{
+    for (id tag in [dataHttpManager getInstance].sqliteLayers.allValues) {
+        if([layerurl isEqualToString: tag]){
             return YES;
         }
     }
