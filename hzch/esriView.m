@@ -185,8 +185,6 @@
 
 -(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType{
     self.mapView.callout.delegate = self;
-    
-    self.dataDic = p_data;
     if(self.ghLayer == nil){
         self.ghLayer = [[AGSGraphicsLayer alloc]init];
         [self.mapView addMapLayer:self.ghLayer withName:@"CustomLayer"];
@@ -194,46 +192,111 @@
     self.ghLayer.selectionColor = [UIColor redColor];
     [self topLocationLayer];
     
-    for (NSInteger i=0; i<self.dataDic.count; i++) {
+    for (NSInteger i=0; i<p_data.count; i++) {
         @autoreleasepool{
-            NSArray *t_arr = (NSArray *)self.dataDic;
-            double x = 0;
-            double y = 0;
-            NSString *name = @"";
-            NSString *address = @"";
-            NSString *t_imagePath;
-            if(searchType == 0){
-                NBSearch *t_att = [t_arr objectAtIndex:i];
-                x = [t_att.centerx doubleValue];
-                y = [t_att.centery doubleValue];
-                address = t_att.address;
-                name = t_att.name;
-                t_imagePath = @"new_cz.png";
-            }else if(searchType == 1){
-                NBSearchCatalog *t_att = [t_arr objectAtIndex:i];
-                x = [t_att.labelx doubleValue];
-                y = [t_att.labely doubleValue];
-                address = t_att.address;
-                name = t_att.name;
-                t_imagePath = @"cus_cz.png";
-            }
-
-            AGSPoint *t_point = [AGSPoint pointWithX:x
-                                                   y:y
-                                    spatialReference:self.mapView.spatialReference];
-            AGSPictureMarkerSymbol *picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:[UIImage imageNamed:t_imagePath]];
-            NSMutableDictionary * tips= nil;
-            if(searchType == 0){
-                tips = [[NSMutableDictionary alloc] initWithCapacity:0];
+            if(searchType == 0 || searchType == 1){
+                double x = 0;
+                double y = 0;
+                NSString *name = @"";
+                NSString *address = @"";
+                NSString *t_imagePath;
+                if(searchType == 0){
+                    NBSearch *t_att = [p_data objectAtIndex:i];
+                    x = [t_att.centerx doubleValue];
+                    y = [t_att.centery doubleValue];
+                    address = t_att.address;
+                    name = t_att.name;
+                    t_imagePath = @"new_cz.png";
+                }else if(searchType == 1){
+                    NBSearchCatalog *t_att = [p_data objectAtIndex:i];
+                    x = [t_att.labelx doubleValue];
+                    y = [t_att.labely doubleValue];
+                    address = t_att.address;
+                    name = t_att.name;
+                    t_imagePath = @"cus_cz.png";
+                }
+                
+                AGSPoint *t_point = [AGSPoint pointWithX:x
+                                                       y:y
+                                        spatialReference:self.mapView.spatialReference];
+                AGSPictureMarkerSymbol *picMarkerSymbol = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImage:[UIImage imageNamed:t_imagePath]];
+                NSMutableDictionary * tips= nil;
+                if(searchType == 0){
+                    tips = [[NSMutableDictionary alloc] initWithCapacity:0];
+                }else{
+                    NBSearchCatalog *t_att = [p_data objectAtIndex:i];
+                    tips = [[NSMutableDictionary alloc] initWithDictionary:t_att.catalogDic];
+                }
+                [tips setObject:address forKey:@"detail"];
+                [tips setObject:name forKey:@"title"];
+                [tips setObject:@(searchType) forKey:@"type"];
+                AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:tips];
+                [self.ghLayer addGraphic:t_gh];
             }else{
-                NBSearchCatalog *t_att = [t_arr objectAtIndex:i];
-                tips = [[NSMutableDictionary alloc] initWithDictionary:t_att.catalogDic];
+                NSDictionary *dic = [p_data objectAtIndex:i];
+                NSString *name = [dic objectForKey:@"NAME"]?[dic objectForKey:@"NAME"]:[dic objectForKey:@"FNAME"];
+                NSString *address = [dic objectForKey:@"ADDRESS"]?[dic objectForKey:@"ADDRESS"]:[dic objectForKey:@"COUNTRY"];
+                NSString *jsonString  = [dic objectForKey:@"GEOJSON"];
+                AGSSBJsonParser *parser = [[AGSSBJsonParser alloc] init];
+                id  returnObject = [parser objectWithString:jsonString];
+                NSDictionary *geoDic = nil;
+                if ([returnObject isKindOfClass:[NSDictionary class]]) {
+                    geoDic = (NSDictionary*)returnObject;
+                }
+                if([[geoDic objectForKey:@"type"] isEqualToString:@"Point"]){
+                    NSArray *array = [geoDic objectForKey:@"coordinates"];
+                    if(array.count == 2){
+                        AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
+                        AGSSimpleMarkerSymbol* generalPointSymbol = [AGSSimpleMarkerSymbol simpleMarkerSymbol];
+                        generalPointSymbol.style = AGSSimpleMarkerSymbolStyleTriangle;
+                        generalPointSymbol.color = [UIColor orangeColor];
+                        generalPointSymbol.size = CGSizeMake(10, 10);
+                        NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
+                        [tips setObject:address forKey:@"detail"];
+                        [tips setObject:name forKey:@"title"];
+                        [tips setObject:@(3) forKey:@"type"];
+                        AGSGraphic *gra = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:tips];
+                        [self.ghLayer addGraphic:gra];
+                        
+                    }
+                    
+                }else if([[geoDic objectForKey:@"type"] isEqualToString:@"Polygon"]){
+                    NSArray *array = [geoDic objectForKey:@"coordinates"];
+                    if(array){
+                        AGSMutablePolygon *polyon = [AGSMutablePolygon polygonWithJSON:@{@"rings":array,@"spatialReference":@{@"wkid" : @(4326)}}];
+                        AGSSimpleFillSymbol* generalPolygonSymbol = [AGSSimpleFillSymbol simpleFillSymbol];
+                        generalPolygonSymbol.outline.style = AGSSimpleLineSymbolStyleInsideFrame;
+                        generalPolygonSymbol.style = AGSSimpleFillSymbolStyleDiagonalCross;
+                        generalPolygonSymbol.outline.color = [UIColor orangeColor];
+                        generalPolygonSymbol.color = [UIColor yellowColor];
+                        generalPolygonSymbol.outline.width = 3;
+                        NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
+                        [tips setObject:address forKey:@"detail"];
+                        [tips setObject:name forKey:@"title"];
+                        [tips setObject:@(5) forKey:@"type"];
+                        AGSGraphic *gra = [AGSGraphic graphicWithGeometry:polyon symbol:generalPolygonSymbol attributes:tips];
+                        [self.ghLayer addGraphic:gra];
+                    }
+                    
+                }else if([[geoDic objectForKey:@"type"] isEqualToString:@"MultiLineString"]){
+                    NSArray *array = [geoDic objectForKey:@"coordinates"];
+                    if(array){
+                        AGSMutablePolyline *line = [AGSMutablePolyline polylineWithJSON:@{@"paths":array,@"spatialReference":@{@"wkid" : @(4326)}}];
+                        AGSSimpleLineSymbol* generallineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+                        generallineSymbol.style = AGSSimpleLineSymbolStyleInsideFrame;
+                        generallineSymbol.color = [UIColor orangeColor];
+                        generallineSymbol.width = 5;
+                        NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
+                        [tips setObject:address forKey:@"detail"];
+                        [tips setObject:name forKey:@"title"];
+                        [tips setObject:@(4) forKey:@"type"];
+                        AGSGraphic *gra = [AGSGraphic graphicWithGeometry:line symbol:generallineSymbol attributes:tips];
+                        [self.ghLayer addGraphic:gra];
+                        
+                    }
+                    
+                }
             }
-            [tips setObject:address forKey:@"detail"];
-            [tips setObject:name forKey:@"title"];
-            [tips setObject:@(searchType) forKey:@"type"];
-            AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:tips];
-            [self.ghLayer addGraphic:t_gh];
         }
     }
     [self.ghLayer refresh];
@@ -898,6 +961,8 @@
                     }
                     generalPointSymbol.size = CGSizeMake(width, width);
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
+                    [tips setObject:address forKey:@"detail"];
+                    [tips setObject:name forKey:@"title"];
                     [tips setObject:@(3) forKey:@"type"];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:tips];
                     [localLayer addGraphic:gra];
@@ -996,6 +1061,8 @@
                     }
                     generalPolygonSymbol.outline.width = width;
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
+                    [tips setObject:address forKey:@"detail"];
+                    [tips setObject:name forKey:@"title"];
                     [tips setObject:@(5) forKey:@"type"];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:polyon symbol:generalPolygonSymbol attributes:tips];
                     [localLayer addGraphic:gra];
@@ -1053,6 +1120,8 @@
                     }
                     generallineSymbol.width = width;
                     NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithDictionary:dic];
+                    [tips setObject:address forKey:@"detail"];
+                    [tips setObject:name forKey:@"title"];
                     [tips setObject:@(4) forKey:@"type"];
                     AGSGraphic *gra = [AGSGraphic graphicWithGeometry:line symbol:generallineSymbol attributes:tips];
                     [localLayer addGraphic:gra];

@@ -54,7 +54,7 @@
                         [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                     }
                 }
-                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"type"]){
+                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"Geometry"] || [key isEqualToString:@"type"]|| [key isEqualToString:@"title"]|| [key isEqualToString:@"detail"]|| [key isEqualToString:@"FeatureGUI"]|| [key isEqualToString:@"updatestat"]|| [key isEqualToString:@"PK_UID"]){
                     [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                 }
             }

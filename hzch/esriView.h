@@ -40,7 +40,6 @@ CLLocationManagerDelegate>
 
 
 //叠加层
-@property (nonatomic,strong)NSArray *dataDic;
 @property (nonatomic,strong)AGSGraphicsLayer *ghLayer;
 @property (nonatomic,strong)AGSGraphicsLayer *lineLayer;
 @property (nonatomic,strong)AGSGraphicsLayer *sketchGhLayer;

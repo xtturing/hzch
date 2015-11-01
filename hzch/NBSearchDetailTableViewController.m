@@ -253,7 +253,8 @@
                         [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                     }
                 }
-                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"type"] || [key isEqualToString:@"Geometry"]){
+                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"Geometry"]
+                   || [key isEqualToString:@"type"]|| [key isEqualToString:@"title"]|| [key isEqualToString:@"detail"]|| [key isEqualToString:@"FeatureGUI"]|| [key isEqualToString:@"updatestat"]|| [key isEqualToString:@"PK_UID"]){
                     [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                 }
             }
@@ -268,16 +269,7 @@
 -(IBAction)showInMap:(id)sender{
     NSArray *results = [_resultDic objectForKey:@"results"];
     if([results count] > 0){
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        mapViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
-//        mapViewController.resultList = results;
-//        mapViewController.searchType = _searchType;
-//        [self.navigationController pushViewController:mapViewController animated:YES];
-        if(_searchType == 0 || _searchType == 1){
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType)}];
-        }else{
-            
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType)}];
         
     }
 }
