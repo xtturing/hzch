@@ -76,12 +76,31 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getStartPointInMap) name:@"START_POINT_IN_MAP" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEndPointInMap) name:@"END_POINT_IN_MAP" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doRouteInMap:) name:@"ADD_ROUTE_IN_MAP" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearTpkSqlite) name:@"CLEAR_TPK_SQLITE" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearMyDraw) name:@"CLEAR_MYDRAW" object:nil];
             [self locationListenner];
         }
         
 
     }
     return self;
+}
+
+- (void)clearTpkSqlite{
+    NSArray *layers = [NSArray arrayWithArray:self.mapView.mapLayers];
+    for(AGSLayer *layer in layers){
+        if(![layer.name containsString:@"Layer"]){
+            [self.mapView removeMapLayerWithName:layer.name];
+        }
+    }
+}
+
+- (void)clearMyDraw{
+    if([self hasLayer:@"sketchGhLayer"])
+    {
+        [_mapView removeMapLayerWithName:@"sketchGhLayer"];
+        [[dataHttpManager getInstance].drawLayers removeAllObjects];
+    }
 }
 
 - (void)changeMap:(NSInteger)index{
@@ -370,7 +389,7 @@
         // Set the default measures and units
         _distance = 0;
         _area = 0;
-        _drawWidth = 2.0;
+        _drawWidth = 4.0;
         _drawIndex = 4001;
         _drawColor = [UIColor redColor];
         _distanceUnit = AGSSRUnitKilometer;
@@ -1220,6 +1239,13 @@
         ALERT(@"标绘已添加到地图");
     }else{
         [[dataHttpManager getInstance].drawLayers removeObject:[NSString stringWithFormat:@"%ld",draw.createDate]];
+        for (AGSGraphic *gra in self.sketchGhLayer.graphics) {
+            NSString *createDate = [gra attributeForKey:@"createDate"];
+            if([[NSString stringWithFormat:@"%ld",draw.createDate] isEqualToString:createDate]){
+                [self.sketchGhLayer removeGraphic:gra];
+                break;
+            }
+        }
         ALERT(@"标绘已从地图移除");
     }
     NSArray *allDraws = [[dataHttpManager getInstance].drawDB getAllDraws];
@@ -1260,7 +1286,7 @@
                 }
                 outerSymbol.width = [[dic objectForKey:@"width"] floatValue];
                 AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
-                
+                [graphic setAttribute:createDate forKey:@"createDate"];
                 [self.sketchGhLayer addGraphic:graphic];
                 [self.sketchGhLayer refresh];
             }

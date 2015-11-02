@@ -116,6 +116,7 @@
 		41750E1E1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E1D1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m */; };
 		41750E211BD2978500A99384 /* LayersManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E201BD2978500A99384 /* LayersManagerTableViewController.m */; };
 		41750E241BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41750E231BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m */; };
+		4179E8511BE7A73F00920E1A /* ClearCacheTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4179E8501BE7A73F00920E1A /* ClearCacheTableViewController.m */; };
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
 		417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC3671BA9C69E00FA4394 /* ViewController.m */; };
 		4186EC401BE525AC00E8FBD3 /* SqliteDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */; };
@@ -334,6 +335,8 @@
 		41750E201BD2978500A99384 /* LayersManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayersManagerTableViewController.m; sourceTree = "<group>"; };
 		41750E221BD2ACAF00A99384 /* DrawSearchDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSearchDetailTableViewController.h; sourceTree = "<group>"; };
 		41750E231BD2ACAF00A99384 /* DrawSearchDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSearchDetailTableViewController.m; sourceTree = "<group>"; };
+		4179E84F1BE7A73F00920E1A /* ClearCacheTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearCacheTableViewController.h; sourceTree = "<group>"; };
+		4179E8501BE7A73F00920E1A /* ClearCacheTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheTableViewController.m; sourceTree = "<group>"; };
 		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		417DC3661BA9C69E00FA4394 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		417DC3671BA9C69E00FA4394 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -742,6 +745,8 @@
 				41483E801BDFC5A600C251CE /* lineTableViewController.m */,
 				41483E821BDFC5C700C251CE /* polyonTableViewController.h */,
 				41483E831BDFC5C700C251CE /* polyonTableViewController.m */,
+				4179E84F1BE7A73F00920E1A /* ClearCacheTableViewController.h */,
+				4179E8501BE7A73F00920E1A /* ClearCacheTableViewController.m */,
 			);
 			name = set;
 			sourceTree = "<group>";
@@ -1031,6 +1036,7 @@
 				412A15651BC6B46B006E87A0 /* XMLDictionary.m in Sources */,
 				415A61341BADB4C9001FA3FB /* RATreeNodeCollectionController.m in Sources */,
 				413D7E0B1BAF033000D972DB /* GTMBase64.m in Sources */,
+				4179E8511BE7A73F00920E1A /* ClearCacheTableViewController.m in Sources */,
 				41E425E31BA86AAC009C0581 /* TianDiTuData.m in Sources */,
 				41750E1E1BD2903000A99384 /* NBSearchCatalogDetailTableViewController.m in Sources */,
 				413CD51C1BC2BE480069EC23 /* NBSearchCatalog.m in Sources */,
