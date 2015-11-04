@@ -26,5 +26,4 @@
 - (void)updateDraw:(Draw *)theDraw;
 -(int)getCount;
 
-
 @end

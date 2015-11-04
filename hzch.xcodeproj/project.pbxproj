@@ -119,6 +119,8 @@
 		4179E8511BE7A73F00920E1A /* ClearCacheTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4179E8501BE7A73F00920E1A /* ClearCacheTableViewController.m */; };
 		417DC3651BA9C5D500FA4394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 417DC3641BA9C5D500FA4394 /* Main.storyboard */; };
 		417DC3681BA9C69E00FA4394 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 417DC3671BA9C69E00FA4394 /* ViewController.m */; };
+		417FBD0D1BEA479F00568A01 /* DBCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 417FBD0C1BEA479F00568A01 /* DBCache.m */; };
+		417FBD101BEA49C300568A01 /* DBCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 417FBD0F1BEA49C300568A01 /* DBCacheManager.m */; };
 		4186EC401BE525AC00E8FBD3 /* SqliteDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */; };
 		41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B9534C1BB598E200FE6F35 /* CanvasView.m */; };
 		41C735591BDD13F800E01B84 /* NBRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735561BDD13F800E01B84 /* NBRoute.m */; };
@@ -340,6 +342,10 @@
 		417DC3641BA9C5D500FA4394 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		417DC3661BA9C69E00FA4394 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		417DC3671BA9C69E00FA4394 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		417FBD0B1BEA479F00568A01 /* DBCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCache.h; sourceTree = "<group>"; };
+		417FBD0C1BEA479F00568A01 /* DBCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCache.m; sourceTree = "<group>"; };
+		417FBD0E1BEA49C300568A01 /* DBCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCacheManager.h; sourceTree = "<group>"; };
+		417FBD0F1BEA49C300568A01 /* DBCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBCacheManager.m; sourceTree = "<group>"; };
 		4186EC3E1BE525AC00E8FBD3 /* SqliteDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteDetailTableViewController.h; sourceTree = "<group>"; };
 		4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SqliteDetailTableViewController.m; sourceTree = "<group>"; };
 		41B9534C1BB598E200FE6F35 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
@@ -666,6 +672,10 @@
 		415CA73B1BC7D095003D8347 /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				417FBD0E1BEA49C300568A01 /* DBCacheManager.h */,
+				417FBD0F1BEA49C300568A01 /* DBCacheManager.m */,
+				417FBD0B1BEA479F00568A01 /* DBCache.h */,
+				417FBD0C1BEA479F00568A01 /* DBCache.m */,
 				415CA73C1BC7D0EA003D8347 /* DBDraws.h */,
 				415CA73D1BC7D0EA003D8347 /* DBDraws.m */,
 				415CA73F1BC7D23C003D8347 /* Draw.h */,
@@ -990,6 +1000,7 @@
 				415A61301BADB4C9001FA3FB /* RATreeView+Private.m in Sources */,
 				41E425D81BA8694D009C0581 /* TianDiTuWMTSLayerInfoDelegate.m in Sources */,
 				415A613B1BADB4E8001FA3FB /* RADataObject.m in Sources */,
+				417FBD101BEA49C300568A01 /* DBCacheManager.m in Sources */,
 				412A152B1BC69318006E87A0 /* AbstractActionSheetPicker.m in Sources */,
 				413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */,
 				412A15681BC6CA37006E87A0 /* tucengTableViewController.m in Sources */,
@@ -998,6 +1009,7 @@
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
 				413D7E0F1BAF049F00D972DB /* NBTpk.m in Sources */,
 				410A3ABF1BAB041B0025206E /* SetTableViewController.m in Sources */,
+				417FBD0D1BEA479F00568A01 /* DBCache.m in Sources */,
 				415CA7481BC80FDB003D8347 /* myDrawTableViewCell.m in Sources */,
 				415A612F1BADB4C9001FA3FB /* RATreeView+TableViewDataSource.m in Sources */,
 				41483E841BDFC5C700C251CE /* polyonTableViewController.m in Sources */,
