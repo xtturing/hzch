@@ -55,6 +55,9 @@ static dataHttpManager * instance=nil;
         self.drawDB = [[DBDraws alloc]init];
         [self.drawDB createTable];
         
+        self.cacheDB = [[DBCacheManager alloc]init];
+        [self.cacheDB createTable];
+        
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
         self.drawLayers = [NSMutableArray arrayWithCapacity:0];
         self.sqliteLayers = [NSMutableDictionary dictionaryWithCapacity:0];

@@ -26,6 +26,11 @@
 	<true/>
 	<key>Main storyboard file base name </key>
 	<string>Main</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>请允许使用你的位置信息，否则很多功能会无法正常使用</string>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -11,6 +11,8 @@
 #import "NSStringAdditions.h"
 #import "DBDraws.h"
 #import "NBRoute.h"
+#import "DBCacheManager.h"
+#import "DBCache.h"
 #define HTTP_LOAD_TPK          @"http://ditu.zj.cn:8081/LoadTPK/LoadTPK.asmx/LoadTpk"
 
 #define HTTP_DEPARTMENT        @"http://ditu.zj.cn/catalog?parentid=1&catalogtheme=catalog_department&request=list&page=1&start=0&limit=1000"
@@ -85,6 +87,8 @@ typedef enum {
 @property (nonatomic,assign) int type;
 @property (nonatomic,assign) id<dataHttpDelegate> delegate;
 @property (nonatomic,strong) DBDraws *drawDB;
+@property (nonatomic,strong) DBCacheManager *cacheDB;
+@property (nonatomic,strong) DBCache *cache;
 @property (nonatomic,strong) NSMutableDictionary *resourceLayers;
 @property (nonatomic,strong) NSArray *drawPoints;
 @property (nonatomic,strong)AGSGraphicsLayer *drawGhLayer;

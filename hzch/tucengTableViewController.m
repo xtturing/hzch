@@ -7,18 +7,21 @@
 //
 
 #import "tucengTableViewController.h"
-
+#import "dataHttpManager.h"
 @interface tucengTableViewController (){
-    NSArray *array;
 }
-
+@property (nonatomic,strong) NSArray *cacheList;
+@property (nonatomic,strong)  NSArray *array;
+@property (nonatomic,strong)  NSArray *layerArray;
 @end
 
 @implementation tucengTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    array = @[@"中国电子地图",@"中国电子地图注记",@"中国影像",@"中国影像注记",@"浙江电子地图",@"浙江电子地图注记",@"浙江影像",@"浙江影像注记"];
+     self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
+    _array = @[@"中国电子地图",@"中国电子地图注记",@"中国影像",@"中国影像注记",@"浙江电子地图",@"浙江电子地图注记",@"浙江影像",@"浙江影像注记"];
+    _layerArray = @[@"vec",@"cva",@"img",@"cia",@"zjemap",@"zjemapanno",@"imgmap",@"imgmap_lab"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -39,7 +42,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [array count];
+    return [_array count];
 }
 
 
@@ -52,10 +55,36 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    cell.textLabel.text = [array objectAtIndex:indexPath.row];
+    if([self isInCacheList:indexPath.row]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    cell.textLabel.text = [_array objectAtIndex:indexPath.row];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [dataHttpManager getInstance].cache.typeID = indexPath.row;
+    [dataHttpManager getInstance].cache.name = [_array objectAtIndex:indexPath.row];
+    [dataHttpManager getInstance].cache.layerName = [_layerArray objectAtIndex:indexPath.row];
+    [tableView reloadData];
+}
+
+- (BOOL)isInCacheList:(NSInteger)typeID{
+    if(!self.cacheList || self.cacheList.count == 0){
+        if([dataHttpManager getInstance].cache.typeID == typeID){
+            return YES;
+        }
+        return NO;
+    }
+    for (DBCache *cache in self.cacheList) {
+        if(cache.typeID == typeID){
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

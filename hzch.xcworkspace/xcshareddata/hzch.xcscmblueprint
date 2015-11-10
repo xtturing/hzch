@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B71CC74D30A7C1DDA601A890821754A8A580845B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "271e7a0e-f0b0-8a46-a9fc-7158eb86853c++1213" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "B71CC74D30A7C1DDA601A890821754A8A580845B" : 0,
+    "271e7a0e-f0b0-8a46-a9fc-7158eb86853c++1213" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CDA42BDD-D245-4E35-A077-D3E3FADE5B38",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "B71CC74D30A7C1DDA601A890821754A8A580845B" : "hzch",
+    "271e7a0e-f0b0-8a46-a9fc-7158eb86853c++1213" : "hzch\/hzch\/shapelib-1.2.10\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "hzch",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "hzch.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.33.0.85:8099\/svn\/zjpipe",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "271e7a0e-f0b0-8a46-a9fc-7158eb86853c++1213"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/xtturing\/hzch.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B71CC74D30A7C1DDA601A890821754A8A580845B"
+    }
+  ]
+}

@@ -8,8 +8,12 @@
 
 #import "cacheTableViewController.h"
 #import "myDrawTableViewCell.h"
+#import "dataHttpManager.h"
+#import "DBCache.h"
 
 @interface cacheTableViewController ()
+
+@property (nonatomic,strong) NSArray *cacheList;
 
 @end
 
@@ -18,11 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"地图缓存管理";
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,11 +37,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [self.cacheList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *FirstLevelCell = @"cacheCell";
+    DBCache *cache = (DBCache *)[self.cacheList objectAtIndex:indexPath.row];
     myDrawTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                                  FirstLevelCell];
     if (cell == nil) {
@@ -49,7 +50,12 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.titleLab.text = @"adad";
+    cell.titleLab.text = cache.name;
+    if(cache.isShow){
+        [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
+    }else{
+        [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
+    }
     cell.type = 2;
     cell.titleLab.adjustsFontSizeToFitWidth = YES;
     return cell;

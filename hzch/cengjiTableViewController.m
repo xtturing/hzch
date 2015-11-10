@@ -7,16 +7,16 @@
 //
 
 #import "cengjiTableViewController.h"
-
+#import "dataHttpManager.h"
 @interface cengjiTableViewController ()
-
+@property (nonatomic,strong) NSArray *cacheList;
 @end
 
 @implementation cengjiTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -36,7 +36,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 18;
+    return 20;
 }
 
 
@@ -49,10 +49,46 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    cell.textLabel.text = [NSString stringWithFormat:@"%d",(int)(indexPath.row + 1)];
+    if([self isInCacheList:(indexPath.row + 1)]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld",(indexPath.row + 1)];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger index = (indexPath.row+1);
+    if(index < [dataHttpManager getInstance].cache.minLevel){
+        [dataHttpManager getInstance].cache.minLevel = index;
+    }else if (index > [dataHttpManager getInstance].cache.maxLevel){
+        [dataHttpManager getInstance].cache.maxLevel = index;
+    }else{
+        if((index - [dataHttpManager getInstance].cache.minLevel) <= ([dataHttpManager getInstance].cache.maxLevel - index)){
+            [dataHttpManager getInstance].cache.minLevel = index;
+        }else{
+            [dataHttpManager getInstance].cache.maxLevel = index;
+        }
+    }
+    [tableView reloadData];
+}
+
+- (BOOL)isInCacheList:(NSInteger)typeID{
+    if(!self.cacheList || self.cacheList.count == 0){
+        if([dataHttpManager getInstance].cache.minLevel == typeID || [dataHttpManager getInstance].cache.maxLevel == typeID ){
+            return YES;
+        }
+        return NO;
+    }
+    for (DBCache *cache in self.cacheList) {
+        if(cache.minLevel == typeID || cache.maxLevel == typeID){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 @end
