@@ -43,6 +43,7 @@
 
 - (IBAction)addCache:(id)sender{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [dataHttpManager getInstance].cache.name = self.textLabel.text;
     if([self isInCacheList:[dataHttpManager getInstance].cache.typeID]){
         [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
     }else{
@@ -50,6 +51,8 @@
     }
     [SVProgressHUD dismiss];
     ALERT(@"添加缓存成功");
+    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

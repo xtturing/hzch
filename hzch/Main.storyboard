@@ -1291,6 +1291,9 @@
                                             <state key="normal" image="show_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="showDraw:" destination="M10-QT-pp6" eventType="touchUpInside" id="JEQ-vU-1QH"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZb-Pb-nF2">
                                             <rect key="frame" x="560" y="11" width="22" height="22"/>
@@ -1298,6 +1301,9 @@
                                             <state key="normal" image="delete_line_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="deleteDraw:" destination="M10-QT-pp6" eventType="touchUpInside" id="Sel-mP-L5l"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tod-aX-X70">
                                             <rect key="frame" x="520" y="11" width="22" height="22"/>
@@ -1305,6 +1311,9 @@
                                             <state key="normal" image="plotting_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="editDraw:" destination="M10-QT-pp6" eventType="touchUpInside" id="wCE-Fz-CKT"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <animations/>

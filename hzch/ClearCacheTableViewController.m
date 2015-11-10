@@ -9,6 +9,7 @@
 #import "ClearCacheTableViewController.h"
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
+#import "DownloadManager.h"
 @interface ClearCacheTableViewController (){
     BOOL selectTpk;
     BOOL selectSqlite;
@@ -96,6 +97,7 @@
                 if([fileManager fileExistsAtPath:dbPath]){
                     [fileManager removeItemAtPath:dbPath error:NULL];
                 }
+                [[DownloadManager sharedInstance] cancelAllDownloadTask];
             }
             
             if(selectSqlite){
@@ -106,21 +108,17 @@
                 if ([fileManage fileExistsAtPath:mapDir]) {
                     [fileManage removeItemAtPath:mapDir error:NULL];
                 }
+                [[dataHttpManager getInstance].cacheDB deleteCaches];
+
             }
             
             if(selectMyDraw){
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CLEAR_MYDRAW" object:nil];
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-                NSString *dbPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:@"mydraws.db"];
-                if([fileManager fileExistsAtPath:dbPath]){
-                    [fileManager removeItemAtPath:dbPath error:NULL];
-                    [[dataHttpManager getInstance].drawDB closeDatabase];
-                    [dataHttpManager getInstance].drawDB = nil;
-                }
+                [[dataHttpManager getInstance].drawDB deleteDraws];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismiss];
+                ALERT(@"已清空缓存");
             });
         });
     }

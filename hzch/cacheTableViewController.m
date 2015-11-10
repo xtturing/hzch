@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"地图缓存管理";
-    self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:@"RELOADTABLE" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,6 +30,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)reload{
+    self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
+    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:1.0];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -56,7 +73,8 @@
     }else{
         [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
     }
-    cell.type = 2;
+    cell.type = 3;
+    cell.cache = cache;
     cell.titleLab.adjustsFontSizeToFitWidth = YES;
     return cell;
 }

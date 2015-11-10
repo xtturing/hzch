@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Draw.h"
-
+#import "DBCache.h"
 @interface myDrawTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) IBOutlet UIButton *showBtn;
@@ -16,6 +16,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *deleteBtn;
 @property (nonatomic,strong) IBOutlet UILabel *titleLab;
 @property (nonatomic,strong) Draw *draw;
+@property (nonatomic,strong) DBCache *cache;
 @property (nonatomic,strong) NSString *layerUrl;
 @property (nonatomic,assign) NSInteger type;
 @property (nonatomic,copy) void(^editSqlitBlock)(void);

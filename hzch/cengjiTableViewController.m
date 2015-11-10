@@ -76,16 +76,8 @@
 }
 
 - (BOOL)isInCacheList:(NSInteger)typeID{
-    if(!self.cacheList || self.cacheList.count == 0){
-        if([dataHttpManager getInstance].cache.minLevel == typeID || [dataHttpManager getInstance].cache.maxLevel == typeID ){
-            return YES;
-        }
-        return NO;
-    }
-    for (DBCache *cache in self.cacheList) {
-        if(cache.minLevel == typeID || cache.maxLevel == typeID){
-            return YES;
-        }
+    if([dataHttpManager getInstance].cache.minLevel == typeID || [dataHttpManager getInstance].cache.maxLevel == typeID ){
+        return YES;
     }
     return NO;
 }

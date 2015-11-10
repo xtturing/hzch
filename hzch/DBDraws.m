@@ -139,6 +139,15 @@
     }
 }
 
+-(void)deleteDraws{
+    NSString * query = @"DELETE FROM DRAWS";
+    BOOL bSucceed = [database executeUpdate:query];
+    if(!bSucceed)
+    {
+        NSLog(@"DBPhoto deleteRecord Failed to update table. Error: %@",[database lastErrorMessage]);
+    }
+}
+
 -(int)getCount{
     int nCount = 0;
     NSString *query = @"SELECT ROW FROM DRAWS ORDER BY ROW";

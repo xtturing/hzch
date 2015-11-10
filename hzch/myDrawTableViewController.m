@@ -36,7 +36,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self.tableView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)reload{

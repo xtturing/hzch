@@ -73,16 +73,8 @@
 }
 
 - (BOOL)isInCacheList:(NSInteger)typeID{
-    if(!self.cacheList || self.cacheList.count == 0){
-        if([dataHttpManager getInstance].cache.typeID == typeID){
-            return YES;
-        }
-        return NO;
-    }
-    for (DBCache *cache in self.cacheList) {
-        if(cache.typeID == typeID){
-            return YES;
-        }
+    if([dataHttpManager getInstance].cache.typeID == typeID){
+        return YES;
     }
     return NO;
 }

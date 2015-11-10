@@ -24,6 +24,8 @@
     }else if(_type == 1 || _type == 2){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl,@"name":self.titleLab.text}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
+    }else{
+        
     }
 }
 
@@ -40,6 +42,14 @@
         if(self.editSqlitBlock){
             self.editSqlitBlock();
         }
+    }else{
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"修改名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alert.tag = 90009;
+        UITextField *textfield =  [alert textFieldAtIndex: 0];
+        textfield.text = self.titleLab.text;
+        textfield.clearButtonMode = UITextFieldViewModeAlways;
+        [alert show];
     }
     
 }
@@ -61,6 +71,35 @@
                 });
             }
             
+        }
+    }
+    if (alertView.tag == 90009)
+    {
+        if (buttonIndex == 1)
+        {
+            UITextField *textfield =  [alertView textFieldAtIndex: 0];
+            if(textfield.text.length > 1){
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    self.cache.name = textfield.text;
+                    [[dataHttpManager getInstance].cacheDB updateCache:self.cache];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
+                    });
+                });
+            }
+            
+        }
+    }
+    if (alertView.tag == 60008)
+    {
+        if (buttonIndex == 1)
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [[dataHttpManager getInstance].cacheDB deleteCache:self.cache.typeID];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
+                });
+            });
         }
     }
     if(alertView.tag == 70008){
@@ -169,6 +208,10 @@
     }else if (_type == 2){
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除离线数据库？", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
         alert.tag = 90008;
+        [alert show];
+    }else{
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除缓存文件？", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+        alert.tag = 60008;
         [alert show];
     }
 }

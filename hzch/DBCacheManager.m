@@ -144,6 +144,15 @@
     }
 }
 
+-(void)deleteCaches{
+    NSString * query = @"DELETE FROM CACHE";
+    BOOL bSucceed = [database executeUpdate:query];
+    if(!bSucceed)
+    {
+        NSLog(@"DBPhoto deleteRecord Failed to update table. Error: %@",[database lastErrorMessage]);
+    }
+}
+
 -(int)getCount{
     int nCount = 0;
     NSString *query = @"SELECT ROW FROM CACHE ORDER BY ROW";
