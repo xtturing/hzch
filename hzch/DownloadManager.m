@@ -315,6 +315,12 @@ static DownloadManager *_instance;
         [downItem cancelDownloadTask];
     }];
     [_pauseQueue removeAllObjects];
+    [_finishedQueue.allValues enumerateObjectsUsingBlock:^(id obj,NSUInteger index,BOOL *stop){
+        DownloadItem *downItem=obj;
+        NSLog(@"downItem.downloadDestinationPath=%@,%@",downItem.downloadDestinationPath,downItem.temporaryFileDownloadPath);
+        [downItem cancelDownloadTask];
+    }];
+    [_finishedQueue removeAllObjects];
 }
 
 -(void)insertDownloadingQueueItem:(DownloadItem *)downItem
