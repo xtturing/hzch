@@ -64,6 +64,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLab.text = draw.name;
     cell.titleLab.tag = draw.createDate;
     cell.type = 0;

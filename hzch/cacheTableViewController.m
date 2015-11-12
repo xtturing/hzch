@@ -68,6 +68,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLab.text = cache.name;
     if(cache.isShow){
         [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];

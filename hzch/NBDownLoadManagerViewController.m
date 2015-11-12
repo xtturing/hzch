@@ -215,6 +215,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLab.text = name;
     cell.layerUrl = urlKey;
     if(_segment.selectedSegmentIndex==0)

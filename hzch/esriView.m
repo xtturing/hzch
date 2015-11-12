@@ -710,6 +710,13 @@
         case 2007:
         {
             self.drawTool.hidden = YES;
+            self.sketchLayer = nil;
+            self.sketchLayer.geometry = nil;
+            self.mapView.touchDelegate = nil;
+            if([self hasLayer:@"sketchLayer"])
+            {
+                [_mapView removeMapLayerWithName:@"sketchLayer"];
+            }
         }
             break;
         default:
@@ -807,13 +814,15 @@
 
 - (void)didSaveDrawing
 {
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"标绘名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alert.tag = 70009;
-    UITextField *textfield =  [alert textFieldAtIndex: 0];
-    textfield.placeholder = @"请输入标绘名称";
-    textfield.clearButtonMode = UITextFieldViewModeAlways;
-    [alert show];
+    if(self.sketchLayer.geometry){
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"标绘名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alert.tag = 70009;
+        UITextField *textfield =  [alert textFieldAtIndex: 0];
+        textfield.placeholder = @"请输入标绘名称";
+        textfield.clearButtonMode = UITextFieldViewModeAlways;
+        [alert show];
+    }
 }
 
 #pragma mark - UIAlertView Delegate

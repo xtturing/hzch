@@ -34,7 +34,7 @@
             }
         }
         self.imageView.animationImages = array;
-        self.imageView.animationDuration = 2.0f;
+        self.imageView.animationDuration = 4.0f;
         [self.imageView startAnimating];
     }else{
         NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(

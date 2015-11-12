@@ -25,7 +25,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_LOCAL_LAYER" object:nil userInfo:@{@"localurl":self.layerUrl,@"name":self.titleLab.text}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
     }else{
-        
+        BOOL show = !self.cache.isShow;
+        self.cache.isShow = show;
+        [[dataHttpManager getInstance].cacheDB updateCache:self.cache];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
     }
 }
 
@@ -226,7 +229,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

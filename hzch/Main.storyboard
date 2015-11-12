@@ -351,8 +351,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-Ao-AMc">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-Ao-AMc">
+                                <rect key="frame" x="4" y="0.0" width="592" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -887,6 +887,13 @@
                                                         <action selector="editDraw:" destination="geT-L6-gbS" eventType="touchUpInside" id="8bz-9D-uDD"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n9A-qv-LuU">
+                                                    <rect key="frame" x="0.0" y="5" width="255" height="44"/>
+                                                    <animations/>
+                                                    <connections>
+                                                        <action selector="showDraw:" destination="geT-L6-gbS" eventType="touchUpInside" id="vi7-gM-ScH"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <animations/>
                                             <constraints>
@@ -1126,8 +1133,8 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xg-WM-mN5">
-                                            <rect key="frame" x="10" y="11" width="22" height="22"/>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xg-WM-mN5">
+                                            <rect key="frame" x="0.0" y="0.0" width="54" height="43"/>
                                             <animations/>
                                             <state key="normal" image="show_click">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1154,6 +1161,13 @@
                                             </state>
                                             <connections>
                                                 <action selector="editDraw:" destination="BzW-It-jls" eventType="touchUpInside" id="Z00-mR-oFm"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAm-wm-d2R">
+                                            <rect key="frame" x="8" y="0.0" width="232" height="42"/>
+                                            <animations/>
+                                            <connections>
+                                                <action selector="showDraw:" destination="BzW-It-jls" eventType="touchUpInside" id="mjl-b7-6hq"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -1313,6 +1327,13 @@
                                             </state>
                                             <connections>
                                                 <action selector="editDraw:" destination="M10-QT-pp6" eventType="touchUpInside" id="wCE-Fz-CKT"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ves-Yg-fL2">
+                                            <rect key="frame" x="8" y="1" width="212" height="42"/>
+                                            <animations/>
+                                            <connections>
+                                                <action selector="showDraw:" destination="M10-QT-pp6" eventType="touchUpInside" id="abs-8Y-LnJ"/>
                                             </connections>
                                         </button>
                                     </subviews>

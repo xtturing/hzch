@@ -67,7 +67,7 @@
 
 -(NSData *)QueryTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l
 {
-    if([self needToCache:t level:l]){
+    if([self needToShowCache:t level:l]){
         NSString *tilePath = [self getTilePath:t x:x y:y l:l];
         
         return [self getTileData:tilePath];
@@ -92,6 +92,15 @@
 - (BOOL)needToCache:(NSString *)layername level:(NSInteger)level{
     for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
         if([cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel){
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)needToShowCache:(NSString *)layername level:(NSInteger)level{
+    for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
+        if([cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel && cache.isShow){
             return YES;
         }
     }
