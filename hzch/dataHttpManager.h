@@ -96,6 +96,7 @@ typedef enum {
 @property (nonatomic,strong) NSMutableDictionary *sqliteLayers;
 @property (nonatomic,strong) NSMutableArray *localLayers;
 @property (nonatomic,strong) NSMutableDictionary *sqliteCalloutDic;
+@property (nonatomic,strong) NSArray *cacheList;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 

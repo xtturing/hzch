@@ -95,6 +95,14 @@
         if (buttonIndex == 1)
         {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *documentsDirectory = [paths objectAtIndex:0];
+                NSFileManager *fileManage = [NSFileManager defaultManager];
+                NSString *mapDir = [documentsDirectory stringByAppendingPathComponent:@"map"];
+                NSString *layerDir = [mapDir stringByAppendingPathComponent:self.cache.layerName];
+                if ([fileManage fileExistsAtPath:layerDir]) {
+                    [fileManage removeItemAtPath:layerDir error:NULL];
+                }
                 [[dataHttpManager getInstance].cacheDB deleteCache:self.cache.typeID];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];

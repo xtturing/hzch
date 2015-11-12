@@ -7,7 +7,8 @@
 //
 
 #import "TianDiTuData.h"
-
+#import "DBCache.h"
+#import "dataHttpManager.h"
 @implementation TianDiTuData
 
 - (NSString*)getTilePath:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l
@@ -18,9 +19,9 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     NSString *tlayer = t;
-    NSString *llayer = [NSString stringWithFormat: @"%d", l];
-    NSString *xname = [NSString stringWithFormat: @"%d", x];
-    NSString *yname = [NSString stringWithFormat: @"%d", y];
+    NSString *llayer = [NSString stringWithFormat: @"%ld", (long)l];
+    NSString *xname = [NSString stringWithFormat: @"%ld", (long)x];
+    NSString *yname = [NSString stringWithFormat: @"%ld", (long)y];
     //建立文件操作对象
     NSFileManager *fileManage = [NSFileManager defaultManager];
     
@@ -66,22 +67,35 @@
 
 -(NSData *)QueryTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l
 {
-    
-    NSString *tilePath = [self getTilePath:t x:x y:y l:l];
-    
-    return [self getTileData:tilePath];
+    if([self needToCache:t level:l]){
+        NSString *tilePath = [self getTilePath:t x:x y:y l:l];
+        
+        return [self getTileData:tilePath];
+    }
+    return nil;
 }
 
 - (BOOL)InsertTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l tiels:(NSData *)tiels{
     BOOL _result = NO;
-    NSString *tilePath = [self getTilePath:t x:x y:y l:l];
-    NSFileManager *fileManage = [NSFileManager defaultManager];
-    [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
-    
-    if ([fileManage fileExistsAtPath:tilePath]) {
-        _result = YES;
+    if([self needToCache:t level:l]){
+        NSString *tilePath = [self getTilePath:t x:x y:y l:l];
+        NSFileManager *fileManage = [NSFileManager defaultManager];
+        [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
+        
+        if ([fileManage fileExistsAtPath:tilePath]) {
+            _result = YES;
+        }
     }
     return _result;
+}
+
+- (BOOL)needToCache:(NSString *)layername level:(NSInteger)level{
+    for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
+        if([cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel){
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

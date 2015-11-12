@@ -57,6 +57,7 @@
         //NSLog(@"连续加载对象 : %@",self);
         @autoreleasepool{
             NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"esriView" owner:self options: nil];
+            [dataHttpManager getInstance].cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
             if(arrayOfViews.count < 1){
                 return nil;
             }
@@ -457,6 +458,10 @@
     [self.mapView removeMapLayerWithName:@"GPS Location Layer"];
     [self.mapView addMapLayer:self.locationLayer withName:@"GPS Location Layer"];
 }
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error{
+    
+}
 -(void)topLocationLayer{
     if (self.locationLayer !=nil) {
         //NSLog(@"IS NIL TEST %@" ,@"3.0");
@@ -523,12 +528,22 @@
         [self.locationBtn setImage:[UIImage imageNamed:@"locActive"] forState:UIControlStateNormal];
         [self.locationManager startUpdatingLocation];
         self.locationState = YES;
+        if(self.mapView.locationDisplay.mapLocation){
+            [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
+        }else{
+            [self.mapView.locationDisplay startDataSource];
+            self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
+        }
+
     }else{
         [self.locationBtn setImage:[UIImage imageNamed:@"location_click"] forState:UIControlStateNormal];
         [self.locationManager stopUpdatingLocation];
         self.locationState = NO;
+        if([self.mapView.locationDisplay isDataSourceStarted]){
+            [self.mapView.locationDisplay stopDataSource];
+            
+        }
     }
-    
 }
 
 #pragma mark -measure

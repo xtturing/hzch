@@ -114,7 +114,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 80;
+    return 120;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -160,9 +160,9 @@
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.textLabel.minimumScaleFactor = 0.5;
+    cell.textLabel.minimumScaleFactor = 0.3;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
-    cell.detailTextLabel.minimumScaleFactor = 0.5;
+    cell.detailTextLabel.minimumScaleFactor = 0.3;
     cell.detailTextLabel.numberOfLines = 0;
     cell.textLabel.numberOfLines = 0;
     return cell;

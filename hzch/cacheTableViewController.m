@@ -45,6 +45,7 @@
 
 - (void)reload{
     self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
+    [dataHttpManager getInstance].cacheList = self.cacheList;
     [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:1.0];
 }
 #pragma mark - Table view data source
