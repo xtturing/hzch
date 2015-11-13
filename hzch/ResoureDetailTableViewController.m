@@ -130,33 +130,37 @@
     NSString *wmtsurl = nil;
     NSString *wmtsID = nil;
     NSString *name = nil;
+    NSInteger ctype = 0;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:index];
         wmtsname = depart.CCODE;
         wmtsurl = depart.WMTS;
+        ctype = depart.CTYPE;
         wmtsID = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
         name = depart.NAME;
     }else{
         NBGovment *gov = [_detailList objectAtIndex:index];
         wmtsname = gov.CCODE;
+        ctype = gov.CTYPE;
         wmtsurl = gov.WMTS;
         wmtsID = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
         name = gov.NAME;
     }
-    if([self hasInMapLayerName:wmtsname]){
-        UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        UIButton *btn = (UIButton *)cell.accessoryView;
-        [btn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
-        ALERT(@"已从地图移除");
-    }else{
-        UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-        UIButton *btn = (UIButton *)cell.accessoryView;
-        [btn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
-        ALERT(@"已添加到地图");
+    if(ctype == 4 && (wmtsurl || wmtsurl.length > 0)){
+        if([self hasInMapLayerName:wmtsname]){
+            UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+            UIButton *btn = (UIButton *)cell.accessoryView;
+            [btn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
+            ALERT(@"已从地图移除");
+        }else{
+            UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+            UIButton *btn = (UIButton *)cell.accessoryView;
+            [btn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
+            ALERT(@"已添加到地图");
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,@"wmtsID":wmtsID,@"name":name}];
+        [self.tableView reloadData];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,@"wmtsID":wmtsID,@"name":name}];
-    [self.tableView reloadData];
-
 }
 - (void)didGetFailed{
     [SVProgressHUD dismiss];

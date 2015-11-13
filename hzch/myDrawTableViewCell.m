@@ -119,7 +119,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [[dataHttpManager getInstance].drawDB deleteDraw:self.titleLab.tag];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if([self hasShowDraw:[NSString stringWithFormat:@"%ld",self.titleLab.tag]]){
+                    if([self hasShowDraw:[NSString stringWithFormat:@"%ld",(long)self.titleLab.tag]]){
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_DRAW_LAYER" object:nil userInfo:@{@"draw":self.draw}];
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
