@@ -63,7 +63,7 @@
 
 - (IBAction)doLineSearch:(id)sender{
     if(self.startText.text.length > 0 && self.endText.text.length > 0){
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[dataHttpManager getInstance] letGetLineSearch:self.startText.text end:self.endText.text];
         });
@@ -160,9 +160,9 @@
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.textLabel.minimumScaleFactor = 0.3;
+    cell.textLabel.minimumScaleFactor = 0.5;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
-    cell.detailTextLabel.minimumScaleFactor = 0.3;
+    cell.detailTextLabel.minimumScaleFactor = 0.5;
     cell.detailTextLabel.numberOfLines = 0;
     cell.textLabel.numberOfLines = 0;
     return cell;

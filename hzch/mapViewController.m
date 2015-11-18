@@ -37,7 +37,7 @@
 
 - (void)addMapPoint{
     [self.esriView addAllWmtsLayers];
-    [self.esriView addCustLayer:self.resultList withType:self.searchType];
+    [self.esriView addCustLayer:self.resultList withType:self.searchType withIndex:0];
 }
 
 /*

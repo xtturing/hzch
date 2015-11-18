@@ -62,6 +62,7 @@
     }
     cell.textLabel.text = [_array objectAtIndex:indexPath.row];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 

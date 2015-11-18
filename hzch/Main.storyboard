@@ -2540,18 +2540,12 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="k6T-bG-BQi">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="添加到地图" id="BEV-NL-Xzd">
-                            <connections>
-                                <action selector="showInMap:" destination="OjP-SJ-f8f" id="phv-FH-c7j"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="countItem" destination="299-Zz-1Dz" id="NjQ-nC-Hv7"/>
                         <outlet property="nextItem" destination="Fjn-Y4-GJ1" id="M52-mx-rKm"/>
                         <outlet property="preItem" destination="CqO-ba-CUc" id="zgE-rw-yz2"/>
-                        <outlet property="showMapItem" destination="BEV-NL-Xzd" id="Ngg-j9-Rd5"/>
                         <outlet property="toolBar" destination="YIa-ky-lKR" id="goX-dH-wW4"/>
                     </connections>
                 </tableViewController>
@@ -2613,17 +2607,11 @@
                                 <action selector="doBack:" destination="nbi-vx-RoW" id="4ry-BE-r7N"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="添加到地图" id="XKY-Tq-jpA">
-                            <connections>
-                                <action selector="showInMap:" destination="nbi-vx-RoW" id="ss8-hu-4ww"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="countItem" destination="nA6-3I-3db" id="gw1-g0-f0T"/>
                         <outlet property="nextItem" destination="jLk-6g-J5a" id="fwm-Ys-lyC"/>
                         <outlet property="preItem" destination="Roj-LF-dgr" id="Hqb-Uu-aSh"/>
-                        <outlet property="showMapItem" destination="XKY-Tq-jpA" id="xQ5-Bu-xN9"/>
                         <outlet property="toolBar" destination="Efo-yb-KnT" id="xFW-7K-rVt"/>
                     </connections>
                 </tableViewController>

@@ -23,7 +23,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.title = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]:[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"FNAME"];
+    self.title = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"name"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"name"]:([[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]:[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"FNAME"]);
 }
 
 - (IBAction)doBack:(id)sender{
@@ -71,6 +71,7 @@
     }
     
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 
@@ -80,17 +81,19 @@
     if(([key isEqualToString:@"IMAGE"] || [key isEqualToString:@"image"]) && value.length > 0){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         NBSearchImageViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchImageViewController"];
-        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue];
+        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID;
         mapViewController.imageUrl = value;
         mapViewController.titleName = self.title;
+          self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
     if(([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]) && value.length > 0){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         NBSearchVideoViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchVideoViewController"];
-        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue];
+        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID;
         mapViewController.imageUrl = value;
         mapViewController.titleName = self.title;
+          self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
     

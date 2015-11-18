@@ -89,16 +89,13 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if(_searchType == 0){
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    if(_searchType == 1 || _searchType == 2){
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.7;
     cell.detailTextLabel.text = detail;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+    cell.detailTextLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 
@@ -149,6 +146,7 @@
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
         self.resultDic = searchDic;
         tableID = [[searchDic objectForKey:@"tableid"] integerValue];
+        [dataHttpManager getInstance].tableID = tableID;
         self.toolBar.hidden = NO;
         if(page > 1){
             self.preItem.enabled = YES;
@@ -232,46 +230,50 @@
     if(_searchType == 1){
         NSArray *results = [_resultDic objectForKey:@"results"];
         NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
-        mapViewController.catalog = catalog;
-        mapViewController.tableID = tableID;
-        [self.navigationController pushViewController:mapViewController animated:YES];
+        [dataHttpManager getInstance].tableName = catalog.tablename;
     }
-    if(_searchType == 2){
-        NSArray *results = [_resultDic objectForKey:@"results"];
-        NSDictionary *dic =[results objectAtIndex:indexPath.row];
-        [dataHttpManager getInstance].sqliteCalloutDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-        for(NSString *key in dic.allKeys){
-            if([dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null])
-            {
-                [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
-            }else{
-                if([[dic objectForKey:key] isKindOfClass:[NSString class]]){
-                    NSString *value = [dic objectForKey:key];
-                    if([value stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0 || [value isEqualToString:@"<null>"]){
-                        [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
-                    }
-                }
-                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"Geometry"]
-                   || [key isEqualToString:@"type"]|| [key isEqualToString:@"title"]|| [key isEqualToString:@"detail"]|| [key isEqualToString:@"FeatureGUI"]|| [key isEqualToString:@"updatestat"]|| [key isEqualToString:@"PK_UID"]){
-                    [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
-                }
-            }
-        }
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        SqliteDetailTableViewController *sqliteViewContoller = [storyboard instantiateViewControllerWithIdentifier:@"SqliteDetailTableViewController"];
-        sqliteViewContoller.isPush = YES;
-        [self.navigationController pushViewController:sqliteViewContoller animated:YES];
-    }
+//    if(_searchType == 2){
+//        NSArray *results = [_resultDic objectForKey:@"results"];
+//        NSDictionary *dic =[results objectAtIndex:indexPath.row];
+//        [dataHttpManager getInstance].sqliteCalloutDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+//        for(NSString *key in dic.allKeys){
+//            if([dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null])
+//            {
+//                [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+//            }else{
+//                if([[dic objectForKey:key] isKindOfClass:[NSString class]]){
+//                    NSString *value = [dic objectForKey:key];
+//                    if([value stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0 || [value isEqualToString:@"<null>"]){
+//                        [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+//                    }
+//                }
+//                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"Geometry"]
+//                   || [key isEqualToString:@"type"]|| [key isEqualToString:@"title"]|| [key isEqualToString:@"detail"]|| [key isEqualToString:@"FeatureGUI"]|| [key isEqualToString:@"updatestat"]|| [key isEqualToString:@"PK_UID"]){
+//                    [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
+//                }
+//            }
+//        }
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        SqliteDetailTableViewController *sqliteViewContoller = [storyboard instantiateViewControllerWithIdentifier:@"SqliteDetailTableViewController"];
+//        sqliteViewContoller.isPush = YES;
+//        [self.navigationController pushViewController:sqliteViewContoller animated:YES];
+//    }
+    [self showMap:indexPath.row];
 }
 
 -(IBAction)showInMap:(id)sender{
+    [self showMap:0];
+}
+
+- (void)showMap:(NSInteger)index{
     NSArray *results = [_resultDic objectForKey:@"results"];
     if([results count] > 0){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(_searchType),@"index":@(index)}];
         
     }
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 @end

@@ -80,8 +80,10 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.7;
     cell.detailTextLabel.text = detail;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+    cell.detailTextLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 
@@ -103,6 +105,7 @@
     if([[searchDic objectForKey:@"results"] count] > 0){
         self.showMapItem.enabled = YES;
         tableID = [[searchDic objectForKey:@"tableid"] integerValue];
+        [dataHttpManager getInstance].tableID = tableID;
         allCount = [[searchDic objectForKey:@"totalCount"] intValue];
         allCount = ceil(allCount / (pageSize*1.000));
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
@@ -151,21 +154,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSArray *results = [_resultDic objectForKey:@"results"];
     NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
-    mapViewController.catalog = catalog;
-    mapViewController.tableID = tableID;
-    [self.navigationController pushViewController:mapViewController animated:YES];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    NBSearchCatalogDetailTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchCatalogDetailTableViewController"];
+//    mapViewController.catalog = catalog;
+//    mapViewController.tableID = tableID;
+//    [self.navigationController pushViewController:mapViewController animated:YES];
+    [dataHttpManager getInstance].tableName = catalog.tablename;
+    if([results count] > 0){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(1),@"index":@(indexPath.row)}];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 -(IBAction)showInMap:(id)sender{
     NSArray *results = [_resultDic objectForKey:@"results"];
     if([results count] > 0){
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        mapViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
-//        mapViewController.resultList = results;
-//        mapViewController.searchType = 1;
-//        [self.navigationController pushViewController:mapViewController animated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_POINTS_ON_MAP" object:nil userInfo:@{@"results":results,@"searchType":@(1)}];
     }
 }

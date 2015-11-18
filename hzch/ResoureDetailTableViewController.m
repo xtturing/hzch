@@ -104,6 +104,7 @@
     
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 

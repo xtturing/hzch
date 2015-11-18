@@ -56,6 +56,7 @@
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%ld",(indexPath.row + 1)];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 

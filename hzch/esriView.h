@@ -62,7 +62,7 @@ CLLocationManagerDelegate>
 - (IBAction)widthTool:(id)sender;
 - (IBAction)colorTool:(id)sender;
 - (IBAction)widthChange:(id)sender;
--(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType;
+-(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType withIndex:(NSInteger)index;
 -(void)addSketchLayer;
 -(void)showToolView;
 - (void)hiddenToolView;

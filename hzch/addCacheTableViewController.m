@@ -50,7 +50,7 @@
          [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
     }
     [SVProgressHUD dismiss];
-    ALERT(@"添加缓存成功");
+    ALERT(@"添加缓存设置成功");
     [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
 }

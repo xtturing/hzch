@@ -360,6 +360,10 @@ static dataHttpManager * instance=nil;
     }
     else if ([returnObject isKindOfClass:[NSArray class]]) {
         userArr = (NSArray*)returnObject;
+    }else{
+        if ([_delegate respondsToSelector:@selector(didGetFailed)]) {
+            [_delegate didGetFailed];
+        }
     }
     
     if(requestType == AALoadTPK && userInfo){

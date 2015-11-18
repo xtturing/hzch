@@ -203,7 +203,7 @@
     }
 }
 
--(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType{
+-(void)addCustLayer:(NSArray *)p_data withType:(NSInteger)searchType withIndex:(NSInteger)index{
     self.mapView.callout.delegate = self;
     if(self.ghLayer == nil){
         self.ghLayer = [[AGSGraphicsLayer alloc]init];
@@ -252,6 +252,9 @@
                 [tips setObject:@(searchType) forKey:@"type"];
                 AGSGraphic *t_gh = [AGSGraphic graphicWithGeometry:t_point symbol:picMarkerSymbol attributes:tips];
                 [self.ghLayer addGraphic:t_gh];
+                if(i == index){
+                    [self.mapView.callout showCalloutAtPoint:t_point forFeature:t_gh layer:self.ghLayer animated:NO];
+                }
             }else{
                 NSDictionary *dic = [p_data objectAtIndex:i];
                 NSString *name = [dic objectForKey:@"NAME"]?[dic objectForKey:@"NAME"]:[dic objectForKey:@"FNAME"];
@@ -277,7 +280,9 @@
                         [tips setObject:@(3) forKey:@"type"];
                         AGSGraphic *gra = [AGSGraphic graphicWithGeometry:point symbol:generalPointSymbol attributes:tips];
                         [self.ghLayer addGraphic:gra];
-                        
+                        if(i == index){
+                            [self.mapView.callout showCalloutAtPoint:point forFeature:gra layer:self.ghLayer animated:NO];
+                        }
                     }
                     
                 }else if([[geoDic objectForKey:@"type"] isEqualToString:@"Polygon"]){
@@ -320,7 +325,7 @@
         }
     }
     [self.ghLayer refresh];
-    ALERT(@"已添加到地图");
+//    ALERT(@"已添加到地图");
 
 }
 
@@ -478,6 +483,7 @@
         [self.mapView removeMapLayer:self.ghLayer];
         self.ghLayer = nil;
     }
+    [self.mapView.callout removeFromSuperview];
 }
 
 //活的定位图层
@@ -622,7 +628,7 @@
         {
             [self addSketchLayer];
             [self addSketchGhLayer];
-            self.toolLabel.text = @"请在地图上点击开始标绘";
+            self.toolLabel.text = @"请在地图上点击画线开始标绘";
             self.drawTool.hidden = NO;
             self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
             self.mapView.touchDelegate = self.sketchLayer;

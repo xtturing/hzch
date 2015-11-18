@@ -41,6 +41,7 @@
     segIndex = 0;
     showMap = YES;
     [self.conView addSubview:self.esriView];
+    __weak typeof(self) weakSelf = self;
     self.esriView.ClickCalloutBlock = ^(NSDictionary *dic){
         [dataHttpManager getInstance].sqliteCalloutDic = [NSMutableDictionary dictionaryWithDictionary:dic];
         for(NSString *key in dic.allKeys){
@@ -60,7 +61,7 @@
             }
         }
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"SearchCatalogDetailNavigation"] animated:YES completion:nil];
+        [weakSelf presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"SearchCatalogDetailNavigation"] animated:YES completion:nil];
     };
     [self.conView addSubview:self.segmentedView];
     [self.conView addSubview:self.deleteBtn];
@@ -127,7 +128,8 @@
 - (void)addPointsOnMap:(NSNotification *)info{
     NSArray *resultList = [info.userInfo objectForKey:@"results"];
     NSInteger searchType = [[info.userInfo objectForKey:@"searchType"] integerValue];
-    [self.esriView addCustLayer:resultList withType:searchType];
+    NSInteger index = [[info.userInfo objectForKey:@"index"] integerValue];
+    [self.esriView addCustLayer:resultList withType:searchType withIndex:index];
 }
 
 - (void)addLayerOnMap:(NSNotification *)info{
