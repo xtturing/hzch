@@ -72,7 +72,16 @@
     }
     if(_searchType == 1){
         NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-        title = catalog.name;
+        if(catalog.name.length > 0){
+            title = catalog.name;
+        }else{
+            for(NSString *key in catalog.catalogDic.allKeys){
+                if([[key lowercaseString] containsString:@"name"]){
+                    title = [catalog.catalogDic objectForKey:key];
+                    break;
+                }
+            }
+        }
         detail = catalog.address;
     }
     if(_searchType == 2){

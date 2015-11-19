@@ -26,6 +26,7 @@
 #define HTTP_CATALOG_SEARCH    @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=%@&city=&v=2&frontRequest=true&tableid=%@&minx=&maxx=&miny=&maxy=&lk=false&geo=&_dc=1419474648386"
 
 #define HTTP_DRAW_SEARCH       @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=&city=&v=2&frontRequest=true&tableid=%@&minx=%f&maxx=%f&miny=%f&maxy=%f&lk=false&geo=&_dc=1419474648386"
+#define HTTP_THEMATIC          @"http://ditu.zj.cn/thematicDataMetadata?request=updatethematicdata&operationAction=lookup&tableName=%@"
 
 #define HTTP_LINE_SEARCH       @"http://www.tianditu.com/query.shtml"
 
@@ -41,6 +42,7 @@ typedef enum {
     AASearchCatalog,
     AASearchDraw,
     AAGetLineSearch,
+    AAGetThematic,
     //继续添加
     
 }DataRequestType;
@@ -75,7 +77,9 @@ typedef enum {
 
 - (void)didGetDraw:(NSMutableDictionary *)searchDic;
 
--(void)didGetRoute:(NBRoute *)route;
+- (void)didGetRoute:(NBRoute *)route;
+
+- (void)didGetThematic:(NSMutableDictionary *)thematicDic;
 //继续添加
 @end
 
@@ -99,6 +103,7 @@ typedef enum {
 @property (nonatomic,strong) NSArray *cacheList;
 @property (nonatomic) NSInteger tableID;
 @property (nonatomic,strong) NSString *tableName;
+@property (nonatomic,strong) NSDictionary *thematicDic;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 
@@ -112,5 +117,6 @@ typedef enum {
 - (void)letGetSearchSqlite:(NSString *)searchText;
 - (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size;
 - (void)letGetLineSearch:(NSString *)start end:(NSString *)end;
+- (void)letGetThematic;
 //继续添加
 @end

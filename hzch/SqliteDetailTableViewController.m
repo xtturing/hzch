@@ -10,7 +10,8 @@
 #import "NBSearchImageViewController.h"
 #import "NBSearchVideoViewController.h"
 #import "dataHttpManager.h"
-@interface SqliteDetailTableViewController ()
+#import "SVProgressHUD.h"
+@interface SqliteDetailTableViewController ()<dataHttpDelegate>
 
 @end
 
@@ -23,7 +24,20 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letGetThematic];
+    });
     self.title = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"name"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"name"]:([[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]:[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"FNAME"]);
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate =  nil;
 }
 
 - (IBAction)doBack:(id)sender{
@@ -41,6 +55,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)didGetThematic:(NSMutableDictionary *)thematicDic{
+    [SVProgressHUD dismiss];
+    [self.tableView reloadData];
+}
+
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -56,7 +79,7 @@
                              FirstLevelCell];
     if (cell == nil) {
         cell = [[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleSubtitle
+                initWithStyle:UITableViewCellStyleValue1
                 reuseIdentifier: FirstLevelCell];
     }
     if((([key isEqualToString:@"IMAGE"] || [key isEqualToString:@"image"]) || ([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]))){
@@ -64,14 +87,21 @@
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    if([[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key] isKindOfClass:[NSString class]]){
-        cell.textLabel.text = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key];
+    NSString *name = [[dataHttpManager getInstance].thematicDic objectForKey:[key lowercaseString]];
+    if(!name){
+        name = [[dataHttpManager getInstance].thematicDic objectForKey:[key uppercaseString]];
+    }
+    if(name){
+        cell.textLabel.text = [NSString stringWithFormat:@"%@:",name];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key]];
     }else{
         cell.textLabel.text = [NSString stringWithFormat:@"%@",[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key]];
     }
     
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.7;
+    cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+    cell.detailTextLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 

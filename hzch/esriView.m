@@ -232,7 +232,16 @@
                     x = [t_att.labelx doubleValue];
                     y = [t_att.labely doubleValue];
                     address = t_att.address;
-                    name = t_att.name;
+                    if(t_att.name.length > 0){
+                        name = t_att.name;
+                    }else{
+                        for(NSString *key in t_att.catalogDic.allKeys){
+                            if([[key lowercaseString] containsString:@"name"]){
+                                name = [t_att.catalogDic objectForKey:key];
+                                break;
+                            }
+                        }
+                    }
                     t_imagePath = @"cus_cz.png";
                 }
                 

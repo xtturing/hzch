@@ -67,7 +67,16 @@
     NSString *detail = nil;
     NSArray *results = [_resultDic objectForKey:@"results"];
     NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-    title = catalog.name;
+    if(catalog.name.length > 0){
+        title = catalog.name;
+    }else{
+        for(NSString *key in catalog.catalogDic.allKeys){
+            if([[key lowercaseString] containsString:@"name"]){
+                title = [catalog.catalogDic objectForKey:key];
+                break;
+            }
+        }
+    }
     detail = catalog.address;
     static NSString *FirstLevelCell = @"NBSearchCatalog";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:

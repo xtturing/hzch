@@ -177,6 +177,20 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 
+- (void)letGetThematic{
+    if(self.tableName.length > 0){
+        NSString *baseUrl =[NSString  stringWithFormat:HTTP_THEMATIC,self.tableName];
+        NSURL  *url = [NSURL URLWithString:baseUrl];
+        ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+        [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+        [request setTimeOutSeconds:TIMEOUT];
+        [request setResponseEncoding:NSUTF8StringEncoding];
+        NSLog(@"url=%@",url);
+        [self setGetUserInfo:request withRequestType:AAGetThematic];
+        [_requestQueue addOperation:request];
+    }    
+}
+
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size{
     NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                                     kCFAllocatorDefault, /* allocator */
@@ -498,6 +512,19 @@ static dataHttpManager * instance=nil;
         }
         if (_delegate && [_delegate respondsToSelector:@selector(didGetRoute:)] && route) {
             [_delegate didGetRoute:route];
+        }
+    }
+    if(requestType == AAGetThematic && userInfo){
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+        NSArray *array = [userInfo objectForKey:@"columnNames"];
+        for(NSDictionary *dataDic in array){
+            if([dataDic objectForKey:@"COMMENTS"] && [dataDic objectForKey:@"COLUMN_NAME"]){
+                [dic setObject:[dataDic objectForKey:@"COMMENTS"] forKey:[dataDic objectForKey:@"COLUMN_NAME"]];
+            }
+        }
+        self.thematicDic = [NSDictionary dictionaryWithDictionary:dic];
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetThematic:)]) {
+            [_delegate didGetThematic:dic];
         }
     }
     //继续添加
