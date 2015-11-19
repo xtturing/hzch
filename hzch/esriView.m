@@ -79,6 +79,7 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doRouteInMap:) name:@"ADD_ROUTE_IN_MAP" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearTpkSqlite) name:@"CLEAR_TPK_SQLITE" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearMyDraw) name:@"CLEAR_MYDRAW" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeLineDetail:) name:@"RouteLineDetail" object:nil];
             [self locationListenner];
         }
         
@@ -1506,7 +1507,7 @@
 }
 -(void)doRouteInMap:(NSNotification *)info{
     NBRoute *route = [info.userInfo objectForKey:@"route"];
-    AGSPictureMarkerSymbol * jingguo = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"last_cz"];
+    AGSPictureMarkerSymbol * jingguo = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
     AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
     lineSymbol.color =[UIColor colorWithRed:45.0/255.0 green:140.0/255.0  blue:58.0/255.0 alpha:1.0];
     lineSymbol.width = 4;
@@ -1567,5 +1568,33 @@
             }
         });
     });
+}
+
+- (void)routeLineDetail:(NSNotification *)notic{
+    NSIndexPath *index = [notic.userInfo objectForKey:@"indexPath"];
+    NBRoute *route = [notic.userInfo objectForKey:@"route"];
+    NBRouteItem *item = (NBRouteItem *)[route.routeItemList objectAtIndex:index.row];
+    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
+    NSArray *array = [item.turnlatlon componentsSeparatedByString:@","];
+    AGSPoint *point =	[AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue]  y: [[array objectAtIndex:1] doubleValue] spatialReference:nil];
+    if(point.x == 0 || point.y == 0 ){
+        return;
+    }
+    AGSGraphic * pointgra= nil;
+    pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
+    pointgra.symbol = dian;
+    [self.lineLayer addGraphic:pointgra];
+    self.mapView.callout.customView = nil;
+    self.mapView.callout.title = item.streetName;
+    self.mapView.callout.detail = item.strguide;
+    self.mapView.callout.titleColor=[UIColor whiteColor];
+    self.mapView.callout.autoAdjustWidth=YES;
+    self.mapView.callout.cornerRadius=2;
+    self.mapView.callout.accessoryButtonHidden = YES;
+    
+    [self.mapView.callout showCalloutAtPoint:point forFeature:pointgra layer:self.lineLayer animated:YES];
+    
+    [self.mapView centerAtPoint:point animated:YES];
+    [self.lineLayer refresh];
 }
 @end

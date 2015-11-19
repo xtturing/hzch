@@ -168,4 +168,12 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(self.route){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_ROUTE_IN_MAP" object:nil userInfo:@{@"route":self.route}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteLineDetail" object:nil userInfo:@{@"indexPath":indexPath,@"route":_route}];
+        [self doBack:nil];
+    }
+}
+
 @end
