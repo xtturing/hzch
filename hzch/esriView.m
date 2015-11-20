@@ -336,6 +336,8 @@
     }
     [self.ghLayer refresh];
 //    ALERT(@"已添加到地图");
+    [self.mapView zoomIn:NO];
+    [self.mapView zoomOut:NO];
 
 }
 
@@ -943,6 +945,8 @@
         }
         
     }
+    [self.mapView zoomIn:NO];
+    [self.mapView zoomOut:NO];
 }
 
 - (void)addLocalGeomery:(NSMutableArray *)list layerName:(NSString *)name{
@@ -1235,6 +1239,8 @@
     if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
         ALERT(@"离线数据已添加到地图");
     }
+    [self.mapView zoomIn:NO];
+    [self.mapView zoomOut:NO];
 }
 
 
@@ -1242,6 +1248,8 @@
     if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
         ALERT(@"加载离线数据失败");
     }
+    [self.mapView zoomIn:NO];
+    [self.mapView zoomOut:NO];
 }
 
 - (void)addLocalTileLayerWithName:(NSString *)fileName{
@@ -1332,7 +1340,8 @@
             }
         }
     }
-    
+    [self.mapView zoomIn:NO];
+    [self.mapView zoomOut:NO];
 }
 
 - (BOOL)hasShowSqlite:(NSString *)cellTag{

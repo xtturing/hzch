@@ -118,15 +118,49 @@
         [self.navigationController pushViewController:mapViewController animated:YES];
     }
     if(([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]) && value.length > 0){
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        NBSearchVideoViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchVideoViewController"];
-        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID;
-        mapViewController.imageUrl = value;
-        mapViewController.titleName = self.title;
-          self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
-        [self.navigationController pushViewController:mapViewController animated:YES];
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        NBSearchVideoViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchVideoViewController"];
+//        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID;
+//        mapViewController.imageUrl = value;
+//        mapViewController.titleName = self.title;
+//          self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
+//        [self.navigationController pushViewController:mapViewController animated:YES];
+        NSString* escaped_value = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *url = [NSString stringWithFormat:@"http://ditu.zj.cn/MEDIA/%ld/VIDEO/%@",(long)([[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID),escaped_value];
+        NSLog(@"video url %@", url);
+        // add to view
+        MPMoviePlayerViewController *movie = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL URLWithString:url]];
+        
+        [movie.moviePlayer prepareToPlay];
+        [self presentMoviePlayerViewControllerAnimated:movie];
+        [movie.moviePlayer setControlStyle:MPMovieControlStyleFullscreen];
+        
+        [movie.view setBackgroundColor:[UIColor clearColor]];
+        
+        [movie.view setFrame:self.view.bounds];
+        [[NSNotificationCenter defaultCenter]addObserver:self
+         
+                                                selector:@selector(movieFinishedCallback:)
+         
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+         
+                                                  object:movie.moviePlayer];
     }
     
 }
-
+-(void)movieFinishedCallback:(NSNotification*)notify{
+    
+    // 视频播放完或者在presentMoviePlayerViewControllerAnimated下的Done按钮被点击响应的通知。
+    
+    MPMoviePlayerController* theMovie = [notify object];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self
+     
+                                                   name:MPMoviePlayerPlaybackDidFinishNotification
+     
+                                                 object:theMovie];
+    
+    [self dismissMoviePlayerViewControllerAnimated];
+    
+}
 @end
