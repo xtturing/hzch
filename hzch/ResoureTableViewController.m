@@ -81,15 +81,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
-    NSInteger count = 0;
     if(_showType == 0){
         NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
         title = depart.NAME;
-        count = depart.COUNTS;
     }else{
         NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
         title = gov.NAME;
-        count = gov.COUNTS;
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -99,13 +96,7 @@
                 initWithStyle:UITableViewCellStyleValue1
                 reuseIdentifier: FirstLevelCell];
     }
-    if(count > 0){
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld",(long)count];
-    }else{
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.text = nil;
-    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = title;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.7;
@@ -114,27 +105,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger count = 0;
-    NSInteger catalogID  = nil;
+    NSInteger catalogID  = 0;
     NSString *titlename = nil;
     if(_showType == 0){
         NBDepartMent *depart = [_departmentList objectAtIndex:indexPath.row];
-        count = depart.COUNTS;
         catalogID = depart.CATALOGID;
         titlename = depart.NAME;
     }else{
         NBGovment *gov = [_govmentList objectAtIndex:indexPath.row];
-        count = gov.COUNTS;
         catalogID = gov.CATALOGID;
         titlename = gov.NAME;
     }
-    if(count > 0){
-        ResoureDetailTableViewController *detailViewController = [[ResoureDetailTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        detailViewController.showType =self.showType;
-        detailViewController.catalogID = catalogID;
-        detailViewController.titleName = titlename;
-        [self.navigationController pushViewController:detailViewController animated:YES];
-    }
+    ResoureDetailTableViewController *detailViewController = [[ResoureDetailTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    detailViewController.showType =self.showType;
+    detailViewController.catalogID = catalogID;
+    detailViewController.titleName = titlename;
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (void)didGetFailed{

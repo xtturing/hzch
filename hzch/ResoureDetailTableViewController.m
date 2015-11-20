@@ -59,6 +59,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = nil;
     NSInteger ctype = 0;
+    NSInteger catalogID = 0;
     NSString *wmsurl = nil;
     NSString *wmtsurl = nil;
     NSString *wmtsname = nil;
@@ -71,6 +72,7 @@
         wmtsurl = depart.WMTS;
         wmtsname = depart.CCODE;
         wmtsID = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
+        catalogID = depart.CATALOGID;
     }else{
         NBGovment *gov = [_detailList objectAtIndex:indexPath.row];
         title = gov.NAME;
@@ -79,6 +81,7 @@
         wmtsurl = gov.WMTS;
         wmtsname = gov.CCODE;
         wmtsID = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
+        catalogID = gov.CATALOGID;
     }
     static NSString *FirstLevelCell = @"NBDepartMent";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
@@ -98,8 +101,14 @@
         eyeButton.tag = indexPath.row;
         [eyeButton addTarget:self action:@selector(showLayerInMap:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = eyeButton;
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }else{
         cell.accessoryView = nil;
+        if(catalogID != self.catalogID){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
     }
     
     cell.textLabel.text = title;
@@ -132,6 +141,7 @@
     NSString *wmtsID = nil;
     NSString *name = nil;
     NSInteger ctype = 0;
+    NSInteger catalogID  = 0;
     if(_showType == 0){
         NBDepartMent *depart = [_detailList objectAtIndex:index];
         wmtsname = depart.CCODE;
@@ -139,6 +149,7 @@
         ctype = depart.CTYPE;
         wmtsID = [NSString stringWithFormat:@"%ld",(long)depart.CATALOGID];
         name = depart.NAME;
+        catalogID = depart.CATALOGID;
     }else{
         NBGovment *gov = [_detailList objectAtIndex:index];
         wmtsname = gov.CCODE;
@@ -146,21 +157,31 @@
         wmtsurl = gov.WMTS;
         wmtsID = [NSString stringWithFormat:@"%ld",(long)gov.CATALOGID];
         name = gov.NAME;
+        catalogID = gov.CATALOGID;
     }
     if(ctype == 4 && (wmtsurl || wmtsurl.length > 0)){
         if([self hasInMapLayerName:wmtsname]){
             UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
             UIButton *btn = (UIButton *)cell.accessoryView;
             [btn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
-            ALERT(@"已从地图移除");
+//            ALERT(@"已从地图移除");
         }else{
             UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
             UIButton *btn = (UIButton *)cell.accessoryView;
             [btn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
-            ALERT(@"已添加到地图");
+//            ALERT(@"已添加到地图");
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_WMTS_LAYER_ON_MAP" object:nil userInfo:@{@"wmtsurl":wmtsurl,@"wmtsname":wmtsname,@"wmtsID":wmtsID,@"name":name}];
         [self.tableView reloadData];
+        [self performSelector:@selector(dismissView) withObject:nil afterDelay:0.4];
+    }else{
+        if(catalogID != self.catalogID){
+            ResoureDetailTableViewController *detailViewController = [[ResoureDetailTableViewController alloc] initWithStyle:UITableViewStylePlain];
+            detailViewController.showType =self.showType;
+            detailViewController.catalogID = catalogID;
+            detailViewController.titleName = name;
+            [self.navigationController pushViewController:detailViewController animated:YES];
+        }
     }
 }
 - (void)didGetFailed{
@@ -191,5 +212,8 @@
     }
 }
 
+- (void)dismissView{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

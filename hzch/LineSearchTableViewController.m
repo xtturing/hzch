@@ -63,7 +63,7 @@
 
 - (IBAction)doLineSearch:(id)sender{
     if(self.startText.text.length > 0 && self.endText.text.length > 0){
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+//        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[dataHttpManager getInstance] letGetLineSearch:self.startText.text end:self.endText.text];
         });
@@ -170,7 +170,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(self.route){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_ROUTE_IN_MAP" object:nil userInfo:@{@"route":self.route}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteLineDetail" object:nil userInfo:@{@"indexPath":indexPath,@"route":_route}];
         [self doBack:nil];
     }

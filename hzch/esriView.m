@@ -1593,6 +1593,30 @@
     pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
     pointgra.symbol = dian;
     [self.lineLayer addGraphic:pointgra];
+    
+//    AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+//    lineSymbol.color =[UIColor purpleColor];
+//    lineSymbol.width = 8;
+//    NBSimpleRoute *sitem = (NBSimpleRoute *)[route.simpleRouteList objectAtIndex:index.row];
+//    if(sitem.streetLatLon.length > 0){
+//        AGSGraphic * linegra=nil;
+//        AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+//        [poly addPathToPolyline];
+//        
+//        NSArray *latlon=[sitem.streetLatLon componentsSeparatedByString:@";"];
+//        for (int i=0; i<latlon.count; i++) {
+//            NSString *str=[latlon objectAtIndex:i];
+//            NSArray *coor=[str componentsSeparatedByString:@","];
+//            if(coor.count==2){
+//                AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
+//                [poly addPointToPath:point];
+//            }
+//        }
+//        linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil];
+//        [self.lineLayer addGraphic:linegra];
+//    }
+
+    
     self.mapView.callout.customView = nil;
     self.mapView.callout.title = item.streetName;
     self.mapView.callout.detail = item.strguide;
