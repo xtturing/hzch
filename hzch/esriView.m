@@ -642,9 +642,13 @@
             [self addSketchGhLayer];
             self.toolLabel.text = @"请在地图上点击画线开始标绘";
             self.drawTool.hidden = NO;
-            self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
-            self.mapView.touchDelegate = self.sketchLayer;
-            [self.sketchLayer.undoManager removeAllActions];
+            [self.coordinates removeAllObjects];
+            [self.mapView addSubview:self.canvasView];
+            [self addSketchGhLayer];
+//            self.sketchLayer.geometry = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+//            self.mapView.touchDelegate = self.sketchLayer;
+//            [self.sketchLayer.undoManager removeAllActions];
+            
         }
             break;
             
@@ -728,13 +732,9 @@
         case 2007:
         {
             self.drawTool.hidden = YES;
-            self.sketchLayer = nil;
-            self.sketchLayer.geometry = nil;
-            self.mapView.touchDelegate = nil;
-            if([self hasLayer:@"sketchLayer"])
-            {
-                [_mapView removeMapLayerWithName:@"sketchLayer"];
-            }
+            self.canvasView.image = nil;
+            [self.coordinates removeAllObjects];
+            [self.canvasView removeFromSuperview];
         }
             break;
         default:
@@ -832,7 +832,10 @@
 
 - (void)didSaveDrawing
 {
-    if(self.sketchLayer.geometry){
+    NSInteger numberOfPoints = [self.coordinates count];
+    
+    if (numberOfPoints > 2)
+    {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"标绘名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = 70009;
@@ -852,20 +855,26 @@
         {
             UITextField *textfield =  [alertView textFieldAtIndex: 0];
             if(textfield.text.length > 1){
-                AGSGeometry* sketchGeometry = [self.sketchLayer.geometry copy];
+                AGSMutablePolyline *line = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+                [line addPathToPolyline];
+                for (AGSPoint *point in self.coordinates) {
+                    [line addPointToPath:point];
+                }
                 AGSSimpleLineSymbol
                 *outerSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
                 outerSymbol.color
                 = _drawColor;
                 outerSymbol.width = _drawWidth;
-                AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:sketchGeometry symbol:outerSymbol attributes:nil];
+                AGSGraphic *graphic = [AGSGraphic graphicWithGeometry:line symbol:outerSymbol attributes:nil];
+                long createDate = [[NSDate date] timeIntervalSince1970]*1000;
+                [graphic setAttribute:[NSString stringWithFormat:@"%ld",createDate] forKey:@"createDate"];
                 [self.sketchGhLayer addGraphic:graphic];
                 [self.sketchGhLayer refresh];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     Draw *draw = [[Draw alloc] init];
                     draw.name = textfield.text;
-                    draw.createDate = [[NSDate date] timeIntervalSince1970]*1000;
-                    NSDictionary *dic = @{@"color":@(_drawIndex),@"width":@(_drawWidth),@"geometry":[[sketchGeometry encodeToJSON] ags_JSONRepresentation]};
+                    draw.createDate = createDate;
+                    NSDictionary *dic = @{@"color":@(_drawIndex),@"width":@(_drawWidth),@"geometry":[[line encodeToJSON] ags_JSONRepresentation]};
                     NSError *error;
                     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
                                                                        options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
@@ -874,8 +883,9 @@
                     [[dataHttpManager getInstance].drawDB insertDraw:draw];
                     [[dataHttpManager getInstance].drawLayers addObject:[NSString stringWithFormat:@"%ld",draw.createDate]];
                 });
-                [self.sketchLayer clear];
-                [self.sketchLayer.undoManager removeAllActions];
+                self.canvasView.image = nil;
+                [self.coordinates removeAllObjects];
+                [self.canvasView removeFromSuperview];
             }
             
         }
@@ -1291,10 +1301,10 @@
             NSString *createDate = [gra attributeForKey:@"createDate"];
             if([[NSString stringWithFormat:@"%ld",draw.createDate] isEqualToString:createDate]){
                 [self.sketchGhLayer removeGraphic:gra];
-                break;
             }
         }
         ALERT(@"标绘已从地图移除");
+        return;
     }
     NSArray *allDraws = [[dataHttpManager getInstance].drawDB getAllDraws];
     for(NSString *createDate in [dataHttpManager getInstance].drawLayers){
@@ -1431,6 +1441,9 @@
     [self getMinMax:point];
     if(self.toolTag == 1004){
         [self didTouchUpInsideDrawButton];
+    }
+    if(self.toolTag == 1003){
+        
     }
 }
 
@@ -1593,30 +1606,29 @@
     pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
     pointgra.symbol = dian;
     [self.lineLayer addGraphic:pointgra];
-    
-//    AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
-//    lineSymbol.color =[UIColor purpleColor];
-//    lineSymbol.width = 8;
-//    NBSimpleRoute *sitem = (NBSimpleRoute *)[route.simpleRouteList objectAtIndex:index.row];
-//    if(sitem.streetLatLon.length > 0){
-//        AGSGraphic * linegra=nil;
-//        AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
-//        [poly addPathToPolyline];
-//        
-//        NSArray *latlon=[sitem.streetLatLon componentsSeparatedByString:@";"];
-//        for (int i=0; i<latlon.count; i++) {
-//            NSString *str=[latlon objectAtIndex:i];
-//            NSArray *coor=[str componentsSeparatedByString:@","];
-//            if(coor.count==2){
-//                AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
-//                [poly addPointToPath:point];
-//            }
-//        }
-//        linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil];
-//        [self.lineLayer addGraphic:linegra];
-//    }
-
-    
+    if((index.row-1) > 0 && (index.row-1) < route.simpleRouteList.count){
+        AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
+        lineSymbol.color =[UIColor colorWithWhite:1 alpha:0.5];
+        lineSymbol.width = 8;
+        NBSimpleRoute *sitem = (NBSimpleRoute *)[route.simpleRouteList objectAtIndex:(index.row-1)];
+        if(sitem.streetLatLon.length > 0){
+            AGSGraphic * linegra=nil;
+            AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+            [poly addPathToPolyline];
+            
+            NSArray *latlon=[sitem.streetLatLon componentsSeparatedByString:@";"];
+            for (int i=0; i<latlon.count; i++) {
+                NSString *str=[latlon objectAtIndex:i];
+                NSArray *coor=[str componentsSeparatedByString:@","];
+                if(coor.count==2){
+                    AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
+                    [poly addPointToPath:point];
+                }
+            }
+            linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil];
+            [self.lineLayer addGraphic:linegra];
+        }
+    }
     self.mapView.callout.customView = nil;
     self.mapView.callout.title = item.streetName;
     self.mapView.callout.detail = item.strguide;

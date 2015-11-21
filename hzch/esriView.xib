@@ -130,18 +130,6 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="3IC-h5-nb0"/>
-                        <barButtonItem tag="2003" image="bh_last_step_normal" id="mgV-m7-kKt">
-                            <connections>
-                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="Q1o-K8-P7E"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="yMO-JM-QFt"/>
-                        <barButtonItem tag="2004" image="bh_next_step_normal" id="jfl-Ic-em8">
-                            <connections>
-                                <action selector="toolDraw:" destination="g1L-6G-ZfW" id="Ml5-P1-JaG"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ha3-4h-ao9"/>
                         <barButtonItem tag="2005" title="保存" id="8jt-v7-6Vv">
                             <connections>
                                 <action selector="toolDraw:" destination="g1L-6G-ZfW" id="PJy-lW-VOa"/>
@@ -251,8 +239,6 @@
         <image name="bh_color_green_click" width="47" height="26"/>
         <image name="bh_color_purple_normal" width="47" height="26"/>
         <image name="bh_color_red_normal" width="47" height="26"/>
-        <image name="bh_last_step_normal" width="22" height="22"/>
-        <image name="bh_next_step_normal" width="22" height="22"/>
         <image name="btnBg" width="40" height="40"/>
         <image name="delete_line_click" width="22" height="22"/>
         <image name="gesture_search_click" width="22" height="22"/>
