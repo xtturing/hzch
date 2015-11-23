@@ -55,7 +55,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if([self isInCacheList:indexPath.row]){
+    if(indexPath.row == [dataHttpManager getInstance].cache.typeID){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -67,24 +67,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(![self isInCacheList:indexPath.row]){
-        [dataHttpManager getInstance].cache.typeID = indexPath.row;
-        [dataHttpManager getInstance].cache.name = [_array objectAtIndex:indexPath.row];
-        [dataHttpManager getInstance].cache.layerName = [_layerArray objectAtIndex:indexPath.row];
-        [dataHttpManager getInstance].cache.minLevel = 1;
-        [dataHttpManager getInstance].cache.maxLevel = 20;
-        [dataHttpManager getInstance].cache.isShow = YES;
-        [tableView reloadData];
-        [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-    }else{
-        for (DBCache *cache in self.cacheList) {
-            if(cache.typeID == indexPath.row){
-                [dataHttpManager getInstance].cache = cache;
-                break;
-            }
-        }
-        [tableView reloadData];
-    }
+    [dataHttpManager getInstance].cache.typeID = indexPath.row;
+    [dataHttpManager getInstance].cache.name = [_array objectAtIndex:indexPath.row];
+    [dataHttpManager getInstance].cache.layerName = [_layerArray objectAtIndex:indexPath.row];
+    [dataHttpManager getInstance].cache.minLevel = 1;
+    [dataHttpManager getInstance].cache.maxLevel = 20;
+    [dataHttpManager getInstance].cache.isShow = YES;
+    [tableView reloadData];
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
 - (BOOL)isInCacheList:(NSInteger)typeID{

@@ -44,15 +44,13 @@
         //创建文件夹
         [fileManage createDirectoryAtPath:layerLevelDir attributes:nil];
     }
-    
-    
+
     //切片
     NSString *tilePath =  [layerLevelDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.png",xname,yname]];
     
     return tilePath;
 }
 -(NSData *)getTileData:(NSString *)tilePath{
-    
     NSData *tileData;
     NSFileManager *fileManage = [NSFileManager defaultManager];
     if ([fileManage fileExistsAtPath:tilePath]) {
@@ -77,14 +75,11 @@
 
 - (BOOL)InsertTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l tiels:(NSData *)tiels{
     BOOL _result = NO;
-    if([self needToCache:t level:l]){
-        NSString *tilePath = [self getTilePath:t x:x y:y l:l];
-        NSFileManager *fileManage = [NSFileManager defaultManager];
-        [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
-        
-        if ([fileManage fileExistsAtPath:tilePath]) {
-            _result = YES;
-        }
+    NSString *tilePath = [self getTilePath:t x:x y:y l:l];
+    NSFileManager *fileManage = [NSFileManager defaultManager];
+    [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
+    if ([fileManage fileExistsAtPath:tilePath]) {
+        _result = YES;
     }
     return _result;
 }

@@ -19,17 +19,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if(![dataHttpManager getInstance].cache){
-        DBCache *cache = [[DBCache alloc]init];
-        cache.minLevel = 1;
-        cache.maxLevel = 20;
-        cache.name = @"中国电子地图";
-        cache.layerName = @"vec";
-        cache.isShow = YES;
-        cache.range = @"当前可视范围";
-        cache.typeID = 0;
-        [dataHttpManager getInstance].cache = cache;
-    }
+    DBCache *cache = [[DBCache alloc]init];
+    cache.minLevel = 1;
+    cache.maxLevel = 20;
+    cache.name = @"中国电子地图";
+    cache.layerName = @"vec";
+    cache.isShow = YES;
+    cache.range = @"当前可视范围";
+    cache.typeID = 0;
+    [dataHttpManager getInstance].cache = cache;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -44,11 +42,7 @@
 - (IBAction)addCache:(id)sender{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [dataHttpManager getInstance].cache.name = self.textLabel.text;
-    if([self isInCacheList:[dataHttpManager getInstance].cache.typeID]){
-        [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
-    }else{
-         [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
-    }
+    [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
     [SVProgressHUD dismiss];
     ALERT(@"添加缓存设置成功");
     [self.navigationController popViewControllerAnimated:YES];

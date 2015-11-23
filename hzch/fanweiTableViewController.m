@@ -52,9 +52,10 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
     if(indexPath.section == 0){
         cell.textLabel.text = @"当前屏幕";
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.textLabel.text = @"杭州市";
     }
