@@ -69,6 +69,9 @@
     [self.conView addSubview:self.clearBtn];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLayerOnMap:) name:@"ADD_WMTS_LAYER_ON_MAP" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPointsOnMap:) name:@"ADD_POINTS_ON_MAP" object:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letGetRange];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -152,7 +155,9 @@
         
     }];
 }
-
+- (void)didGetRange:(NSMutableDictionary *)rangeDic{
+    [dataHttpManager getInstance].rangeDic = [NSDictionary dictionaryWithDictionary:rangeDic];
+}
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
     ALERT(@"请求失败，请确认网络连接");

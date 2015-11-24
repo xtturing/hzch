@@ -191,6 +191,18 @@ static dataHttpManager * instance=nil;
     }    
 }
 
+- (void)letGetRange{
+    NSString *baseUrl = HTTP_RANGE;
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AAGetRange];
+    [_requestQueue addOperation:request];
+}
+
 - (void)letGetSearch:(NSString *)searchText page:(int)page pageSize:(int)size{
     NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                                     kCFAllocatorDefault, /* allocator */
@@ -525,6 +537,18 @@ static dataHttpManager * instance=nil;
         self.thematicDic = [NSDictionary dictionaryWithDictionary:dic];
         if (_delegate && [_delegate respondsToSelector:@selector(didGetThematic:)]) {
             [_delegate didGetThematic:dic];
+        }
+    }
+    
+    if(requestType == AAGetRange && userInfo){
+        NSDictionary *result = [userInfo objectForKey:@"result"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+//        [dic setObject:@[[result objectForKey:@"MINX"],[result objectForKey:@"MINY"],[result objectForKey:@"MAXX"],[result objectForKey:@"MAXY"]] forKey:[result objectForKey:@"NAME"]];
+        for(NSDictionary *child in [result objectForKey:@"children"]){
+            [dic setObject:[NSString stringWithFormat:@"%@,%@,%@,%@",[child objectForKey:@"MINX"],[child objectForKey:@"MINY"],[child objectForKey:@"MAXX"],[child objectForKey:@"MAXY"]] forKey:[child objectForKey:@"NAME"]];
+        }
+        if (_delegate && [_delegate respondsToSelector:@selector(didGetRange:)]) {
+            [_delegate didGetRange:dic];
         }
     }
     //继续添加

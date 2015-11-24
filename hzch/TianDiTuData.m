@@ -9,6 +9,8 @@
 #import "TianDiTuData.h"
 #import "DBCache.h"
 #import "dataHttpManager.h"
+#import "TianDiTuWMTSLayerInfoDelegate.h"
+
 @implementation TianDiTuData
 
 - (NSString*)getTilePath:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l
@@ -65,7 +67,7 @@
 
 -(NSData *)QueryTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l
 {
-    if([self needToShowCache:t level:l]){
+    if([self needToShowCache:t level:l x:x y:y]){
         NSString *tilePath = [self getTilePath:t x:x y:y l:l];
         
         return [self getTileData:tilePath];
@@ -93,13 +95,51 @@
     return NO;
 }
 
-- (BOOL)needToShowCache:(NSString *)layername level:(NSInteger)level{
+- (BOOL)needToShowCache:(NSString *)layername level:(NSInteger)level x:(NSInteger)x y:(NSInteger)y{
     for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
-        if([cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel && cache.isShow){
-            return YES;
+        if(cache.isShow && [cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel){
+            NSArray *array = [NSArray arrayWithArray:[cache.rangeBox componentsSeparatedByString:@","]];
+            if([cache.range isEqualToString:@"当前可视范围"] || !array){
+                return YES;
+            }
+            NSInteger minc = [self getMinC:[(NSNumber *)[array objectAtIndex:0] doubleValue] level:level];
+            NSInteger maxc = [self getMaxC:[(NSNumber *)[array objectAtIndex:2] doubleValue] level:level];
+            NSInteger minr = [self getMinR:[(NSNumber *)[array objectAtIndex:3] doubleValue] level:level];
+            NSInteger maxr = [self getMaxR:[(NSNumber *)[array objectAtIndex:1] doubleValue] level:level];
+            if(minc <= y && y <= maxc && x >= minr && x <= maxr){
+                return YES;
+            }
         }
     }
     return NO;
+}
+
+- (NSInteger)getMinC:(double)minx  level:(NSInteger)level{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+    NSInteger minc = floor(fabs((layerInfo.origin.x - minx) / (layerInfo.tileWidth * lod.resolution)));
+    return minc;
+}
+
+- (NSInteger)getMaxC:(double)maxx  level:(NSInteger)level{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+    NSInteger maxc = round(fabs((layerInfo.origin.x - maxx) / (layerInfo.tileWidth * lod.resolution)));
+    return maxc;
+}
+
+- (NSInteger)getMinR:(double)maxy  level:(NSInteger)level{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+    NSInteger minr = floor(fabs((layerInfo.origin.y - maxy) / (layerInfo.tileHeight * lod.resolution)));
+    return minr;
+}
+
+- (NSInteger)getMaxR:(double)miny  level:(NSInteger)level{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+    long maxr = round(fabs((layerInfo.origin.y - miny) / (layerInfo.tileHeight * lod.resolution)));
+    return maxr;
 }
 
 @end

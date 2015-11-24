@@ -7,8 +7,9 @@
 //
 
 #import "fanweiTableViewController.h"
-
-@interface fanweiTableViewController ()
+#import "dataHttpManager.h"
+#import "SVProgressHUD.h"
+@interface fanweiTableViewController ()<dataHttpDelegate>
 
 @end
 
@@ -16,14 +17,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    if(!([dataHttpManager getInstance].rangeDic && [dataHttpManager getInstance].rangeDic.count > 0)){
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[dataHttpManager getInstance] letGetRange];
+        });
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate =  nil;
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -39,7 +57,7 @@
     if(section == 0){
         return 1;
     }
-    return 18;
+    return [dataHttpManager getInstance].rangeDic.count;
 }
 
 
@@ -54,15 +72,40 @@
     }
     
     if(indexPath.section == 0){
-        cell.textLabel.text = @"当前屏幕";
+        cell.textLabel.text = @"当前可视范围";
+    }else{
+        cell.textLabel.text = [[dataHttpManager getInstance].rangeDic.allKeys objectAtIndex:indexPath.row];
+    }
+    
+    if([cell.textLabel.text isEqualToString:[dataHttpManager getInstance].cache.range]){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
-        cell.textLabel.text = @"杭州市";
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.7;
     return cell;
 }
 
+- (void)didGetFailed{
+    ALERT(@"获取行政区划失败");
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 0){
+        [dataHttpManager getInstance].cache.range = @"当前可视范围";
+        [dataHttpManager getInstance].cache.rangeBox = nil;
+    }else{
+        [dataHttpManager getInstance].cache.range = [[dataHttpManager getInstance].rangeDic.allKeys objectAtIndex:indexPath.row];
+        [dataHttpManager getInstance].cache.rangeBox = [[dataHttpManager getInstance].rangeDic objectForKey:[dataHttpManager getInstance].cache.range];
+    }
+    [tableView reloadData];
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+}
+
+- (void)didGetRange:(NSMutableDictionary *)rangeDic{
+    [SVProgressHUD dismiss];
+    [dataHttpManager getInstance].rangeDic = [NSDictionary dictionaryWithDictionary:rangeDic];
+    [self.tableView reloadData];
+}
 
 @end

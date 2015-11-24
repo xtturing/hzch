@@ -28,6 +28,8 @@
 #define HTTP_DRAW_SEARCH       @"http://ditu.zj.cn/services/datasearch?withgeometry=false&searchtype=spatialdata&page=%d&pagesize=%d&keywords=&city=&v=2&frontRequest=true&tableid=%@&minx=%f&maxx=%f&miny=%f&maxy=%f&lk=false&geo=&_dc=1419474648386"
 #define HTTP_THEMATIC          @"http://ditu.zj.cn/thematicDataMetadata?request=updatethematicdata&operationAction=lookup&tableName=%@"
 
+#define HTTP_RANGE             @"http://ditu.zj.cn/services/divisionsearch?v=2&oid=330000-000-2120-%E6%B5%99%E6%B1%9F%E7%9C%81&geom=1000K"
+
 #define HTTP_LINE_SEARCH       @"http://www.tianditu.com/query.shtml"
 
 #define REQUEST_TYPE          @"requestType"
@@ -43,6 +45,7 @@ typedef enum {
     AASearchDraw,
     AAGetLineSearch,
     AAGetThematic,
+    AAGetRange,
     //继续添加
     
 }DataRequestType;
@@ -80,6 +83,8 @@ typedef enum {
 - (void)didGetRoute:(NBRoute *)route;
 
 - (void)didGetThematic:(NSMutableDictionary *)thematicDic;
+
+- (void)didGetRange:(NSMutableDictionary *)rangeDic;
 //继续添加
 @end
 
@@ -104,6 +109,7 @@ typedef enum {
 @property (nonatomic) NSInteger tableID;
 @property (nonatomic,strong) NSString *tableName;
 @property (nonatomic,strong) NSDictionary *thematicDic;
+@property (nonatomic,strong) NSDictionary *rangeDic;
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 
@@ -118,5 +124,6 @@ typedef enum {
 - (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size;
 - (void)letGetLineSearch:(NSString *)start end:(NSString *)end;
 - (void)letGetThematic;
+- (void)letGetRange;
 //继续添加
 @end

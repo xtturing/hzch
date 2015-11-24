@@ -16,6 +16,7 @@
 @property(nonatomic,assign) NSInteger maxLevel;
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *layerName;
+@property(nonatomic,strong) NSString *rangeBox;
 @property(nonatomic,assign) BOOL isShow;
 
 @end

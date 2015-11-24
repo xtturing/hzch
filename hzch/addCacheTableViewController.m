@@ -27,6 +27,7 @@
     cache.isShow = YES;
     cache.range = @"当前可视范围";
     cache.typeID = 0;
+    cache.rangeBox = nil;
     [dataHttpManager getInstance].cache = cache;
 }
 
@@ -36,7 +37,7 @@
     [self.minLabel setTitle:[NSString stringWithFormat:@"%ld",[dataHttpManager getInstance].cache.minLevel] forState:UIControlStateNormal];
     [self.maxLabel setTitle:[NSString stringWithFormat:@"%ld",[dataHttpManager getInstance].cache.maxLevel] forState:UIControlStateNormal];
     self.rangeLabel.text = [dataHttpManager getInstance].cache.range;
-    self.textLabel.text = [dataHttpManager getInstance].cache.name;
+    self.textLabel.text = [NSString stringWithFormat:@"%@_%@",[dataHttpManager getInstance].cache.range,[dataHttpManager getInstance].cache.name];
 }
 
 - (IBAction)addCache:(id)sender{
