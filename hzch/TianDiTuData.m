@@ -56,11 +56,11 @@
     NSData *tileData;
     NSFileManager *fileManage = [NSFileManager defaultManager];
     if ([fileManage fileExistsAtPath:tilePath]) {
+        NSLog(@"%@",tilePath);
         tileData = [NSData dataWithContentsOfFile:tilePath];
     }else{
         tileData = nil;
     }
-    
     return tileData;
 }
 
@@ -69,7 +69,6 @@
 {
     if([self needToShowCache:t level:l x:x y:y]){
         NSString *tilePath = [self getTilePath:t x:x y:y l:l];
-        
         return [self getTileData:tilePath];
     }
     return nil;

@@ -56,7 +56,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if([key isEqualToString:@"image"] || [key isEqualToString:@"video"]){
+    if((([key isEqualToString:@"IMAGE"] || [key isEqualToString:@"image"]) || ([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]))){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -70,15 +70,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *key = [self.catalog.catalogDic.allKeys objectAtIndex:indexPath.row];
     NSString *value = [self.catalog.catalogDic objectForKey:key];
-    if([key isEqualToString:@"image"] && value.length > 0){
+    if(([key isEqualToString:@"IMAGE"] || [key isEqualToString:@"image"]) && value.length > 0){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         NBSearchImageViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchImageViewController"];
         mapViewController.catalogID = self.tableID;
         mapViewController.imageUrl = value;
         mapViewController.titleName = self.catalog.name;
         [self.navigationController pushViewController:mapViewController animated:YES];
-    }
-    if([key isEqualToString:@"video"]){
+    }else if(([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]) && value.length > 0){
         NSString* escaped_value = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *url = [NSString stringWithFormat:@"http://ditu.zj.cn/MEDIA/%ld/VIDEO/%@",(long)self.tableID,escaped_value];
         NSLog(@"video url %@", url);
@@ -99,13 +98,11 @@
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
          
                                                   object:movie.moviePlayer];
-        
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        NBSearchVideoViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchVideoViewController"];
-//        mapViewController.catalogID = self.tableID;
-//        mapViewController.imageUrl = value;
-//        mapViewController.titleName = self.catalog.name;
-//        [self.navigationController pushViewController:mapViewController animated:YES];
+    }else{
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        if(cell.textLabel.text.length > 14){
+            ALERT(cell.textLabel.text);
+        }
     }
     
 }

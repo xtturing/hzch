@@ -116,15 +116,7 @@
         mapViewController.titleName = self.title;
           self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
         [self.navigationController pushViewController:mapViewController animated:YES];
-    }
-    if(([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]) && value.length > 0){
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        NBSearchVideoViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchVideoViewController"];
-//        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID;
-//        mapViewController.imageUrl = value;
-//        mapViewController.titleName = self.title;
-//          self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
-//        [self.navigationController pushViewController:mapViewController animated:YES];
+    }else if(([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"]) && value.length > 0){
         NSString* escaped_value = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *url = [NSString stringWithFormat:@"http://ditu.zj.cn/MEDIA/%ld/VIDEO/%@",(long)([[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID),escaped_value];
         NSLog(@"video url %@", url);
@@ -145,6 +137,11 @@
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
          
                                                   object:movie.moviePlayer];
+    }else{
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        if(cell.detailTextLabel.text.length > 14){
+            ALERT(cell.detailTextLabel.text);
+        }
     }
     
 }

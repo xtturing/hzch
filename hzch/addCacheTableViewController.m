@@ -43,7 +43,12 @@
 - (IBAction)addCache:(id)sender{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [dataHttpManager getInstance].cache.name = self.textLabel.text;
-    [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
+    if([self isInCacheList]){
+        [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
+    }else{
+        [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
+    }
+
     [SVProgressHUD dismiss];
     ALERT(@"添加缓存设置成功");
     [self.navigationController popViewControllerAnimated:YES];
@@ -53,13 +58,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-- (BOOL)isInCacheList:(NSInteger)typeID{
+- (BOOL)isInCacheList{
     self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
     if(!self.cacheList || self.cacheList.count == 0){
         return NO;
     }
     for (DBCache *cache in self.cacheList) {
-        if(cache.typeID == typeID){
+        if([cache.name isEqualToString:[dataHttpManager getInstance].cache.name]){
             return YES;
         }
     }

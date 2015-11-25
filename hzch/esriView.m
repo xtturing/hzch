@@ -721,6 +721,7 @@
         case 2005:
         {
             [self didSaveDrawing];
+            self.drawTool.hidden = YES;
         }
             break;
         case 2006:
@@ -1628,7 +1629,7 @@
     pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
     pointgra.symbol = dian;
     [self.lineLayer addGraphic:pointgra];
-    
+    [self.lineLayer refresh];
     self.mapView.callout.customView = nil;
     self.mapView.callout.title = item.streetName;
     self.mapView.callout.detail = item.strguide;
@@ -1638,6 +1639,6 @@
     
     [self.mapView.callout showCalloutAtPoint:point forFeature:pointgra layer:self.lineLayer animated:YES];
     [self.mapView centerAtPoint:point animated:YES];
-    [self.lineLayer refresh];
+   
 }
 @end
