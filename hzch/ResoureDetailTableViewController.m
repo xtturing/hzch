@@ -196,7 +196,6 @@
         self.detailList = departmentDetailList;
         [self.tableView reloadData];
     }else{
-        ALERT(@"请求数据为空");
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -207,7 +206,6 @@
         self.detailList = govmentDetailList;
         [self.tableView reloadData];
     }else{
-        ALERT(@"请求数据为空");
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

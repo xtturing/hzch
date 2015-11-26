@@ -13,4 +13,7 @@
 
 @property(nonatomic, weak) esriView *delegate;
 
+@property(nonatomic,assign) UIColor *lineColor;
+@property(nonatomic,assign) CGFloat lineWidth;
+
 @end

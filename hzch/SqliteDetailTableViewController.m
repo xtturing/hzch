@@ -67,15 +67,21 @@
 
 - (void)removeNullName{
     self.showDic = [NSMutableDictionary dictionaryWithDictionary:[dataHttpManager getInstance].sqliteCalloutDic];
-    for (NSString *key in [dataHttpManager getInstance].sqliteCalloutDic.allKeys) {
-        NSString *name = [[dataHttpManager getInstance].thematicDic objectForKey:[key lowercaseString]];
-        if(!name){
-            name = [[dataHttpManager getInstance].thematicDic objectForKey:[key uppercaseString]];
+    if([dataHttpManager getInstance].thematicDic.count > 0){
+        for (NSString *key in [dataHttpManager getInstance].sqliteCalloutDic.allKeys) {
+            NSString *name = [[dataHttpManager getInstance].thematicDic objectForKey:[key lowercaseString]];
+            if(!name){
+                name = [[dataHttpManager getInstance].thematicDic objectForKey:[key uppercaseString]];
+            }
+            if(!name){
+                [self.showDic removeObjectForKey:key];
+            }
         }
-        if(!name){
-            [self.showDic removeObjectForKey:key];
+        if(self.showDic.count <= 0){
+            self.showDic = [NSMutableDictionary dictionaryWithDictionary:[dataHttpManager getInstance].sqliteCalloutDic];
         }
     }
+    
 }
 
 - (void)didGetFailed{
@@ -112,6 +118,8 @@
     if(name){
         cell.textLabel.text = [NSString stringWithFormat:@"%@:",name];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[self.showDic objectForKey:key]];
+    }else{
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.showDic objectForKey:key]];
     }
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.7;

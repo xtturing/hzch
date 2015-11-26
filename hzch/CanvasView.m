@@ -33,8 +33,8 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();   
     [self.image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     CGContextSetLineCap(ctx, kCGLineCapRound);
-    CGContextSetLineWidth(ctx, 3.0);
-    CGContextSetStrokeColorWithColor(ctx, [[UIColor blueColor] colorWithAlphaComponent:0.7].CGColor);
+    CGContextSetLineWidth(ctx, self.lineWidth);
+    CGContextSetStrokeColorWithColor(ctx, [self.lineColor colorWithAlphaComponent:0.7].CGColor);
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, self.location.x, self.location.y);
     CGContextAddLineToPoint(ctx, currentLocation.x, currentLocation.y);
@@ -55,8 +55,8 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();   
     [self.image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     CGContextSetLineCap(ctx, kCGLineCapRound);
-    CGContextSetLineWidth(ctx, 3.0);
-    CGContextSetStrokeColorWithColor(ctx, [[UIColor blueColor] colorWithAlphaComponent:0.7].CGColor);
+    CGContextSetLineWidth(ctx, self.lineWidth);
+    CGContextSetStrokeColorWithColor(ctx, [self.lineColor colorWithAlphaComponent:0.7].CGColor);
     CGContextBeginPath(ctx);
     CGContextMoveToPoint(ctx, self.location.x, self.location.y);
     CGContextAddLineToPoint(ctx, currentLocation.x, currentLocation.y);

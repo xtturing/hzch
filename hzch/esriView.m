@@ -784,6 +784,7 @@
         default:
             break;
     }
+    _canvasView.lineColor = _drawColor;
 }
 - (IBAction)widthTool:(id)sender{
     UIBarButtonItem *btnItem = (UIBarButtonItem *)sender;
@@ -803,6 +804,7 @@
 - (IBAction)widthChange:(id)sender{
     UISlider *slider = (UISlider *)sender;
     _drawWidth = slider.value;
+    _canvasView.lineWidth = _drawWidth;
 }
 
 - (void)didTouchUpInsideDrawButton
@@ -1414,6 +1416,8 @@
         _canvasView = [[CanvasView alloc] initWithFrame:self.mapView.frame];
         _canvasView.userInteractionEnabled = YES;
         _canvasView.delegate = self;
+        _canvasView.lineColor = [UIColor redColor];
+        _canvasView.lineWidth = 4.0;
     }
     return _canvasView;
 }
