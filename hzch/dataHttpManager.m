@@ -58,6 +58,12 @@ static dataHttpManager * instance=nil;
         self.cacheDB = [[DBCacheManager alloc]init];
         [self.cacheDB createTable];
         
+        self.tpkDB = [[DBTpkManager alloc] init];
+        [self.tpkDB createTable];
+        
+        self.sqliteDB = [[DBSqliteManager alloc]init];
+        [self.sqliteDB createTable];
+        
         self.resourceLayers = [[NSMutableDictionary alloc] initWithCapacity:0];
         self.drawLayers = [NSMutableArray arrayWithCapacity:0];
         self.sqliteLayers = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -393,6 +399,8 @@ static dataHttpManager * instance=nil;
     }
     
     if(requestType == AALoadTPK && userInfo){
+        [self.tpkDB deleteTpks];
+        [self.sqliteDB deleteSqlites];
         NSString * responseString = [[userInfo objectForKey:@"string"] objectForKey:@"text"];
         id  returnObject = [parser objectWithString:responseString];
         NSArray *tpklist = [[[returnObject objectForKey:@"all"] objectForKey:@"allTPK"] objectForKey:@"tpk"];
@@ -402,14 +410,17 @@ static dataHttpManager * instance=nil;
         for(NSDictionary *tpkdic in tpklist){
             NBTpk *tpk = [[NBTpk alloc] initWithJsonDictionary:tpkdic];
             [tpkArr addObject:tpk];
+            [self.tpkDB insertTpk:tpk];
         }
         for(NSDictionary *datadic in dataList){
             NBSpatialData *data = [[NBSpatialData alloc] initWithJsonDictionary:datadic];
             [dataArr addObject:data];
+            [self.sqliteDB insertSqlite:data];
         }
         NSMutableDictionary  *resultDic = [NSMutableDictionary dictionaryWithCapacity:2];
         [resultDic setObject:tpkArr forKey:@"tpk"];
         [resultDic setObject:dataArr forKey:@"data"];
+        
         if ([_delegate respondsToSelector:@selector(didLoadTPK:)]) {
             [_delegate didLoadTPK:resultDic];
         }

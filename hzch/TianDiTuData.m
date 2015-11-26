@@ -76,18 +76,21 @@
 
 - (BOOL)InsertTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l tiels:(NSData *)tiels{
     BOOL _result = NO;
-    NSString *tilePath = [self getTilePath:t x:x y:y l:l];
-    NSFileManager *fileManage = [NSFileManager defaultManager];
-    [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
-    if ([fileManage fileExistsAtPath:tilePath]) {
-        _result = YES;
-    }
+    if([self needToCache:t]){
+        NSString *tilePath = [self getTilePath:t x:x y:y l:l];
+        NSFileManager *fileManage = [NSFileManager defaultManager];
+        [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
+        if ([fileManage fileExistsAtPath:tilePath]) {
+            _result = YES;
+        }
+    }    
     return _result;
 }
 
-- (BOOL)needToCache:(NSString *)layername level:(NSInteger)level{
-    for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
-        if([cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel){
+- (BOOL)needToCache:(NSString *)layername{
+    NSArray *layerArray = @[@"vec",@"cva",@"img",@"cia",@"zjemap",@"zjemapanno",@"imgmap",@"imgmap_lab"];
+    for (NSString *name in  layerArray) {
+        if([name isEqualToString:layername]){
             return YES;
         }
     }

@@ -28,17 +28,24 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     self.showType = 0;
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letGetCatalogDepartment];
-        [[dataHttpManager getInstance] letGetCatalogGovment];
-    });
     self.title = @"返回";
     // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [dataHttpManager getInstance].delegate = self;
+    if(!_departmentList){
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[dataHttpManager getInstance] letGetCatalogDepartment];
+        });
+    }
+    if(!_govmentList){
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[dataHttpManager getInstance] letGetCatalogGovment];
+        });
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

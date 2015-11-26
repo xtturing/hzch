@@ -115,11 +115,18 @@
 }
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
-    ALERT(@"请求失败，请确认网络连接");
+    NSMutableDictionary  *resultDic = [NSMutableDictionary dictionaryWithCapacity:2];
+    [resultDic setObject:[[dataHttpManager getInstance].tpkDB getAllTpk] forKey:@"tpk"];
+    [resultDic setObject:[[dataHttpManager getInstance].sqliteDB getAllSqlite] forKey:@"data"];
+    [self loadData:resultDic];
 }
 
 -(void)didLoadTPK:(NSMutableDictionary *)Dic{
     [SVProgressHUD dismiss];
+    [self loadData:Dic];
+}
+
+- (void)loadData:(NSMutableDictionary *)Dic{
     NSArray *tpks = [Dic objectForKey:@"tpk"];
     NSArray *datas = [Dic objectForKey:@"data"];
     self.dataList = [[NSMutableDictionary alloc] initWithCapacity:0];

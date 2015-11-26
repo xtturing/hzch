@@ -21,7 +21,7 @@
 -(void)commit;
 -(void)insertCache:(DBCache *)theCache;
 -(NSMutableArray *)getAllCache;
--(void)deleteCache:(NSInteger)typeId;
+-(void)deleteCache:(NSString *)name;
 -(void)deleteCaches;
 - (void)updateCache:(DBCache *)theCache;
 -(int)getCount;

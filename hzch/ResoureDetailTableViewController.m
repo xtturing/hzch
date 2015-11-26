@@ -91,7 +91,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if(ctype == 4 && (wmsurl.length > 0 || wmsurl.length > 0)){
+    if((ctype == 4 || ctype == 5) && (wmsurl.length > 0 || wmsurl.length > 0)){
         UIButton *eyeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
         if([self hasInMapLayerName:wmtsID]){
             [eyeButton setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
@@ -159,7 +159,7 @@
         name = gov.NAME;
         catalogID = gov.CATALOGID;
     }
-    if(ctype == 4 && (wmtsurl || wmtsurl.length > 0)){
+    if((ctype == 4 || ctype == 5) && (wmtsurl || wmtsurl.length > 0)){
         if([self hasInMapLayerName:wmtsname]){
             UITableViewCell *cell =[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
             UIButton *btn = (UIButton *)cell.accessoryView;

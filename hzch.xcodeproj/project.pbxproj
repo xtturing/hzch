@@ -123,6 +123,8 @@
 		417FBD101BEA49C300568A01 /* DBCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 417FBD0F1BEA49C300568A01 /* DBCacheManager.m */; };
 		4186EC401BE525AC00E8FBD3 /* SqliteDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */; };
 		41B9534E1BB598E200FE6F35 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B9534C1BB598E200FE6F35 /* CanvasView.m */; };
+		41BB46BE1C06E94E004358E4 /* DBTpkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BB46BD1C06E94E004358E4 /* DBTpkManager.m */; };
+		41BB46C11C06E998004358E4 /* DBSqliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BB46C01C06E998004358E4 /* DBSqliteManager.m */; };
 		41C735591BDD13F800E01B84 /* NBRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735561BDD13F800E01B84 /* NBRoute.m */; };
 		41C7355A1BDD13F800E01B84 /* NBRouteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C735581BDD13F800E01B84 /* NBRouteItem.m */; };
 		41C7355D1BDD163500E01B84 /* NBSimpleRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C7355C1BDD163500E01B84 /* NBSimpleRoute.m */; };
@@ -350,6 +352,10 @@
 		4186EC3F1BE525AC00E8FBD3 /* SqliteDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SqliteDetailTableViewController.m; sourceTree = "<group>"; };
 		41B9534C1BB598E200FE6F35 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
 		41B9534D1BB598E200FE6F35 /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
+		41BB46BC1C06E94E004358E4 /* DBTpkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTpkManager.h; sourceTree = "<group>"; };
+		41BB46BD1C06E94E004358E4 /* DBTpkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTpkManager.m; sourceTree = "<group>"; };
+		41BB46BF1C06E998004358E4 /* DBSqliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSqliteManager.h; sourceTree = "<group>"; };
+		41BB46C01C06E998004358E4 /* DBSqliteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBSqliteManager.m; sourceTree = "<group>"; };
 		41C735551BDD13F800E01B84 /* NBRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRoute.h; sourceTree = "<group>"; };
 		41C735561BDD13F800E01B84 /* NBRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBRoute.m; sourceTree = "<group>"; };
 		41C735571BDD13F800E01B84 /* NBRouteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRouteItem.h; sourceTree = "<group>"; };
@@ -614,6 +620,10 @@
 				413D7DE91BAF02CC00D972DB /* NBDownLoadViewController.m */,
 				412B398C1BB97B1700DD9151 /* NBSpatialData.h */,
 				412B398D1BB97B1700DD9151 /* NBSpatialData.m */,
+				41BB46BC1C06E94E004358E4 /* DBTpkManager.h */,
+				41BB46BD1C06E94E004358E4 /* DBTpkManager.m */,
+				41BB46BF1C06E998004358E4 /* DBSqliteManager.h */,
+				41BB46C01C06E998004358E4 /* DBSqliteManager.m */,
 			);
 			name = DownLoadManager;
 			sourceTree = "<group>";
@@ -1006,6 +1016,7 @@
 				413D7E0A1BAF033000D972DB /* DesEncrypt.m in Sources */,
 				412A15681BC6CA37006E87A0 /* tucengTableViewController.m in Sources */,
 				4106DFF81BA1D7A900EF997D /* NSDictionaryAdditions.m in Sources */,
+				41BB46BE1C06E94E004358E4 /* DBTpkManager.m in Sources */,
 				415CA73E1BC7D0EA003D8347 /* DBDraws.m in Sources */,
 				41E425E71BA86B26009C0581 /* esriView.m in Sources */,
 				413D7E0F1BAF049F00D972DB /* NBTpk.m in Sources */,
@@ -1028,6 +1039,7 @@
 				41C735591BDD13F800E01B84 /* NBRoute.m in Sources */,
 				413D7DEB1BAF02CC00D972DB /* DowningCell.m in Sources */,
 				41533EFA1BBDF47E006C7D55 /* NBSearch.m in Sources */,
+				41BB46C11C06E998004358E4 /* DBSqliteManager.m in Sources */,
 				41E425D91BA8694D009C0581 /* TianDiTuWMTSTileOperation.m in Sources */,
 				412A15181BC68A8D006E87A0 /* cacheTableViewController.m in Sources */,
 				412A154C1BC6AB5B006E87A0 /* dbfopen.c in Sources */,

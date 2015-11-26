@@ -156,6 +156,8 @@
         }
         TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsID];
         [self.mapView addMapLayer:layer withName:wmtsID];
+        [self.mapView zoomIn:NO];
+        [self.mapView zoomOut:NO];
         [[dataHttpManager getInstance].resourceLayers setObject:@[wmtsurl,wmtsname,name] forKey:wmtsID];
     }
 }

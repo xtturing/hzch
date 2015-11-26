@@ -13,6 +13,8 @@
 #import "SVProgressHUD.h"
 @interface SqliteDetailTableViewController ()<dataHttpDelegate>
 
+@property (nonatomic,strong) NSMutableDictionary *showDic;
+
 @end
 
 @implementation SqliteDetailTableViewController
@@ -28,6 +30,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[dataHttpManager getInstance] letGetThematic];
     });
+    [self removeNullName];
+    
     self.title = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"name"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"name"]:([[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]?[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"NAME"]:[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"FNAME"]);
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -57,7 +61,21 @@
 
 -(void)didGetThematic:(NSMutableDictionary *)thematicDic{
     [SVProgressHUD dismiss];
+    [self removeNullName];
     [self.tableView reloadData];
+}
+
+- (void)removeNullName{
+    self.showDic = [NSMutableDictionary dictionaryWithDictionary:[dataHttpManager getInstance].sqliteCalloutDic];
+    for (NSString *key in [dataHttpManager getInstance].sqliteCalloutDic.allKeys) {
+        NSString *name = [[dataHttpManager getInstance].thematicDic objectForKey:[key lowercaseString]];
+        if(!name){
+            name = [[dataHttpManager getInstance].thematicDic objectForKey:[key uppercaseString]];
+        }
+        if(!name){
+            [self.showDic removeObjectForKey:key];
+        }
+    }
 }
 
 - (void)didGetFailed{
@@ -69,11 +87,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[dataHttpManager getInstance].sqliteCalloutDic.allKeys  count];
+    return [self.showDic.allKeys  count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *key = [[dataHttpManager getInstance].sqliteCalloutDic.allKeys objectAtIndex:indexPath.row];
+    NSString *key = [self.showDic.allKeys objectAtIndex:indexPath.row];
     static NSString *FirstLevelCell = @"sqliteCalloutCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                              FirstLevelCell];
@@ -93,11 +111,8 @@
     }
     if(name){
         cell.textLabel.text = [NSString stringWithFormat:@"%@:",name];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key]];
-    }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"%@",[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[self.showDic objectForKey:key]];
     }
-    
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.7;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
@@ -106,8 +121,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *key = [[dataHttpManager getInstance].sqliteCalloutDic.allKeys objectAtIndex:indexPath.row];
-    NSString *value = [[dataHttpManager getInstance].sqliteCalloutDic objectForKey:key];
+    NSString *key = [self.showDic.allKeys objectAtIndex:indexPath.row];
+    NSString *value = [self.showDic objectForKey:key];
     if(([key isEqualToString:@"IMAGE"] || [key isEqualToString:@"image"]) && value.length > 0){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         NBSearchImageViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchImageViewController"];

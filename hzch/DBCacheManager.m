@@ -96,12 +96,12 @@
 - (void)updateCache:(DBCache *)theCache{
     if(theCache == NULL)
         return;
-    NSString *update = @"update CACHE set NAME = ?,MAXLEVEL = ?,MINLEVEL = ?,LAYERNAME = ? ,RANGE = ? ,RANGEBOX = ?,ISSHOW = ? WHERE TYPEID =";
+    NSString *update = @"update CACHE set TYPEID = ?,MAXLEVEL = ?,MINLEVEL = ?,LAYERNAME = ? ,RANGE = ? ,RANGEBOX = ?,ISSHOW = ? WHERE NAME =";
     update = [update stringByAppendingString:@"\""];
-    update = [update stringByAppendingString:[NSString stringWithFormat:@"%ld",theCache.typeID]];
+    update = [update stringByAppendingString:[NSString stringWithFormat:@"%@",theCache.name]];
     update = [update stringByAppendingString:@"\""];
     BOOL bSucceed = [database executeUpdate:update,
-                     theCache.name,[NSNumber numberWithLong:theCache.maxLevel],[NSNumber numberWithLong:theCache.minLevel],theCache.layerName,theCache.range,theCache.rangeBox,[NSNumber numberWithLong:theCache.isShow]];
+                     [NSNumber numberWithLong:theCache.typeID],[NSNumber numberWithLong:theCache.maxLevel],[NSNumber numberWithLong:theCache.minLevel],theCache.layerName,theCache.range,theCache.rangeBox,[NSNumber numberWithLong:theCache.isShow]];
     
     if (!bSucceed)
     {
@@ -134,9 +134,9 @@
     return recordList;
 }
 
--(void)deleteCache:(NSInteger)typeId{
-    NSString * query = @"DELETE FROM CACHE WHERE TYPEID=\"";
-    query = [query stringByAppendingString:[NSString stringWithFormat:@"%ld",typeId]];
+-(void)deleteCache:(NSString *)name{
+    NSString * query = @"DELETE FROM CACHE WHERE NAME=\"";
+    query = [query stringByAppendingString:[NSString stringWithFormat:@"%@",name]];
     query = [query stringByAppendingString:@"\""];
     BOOL bSucceed = [database executeUpdate:query];
     if(!bSucceed)

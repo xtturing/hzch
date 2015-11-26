@@ -160,7 +160,7 @@
 }
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
-    ALERT(@"请求失败，请确认网络连接");
+//    ALERT(@"请求失败，请确认网络连接");
 }
 
 - (void)didGetTableIDFailed{

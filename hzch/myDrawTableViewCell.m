@@ -106,7 +106,7 @@
                 if ([fileManage fileExistsAtPath:layerDir]) {
                     [fileManage removeItemAtPath:layerDir error:NULL];
                 }
-                [[dataHttpManager getInstance].cacheDB deleteCache:self.cache.typeID];
+                [[dataHttpManager getInstance].cacheDB deleteCache:self.cache.name];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
                 });
