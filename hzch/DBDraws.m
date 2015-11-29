@@ -29,7 +29,7 @@
 -(void)openDatabase
 {
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:@"mydraws.db"];
+    NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:@"mydraws1.db"];
     
     database = [FMDatabase databaseWithPath:desPath];
     if ([database open])
