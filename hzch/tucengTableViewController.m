@@ -69,7 +69,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [dataHttpManager getInstance].cache.typeID = indexPath.row;
     [dataHttpManager getInstance].cache.layerName = [_layerArray objectAtIndex:indexPath.row];
-    [dataHttpManager getInstance].cache.name = [_array objectAtIndex:indexPath.row];
     [tableView reloadData];
     [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
 }

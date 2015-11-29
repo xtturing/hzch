@@ -59,7 +59,6 @@
         //NSLog(@"连续加载对象 : %@",self);
         @autoreleasepool{
             NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"esriView" owner:self options: nil];
-            [dataHttpManager getInstance].cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
             if(arrayOfViews.count < 1){
                 return nil;
             }

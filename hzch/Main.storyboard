@@ -1387,7 +1387,7 @@
         <!--地图缓存下载-->
         <scene sceneID="iui-ht-TBr">
             <objects>
-                <tableViewController title="地图缓存下载" id="Gal-GR-EdQ" customClass="addCacheTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="addCacheTableViewController" title="地图缓存下载" id="Gal-GR-EdQ" customClass="addCacheTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="8zq-oP-H2O">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1573,6 +1573,7 @@
                         <outlet property="minLabel" destination="fUa-jW-ulS" id="Gf4-ve-o8H"/>
                         <outlet property="nameLabel" destination="qzk-jb-nDZ" id="zzy-fv-Al0"/>
                         <outlet property="rangeLabel" destination="bFb-Hu-NoW" id="T2b-z4-bYp"/>
+                        <outlet property="startCache" destination="FVc-WM-aa8" id="yhv-Ix-9aq"/>
                         <outlet property="textLabel" destination="eIb-yM-Keu" id="f6X-Zc-et1"/>
                     </connections>
                 </tableViewController>

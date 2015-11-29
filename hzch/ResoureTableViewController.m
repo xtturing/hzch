@@ -127,6 +127,7 @@
     detailViewController.showType =self.showType;
     detailViewController.catalogID = catalogID;
     detailViewController.titleName = titlename;
+    self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 

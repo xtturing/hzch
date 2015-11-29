@@ -115,6 +115,7 @@ typedef enum {
 @property (nonatomic,strong) NSString *tableName;
 @property (nonatomic,strong) NSDictionary *thematicDic;
 @property (nonatomic,strong) NSDictionary *rangeDic;
+
 +(dataHttpManager*)getInstance;
 - (id)initWithDelegate;
 

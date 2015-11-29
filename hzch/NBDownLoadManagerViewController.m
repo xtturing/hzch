@@ -237,9 +237,10 @@
     }else{
         cell.type = 2;
         cell.editBtn.hidden = NO;
+        __weak typeof(self) weakSelf = self;
         cell.editSqlitBlock = ^(){
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            [self.navigationController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"yangshiTableViewController"] animated:YES];
+            [weakSelf.navigationController pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"yangshiTableViewController"] animated:YES];
         };
         if([self hasShowSqlit:name] && [self hasShowSqliteValue:urlKey]){
             [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];

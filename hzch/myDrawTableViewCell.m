@@ -46,13 +46,16 @@
             self.editSqlitBlock();
         }
     }else{
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"修改名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        alert.tag = 90009;
-        UITextField *textfield =  [alert textFieldAtIndex: 0];
-        textfield.text = self.titleLab.text;
-        textfield.clearButtonMode = UITextFieldViewModeAlways;
-        [alert show];
+        if(self.editSqlitBlock){
+            self.editSqlitBlock();
+        }
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"修改名称", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"确定", nil), nil];
+//        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//        alert.tag = 90009;
+//        UITextField *textfield =  [alert textFieldAtIndex: 0];
+//        textfield.text = self.titleLab.text;
+//        textfield.clearButtonMode = UITextFieldViewModeAlways;
+//        [alert show];
     }
     
 }

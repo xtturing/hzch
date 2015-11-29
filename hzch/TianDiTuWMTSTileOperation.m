@@ -8,8 +8,6 @@
 
 #import "TianDiTuWMTSTileOperation.h"
 
-#define kURLGetTile @"%@?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=%@&FORMAT=%@&TILEMATRIXSET=%@&TILECOL=%ld&TILEROW=%ld&TILEMATRIX=%ld&STYLE=%@"
-
 @implementation TianDiTuWMTSTileOperation
 @synthesize tileKey=_tileKey;
 @synthesize target=_target;
@@ -41,14 +39,14 @@
         NSLog(@"%@",baseUrl);
         NSData *data = [[NSData alloc] init];
         
-        data =  [self.tianDiTuData QueryTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 2];
+        data =  [self.tianDiTuData QueryTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 1];
         
         if (data == nil || data.length == 0)
         {
             NSLog(@"获取网络切片");
             data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:baseUrl]];
             
-            [self.tianDiTuData InsertTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 2 tiels:data];
+            [self.tianDiTuData InsertTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 1 tiels:data];
             
         }
         else

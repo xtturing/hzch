@@ -87,6 +87,79 @@
     return _result;
 }
 
+- (void)GetTiles:(DBCache *)cache{
+    if(cache){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            self.totalTileNum = 0;
+            for(NSInteger level = cache.minLevel; level <= cache.maxLevel; level++ ){
+                NSArray *array = [NSArray arrayWithArray:[cache.rangeBox componentsSeparatedByString:@","]];
+                NSInteger minc;NSInteger maxc;NSInteger minr;NSInteger maxr;
+                if([cache.range isEqualToString:@"当前可视范围"] || !array){
+                    minc = [self getMinC:-180 level:level type:cache.typeID];
+                    maxc = [self getMaxC:180 level:level type:cache.typeID];
+                    minr = [self getMinR:90 level:level type:cache.typeID];
+                    maxr = [self getMaxR:-90 level:level type:cache.typeID];
+                }else{
+                    minc = [self getMinC:[(NSNumber *)[array objectAtIndex:0] doubleValue] level:level type:cache.typeID];
+                    maxc = [self getMaxC:[(NSNumber *)[array objectAtIndex:2] doubleValue] level:level type:cache.typeID];
+                    minr = [self getMinR:[(NSNumber *)[array objectAtIndex:3] doubleValue] level:level type:cache.typeID];
+                    maxr = [self getMaxR:[(NSNumber *)[array objectAtIndex:1] doubleValue] level:level type:cache.typeID];
+                }
+                NSInteger total = self.totalTileNum + (maxc - minc + 1)*(maxr - minr + 1);
+                self.totalTileNum = total;
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@(self.totalTileNum) forKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"TOTAL"]];
+            
+            self.finishTileNum = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]] integerValue];
+            if(!self.finishTileNum){
+                self.finishTileNum = 0;
+                [[NSUserDefaults standardUserDefaults] setObject:@(self.finishTileNum) forKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]];
+            }
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSInteger fin = self.finishTileNum;
+            
+            for(NSInteger level = cache.minLevel; level <= cache.maxLevel; level++ ){
+                NSArray *array = [NSArray arrayWithArray:[cache.rangeBox componentsSeparatedByString:@","]];
+                NSInteger minc;NSInteger maxc;NSInteger minr;NSInteger maxr;
+                if([cache.range isEqualToString:@"当前可视范围"] || !array){
+                    minc = [self getMinC:-180 level:level type:cache.typeID];
+                    maxc = [self getMaxC:180 level:level type:cache.typeID];
+                    minr = [self getMinR:90 level:level type:cache.typeID];
+                    maxr = [self getMaxR:-90 level:level type:cache.typeID];
+                }else{
+                    minc = [self getMinC:[(NSNumber *)[array objectAtIndex:0] doubleValue] level:level type:cache.typeID];
+                    maxc = [self getMaxC:[(NSNumber *)[array objectAtIndex:2] doubleValue] level:level type:cache.typeID];
+                    minr = [self getMinR:[(NSNumber *)[array objectAtIndex:3] doubleValue] level:level type:cache.typeID];
+                    maxr = [self getMaxR:[(NSNumber *)[array objectAtIndex:1] doubleValue] level:level type:cache.typeID];
+                }
+                for(NSInteger column = minc; column <= maxc ;column ++){
+                    for(NSInteger row = minr; row <= maxr ;row ++){
+                        TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:cache.typeID]];
+                        NSString *baseUrl= [NSString stringWithFormat:kURLGetTile,layerInfo.url,layerInfo.layerName,layerInfo.format,layerInfo.tileMatrixSet,column,row,level,layerInfo.style];
+                        NSLog(@"%@",baseUrl);
+                        NSData *data = [[NSData alloc] init];
+                        
+                        data =  [self QueryTile:layerInfo.layerName x:row y:column l:level];
+                        
+                        if (data == nil || data.length == 0)
+                        {
+                            NSLog(@"缓存网络切片");
+                            data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:baseUrl]];
+                            
+                            [self InsertTile:layerInfo.layerName x:row y:column l:level tiels:data];
+                            fin++;
+                            [[NSUserDefaults standardUserDefaults] setObject:@(fin) forKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
 - (BOOL)needToCache:(NSString *)layername{
     NSArray *layerArray = @[@"vec",@"cva",@"img",@"cia",@"zjemap",@"zjemapanno",@"imgmap",@"imgmap_lab"];
     for (NSString *name in  layerArray) {
@@ -98,16 +171,16 @@
 }
 
 - (BOOL)needToShowCache:(NSString *)layername level:(NSInteger)level x:(NSInteger)x y:(NSInteger)y{
-    for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
+    for (DBCache *cache in  [[dataHttpManager getInstance].cacheDB getAllCache]) {
         if(cache.isShow && [cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel){
             NSArray *array = [NSArray arrayWithArray:[cache.rangeBox componentsSeparatedByString:@","]];
             if([cache.range isEqualToString:@"当前可视范围"] || !array){
                 return YES;
             }
-            NSInteger minc = [self getMinC:[(NSNumber *)[array objectAtIndex:0] doubleValue] level:level];
-            NSInteger maxc = [self getMaxC:[(NSNumber *)[array objectAtIndex:2] doubleValue] level:level];
-            NSInteger minr = [self getMinR:[(NSNumber *)[array objectAtIndex:3] doubleValue] level:level];
-            NSInteger maxr = [self getMaxR:[(NSNumber *)[array objectAtIndex:1] doubleValue] level:level];
+            NSInteger minc = [self getMinC:[(NSNumber *)[array objectAtIndex:0] doubleValue] level:level type:cache.typeID];
+            NSInteger maxc = [self getMaxC:[(NSNumber *)[array objectAtIndex:2] doubleValue] level:level type:cache.typeID];
+            NSInteger minr = [self getMinR:[(NSNumber *)[array objectAtIndex:3] doubleValue] level:level type:cache.typeID];
+            NSInteger maxr = [self getMaxR:[(NSNumber *)[array objectAtIndex:1] doubleValue] level:level type:cache.typeID];
             if(minc <= y && y <= maxc && x >= minr && x <= maxr){
                 return YES;
             }
@@ -116,32 +189,64 @@
     return NO;
 }
 
-- (NSInteger)getMinC:(double)minx  level:(NSInteger)level{
-    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
-    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+- (NSInteger)getMinC:(double)minx  level:(NSInteger)level type:(NSInteger)type{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
     NSInteger minc = floor(fabs((layerInfo.origin.x - minx) / (layerInfo.tileWidth * lod.resolution)));
     return minc;
 }
 
-- (NSInteger)getMaxC:(double)maxx  level:(NSInteger)level{
-    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
-    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+- (NSInteger)getMaxC:(double)maxx  level:(NSInteger)level type:(NSInteger)type{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
     NSInteger maxc = round(fabs((layerInfo.origin.x - maxx) / (layerInfo.tileWidth * lod.resolution)));
     return maxc;
 }
 
-- (NSInteger)getMinR:(double)maxy  level:(NSInteger)level{
-    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
-    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+- (NSInteger)getMinR:(double)maxy  level:(NSInteger)level type:(NSInteger)type{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
     NSInteger minr = floor(fabs((layerInfo.origin.y - maxy) / (layerInfo.tileHeight * lod.resolution)));
     return minr;
 }
 
-- (NSInteger)getMaxR:(double)miny  level:(NSInteger)level{
-    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo];
-    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-2)];
+- (NSInteger)getMaxR:(double)miny  level:(NSInteger)level type:(NSInteger)type{
+    TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
+    AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
     long maxr = round(fabs((layerInfo.origin.y - miny) / (layerInfo.tileHeight * lod.resolution)));
     return maxr;
+}
+
+- (TianDiTuLayerTypes)getDituType:(NSInteger)type{
+    switch (type) {
+        case 0:
+            return TIANDITU_VECTOR_2000;
+            break;
+        case 1:
+            return TIANDITU_VECTOR_ANNOTATION_CHINESE_2000;
+            break;
+        case 2:
+            return TIANDITU_IMAGE_2000;
+            break;
+        case 3:
+            return TIANDITU_IMAGE_ANNOTATION_CHINESE_2000;
+            break;
+        case 4:
+            return TIANDITU_ZJ_VECTOR;
+            break;
+        case 5:
+            return TIANDITU_ZJ_VECTOR_ANNOTATION;
+            break;
+        case 6:
+            return TIANDITU_ZJ_IMAGE;
+            break;
+        case 7:
+            return TIANDITU_ZJ_IMAGE_ANNOTATION;
+            break;
+        default:
+            return TIANDITU_VECTOR_2000;
+            break;
+    }
 }
 
 @end

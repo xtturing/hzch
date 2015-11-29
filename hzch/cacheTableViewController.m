@@ -10,7 +10,7 @@
 #import "myDrawTableViewCell.h"
 #import "dataHttpManager.h"
 #import "DBCache.h"
-
+#import "addCacheTableViewController.h"
 @interface cacheTableViewController ()
 
 @property (nonatomic,strong) NSArray *cacheList;
@@ -45,7 +45,6 @@
 
 - (void)reload{
     self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
-    [dataHttpManager getInstance].cacheList = self.cacheList;
     [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:1.0];
 }
 #pragma mark - Table view data source
@@ -75,6 +74,14 @@
     }else{
         [cell.showBtn setImage:[UIImage imageNamed:@"hidden_normal"] forState:UIControlStateNormal];
     }
+    __weak typeof(self) weakSelf = self;
+    cell.editSqlitBlock = ^(){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        addCacheTableViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"addCacheTableViewController"];
+        mapViewController.cache = [weakSelf.cacheList objectAtIndex:indexPath.row];
+        weakSelf.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        [weakSelf.navigationController pushViewController:mapViewController animated:YES];
+    };
     cell.type = 3;
     cell.cache = cache;
     cell.titleLab.adjustsFontSizeToFitWidth = YES;
