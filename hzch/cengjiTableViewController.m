@@ -49,7 +49,7 @@
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier: FirstLevelCell];
     }
-    if((indexPath.row + 1) == [dataHttpManager getInstance].cache.minLevel || (indexPath.row + 1) == [dataHttpManager getInstance].cache.maxLevel){
+    if((indexPath.row + 1) >= [dataHttpManager getInstance].cache.minLevel && (indexPath.row + 1) <= [dataHttpManager getInstance].cache.maxLevel){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;

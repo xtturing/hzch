@@ -147,11 +147,12 @@
                         {
                             NSLog(@"缓存网络切片");
                             data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:baseUrl]];
-                            
-                            [self InsertTile:layerInfo.layerName x:row y:column l:level tiels:data];
-                            fin++;
-                            [[NSUserDefaults standardUserDefaults] setObject:@(fin) forKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            if(data){
+                                [self InsertTile:layerInfo.layerName x:row y:column l:level tiels:data];
+                                fin++;
+                                [[NSUserDefaults standardUserDefaults] setObject:@(fin) forKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]];
+                                [[NSUserDefaults standardUserDefaults] synchronize];
+                            }
                         }
                     }
                 }
