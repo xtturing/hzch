@@ -162,7 +162,7 @@
                                                   object:movie.moviePlayer];
     }else{
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        if(cell.detailTextLabel.text.length > 14){
+        if((cell.detailTextLabel.text.length + cell.textLabel.text.length)> 14){
             ALERT(cell.detailTextLabel.text);
         }
     }
