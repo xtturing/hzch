@@ -81,7 +81,8 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearTpkSqlite) name:@"CLEAR_TPK_SQLITE" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearMyDraw) name:@"CLEAR_MYDRAW" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeLineDetail:) name:@"RouteLineDetail" object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerViewDidLoad) name:AGSMapViewDidLoadNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerViewDidLoad) name:AGSMapViewDidRemoveLayerNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerViewDidLoad) name:AGSMapViewDidAddLayerNotification object:nil];
             [self locationListenner];
         }
         
@@ -1547,6 +1548,7 @@
     [self.lineLayer refresh];
 }
 -(void)doRouteInMap:(NSNotification *)info{
+    self.mapView.callout.delegate = self;
     NBRoute *route = [info.userInfo objectForKey:@"route"];
     AGSPictureMarkerSymbol * jingguo = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
     AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
@@ -1570,6 +1572,11 @@
                 if(array.count == 2){
                     AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
                     pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
+                    NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithCapacity:0];
+                    [tips setObject:item.strguide forKey:@"detail"];
+                    [tips setObject:item.streetNames forKey:@"title"];
+                    [tips setObject:@(0) forKey:@"type"];
+                    [pointgra setAttributes:tips];
                     pointgra.symbol = jingguo;
                     [points addObject:pointgra];
                 }
@@ -1612,51 +1619,128 @@
 }
 
 - (void)routeLineDetail:(NSNotification *)notic{
+    self.mapView.callout.delegate = self;
+    
     NSIndexPath *index = [notic.userInfo objectForKey:@"indexPath"];
     NBRoute *route = [notic.userInfo objectForKey:@"route"];
-    NBRouteItem *item = (NBRouteItem *)[route.routeItemList objectAtIndex:index.row];
+    NBRouteItem *ritem = (NBRouteItem *)[route.routeItemList objectAtIndex:index.row];
     
+    AGSPictureMarkerSymbol * jingguo = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
     AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
-    lineSymbol.color =[UIColor redColor];
-    lineSymbol.width = 6;
-    for(NBSimpleRoute *sitem in route.simpleRouteList){
-        if([sitem.streetLatLon containsString:item.turnlatlon] && sitem.streetLatLon.length > 0){
-            AGSGraphic * linegra=nil;
-            AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
-            [poly addPathToPolyline];
-            NSArray *latlon=[sitem.streetLatLon componentsSeparatedByString:@";"];
-            for (int i=0; i<latlon.count; i++) {
-                NSString *str=[latlon objectAtIndex:i];
-                NSArray *coor=[str componentsSeparatedByString:@","];
-                if(coor.count==2){
-                    AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
-                    [poly addPointToPath:point];
+    lineSymbol.color =[UIColor blueColor];
+    lineSymbol.width = 4;
+    
+    NSMutableArray *points = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *lines = [[NSMutableArray alloc] initWithCapacity:0];
+    [self.lineLayer removeAllGraphics];
+    [self.lineLayer refresh];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        for(NBSimpleRoute *item in route.simpleRouteList){
+            if(item.turnlatlon.length > 0 && item.streetLatLon.length > 0){
+                AGSGraphic * pointgra= nil;
+                AGSGraphic * linegra=nil;
+                AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+                [poly addPathToPolyline];
+                
+                NSArray *array = [item.turnlatlon componentsSeparatedByString:@","];
+                if(array.count == 2){
+                    AGSPoint *point = [AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:self.mapView.spatialReference];
+                    pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
+                    NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithCapacity:0];
+                    [tips setObject:item.strguide forKey:@"detail"];
+                    [tips setObject:item.streetNames forKey:@"title"];
+                    [tips setObject:@(0) forKey:@"type"];
+                    [pointgra setAttributes:tips];
+                    pointgra.symbol = jingguo;
+                    [points addObject:pointgra];
+                }
+                
+                NSArray *latlon=[item.streetLatLon componentsSeparatedByString:@";"];
+                for (int i=0; i<latlon.count; i++) {
+                    NSString *str=[latlon objectAtIndex:i];
+                    NSArray *coor=[str componentsSeparatedByString:@","];
+                    if(coor.count==2){
+                        AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
+                        [poly addPointToPath:point];
+                    }
+                }
+                
+                linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil];
+                [lines addObject:linegra];
+                if([item.streetLatLon containsString:ritem.turnlatlon] && item.streetLatLon.length > 0){
+                    AGSGraphic * linegra=nil;
+                    AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+                    [poly addPathToPolyline];
+                    NSArray *latlon=[item.streetLatLon componentsSeparatedByString:@";"];
+                    for (int i=0; i<latlon.count; i++) {
+                        NSString *str=[latlon objectAtIndex:i];
+                        NSArray *coor=[str componentsSeparatedByString:@","];
+                        if(coor.count==2){
+                            AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
+                            [poly addPointToPath:point];
+                        }
+                    }
+                    AGSSimpleLineSymbol* lineSymbolw = [AGSSimpleLineSymbol simpleLineSymbol];
+                    lineSymbolw.color =[UIColor redColor];
+                    lineSymbolw.width = 4;
+                    linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbolw attributes:nil];
+                    [lines addObject:linegra];
                 }
             }
-            linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil];
-            [self.lineLayer addGraphic:linegra];
         }
-    }
-    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
-    NSArray *array = [item.turnlatlon componentsSeparatedByString:@","];
-    AGSPoint *point =	[AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue]  y: [[array objectAtIndex:1] doubleValue] spatialReference:nil];
-    if(point.x == 0 || point.y == 0 ){
-        return;
-    }
-    AGSGraphic * pointgra= nil;
-    pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
-    pointgra.symbol = dian;
-    [self.lineLayer addGraphic:pointgra];
-    [self.lineLayer refresh];
-    self.mapView.callout.customView = nil;
-    self.mapView.callout.title = item.streetName;
-    self.mapView.callout.detail = item.strguide;
-    self.mapView.callout.autoAdjustWidth=YES;
-    self.mapView.callout.cornerRadius=2;
-    self.mapView.callout.accessoryButtonHidden = YES;
-    
-    [self.mapView.callout showCalloutAtPoint:point forFeature:pointgra layer:self.lineLayer animated:YES];
-    [self.mapView centerAtPoint:point animated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.lineLayer addGraphics:lines];
+            [self.lineLayer addGraphics:points];
+            NSArray *array = [route.orig componentsSeparatedByString:@","];
+            if(array.count == 2){
+                isGetStartPoint = YES;
+                [self addLineStartEndPoint:[AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:nil]];
+                isGetStartPoint = NO;
+            }
+            array = [route.dest componentsSeparatedByString:@","];
+            if(array.count == 2){
+                isGetEndPoint = YES;
+                [self addLineStartEndPoint:[AGSPoint pointWithX:[[array objectAtIndex:0] doubleValue] y:[[array objectAtIndex:1] doubleValue] spatialReference:nil]];
+                isGetEndPoint = NO;
+            }
+            [self.lineLayer refresh];
+            if(route.scale.length>0 && route.center.length > 0){
+                array = [route.center componentsSeparatedByString:@","];
+            }
+            
+            AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
+            NSArray *array2 = [ritem.turnlatlon componentsSeparatedByString:@","];
+            AGSPoint *point =	[AGSPoint pointWithX:[[array2 objectAtIndex:0] doubleValue]  y: [[array2 objectAtIndex:1] doubleValue] spatialReference:nil];
+            if(point.x == 0 || point.y == 0 ){
+                return;
+            }
+            AGSGraphic * pointgra= nil;
+            pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:nil];
+            pointgra.symbol = dian;
+            NSMutableDictionary * tips=[[NSMutableDictionary alloc] initWithCapacity:0];
+            [tips setObject:ritem.strguide forKey:@"detail"];
+            [tips setObject:ritem.streetName forKey:@"title"];
+            [tips setObject:@(0) forKey:@"type"];
+            [pointgra setAttributes:tips];
+            
+            [self.lineLayer addGraphic:pointgra];
+            [self.lineLayer refresh];
+            
+            
+            self.mapView.callout.customView = nil;
+            self.mapView.callout.title = ritem.streetName;
+            self.mapView.callout.detail = ritem.strguide;
+            self.mapView.callout.autoAdjustWidth=YES;
+            self.mapView.callout.cornerRadius=2;
+            self.mapView.callout.accessoryButtonHidden = YES;
+            
+            [self.mapView.callout showCalloutAtPoint:point forFeature:pointgra layer:self.lineLayer animated:YES];
+            [self.mapView centerAtPoint:point animated:YES];
+
+        });
+    });
    
+    
 }
 @end
