@@ -81,6 +81,7 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearTpkSqlite) name:@"CLEAR_TPK_SQLITE" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearMyDraw) name:@"CLEAR_MYDRAW" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeLineDetail:) name:@"RouteLineDetail" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layerViewDidLoad) name:AGSMapViewDidLoadNotification object:nil];
             [self locationListenner];
         }
         
@@ -157,8 +158,6 @@
         }
         TianDiTuWMTSLayer* layer=[[TianDiTuWMTSLayer alloc]initWithLocalServiceURL:wmtsurl withLayerName:wmtsID];
         [self.mapView addMapLayer:layer withName:wmtsID];
-        [self.mapView zoomIn:NO];
-        [self.mapView zoomOut:NO];
         [[dataHttpManager getInstance].resourceLayers setObject:@[wmtsurl,wmtsname,name] forKey:wmtsID];
     }
 }
@@ -199,7 +198,10 @@
     
 }
 
-
+- (void)layerViewDidLoad{
+    [self.mapView zoomIn:NO];
+    [self.mapView zoomOut:NO];
+}
 
 - (void)mapViewDidLoad:(AGSMapView *)mapView{
     if(_delegate && [_delegate respondsToSelector:@selector(mapViewDidLoad)]){
@@ -339,9 +341,6 @@
     }
     [self.ghLayer refresh];
 //    ALERT(@"已添加到地图");
-    [self.mapView zoomIn:NO];
-    [self.mapView zoomOut:NO];
-
 }
 
 //画图
@@ -976,8 +975,6 @@
         }
         
     }
-    [self.mapView zoomIn:NO];
-    [self.mapView zoomOut:NO];
 }
 
 - (void)addLocalGeomery:(NSMutableArray *)list layerName:(NSString *)name{
@@ -1270,8 +1267,6 @@
     if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
         ALERT(@"离线数据已添加到地图");
     }
-    [self.mapView zoomIn:NO];
-    [self.mapView zoomOut:NO];
 }
 
 
@@ -1279,8 +1274,6 @@
     if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
         ALERT(@"加载离线数据失败");
     }
-    [self.mapView zoomIn:NO];
-    [self.mapView zoomOut:NO];
 }
 
 - (void)addLocalTileLayerWithName:(NSString *)fileName{
@@ -1372,8 +1365,6 @@
             }
         }
     }
-    [self.mapView zoomIn:NO];
-    [self.mapView zoomOut:NO];
 }
 
 - (BOOL)hasShowSqlite:(NSString *)cellTag{

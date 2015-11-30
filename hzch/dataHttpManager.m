@@ -194,7 +194,13 @@ static dataHttpManager * instance=nil;
         NSLog(@"url=%@",url);
         [self setGetUserInfo:request withRequestType:AAGetThematic];
         [_requestQueue addOperation:request];
-    }    
+    }else{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([_delegate respondsToSelector:@selector(didGetFailed)]) {
+                [_delegate didGetFailed];
+            }
+        });
+    }
 }
 
 - (void)letGetRange{

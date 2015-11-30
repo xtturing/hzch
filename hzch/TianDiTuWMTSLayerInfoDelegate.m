@@ -46,7 +46,7 @@
 #define X_MAX_2000 180.0
 #define Y_MAX_2000 90.0
 
-#define _minZoomLevel 1
+#define _minZoomLevel 6
 #define _maxZoomLevel 18
 #define _tileWidth 256
 #define _tileHeight 256

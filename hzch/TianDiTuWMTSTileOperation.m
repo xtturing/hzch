@@ -45,16 +45,17 @@
         {
             NSLog(@"获取网络切片");
             data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:baseUrl]];
-            
-            [self.tianDiTuData InsertTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 1 tiels:data];
-            
+            if(data){
+                [self.tianDiTuData InsertTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 1 tiels:data];
+            }
         }
         else
         {
             NSLog(@"获取本地切片");
         }
-        
-        self.imageData = data;
+        if(data){
+            self.imageData = data;
+        }
         data = nil;
 	}
 	@catch (NSException *exception) {

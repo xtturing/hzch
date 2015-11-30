@@ -76,14 +76,12 @@
 
 - (BOOL)InsertTile:(NSString*)t x:(NSInteger)x y:(NSInteger)y l:(NSInteger)l tiels:(NSData *)tiels{
     BOOL _result = NO;
-    if([self needToCache:t]){
-        NSString *tilePath = [self getTilePath:t x:x y:y l:l];
-        NSFileManager *fileManage = [NSFileManager defaultManager];
-        [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
-        if ([fileManage fileExistsAtPath:tilePath]) {
-            _result = YES;
-        }
-    }    
+    NSString *tilePath = [self getTilePath:t x:x y:y l:l];
+    NSFileManager *fileManage = [NSFileManager defaultManager];
+    [fileManage createFileAtPath:tilePath contents:tiels attributes:nil];
+    if ([fileManage fileExistsAtPath:tilePath]) {
+        _result = YES;
+    }
     return _result;
 }
 
@@ -172,7 +170,10 @@
 }
 
 - (BOOL)needToShowCache:(NSString *)layername level:(NSInteger)level x:(NSInteger)x y:(NSInteger)y{
-    for (DBCache *cache in  [[dataHttpManager getInstance].cacheDB getAllCache]) {
+    if(![dataHttpManager getInstance].cacheList){
+        [dataHttpManager getInstance].cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
+    }
+    for (DBCache *cache in  [dataHttpManager getInstance].cacheList) {
         if(cache.isShow && [cache.layerName isEqualToString:layername] && level >= cache.minLevel && level <= cache.maxLevel){
             NSArray *array = [NSArray arrayWithArray:[cache.rangeBox componentsSeparatedByString:@","]];
             if([cache.range isEqualToString:@"当前可视范围"] || !array){
