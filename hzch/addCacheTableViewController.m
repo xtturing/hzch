@@ -35,13 +35,14 @@
         _cache.typeID = 0;
         _cache.rangeBox = nil;
         _isAddCache = YES;
+        _cache.createDate = [[NSDate date] timeIntervalSince1970]*1000;
     }else{
         _isAddCache = NO;
         NSInteger fin = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",_cache.name,@"FINISH"]] integerValue];
         NSInteger tot = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",_cache.name,@"TOTAL"]] integerValue];
         double num = (fin*1.0000/tot)*100.00;
-        if(num > 0.0001){
-            [self.startCache setTitle:[NSString stringWithFormat:@"继续缓存(已完成:%.4lf%@)",num,@"%"] forState:UIControlStateNormal];
+        if(num > 0.00000001){
+            [self.startCache setTitle:[NSString stringWithFormat:@"继续缓存(已完成:%.8lf%@)",num,@"%"] forState:UIControlStateNormal];
         }
     }
     [dataHttpManager getInstance].cache = _cache;
@@ -62,10 +63,20 @@
 
 - (IBAction)addCache:(id)sender{
     [dataHttpManager getInstance].cache.name = self.textLabel.text;
-    if([self isInCacheList]){
-        [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
+    if(!_isAddCache){
+        if([self isInCacheList]){
+            ALERT(@"缓存名称已存在，请重新命名");
+            return;
+        }else{
+            [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
+        }
     }else{
-        [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
+        if([self isInCacheList]){
+            ALERT(@"缓存名称已存在，请重新命名");
+            return;
+        }else{
+            [[dataHttpManager getInstance].cacheDB insertCache:[dataHttpManager getInstance].cache];
+        }
     }
     [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];

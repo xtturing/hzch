@@ -39,7 +39,14 @@
 @property (nonatomic, strong) NSMutableArray *polygonPoints;
 @property (nonatomic) NSInteger toolTag;
 @property (nonatomic, strong) CanvasView *canvasView;
-
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDiTuLyr;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDiTuLyr_Anno;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDituLyr_zje;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDituLyr_Anno_zje;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDiTuLyr_img;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDiTuLyr_Anno_img;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDituLyr_zje_img;
+@property (nonatomic, strong) TianDiTuWMTSLayer* TianDituLyr_Anno_zje_img;
 @end
 
 @implementation esriView
@@ -109,28 +116,65 @@
 }
 
 - (void)changeMap:(NSInteger)index{
-    [self clearMap:NO index:index];
-    [self clearMap:YES index:index];
+    [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
+    [self.mapView removeMapLayerWithName:@"TianDiTu Annotation Layer"];
+    [self.mapView removeMapLayerWithName:@"TianDiTu zje Layer"];
+    [self.mapView removeMapLayerWithName:@"TianDiTu Anno zje Layer"];
+    NSError* err;
+    if(index){
+        if(!_TianDiTuLyr_img){
+            _TianDiTuLyr_img = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_IMAGE_2000 LocalServiceURL:nil error:&err];
+        }
+        if(!_TianDiTuLyr_Anno_img){
+            _TianDiTuLyr_Anno_img = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_IMAGE_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
+        }
+        if(!_TianDituLyr_zje_img){
+            _TianDituLyr_zje_img =[[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_ZJ_IMAGE LocalServiceURL:nil error:&err];
+        }
+        if(!_TianDituLyr_Anno_zje_img){
+            _TianDituLyr_Anno_zje_img = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_ZJ_IMAGE_ANNOTATION LocalServiceURL:nil error:&err];
+        }
+        [self.mapView insertMapLayer:_TianDiTuLyr_img withName:@"TianDiTu Layer" atIndex:0];
+        [self.mapView insertMapLayer:_TianDiTuLyr_Anno_img withName:@"TianDiTu Annotation Layer" atIndex:1];
+        [self.mapView insertMapLayer:_TianDituLyr_zje_img withName:@"TianDiTu zje Layer" atIndex:2];
+        [self.mapView insertMapLayer:_TianDituLyr_Anno_zje_img withName:@"TianDiTu Anno zje Layer" atIndex:3];
+    }else{
+        if(!_TianDiTuLyr){
+            _TianDiTuLyr = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_VECTOR_2000 LocalServiceURL:nil error:&err];
+        }
+        if(!_TianDiTuLyr_Anno){
+            _TianDiTuLyr_Anno = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_VECTOR_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
+        }
+        if(!_TianDituLyr_zje){
+            _TianDituLyr_zje =[[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_ZJ_VECTOR LocalServiceURL:nil error:&err];
+        }
+//        if(!_TianDituLyr_Anno_zje){
+//            _TianDituLyr_Anno_zje = [[TianDiTuWMTSLayer alloc]initWithLayerType:TIANDITU_ZJ_VECTOR_ANNOTATION LocalServiceURL:nil error:&err];
+//        }
+        [self.mapView insertMapLayer:_TianDiTuLyr withName:@"TianDiTu Layer" atIndex:0];
+        [self.mapView insertMapLayer:_TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer" atIndex:1];
+        [self.mapView insertMapLayer:_TianDituLyr_zje withName:@"TianDiTu zje Layer" atIndex:2];
+//        [self.mapView insertMapLayer:_TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer" atIndex:3];
+    }
 }
 
 - (void)clearMap:(BOOL)show index:(NSInteger)index{
     if(show){
-        NSError* err;
-        TianDiTuWMTSLayer* TianDiTuLyr = [[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_IMAGE_2000:TIANDITU_VECTOR_2000 LocalServiceURL:nil error:&err];
-        TianDiTuWMTSLayer* TianDiTuLyr_Anno = [[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_IMAGE_ANNOTATION_CHINESE_2000:TIANDITU_VECTOR_ANNOTATION_CHINESE_2000 LocalServiceURL:nil error:&err];
-        TianDiTuWMTSLayer* TianDituLyr_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_ZJ_IMAGE:TIANDITU_ZJ_VECTOR LocalServiceURL:nil error:&err];
-        TianDiTuWMTSLayer* TianDituLyr_Anno_zje=[[TianDiTuWMTSLayer alloc]initWithLayerType:index?TIANDITU_ZJ_IMAGE_ANNOTATION:TIANDITU_ZJ_VECTOR_ANNOTATION LocalServiceURL:nil error:&err];
-        [self.mapView insertMapLayer:TianDiTuLyr withName:@"TianDiTu Layer" atIndex:0];
-        [self.mapView insertMapLayer:TianDiTuLyr_Anno withName:@"TianDiTu Annotation Layer" atIndex:1];
-        [self.mapView insertMapLayer:TianDituLyr_zje withName:@"TianDiTu zje Layer" atIndex:2];
-        if(index){
-            [self.mapView insertMapLayer:TianDituLyr_Anno_zje withName:@"TianDiTu Anno zje Layer" atIndex:3];
-        }
+        [_TianDiTuLyr setOpacity:1];
+        [_TianDiTuLyr_Anno setOpacity:1];
+        [_TianDituLyr_zje setOpacity:1];
+        [_TianDiTuLyr_img setOpacity:1];
+        [_TianDiTuLyr_Anno_img setOpacity:1];
+        [_TianDituLyr_zje_img setOpacity:1];
+        [_TianDituLyr_Anno_zje_img setOpacity:1];
     }else{
-        [self.mapView removeMapLayerWithName:@"TianDiTu Layer"];
-        [self.mapView removeMapLayerWithName:@"TianDiTu Annotation Layer"];
-        [self.mapView removeMapLayerWithName:@"TianDiTu zje Layer"];
-        [self.mapView removeMapLayerWithName:@"TianDiTu Anno zje Layer"];
+        [_TianDiTuLyr setOpacity:0];
+        [_TianDiTuLyr_Anno setOpacity:0];
+        [_TianDituLyr_zje setOpacity:0];
+        [_TianDiTuLyr_img setOpacity:0];
+        [_TianDiTuLyr_Anno_img setOpacity:0];
+        [_TianDituLyr_zje_img setOpacity:0];
+        [_TianDituLyr_Anno_zje_img setOpacity:0];
     }
 }
 

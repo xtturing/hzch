@@ -30,7 +30,7 @@
 -(void)openDatabase
 {
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:@"myCache2.db"];
+    NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:@"myCache3.db"];
     
     database = [FMDatabase databaseWithPath:desPath];
     if ([database open])
@@ -51,7 +51,7 @@
 
 -(void)createTable
 {
-    NSString *createSQL = @"CREATE TABLE IF NOT EXISTS CACHE (ROW INTEGER PRIMARY KEY, TYPEID INTEGER, MAXLEVEL INTEGER, MINLEVEL INTEGER,NAME TEXT,LAYERNAME TEXT,RANGE TEXT,RANGEBOX TEXT, ISSHOW INTEGER);";
+    NSString *createSQL = @"CREATE TABLE IF NOT EXISTS CACHE (ROW INTEGER PRIMARY KEY, TYPEID INTEGER,CREATE_DATE INTEGER, MAXLEVEL INTEGER, MINLEVEL INTEGER,NAME TEXT,LAYERNAME TEXT,RANGE TEXT,RANGEBOX TEXT, ISSHOW INTEGER);";
     BOOL bSucceed = [database executeUpdate:createSQL];
     if(!bSucceed)
     {
@@ -85,8 +85,8 @@
 -(void)insertCache:(DBCache *)theCache{
     if(theCache == NULL)
         return;
-    NSString *update = @"INSERT OR REPLACE INTO CACHE (TYPEID,MAXLEVEL,MINLEVEL,NAME,LAYERNAME,RANGE,RANGEBOX,ISSHOW) VALUES (?,?,?,?,?,?,?,?);";
-    BOOL bSecceed = [database executeUpdate:update,[NSNumber numberWithLong:theCache.typeID],[NSNumber numberWithLong:theCache.maxLevel],[NSNumber numberWithLong:theCache.minLevel],theCache.name,theCache.layerName,theCache.range,theCache.rangeBox,[NSNumber numberWithLong:theCache.isShow]];
+    NSString *update = @"INSERT OR REPLACE INTO CACHE (CREATE_DATE,TYPEID,MAXLEVEL,MINLEVEL,NAME,LAYERNAME,RANGE,RANGEBOX,ISSHOW) VALUES (?,?,?,?,?,?,?,?,?);";
+    BOOL bSecceed = [database executeUpdate:update,[NSNumber numberWithLong:theCache.createDate],[NSNumber numberWithLong:theCache.typeID],[NSNumber numberWithLong:theCache.maxLevel],[NSNumber numberWithLong:theCache.minLevel],theCache.name,theCache.layerName,theCache.range,theCache.rangeBox,[NSNumber numberWithLong:theCache.isShow]];
     if (!bSecceed)
     {
         NSLog(@"DBSchedule insertRecord Faild to update table. Error:%@",[database lastErrorMessage]);
@@ -96,12 +96,12 @@
 - (void)updateCache:(DBCache *)theCache{
     if(theCache == NULL)
         return;
-    NSString *update = @"update CACHE set TYPEID = ?,MAXLEVEL = ?,MINLEVEL = ?,LAYERNAME = ? ,RANGE = ? ,RANGEBOX = ?,ISSHOW = ? WHERE NAME =";
+    NSString *update = @"update CACHE set TYPEID = ?,NAME = ?,MAXLEVEL = ?,MINLEVEL = ?,LAYERNAME = ? ,RANGE = ? ,RANGEBOX = ?,ISSHOW = ? WHERE CREATE_DATE =";
     update = [update stringByAppendingString:@"\""];
-    update = [update stringByAppendingString:[NSString stringWithFormat:@"%@",theCache.name]];
+    update = [update stringByAppendingString:[NSString stringWithFormat:@"%ld",theCache.createDate]];
     update = [update stringByAppendingString:@"\""];
     BOOL bSucceed = [database executeUpdate:update,
-                     [NSNumber numberWithLong:theCache.typeID],[NSNumber numberWithLong:theCache.maxLevel],[NSNumber numberWithLong:theCache.minLevel],theCache.layerName,theCache.range,theCache.rangeBox,[NSNumber numberWithLong:theCache.isShow]];
+                     [NSNumber numberWithLong:theCache.typeID],theCache.name,[NSNumber numberWithLong:theCache.maxLevel],[NSNumber numberWithLong:theCache.minLevel],theCache.layerName,theCache.range,theCache.rangeBox,[NSNumber numberWithLong:theCache.isShow]];
     
     if (!bSucceed)
     {
@@ -112,7 +112,7 @@
 -(NSMutableArray *)getAllCache{
     NSMutableArray * recordList = [NSMutableArray arrayWithCapacity:1];
     
-    NSString *query = @"SELECT TYPEID,MAXLEVEL,MINLEVEL,NAME,LAYERNAME,RANGE,RANGEBOX,ISSHOW FROM CACHE;";
+    NSString *query = @"SELECT TYPEID,CREATE_DATE,MAXLEVEL,MINLEVEL,NAME,LAYERNAME,RANGE,RANGEBOX,ISSHOW FROM CACHE;";
     
     FMResultSet *rs = [database executeQuery:query];
     while ([rs next])
@@ -124,6 +124,7 @@
         record.maxLevel = [rs longForColumn:@"MAXLEVEL"];
         record.minLevel = [rs longForColumn:@"MINLEVEL"];
         record.typeID = [rs longForColumn:@"TYPEID"];
+        record.createDate = [rs longForColumn:@"CREATE_DATE"];
         record.isShow = [rs boolForColumn:@"ISSHOW"];
         record.rangeBox = [rs stringForColumn:@"RANGEBOX"];
         [recordList addObject:record];
@@ -134,9 +135,9 @@
     return recordList;
 }
 
--(void)deleteCache:(NSString *)name{
-    NSString * query = @"DELETE FROM CACHE WHERE NAME=\"";
-    query = [query stringByAppendingString:[NSString stringWithFormat:@"%@",name]];
+-(void)deleteCache:(long)createdate{
+    NSString * query = @"DELETE FROM CACHE WHERE CREATE_DATE=\"";
+    query = [query stringByAppendingString:[NSString stringWithFormat:@"%ld",createdate]];
     query = [query stringByAppendingString:@"\""];
     BOOL bSucceed = [database executeUpdate:query];
     if(!bSucceed)

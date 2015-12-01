@@ -10,6 +10,7 @@
 
 @interface DBCache : NSObject
 
+@property(nonatomic,assign)long createDate;
 @property(nonatomic,assign) NSInteger typeID;
 @property(nonatomic,strong) NSString *range;
 @property(nonatomic,assign) NSInteger minLevel;
