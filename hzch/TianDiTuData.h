@@ -20,4 +20,6 @@
 
 - (void)GetTiles:(DBCache *)cache;
 
+- (void)stopGetTiles;
+
 @end

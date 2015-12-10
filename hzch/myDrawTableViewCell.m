@@ -14,7 +14,7 @@
 @implementation myDrawTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    
 }
 
 - (IBAction)showDraw:(id)sender{
@@ -110,6 +110,9 @@
                     [fileManage removeItemAtPath:layerDir error:NULL];
                 }
                 [[dataHttpManager getInstance].cacheDB deleteCache:self.cache.createDate];
+                [[NSUserDefaults standardUserDefaults]  setInteger:0 forKey:[NSString stringWithFormat:@"%@_%@",self.cache.name,@"FINISH"]];
+                [[NSUserDefaults standardUserDefaults]  setInteger:0 forKey:[NSString stringWithFormat:@"%@_%@",_cache.name,@"TOTAL"]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOADTABLE" object:nil];
                 });

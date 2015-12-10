@@ -64,12 +64,7 @@
 - (IBAction)addCache:(id)sender{
     [dataHttpManager getInstance].cache.name = self.textLabel.text;
     if(!_isAddCache){
-        if([self isInCacheList]){
-            ALERT(@"缓存名称已存在，请重新命名");
-            return;
-        }else{
-            [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
-        }
+        [[dataHttpManager getInstance].cacheDB updateCache:[dataHttpManager getInstance].cache];
     }else{
         if([self isInCacheList]){
             ALERT(@"缓存名称已存在，请重新命名");

@@ -23,6 +23,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"地图缓存管理";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:@"RELOADTABLE" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCell:) name:@"updateDownloadCache" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,6 +48,28 @@
     self.cacheList = [[dataHttpManager getInstance].cacheDB getAllCache];
     [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:1.0];
 }
+
+- (void)reloadCell:(NSNotification *)info{
+    NSString *cacheName = [info.userInfo objectForKey:@"name"];
+    for(NSInteger i = 0; i< self.cacheList.count; i++){
+        DBCache *cache = [self.cacheList objectAtIndex:i];
+        if([cache.name isEqualToString:cacheName]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                myDrawTableViewCell *cell = (myDrawTableViewCell *)[self.tableView cellForRowAtIndexPath:indexpath];
+                NSInteger fin = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]] integerValue];
+                NSInteger tot = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"TOTAL"]] integerValue];
+                double num = (fin*1.0000/tot)*100.00;
+                if(num > 0.00000001){
+                    [cell.detailLab setText:[NSString stringWithFormat:@"已完成:%.8lf%@",num,@"%"]];
+                }else{
+                    [cell.detailLab setText:@""];
+                }
+            });
+        }
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -69,6 +92,14 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLab.text = cache.name;
+    NSInteger fin = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]] integerValue];
+    NSInteger tot = [[[NSUserDefaults standardUserDefaults]  objectForKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"TOTAL"]] integerValue];
+    double num = (fin*1.0000/tot)*100.00;
+    if(num > 0.00000001){
+        [cell.detailLab setText:[NSString stringWithFormat:@"(已完成:%.8lf%@)",num,@"%"]];
+    }else{
+        [cell.detailLab setText:@""];
+    }
     if(cache.isShow){
         [cell.showBtn setImage:[UIImage imageNamed:@"show_normal"] forState:UIControlStateNormal];
     }else{

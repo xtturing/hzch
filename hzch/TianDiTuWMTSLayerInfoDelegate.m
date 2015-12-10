@@ -62,8 +62,8 @@
     layerInfo.dpi = _dpi;
     layerInfo.tileHeight = _tileHeight;
     layerInfo.tileWidth = _tileWidth;
-    layerInfo.minZoomLevel =_minZoomLevel;
-    layerInfo.maxZoomLevel =_maxZoomLevel;
+    layerInfo.minZoomLevel =1;
+    layerInfo.maxZoomLevel =20;
     //sr
     layerInfo.srid = SRID_2000;
     layerInfo.xMax = X_MAX_2000;

@@ -26,7 +26,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[dataHttpManager getInstance] letGetThematic];
     });
@@ -97,7 +96,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *key = [self.showDic.allKeys objectAtIndex:indexPath.row];
+    NSString *key = [self.showDic.allKeys objectAtIndex:(self.showDic.count - indexPath.row -1)];
     static NSString *FirstLevelCell = @"sqliteCalloutCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                              FirstLevelCell];
@@ -119,7 +118,8 @@
         cell.textLabel.text = [NSString stringWithFormat:@"%@:",name];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[self.showDic objectForKey:key]];
     }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.showDic objectForKey:key]];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@:",key];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[self.showDic objectForKey:key]];
     }
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.7;

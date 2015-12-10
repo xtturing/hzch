@@ -15,6 +15,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *editBtn;
 @property (nonatomic,strong) IBOutlet UIButton *deleteBtn;
 @property (nonatomic,strong) IBOutlet UILabel *titleLab;
+@property (nonatomic,strong) IBOutlet UILabel *detailLab;
 @property (nonatomic,strong) Draw *draw;
 @property (nonatomic,strong) DBCache *cache;
 @property (nonatomic,strong) NSString *layerUrl;

@@ -244,6 +244,10 @@
 }
 
 - (void)layerViewDidLoad{
+    [self performSelector:@selector(movemap) withObject:nil afterDelay:0.2];
+}
+
+- (void)movemap{
     [self.mapView zoomIn:NO];
     [self.mapView zoomOut:NO];
 }

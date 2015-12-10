@@ -150,6 +150,7 @@
                                 fin++;
                                 [[NSUserDefaults standardUserDefaults] setObject:@(fin) forKey:[NSString stringWithFormat:@"%@_%@",cache.name,@"FINISH"]];
                                 [[NSUserDefaults standardUserDefaults] synchronize];
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateDownloadCache" object:nil userInfo:@{@"name":cache.name}];
                             }
                         }
                     }
@@ -194,28 +195,28 @@
 - (NSInteger)getMinC:(double)minx  level:(NSInteger)level type:(NSInteger)type{
     TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
     AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
-    NSInteger minc = floor(fabs((layerInfo.origin.x - minx) / (layerInfo.tileWidth * lod.resolution)));
+    NSInteger minc = floorf(fabs((layerInfo.origin.x - minx) / (layerInfo.tileWidth * lod.resolution)));
     return minc;
 }
 
 - (NSInteger)getMaxC:(double)maxx  level:(NSInteger)level type:(NSInteger)type{
     TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
     AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
-    NSInteger maxc = round(fabs((layerInfo.origin.x - maxx) / (layerInfo.tileWidth * lod.resolution)));
+    NSInteger maxc = ceilf(fabs((layerInfo.origin.x - maxx) / (layerInfo.tileWidth * lod.resolution)));
     return maxc;
 }
 
 - (NSInteger)getMinR:(double)maxy  level:(NSInteger)level type:(NSInteger)type{
     TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
     AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
-    NSInteger minr = floor(fabs((layerInfo.origin.y - maxy) / (layerInfo.tileHeight * lod.resolution)));
+    NSInteger minr = floorf(fabs((layerInfo.origin.y - maxy) / (layerInfo.tileHeight * lod.resolution)));
     return minr;
 }
 
 - (NSInteger)getMaxR:(double)miny  level:(NSInteger)level type:(NSInteger)type{
     TianDiTuWMTSLayerInfo *layerInfo = [[TianDiTuWMTSLayerInfoDelegate alloc] getLayerInfo:[self getDituType:type]];
     AGSLOD *lod  = (AGSLOD *)[layerInfo.lods objectAtIndex:(level-1)];
-    long maxr = round(fabs((layerInfo.origin.y - miny) / (layerInfo.tileHeight * lod.resolution)));
+    long maxr = ceilf(fabs((layerInfo.origin.y - miny) / (layerInfo.tileHeight * lod.resolution)));
     return maxr;
 }
 
