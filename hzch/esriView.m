@@ -244,7 +244,7 @@
 }
 
 - (void)layerViewDidLoad{
-    [self performSelector:@selector(movemap) withObject:nil afterDelay:0.2];
+    [self performSelector:@selector(movemap) withObject:nil afterDelay:0.33];
 }
 
 - (void)movemap{
@@ -992,6 +992,7 @@
             [[dataHttpManager getInstance].localLayers removeObject:layerurl];
             ALERT(@"离线数据已从地图移除");
         }
+        [self performSelector:@selector(movemap) withObject:nil afterDelay:0.33];
     }
     
     if([[name pathExtension] isEqualToString:@"sqlite"] ){
@@ -1014,12 +1015,14 @@
                     }else{
                         ALERT(@"离线数据为空");
                     }
+                    [self performSelector:@selector(movemap) withObject:nil afterDelay:0.33];
                 });
             });
         }else{
             [[dataHttpManager getInstance].sqliteLayers removeObjectForKey:layername];
             [self.mapView removeMapLayerWithName:layername];
             [self.mapView.callout removeFromSuperview];
+            [self performSelector:@selector(movemap) withObject:nil afterDelay:0.33];
             ALERT(@"离线数据已从地图移除");
         }
         

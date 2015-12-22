@@ -239,7 +239,6 @@
     if(_searchType == 1){
         NSArray *results = [_resultDic objectForKey:@"results"];
         NBSearchCatalog *catalog = [results objectAtIndex:indexPath.row];
-        [dataHttpManager getInstance].tableName = catalog.tablename;
     }
 //    if(_searchType == 2){
 //        NSArray *results = [_resultDic objectForKey:@"results"];

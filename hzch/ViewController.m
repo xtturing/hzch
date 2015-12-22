@@ -44,6 +44,7 @@
     __weak typeof(self) weakSelf = self;
     self.esriView.ClickCalloutBlock = ^(NSDictionary *dic){
         [dataHttpManager getInstance].sqliteCalloutDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        [dataHttpManager getInstance].tableName = [dic objectForKey:@"tablename"];
         for(NSString *key in dic.allKeys){
             if([dic objectForKey:key] == nil || [dic objectForKey:key] == [NSNull null])
             {
@@ -55,7 +56,7 @@
                         [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                     }
                 }
-                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"Geometry"] || [key isEqualToString:@"type"]|| [key isEqualToString:@"title"]|| [key isEqualToString:@"detail"]|| [key isEqualToString:@"FeatureGUI"]|| [key isEqualToString:@"updatestat"]|| [key isEqualToString:@"PK_UID"]){
+                if([key isEqualToString:@"GEOJSON"] || [key isEqualToString:@"Geometry"] || [key isEqualToString:@"type"]|| [key isEqualToString:@"title"]|| [key isEqualToString:@"detail"]|| [key isEqualToString:@"FeatureGUI"]|| [key isEqualToString:@"updatestat"]|| [key isEqualToString:@"PK_UID"] || [key isEqualToString:@"tablename"] || [key isEqualToString:@"OBJECTID"]){
                     [[dataHttpManager getInstance].sqliteCalloutDic removeObjectForKey:key];
                 }
             }
