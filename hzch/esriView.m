@@ -1603,7 +1603,7 @@
     NBRoute *route = [info.userInfo objectForKey:@"route"];
     AGSPictureMarkerSymbol * jingguo = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"locMark"];
     AGSSimpleLineSymbol* lineSymbol = [AGSSimpleLineSymbol simpleLineSymbol];
-    lineSymbol.color =[UIColor colorWithRed:45.0/255.0 green:140.0/255.0  blue:58.0/255.0 alpha:1.0];
+    lineSymbol.color =[UIColor blueColor];
     lineSymbol.width = 4;
     
     NSMutableArray *points = [[NSMutableArray alloc] initWithCapacity:0];
@@ -1719,25 +1719,23 @@
                 
                 linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbol attributes:nil];
                 [lines addObject:linegra];
-                if([item.streetLatLon containsString:ritem.turnlatlon] && item.streetLatLon.length > 0){
-                    AGSGraphic * linegra=nil;
-                    AGSMutablePolyline* poly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
-                    [poly addPathToPolyline];
-                    NSArray *latlon=[item.streetLatLon componentsSeparatedByString:@";"];
-                    for (int i=0; i<latlon.count; i++) {
-                        NSString *str=[latlon objectAtIndex:i];
-                        NSArray *coor=[str componentsSeparatedByString:@","];
-                        if(coor.count==2){
-                            AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
-                            [poly addPointToPath:point];
-                        }
+                AGSGraphic * rlinegra=nil;
+                AGSMutablePolyline* rpoly = [[AGSMutablePolyline alloc] initWithSpatialReference:self.mapView.spatialReference];
+                [rpoly addPathToPolyline];
+                NSArray *rlatlon=ritem.lineLatlon;
+                for (int i=0; i<rlatlon.count; i++) {
+                    NSString *str=[rlatlon objectAtIndex:i];
+                    NSArray *coor=[str componentsSeparatedByString:@","];
+                    if(coor.count==2){
+                        AGSPoint *point =	[AGSPoint pointWithX:[[coor objectAtIndex:0] doubleValue]  y: [[coor objectAtIndex:1] doubleValue] spatialReference:nil];
+                        [rpoly addPointToPath:point];
                     }
-                    AGSSimpleLineSymbol* lineSymbolw = [AGSSimpleLineSymbol simpleLineSymbol];
-                    lineSymbolw.color =[UIColor redColor];
-                    lineSymbolw.width = 4;
-                    linegra = [AGSGraphic graphicWithGeometry:poly symbol:lineSymbolw attributes:nil];
-                    [lines addObject:linegra];
                 }
+                AGSSimpleLineSymbol* lineSymbolw = [AGSSimpleLineSymbol simpleLineSymbol];
+                lineSymbolw.color =[UIColor redColor];
+                lineSymbolw.width = 4;
+                rlinegra = [AGSGraphic graphicWithGeometry:rpoly symbol:lineSymbolw attributes:nil];
+                [lines addObject:rlinegra];
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{

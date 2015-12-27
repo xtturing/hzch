@@ -15,6 +15,7 @@
 @property(nonatomic, strong) NSString *streetName;
 @property(nonatomic, strong) NSString *nextStreetName;
 @property(nonatomic, strong) NSString *turnlatlon;
+@property(nonatomic, strong) NSMutableArray *lineLatlon;
 
 - (NBRouteItem *)initWithJsonDictionary:(NSDictionary*)dic;
 

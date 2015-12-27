@@ -48,6 +48,18 @@
         }
        
     }
+    NSArray *latlon=[_routelatlon componentsSeparatedByString:@";"];
+    NSMutableArray *latlons = [NSMutableArray arrayWithCapacity:0];
+    for (NSString *point in latlon) {
+        [latlons addObject:point];
+        for(NBRouteItem *item in _routeItemList){
+            if([item.turnlatlon isEqualToString:point] && !item.lineLatlon){
+                item.lineLatlon = [[NSMutableArray alloc] initWithArray:latlons copyItems:YES];
+                [latlons removeAllObjects];
+                break;
+            }
+        }
+    }
 	return self;
 }
 
@@ -55,6 +67,5 @@
     
     return [[NBRoute alloc] initWithJsonDictionary:dic];
 }
-
 
 @end

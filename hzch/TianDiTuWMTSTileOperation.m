@@ -45,6 +45,9 @@
         {
             NSLog(@"获取网络切片");
             data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:baseUrl]];
+            if(data == nil || data.length == 0){
+                return;
+            }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self.tianDiTuData InsertTile:self.layerInfo.layerName x:self.tileKey.row y:self.tileKey.column l:self.tileKey.level + 1 tiels:data];
             });
