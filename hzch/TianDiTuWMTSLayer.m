@@ -112,10 +112,10 @@
          layerInfo.layerName = layerName;
          
          AGSSpatialReference* sr = [AGSSpatialReference spatialReferenceWithWKID:layerInfo.srid];
-         _fullEnvelope = [[AGSEnvelope alloc] initWithXmin:layerInfo.xMin
-                                                      ymin:layerInfo.yMin
-                                                      xmax:layerInfo.xMax
-                                                      ymax:layerInfo.yMax
+         _fullEnvelope = [[AGSEnvelope alloc] initWithXmin:118.02252449
+                                                      ymin:27.04527654
+                                                      xmax:123.1561344
+                                                      ymax:31.18247145
                                           spatialReference:sr];
          
          _tileInfo = [[AGSTileInfo alloc]
