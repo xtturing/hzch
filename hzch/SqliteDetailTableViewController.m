@@ -135,14 +135,14 @@
     if(([key isEqualToString:@"IMAGE"] || [key isEqualToString:@"image"] || [value containsString:@".jpg"] || [value containsString:@".JPG"]) && value.length > 0){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         NBSearchImageViewController *mapViewController = [storyboard instantiateViewControllerWithIdentifier:@"NBSearchImageViewController"];
-        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID;
+        mapViewController.catalogID = [[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue];
         mapViewController.imageUrl = value;
         mapViewController.titleName = self.title;
           self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
         [self.navigationController pushViewController:mapViewController animated:YES];
     }else if(([key isEqualToString:@"VIDEO"] || [key isEqualToString:@"video"] || [value containsString:@".mp4"] || [value containsString:@".MP4"]) && value.length > 0){
         NSString* escaped_value = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *url = [NSString stringWithFormat:@"http://ditu.zj.cn/MEDIA/%ld/VIDEO/%@",(long)([[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]?[[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]:[dataHttpManager getInstance].tableID),escaped_value];
+        NSString *url = [NSString stringWithFormat:@"http://ditu.zj.cn/MEDIA/%ld/VIDEO/%@",(long)([[[dataHttpManager getInstance].sqliteCalloutDic objectForKey:@"metadataid"] integerValue]),escaped_value];
         NSLog(@"video url %@", url);
         // add to view
         MPMoviePlayerViewController *movie = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL URLWithString:url]];

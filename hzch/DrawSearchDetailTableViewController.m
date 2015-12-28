@@ -114,7 +114,7 @@
     if([[searchDic objectForKey:@"results"] count] > 0){
         self.showMapItem.enabled = YES;
         tableID = [[searchDic objectForKey:@"tableid"] integerValue];
-        [dataHttpManager getInstance].tableID = tableID;
+//        [dataHttpManager getInstance].tableID = tableID;
         allCount = [[searchDic objectForKey:@"totalCount"] intValue];
         allCount = ceil(allCount / (pageSize*1.000));
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];

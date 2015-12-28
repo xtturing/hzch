@@ -155,7 +155,7 @@
         self.countItem.title = [NSString stringWithFormat:@"第%d页／共%d页",page,allCount];
         self.resultDic = searchDic;
         tableID = [[searchDic objectForKey:@"tableid"] integerValue];
-        [dataHttpManager getInstance].tableID = tableID;
+//        [dataHttpManager getInstance].tableID = tableID;
         self.toolBar.hidden = NO;
         if(page > 1){
             self.preItem.enabled = YES;

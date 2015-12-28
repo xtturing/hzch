@@ -33,6 +33,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if(self.detailList.count > 0){
+        [self.tableView reloadData];
+    }
     [dataHttpManager getInstance].delegate = self;
 }
 

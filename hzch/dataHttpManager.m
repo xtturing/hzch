@@ -233,7 +233,7 @@ static dataHttpManager * instance=nil;
     [_requestQueue addOperation:request];
 }
 - (void)letGetSearchCatalog:(NSString *)searchText page:(int)page pageSize:(int)size{
-    if(self.resourceLayers && self.resourceLayers.allKeys.count == 1){
+    if(self.resourceLayers && self.resourceLayers.allKeys.count >= 1){
         NSString *tableIds = @"";
         for(NSString *tableId in self.resourceLayers.allKeys){
             tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
@@ -311,7 +311,7 @@ static dataHttpManager * instance=nil;
 }
 
 - (void)doTouchDrawSearchMinx:(double)minx miny:(double)miny maxx:(double)maxx maxy:(double)maxy page:(int)page pageSize:(int)size{
-    if(self.resourceLayers && self.resourceLayers.allKeys.count == 1){
+    if(self.resourceLayers && self.resourceLayers.allKeys.count >= 1){
         NSString *tableIds = @"";
         for(NSString *tableId in self.resourceLayers.allKeys){
             tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
