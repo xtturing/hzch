@@ -314,7 +314,7 @@ static dataHttpManager * instance=nil;
     if(self.resourceLayers && self.resourceLayers.allKeys.count >= 1){
         NSString *tableIds = @"";
         for(NSString *tableId in self.resourceLayers.allKeys){
-            tableIds = [NSString stringWithFormat:@"%@%@",tableId,@"%2C"];
+            tableIds = [NSString stringWithFormat:@"%@%@%@",tableIds,tableId,@"%2C"];
         }
         if(tableIds.length > 0){
             NSString *baseUrl =[NSString  stringWithFormat:HTTP_DRAW_SEARCH,page,size,tableIds,minx,maxx,miny,maxy];
